@@ -1,8 +1,8 @@
-#This script will create json files needed for the creation of https://ballerina.io/downloads/archived/ and https://ballerina.io/downloads/release-notes/
+# This script will create json files needed for the creation of [Release Notes](https://ballerina.io/downloads/release-notes/) and [Archived downloads](https://ballerina.io/downloads/archived/) pages of Ballerina website
 
-##Need 2 arguemnts to run this script 
-1. URL of archived_releases.json
-2. URL of latest_release.json
+These are the 2 arguments needed to run this script 
+1. URL of *archived_releases.json*
+2. URL of *latest_release.json*
 
 Example Usage
 ```
