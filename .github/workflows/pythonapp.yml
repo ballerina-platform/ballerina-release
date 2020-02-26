@@ -14,6 +14,10 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
     - name: Run release_note_md_to_html script
       run: python3 ./publish_scripts/release_note_md_to_html.py /home/sajeer/Desktop/release-notes-master/release-notes-1.1.3.md
     - name: Run publish_json script
