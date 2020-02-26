@@ -14,11 +14,16 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: '3.x'
+    - name: wget required files
+      run: |
+        wget -O ./publish_scripts/archived_releases.json https://product-dist.ballerina.io/downloads/archived_releases.json
+        wget -O ./publish_scripts/latest_release.json https://product-dist.ballerina.io/downloads/latest_release.json?982
+        wget -O ./publish_scripts/release_note.md https://raw.githubusercontent.com/keizer619/release-notes/master/release-notes-1.1.3.md
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r ./publish_scripts/requirements.txt
-#    - name: Run release_note_md_to_html script
-#      run: python3 ./publish_scripts/release_note_md_to_html.py /home/sajeer/Desktop/release-notes-master/release-notes-1.1.3.md
+    - name: Run release_note_md_to_html script
+      run: python3 ./publish_scripts/release_note_md_to_html.py ./publish_scripts/release_note.md
     - name: Run publish_json script
-      run: python3 ./publish_scripts/publish_json.py https://product-dist.ballerina.io/downloads/archived_releases.json https://product-dist.ballerina.io/downloads/latest_release.json?982
+      run: python3 ./publish_scripts/publish_json.py ./publish_scripts/archived_releases.json ./publish_scripts/latest_release.json
