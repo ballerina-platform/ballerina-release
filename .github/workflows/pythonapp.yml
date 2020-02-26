@@ -1,0 +1,20 @@
+name: Python package
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: Run release_note_md_to_html script
+      run: python3 release_note_md_to_html.py /home/sajeer/Desktop/release-notes-master/release-notes-1.1.3.md
+    - name: Run publish_json script
+      run: python3 publish_json.py https://product-dist.ballerina.io/downloads/archived_releases.json https://product-dist.ballerina.io/downloads/latest_release.json?982
