@@ -17,4 +17,4 @@ jobs:
       env:
         OS_TYPE: ubuntu
       working-directory: ./test-scripts/ballerina-test-automation
-      run: ./gradlew build
+      run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
