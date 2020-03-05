@@ -1,0 +1,3 @@
+$ ballerina run taint_analysis.bal
+error: .::taint_analysis.bal:8:21: tainted value passed to sensitive parameter 'secureParameter'
+error: .::taint_analysis.bal:20:21: tainted value passed to sensitive parameter 'secureParameter'

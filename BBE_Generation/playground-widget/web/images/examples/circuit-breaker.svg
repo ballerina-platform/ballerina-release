@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 64" style="enable-background:new 0 0 512 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;fill:#3AD1CA;}
+	.st1{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;}
+	.st3{font-family:'Monaco';}
+	.st4{font-size:10px;}
+</style>
+<rect class="st0" width="512" height="64"/>
+<g>
+	<line class="st1" x1="235.4" y1="32.2" x2="196.9" y2="32.2"/>
+	<g>
+		<g>
+			<line class="st1" x1="383.9" y1="32.2" x2="353.8" y2="32.2"/>
+			<g>
+				<polygon class="st2" points="380.5,28.1 379.9,28.8 383.5,32.2 379.9,35.5 380.5,36.2 384.9,32.2 				"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<circle class="st1" cx="180.9" cy="32" r="16.1"/>
+		<g>
+			<text transform="matrix(1 0 0 1 172.166 35.0781)" class="st2 st3 st4">api</text>
+		</g>
+	</g>
+	<g>
+		<rect x="235.4" y="22.1" class="st1" width="111.8" height="19.8"/>
+		<g>
+			<text transform="matrix(1 0 0 1 269.915 35.3281)" class="st2 st3 st4">service</text>
+		</g>
+	</g>
+	<g>
+		<path class="st1" d="M447.7,15.9c-4.5,0-8.6,1.9-11.5,4.9c-2.9-3-7-4.9-11.5-4.9c-4.5,0-8.6,1.9-11.5,4.9c-2.9-3-7-4.9-11.5-4.9
+			c-8.9,0-16.1,7.2-16.1,16.1s7.2,16.1,16.1,16.1c4.5,0,8.6-1.9,11.5-4.9c2.9,3,7,4.9,11.5,4.9c4.5,0,8.6-1.9,11.5-4.9
+			c2.9,3,7,4.9,11.5,4.9c8.9,0,16.1-7.2,16.1-16.1S456.6,15.9,447.7,15.9z"/>
+		<g>
+			<text transform="matrix(1 0 0 1 399.9277 35.1748)" class="st2 st3 st4">endpoint</text>
+		</g>
+	</g>
+	<g>
+		<path class="st1" d="M110.3,15.9c-4.5,0-8.6,1.9-11.5,4.9c-2.9-3-7-4.9-11.5-4.9s-8.6,1.9-11.5,4.9c-2.9-3-7-4.9-11.5-4.9
+			c-8.9,0-16.1,7.2-16.1,16.1s7.2,16.1,16.1,16.1c4.5,0,8.6-1.9,11.5-4.9c2.9,3,7,4.9,11.5,4.9s8.6-1.9,11.5-4.9
+			c2.9,3,7,4.9,11.5,4.9c8.9,0,16.1-7.2,16.1-16.1S119.2,15.9,110.3,15.9z"/>
+		<g>
+			<text transform="matrix(1 0 0 1 68.6655 35.1748)" class="st2 st3 st4">caller</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			<line class="st1" x1="163.2" y1="32.2" x2="126.6" y2="32.2"/>
+			<g>
+				<polygon class="st2" points="159.9,28.1 159.2,28.8 162.9,32.2 159.2,35.5 159.9,36.2 164.3,32.2 				"/>
+			</g>
+		</g>
+	</g>
+	<rect x="347.2" y="26.3" class="st1" width="6.6" height="11.5"/>
+</g>
+</svg>

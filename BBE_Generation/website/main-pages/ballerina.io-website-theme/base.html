@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+
+    {%- block site_meta %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% if page and page.is_homepage %}
+    <meta name="description" content="{{ config.site_description }}">{% endif %} {% if config.site_author %}
+    <meta name="author" content="{{ config.site_author }}">{% endif %} {% if config.site_favicon %}
+    <link rel="shortcut icon" href="{{ base_url }}/{{ config.site_favicon }}"> {% else %}
+    <link rel="shortcut icon" href="{{ base_url }}/img/favicon.ico">{% endif %} {%- endblock %} {%- block htmltitle %}
+    <title>{% if page and page.title and not page.is_hompage %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
+    {%- endblock %} {%- block styles %}
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92163714-2"></script>
+
+    <!--FB-->
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Ballerina" />
+    <meta property="og:description"        content="Ballerina is an open source programming language and platform for cloud-era application programmers." />
+    <meta property="og:image"              content="/img/ballerina-sm-3.png" />
+
+    <!--TWITTER-->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@ballerinalang">
+    <meta name="twitter:creator" content="@ballerinalang">
+    <meta name="twitter:title" content="Ballerina">
+    <meta name="twitter:description" content="Ballerina is an open source programming language and platform for cloud-era application programmers.">
+    <meta name="twitter:image" content="/img/ballerina-sm-3.png">
+    <meta name="twitter:text:description" content="Ballerina is an open source programming language and platform for cloud-era application programmers.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image:width" content="610">
+
+    <!--LINKED IN  -->
+    <meta property='og:title' content="Ballerina"/>
+    <meta property='og:image' content="/img/ballerina-sm-3.png"/>
+    <meta property='og:description' content="Ballerina is an open source programming language and platform for cloud-era application programmers."/>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-92163714-2');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-PSL2TX4');
+    </script>
+    <!-- End Google Tag Manager -->
+    <script src="/js/moment-2.22.0/moment.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    {% if page and page.title == 'Archived' %}
+    <script src="/js/handlebars-4.0.5/handlebars.js"></script>
+    <script src="/js/download/archived_download.js"></script>
+    {% endif %}
+    <script>
+        var base_url = "";
+    </script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="https://use.typekit.net/son4ymv.css">
+    <!-- <link rel="stylesheet" href="{{ base_url }}/js/vs/editor/editor.main.css">-->
+
+    <script type="text/javascript" src="/js/highlight.pack.js"></script>
+
+    <script src="/js/ballerina-common.js?1508"></script>
+    <link rel="stylesheet" href="{{ base_url }}/css/ballerina-io.css"> {%- for path in extra_css %}
+    <!--  <link href="{{ path }}" rel="stylesheet">-->
+    {%- endfor %} {%- endblock %} {%- block libs %} {% if page %}
+    <script>
+        // Current page data
+        var mkdocs_page_name = '{{ page.title | tojson | safe }}'.replace(/^"|"$/g, '');
+        var mkdocs_page_input_path = '{{ page.input_path | tojson | safe }}'.replace(/^"|"$/g, '');
+        var mkdocs_page_url = '{{ page.abs_url | tojson | safe }}'.replace(/^"|"$/g, '');
+        var base_download_url = '{{config.extra.base_download_url}}';
+        var nightly_download_url = '{{config.extra.nightly_download_url}}';
+        var dev_download_url = '{{config.extra.dev_download_url}}';
+        var archived_versions_json = '{{config.extra.archived_versions_json}}';
+        var releaseNoteFilename = '{{config.extra.archived_release_note_html}}';
+        var nightly_versions_json = '{{config.extra.nightly_versions_json}}';
+        var dev_versions_json = '{{config.extra.dev_versions_json}}';
+        var latest_versions_json = '{{config.extra.latest_versions_json}}';
+        var release_notes_versions_json = '{{config.extra.release_notes_versions_json}}';
+    </script>
+    {% endif %} {%- endblock %} {%- block extrahead %} {% endblock %} {%- block analytics %} {% if config.google_analytics %} {% endif %} {%- endblock %}
+
+</head>
+
+<body class="cBallerina-io" role="document">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSL2TX4"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    {% include "navigation.html" %} {{ page.content }} {% include "footer.html" %}
+
+   <!-- <script>
+        $(document).ready(function() {
+            var ConBanner = '<div class="row cBallerinaConBanner"><a target="_blank" href="https://con.ballerina.io/?utm_source=ballerina.io&utm_medium=banner&utm_campaign=ballerina_con_2018_seattle">' +
+            '<div class="container">JOIN <span>BALLERINACON</span> IN SEATTLE ON 10TH DECEMBER TO LEARN HOW WE MAKE INTEGRATION SIMPLE AND AGILE.<span> CLICK TO REGISTER</span></div></a></div>';
+            $('#iBanner').append(ConBanner);
+            setTimeout(function() {
+                $('#iBanner').addClass('cShowBanner');
+                $('#iMainNavigation').addClass('cShowBanner');
+                $('.cMainParagraph').addClass('cShowBanner');
+//              }, 2000);
+            });
+        });
+    </script> -->
+
+    <script src="/js/clipboard.js-2.0.0/clipboard.min.js"></script>
+    <script src="/search/require.js"></script>
+    <script src="/search/search.js"></script>
+
+</body>
+
+</html>
+{% if page and page.is_homepage %}
+<!--
+MkDocs version : {{ mkdocs_version }}
+Build Date UTC : {{ build_date_utc }}
+-->
+{% endif %}

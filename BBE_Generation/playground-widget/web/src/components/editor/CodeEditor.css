@@ -1,0 +1,39 @@
+.monaco-editor {
+    height: 100%;
+}
+
+.monaco-editor .margin {
+    padding-top: 4px;
+    width: 30px!important;
+}
+
+.monaco-editor .line-numbers {
+    width: 20px!important;
+}
+
+.monaco-editor .editor-scrollable {
+    width: 442px!important;
+    height: 277px!important;
+    top: 4px!important;
+    left: 34px!important;
+}
+
+/* 
+.monaco-editor .overflow-guard {
+    height: 279px!important;
+} */
+.vs .monaco-scrollable-element>.scrollbar.vertical>.slider {
+    left: 8px!important;
+    border-radius: 5px!important;
+    width: 6px!important;
+}
+
+.vs .monaco-scrollable-element>.scrollbar.horizontal>.slider {
+    top: 4px!important;
+    border-radius: 5px!important;
+    height: 6px!important;
+}
+
+.monaco-editor .margin-view-overlays, .monaco-editor .editor-scrollable {
+    /**margin-top: 10px;**/
+}

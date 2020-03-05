@@ -1,0 +1,31 @@
+.curl-editor {
+    background-color: #20b6b0;
+    height: 100%;
+    color: #FFFFFF;
+    padding: 7px 7px 7px 7px;
+}
+
+.curl-editor .curl-string {
+    float: left;
+    line-height: normal;
+}
+
+.curl-editor .curl-btn {
+    float: right;
+    margin-right: 30px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.try-it-refresh-btn {
+    height: 28px;
+    width: 28px;
+}
+
+.curl-string input {
+    border: none;
+    background: transparent;
+    outline: none;
+    color: #FFFFFF;
+    padding: 0;
+}

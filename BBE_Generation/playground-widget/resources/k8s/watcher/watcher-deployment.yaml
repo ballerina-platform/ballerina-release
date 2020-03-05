@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: bpg-watcher-dep
+  namespace: ballerina-playground 
+  labels: 
+    app: bpg-watcher
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: bpg-watcher
+  template: 
+    metadata: 
+      labels: 
+        app: bpg-watcher
+    spec: 
+      serviceAccount: bpg-watcher-sa
+      serviceAccountName: bpg-watcher-sa
+      containers: 
+      - name: bpg-watcher-container
+        imagePullPolicy: Always 
+        image: gcr.io/${BPG_GCP_PROJECT_ID}/controller:v0.1-20180425-1754
+        env:
+        -
+          name: BPG_REDIS_WRITE_HOST
+          value: "redis-master"
+        -
+          name: BPG_REDIS_WRITE_PORT
+          value: "6379"
+        -
+          name: BPG_REDIS_READ_HOST
+          value: "redis-slave"
+        -
+          name: BPG_REDIS_READ_PORT
+          value: "6379"
+        -
+          name: BPG_NAMESPACE
+          value: "ballerina-playground"
+        -
+          name: ROOT_DOMAIN_NAME
+          value: "playground.preprod.ballerina.io"
+        -
+          name: BPG_CONTROLLER_ROLE
+          value: "EVENT_WATCHER"

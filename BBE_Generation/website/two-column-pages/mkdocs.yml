@@ -1,0 +1,108 @@
+site_name: Ballerina.io
+repo_url: https://github.com/ballerina-platform/ballerina-www/tree/1.0 rc1
+edit_uri: website/two-column-pages/docs/
+site_description: Documentation for the Ballerina Programming Language
+site_author: WSO2, Inc.
+copyright: 2018 WSO2, Inc.
+pages:
+- Learn: 'learn.md'
+- Learn:
+    - Quick Tour: 'learn/quick-tour.md'
+    - Getting Started: 'learn/getting-started.md'
+    - Tools and IDEs: 'learn/tools-ides.md'
+    - Tools and IDEs: 
+        - VSCode Plugin: 'learn/tools-ides/vscode-plugin.md'
+        - VSCode Plugin:
+            - Documentation Viewer: 'learn/tools-ides/vscode-plugin/documentation-viewer.md'
+            - Language Intelligence: 'learn/tools-ides/vscode-plugin/language-intelligence.md'
+            - Run and Debug: 'learn/tools-ides/vscode-plugin/run-and-debug.md'
+            - Graphical View : 'learn/tools-ides/vscode-plugin/graphical-editor.md'
+        - IntelliJ Plugin: 'learn/tools-ides/intellij-plugin.md'
+        - IntelliJ Plugin: 
+            - Using IntelliJ Plugin Features: 'learn/tools-ides/intellij-plugin/using-intellij-plugin-features.md'
+            - Using the IntelliJ Plugin: 'learn/tools-ides/intellij-plugin/using-the-intellij-plugin.md'
+    - How to write secure ballerina code: 'learn/how-to-write-secure-ballerina-code.md'
+    - How to observe ballerina code: 'learn/how-to-observe-ballerina-code.md'
+    - How to structure ballerina code: 'learn/how-to-structure-ballerina-code.md'
+    - How to extend ballerina: 'learn/how-to-extend-ballerina.md'
+    - How to deploy and run ballerina programs: 'learn/how-to-deploy-and-run-ballerina-programs.md'
+    - How to test ballerina code: 'learn/how-to-test-ballerina-code.md'
+    - How to document ballerina code: 'learn/how-to-document-ballerina-code.md'
+    - How to Publish Modules: 'learn/how-to-publish-modules.md'
+    - How to Use OpenAPI Tools: 'learn/how-to-use-openapi-tools.md'
+    - How to Write Secure Ballerina Code : 'learn/how-to-write-secure-ballerina-code.md'
+    - FAQ: 'learn/faq.md'
+    - Ballerina streaming reference: 'learn/ballerina-streaming-reference.md'
+    - How to generate code for protocol buffers: 'learn/how-to-generate-code-for-protocol-buffers.md'
+    - Events: 'learn/events.md'
+    - Events:
+        - Past Events: 'learn/events/past-events.md'
+        - Ballerina Day Colombo 2018: 'learn/events/ballerina-day-colombo-2018.md'
+        - Ballerina Day London 2018: 'learn/events/ballerina-day-london-2018.md'
+        - Ballerina Day London 2018: 
+            - Ballerina Cloud Native Programming Language: 'learn/events/ballerina-day-london-2018/ballerina-cloud-native-programming-language.md'
+            - Ballerina Philosophy: 'learn/events/ballerina-day-london-2018/ballerina-philosophy.md'
+            - Writing Microservices: 'learn/events/ballerina-day-london-2018/writing-microservices.md'
+            - Microservices Integration: 'learn/events/ballerina-day-london-2018/microservices-integration.md'
+            - Service Resiliency in Microservices: 'learn/events/ballerina-day-london-2018/service-resiliency-in-microservices.md'
+            - Data integration: 'learn/events/ballerina-day-london-2018/data-integration.md'
+            - Orchestrating Microservices with Docker and Kubernetes: 'learn/events/ballerina-day-london-2018/orchestrating-microservices-with-docker-and-kubernetes.md'
+            - Ballerina Ecosystem: 'learn/events/ballerina-day-london-2018/ballerina-ecosystem.md'
+        - Ballerina Day Colombo 2018:
+            - Ballerina Day Colombo 2018 Confirmation: 'learn/events/ballerina-day-colombo-2018/confirmation.md'
+            - Ballerina Day Colombo 2018 Transport Confirmation: 'learn/events/ballerina-day-colombo-2018/transport-confirmation.md'
+        - Webinars: 'learn/events/webinars.md'
+        - Webinars:
+            - Ballerina Serverless with Kubeless: 'learn/events/webinars/ballerina-serverless-with-kubeless.md'
+            - Observing Your Ballerina Services with Humio: 'learn/events/webinars/observing-your-ballerina-services-with-humio.md'
+            - Continuous Delivery for Cloud Native Applications with Kubernetes, Ballerina, and Codefresh: 'learn/events/webinars/continuous-delivery-for-cloud-native-applications-with-kubernetes-ballerina-and-codefresh.md'
+            - CNCF Webinar Series - Intro to Ballerina - A Cloud Native Programming Language: 'learn/events/webinars/cncf-webinar-series-intro-to-ballerina-a-cloud-native-programming-language.md'
+            - Ballerina Cloud Native Programming Language : 'learn/events/webinars/ballerina-cloud-native-programming-language.md'
+        - Ballerinacon San Francisco 2018:
+            - Ballerina Serverless with Kubeless: 'learn/events/ballerinacon-san-francisco-2018/ballerina-cloud-native-programming-language.md'
+            - Ballerina is not Java (or Go or ..): 'learn/events/ballerinacon-san-francisco-2018/ballerina-is-not-java-or-go-or.md'
+            - Microservice Integration & Ballerina: 'learn/events/ballerinacon-san-francisco-2018/microservice-Integration-and-ballerina.md'
+            - Service Resiliency in Microservices: 'learn/events/ballerinacon-san-francisco-2018/service-resiliency-in-microservices.md'
+            - Cloud Native Programing with Docker and Kubernetes: 'learn/events/ballerinacon-san-francisco-2018/cloud-native-programing-with-docker-and-kubernetes.md'
+            - Service Mesh in Practice: 'learn/events/ballerinacon-san-francisco-2018/service-mesh-in-practice.md'
+            - Test Driven Development for Microservices: 'learn/events/ballerinacon-san-francisco-2018/test-driven-development-for-microservices.md'
+            - Serverless Ballerina: 'learn/events/ballerinacon-san-francisco-2018/serverless-ballerina.md'
+            - Observability with Ballerina: 'learn/events/ballerinacon-san-francisco-2018/observability-with-ballerina.md'
+            - Ballerina Development Lifecycle and Tools: 'learn/events/ballerinacon-san-francisco-2018/ballerina-development-lifecycle-and-tools.md'
+            - Secure by Design Microservices & Integrations: 'learn/events/ballerinacon-san-francisco-2018/secure-by-design-microservices-and-integrations.md'
+            - Stream Processing with Ballerina: 'learn/events/ballerinacon-san-francisco-2018/stream-processing-with-ballerina.md'
+        - Columbus Ballerina Meetup: 'learn/events/columbus-ballerina-meetup.md'
+        - CSensorium 2019: 'learn/events/sensorium-2019.md'
+    - Style Guide: 'learn/style-guide.md'
+    - Style Guide: 
+        - Definitions: 'learn/style-guide/definitions.md'
+        - Operators Keywords and Types: 'learn/style-guide/operators_keywords_and_types.md'
+        - Statements: 'learn/style-guide/statements.md'
+        - Expressions: 'learn/style-guide/expressions.md'
+        - Annotations Documentation and Comments: 'learn/style-guide/annotations_documentation_and_comments.md'
+- Community  : 'community.md'
+- Community  :
+    - Slack : 'community/slack.md'
+- Help : 'help.md'
+- License of site : 'license-of-site.md'
+- Terms of Service : 'terms-of-service.md'
+- Privacy Policy : 'privacy-policy.md'
+- Security : 'security.md'
+- Downloads :
+     - Release Notes : 'downloads/release-notes.md'
+- Community Program : 'community-program.md'
+- Deployment : 
+     - Ballerina AWS Lambda Deployment : 'deployment/aws-lambda.md'
+- Google Season of Docs 2019: 'season-of-docs-2019.md'   
+- Language Specification: 'spec.md'   
+
+theme: null
+theme_dir: ballerina.io-two-col-theme
+plugins: []
+extra :
+    base_download_url : 'https://product-dist.ballerina.io/downloads'
+    archived_versions_json : 'https://product-dist.ballerina.io/downloads/archived_releases.json'
+    archived_release_note_html : 'RELEASE_NOTE.html'
+    nightly_versions_json : 'https://product-dist.ballerina.io/downloads/nightly_release.json'
+    latest_versions_json : 'https://product-dist.ballerina.io/downloads/latest_release.json'
+    release_notes_versions_json : 'https://product-dist.ballerina.io/downloads/release_notes_versions.json'

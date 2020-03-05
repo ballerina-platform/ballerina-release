@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    {%- block site_meta %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% if page and page.is_homepage %}
+    <meta name="description" content="{{ config.site_description }}">{% endif %} {% if config.site_author %}
+    <meta name="author" content="{{ config.site_author }}">{% endif %} {% if config.site_favicon %}
+    <link rel="shortcut icon" href="{{ base_url }}/{{ config.site_favicon }}"> {% else %}
+    <link rel="shortcut icon" href="/img/favicon.ico">{% endif %} {%- endblock %} {%- block htmltitle %}
+    <title>{% if page and page.title and not page.is_hompage %}{{ page.title }} {% endif %}</title>
+    {%- endblock %} {%- block styles %}
+
+
+
+            <meta property="og:type"               content="article" />
+            <meta property="og:title"              content="{{ page.title }}" />
+             {% if page and page.meta.abstract %}<meta property="og:description" content="{{ page.meta.abstract }}" />{% endif %}
+             {% if page and page.meta.socialmediaimage %}<meta property="og:image" content="https://ballerina.io/img/{{ page.meta.socialmediaimage }}" />{% endif %}
+
+
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:site" content="@ballerinalang">
+            <meta name="twitter:creator" content="@ballerinalang">
+            <meta name="twitter:title" content="{{ page.title }}">
+            {% if page and page.meta.abstract %}<meta name="twitter:description" content="{{ page.meta.abstract[0] }}">{% endif %}
+            {% if page and page.meta.socialmediaimage %}<meta name="twitter:image" content="https://ballerina.io/img/{{ page.meta.socialmediaimage }}"> {% endif %}
+            {% if page and page.meta.abstract %}<meta name="twitter:text:description" content="{{ page.meta.abstract }}"> {% endif %}
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:image:width" content="610">
+
+
+
+            <meta property='og:title' content="{{ page.title }}"/>
+            {% if page and page.meta.socialmediaimage %}<meta property='og:image' content="https://ballerina.io/img/{{ page.meta.socialmediaimage }}"/>{% endif %}
+            {% if page and page.meta.abstract %}<meta property='og:description' content="{{ page.meta.abstract }}"/>{% endif %}
+
+
+
+
+
+    <script src="/js/moment-2.22.0/moment.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    {% if page and page.title == 'Release Notes' %}
+    <script src="/js/handlebars-4.0.5/handlebars.js"></script>
+    <script src="/js/release_notes/all_release_notes.js"></script>
+    {% endif %}
+
+
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92163714-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-92163714-2');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-PSL2TX4');
+    </script>
+    <!-- End Google Tag Manager -->
+
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--<script src="{{ base_url }}/js/jquery-2.1.1.min.js"></script>-->
+    <!--<script src="{{ base_url }}/js/modernizr-2.8.3.min.js"></script>
+  	<script type="text/javascript" src="{{ base_url }}/js/highlight.pack.js"></script>-->
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/modernizr-2.8.3.min.js"></script>
+
+    <script>
+        var base_url = "";
+        var base_download_url = "{{config.extra.base_download_url}}";
+        var archived_versions_json = "{{config.extra.archived_versions_json}}";
+        var releaseNoteFilename = "{{config.extra.archived_release_note_html}}";
+        var release_notes_versions_json = '{{config.extra.release_notes_versions_json}}';
+    </script>
+    <link rel="stylesheet" href="https://use.typekit.net/son4ymv.css" />
+    <link rel="stylesheet" href="/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="/css/theme_extra.css" type="text/css" />
+    <script type="text/javascript" src="{{ base_url }}/js/highlight.pack.js"></script>
+    <script src="/js/ballerina-common.js"></script>
+    <script src="/js/jquery.validate.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="/css/ballerina-io.css?200618">
+    <link rel="stylesheet" href="/css/ballerina-io-docs.css?200618"> {%- for path in extra_css %}
+    <!--  <link href="{{ path }}" rel="stylesheet">-->
+    {%- endfor %} {%- endblock %} {%- block libs %} {% if page %} {% endif %} {%- endblock %} {%- block extrahead %} {% endblock %} {%- block analytics %} {% if config.google_analytics %} {% endif %} {%- endblock %} {% if page and page.title == 'Open Source'
+    %}
+    <script>
+        $(document).ready(function() {
+            //subscribe form
+            $("#subscribeUserButtonOS").click(function(event) {
+                event.preventDefault();
+                subscribeUserOS();
+            });
+
+            $('#emailUserOS').on('keypress', function(event) {
+                if (event.which === 13) {
+                    event.preventDefault();
+                    $(this).attr("disabled", "disabled");
+                    subscribeUserOS();
+                    $(this).removeAttr("disabled");
+                }
+            });
+
+            function subscribeUserOS() {
+                var email = $('#emailUserOS').val();
+                $('#subscribeUserMessage').remove("");
+                if (email == "") {
+                    $('#emailUserOS').val('');
+                    $("#emailUserOS").attr("placeholder","Please enter your email.");
+                } else if (!isEmail(email)) {
+                    $('#emailUserOS').val('');
+                    $("#emailUserOS").attr("placeholder","Please enter a valid email.");
+                } else {
+                    $('#emailUserOS').val('');
+                    $(".pdframe").html("<iframe src='https://go.pardot.com/l/142131/2018-03-26/4yl979?email=" + email + "'></iframe>");
+                    $("#emailUserOS").attr("placeholder","Your email address has been added.");
+                }
+                return;
+            }
+        });
+    </script>
+    {% endif %}
+    <script>
+        $(document).ready(function() {
+            $("#slackSubscribeButton").click(function(event) {
+                event.preventDefault();
+                inviteSlackUser();
+            });
+            $('#email').on('keypress', function(event) {
+                if (event.which === 13) {
+                    event.preventDefault();
+                    $(this).attr("disabled", "disabled");
+                    inviteSlackUser();
+                    $(this).removeAttr("disabled");
+                }
+            });
+        });
+
+        function inviteSlackUser() {
+            $('#subscribeMessage').html('');
+            var email = $("#email").val();
+
+            if (email == "") {
+                $('#email').val('');
+                $("#email").attr("placeholder","Please enter your email.");
+            } else if (!isEmail(email)) {
+                $('#email').val('');
+                $("#email").attr("placeholder","Please enter a valid email.");
+            } else {
+                $('#email').val('');
+                $("#email").attr("placeholder","Processing...");
+                $.ajax({
+                    type: 'GET',
+                    url: '/slackServiceCall.php?email='+email,
+                    success: function(msg) {
+                        if (msg == 1) {
+                            $('#email').val('');
+                            $("#email").attr("placeholder","Your invitation has been sent.");
+                        } else {
+                            $('#email').val('');
+                            $("#email").attr("placeholder",msg);
+                        }
+                    }
+                });
+            }
+            return;
+        }
+    </script>
+    <script src="/search/require.js"></script>
+</head>
+
+<body class="cBallerina-io" role="document">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSL2TX4"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    {% include "navigation.html" %}
+
+    <div class="row cBallerina-io-Gray-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 cBallerina-io-Home-Left-col">
+                    <div class="cBlallerina-io-docs-left-nav-container">
+                        <div class="cSideBar-Button"><img src="/img/sidebar.svg" /></div>
+                        <div class="cBlallerina-io-docs-left-nav-box">
+                            <div class="cBallerina-io-docs-Title">TABLE OF CONTENTS</div>
+                            <ul id="toc_list">
+
+                                {% for toc_item in page.toc %}
+                                <li class="toctree-l3"><a href="{{ toc_item.url }}">{{ toc_item.title }}</a></li>
+                                {% for toc_item in toc_item.children %}
+                                <li><a class="toctree-l4" href="{{ toc_item.url }}">{{ toc_item.title }}</a></li>
+                                {% endfor %} {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cBallerina-io-Home-Middle-col">
+                    <div class="col-md-12 col-lg-12 cBallerina-io-breadcrumbs">
+                        {% include "breadcrumbs.html" %}
+                    </div>
+                    <div class="cBlallerina-io-docs-content-container">
+                        <div class="wy-nav-content">
+                            <div class="rst-content">
+
+                                <div role="main">
+                                    <div class="section">
+                                        <!--                <h1>{{ page.title }}</h1>-->
+                                        {% block content %} {{ page.content }} {% endblock %}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "footer.html" %} {%- block scripts %}
+
+    <script>
+        $(document).ready(function() {
+            $(".cSideBar-Button").click(function() {
+                $(".cSideBar-Button").toggleClass('cOpen');
+                $(".cBallerina-io-Home-Left-col").toggleClass('cOpen-col');
+            });
+
+            $("#breadcrumb-list li").each(function(index) {
+                var current = $(this);
+                var currentLink = $(current.find("a")[0]);
+                if (currentLink && currentLink.attr("href") == "#" && !current.hasClass("wy-breadcrumbs-aside") &&
+                    !current.next().hasClass("wy-breadcrumbs-aside")) {
+                    var prevLink = $(current.prev().find("a")[0]);
+                    if (prevLink && prevLink.attr("href") != "#") {
+                        currentLink.attr("href", prevLink.attr("href") +
+                            (prevLink.attr("href").match(/\/$/) ? "" : "/") +
+                            current.attr("link_candidate").toLowerCase().split(" ").join("-"));
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script src="/js/theme.js"></script>
+    <script src="/search/search.js"></script>
+    {%- for path in extra_javascript %}
+    <script src="{{ path }}"></script>
+    {%- endfor %} {%- endblock %}
+
+    <!-- Slack form -->
+    <div class="modal fade" id="subscribe" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Request an invite</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="cBallerinaFormFieldContainer">
+                            <span id="subscribeMessage"></span>
+                            <label class="subscribeForm">Email Address</label>
+                            <input maxlength="90" value="" id="email" name="email" placeholder="Email" title="Email" class="cTextfieldstyle contact_email subscribeForm" type="text">
+                        </div>
+                        <a class="cBallerinaButtons subscribeForm" href="" id="subscribeButton">Submit</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="cSocial-sidebar">
+                 <ul class="cHorizontalList cSocialMedia" style="list-style: none; padding: 0; margin: 0;">
+                     <li>
+                         <a target="_blank" rel="external nofollow"  class="w-inline-block social-share-btn tw" href="https://twitter.com/intent/tweet?" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20 ' + encodeURIComponent(document.URL)); return false;">
+                                 <img id="iFloating-Twitter-Share" src="https://ballerina.io/img/twitter.svg" alt="Twitter">
+                             </a>
+                     </li>
+                     <li>
+                         <a target="_blank" rel="external nofollow" title="Share with your friends on Facebook" href="https://www.facebook.com/sharer/sharer.php?u=&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;">
+                             <img id="iFloating-Facebook-Share" src="https://ballerina.io/img/facebook.svg" alt="Facebook">
+                         </a>
+                     </li>
+                     <li>
+                         <a target="_blank" rel="external nofollow" class="w-inline-block social-share-btn lnk" href="http://www.linkedin.com/shareArticle?mini=true&url=&title=&summary=&source=" target="_blank" title="Share on LinkedIn" onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.URL) + '&title=' + encodeURIComponent(document.title)); return false;">
+                                 <img id="iFloating-LinkedIn-Share" src="https://ballerina.io/img/linkedin.svg" alt="LinkedIn">
+                             </a>
+                     </li>
+                 </ul>
+             </div>
+
+
+    <script>
+   $(document).ready(function() {
+            var gitstar = '<iframe id="iGitStarIframe" src="https://ghbtns.com/github-btn.html?user=ballerina-platform&repo=ballerina-lang&type=star&count=true&size=small" frameborder="0" scrolling="0"></iframe>';
+            $('[data-button="iGitStarText"]').replaceWith(gitstar);
+
+            var gitwatch = '<iframe id="iGitWatchIframe" src="https://ghbtns.com/github-btn.html?user=ballerina-platform&repo=ballerina-lang&type=watch&count=true&size=lsmalle&v=2" frameborder="0" scrolling="0"></iframe>';
+            $('[data-button="iGitWatchText"]').replaceWith(gitwatch);
+
+    });
+   </script>
+
+   <style>
+       .cGitButtonContainer {
+           display: inline-block;
+           width: 100%;
+           margin-bottom: 0px;
+       }
+
+        #iGitStarText {
+            height: 20px;
+            float: left;
+            padding: 0;
+            margin: 0;
+        }
+       #iGitStarIframe , #iGitWatchIframe {
+            height: 20px;
+            width: 100px;
+            float: left;
+        }
+    </style>
+
+
+</body>
+
+</html>
+{% if page and page.is_homepage %}
+<!--
+MkDocs version : {{ mkdocs_version }}
+Build Date UTC : {{ build_date_utc }}
+-->
+{% endif %}

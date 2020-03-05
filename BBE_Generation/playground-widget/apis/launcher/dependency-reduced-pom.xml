@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>ballerina-playground-api-parent</artifactId>
+    <groupId>org.ballerinalang.platform</groupId>
+    <version>0.8-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>playground-launcher</artifactId>
+  <name>Ballerina - Playground Launcher API</name>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>${maven.shadeplugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer>
+                  <mainClass>${main.class}</mainClass>
+                </transformer>
+                <transformer />
+              </transformers>
+              <artifactSet>
+                <excludes>
+                  <exclude>com.github.jknack:handlebars</exclude>
+                  <exclude>org.apache.ws.commons.axiom:axiom-dom</exclude>
+                  <exclude>org.wso2.staxon:staxon-core</exclude>
+                  <exclude>commons-pool.wso2:commons-pool</exclude>
+                  <exclude>org.wso2.carbon.utils:carbon-utils</exclude>
+                  <exclude>org.yaml:snakeyaml</exclude>
+                </excludes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <properties>
+    <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
+    <org.wso2.transport.http.version>6.0.63</org.wso2.transport.http.version>
+    <main.class>org.ballerinalang.platform.playground.launcher.ServiceRunner</main.class>
+    <slf4j.version>1.7.22</slf4j.version>
+    <msf4j.version>2.5.0</msf4j.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+</project>
+

@@ -1,0 +1,27 @@
+site_name: Ballerina.io
+repo_url: https://github.com/ballerina-platform/ballerina-www/tree/1.0 rc1
+edit_uri: website/main-pages/docs/
+site_description: Documentation for the Ballerina Programming Language
+site_author: WSO2, Inc.
+copyright: 2018 WSO2, Inc.
+pages:
+- Home : 'index.md'
+- Downloads : 'downloads.md'
+- Downloads :
+    - Archived : 'downloads/archived.md'
+- 404 : 'page-not-found.md'
+
+theme: null
+theme_dir: ballerina.io-website-theme
+extra :
+    latest_version : 0.970.0 alpha1
+    latest_release_date : Apr 03, 2018
+    base_download_url : 'https://product-dist.ballerina.io/downloads'
+    nightly_download_url : 'https://product-dist.ballerina.io/nightly'
+    dev_download_url : 'https://product-dist.ballerina.io/dev'
+    archived_versions_json : 'https://product-dist.ballerina.io/downloads/archived_releases.json'
+    release_notes_versions_json : 'https://product-dist.ballerina.io/downloads/release_notes_versions.json'
+    archived_release_note_html : 'RELEASE_NOTE.html'
+    nightly_versions_json : 'https://product-dist.ballerina.io/nightly/nightly_release.json'
+    dev_versions_json : 'https://product-dist.ballerina.io/dev/dev_release.json'
+    latest_versions_json : 'https://product-dist.ballerina.io/downloads/latest_release.json?982'

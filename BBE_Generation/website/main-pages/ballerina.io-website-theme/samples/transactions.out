@@ -1,0 +1,5 @@
+$ ballerina run --experimental transactions.bal
+[ballerina/http] started HTTP/WS endpoint 172.17.0.1:39977
+2018-12-07 18:02:23,771 INFO  [ballerina/transactions] - Created transaction: 3cf30f2a-2c1e-4a04-b2c6-7156e773e8bd 
+2018-12-07 18:02:23,780 INFO  [ballerina/transactions] - Running 2-phase commit for transaction: 3cf30f2a-2c1e-4a04-b2c6-7156e773e8bd:$anon$.$1 
+Transaction: 3cf30f2a-2c1e-4a04-b2c6-7156e773e8bd:$anon$.$1 committed

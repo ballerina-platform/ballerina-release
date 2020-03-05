@@ -1,0 +1,21 @@
+{
+  "name": "playground-api-load-test",
+  "version": "0.8.1",
+  "description": "A load test for launchers",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d lib",
+    "test": "npm run build && cp -a resources/. lib && node lib/test-no-cache"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "ssl-root-cas": "^1.2.5",
+    "ws": "5.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}

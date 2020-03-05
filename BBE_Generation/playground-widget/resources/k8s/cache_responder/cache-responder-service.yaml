@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    serviceloadbalancer/lb.cookie-sticky-session: "true"
+    serviceloadbalancer/lb.host: cache.playground.preprod.ballerina.io
+    serviceloadbalancer/lb.sslTerm: "true"
+  labels:
+    app: bpg-cache-responder
+  name: bpg-cache-responder
+  namespace: ballerina-playground
+spec:
+  ports:
+    - name: "web-port-https"
+      port: 443
+      targetPort: 8443
+  selector:
+    app: bpg-cache-responder
+

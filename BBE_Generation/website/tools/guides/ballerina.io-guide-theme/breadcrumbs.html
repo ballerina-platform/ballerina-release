@@ -1,0 +1,21 @@
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="/">Home</a> &raquo;</li>
+    <li><a href="/learn ">Learn </a> &raquo;</li>
+    <li><a href="/learn/by-guide/">Guides</a> &raquo;</li>
+    <li id="breadcrumb-suffix">{{ page.title }}</li>
+    <li class="wy-breadcrumbs-aside" id="iGitEdit">
+      {%- block repo %}
+      {% if page and page.edit_url %}
+        <a href="#" id="editOnGithub" target="_blank"
+           {%- if config.repo_name|lower == 'github' %}
+          class="icon icon-github"
+        {%- elif config.repo_name|lower == 'bitbucket' %}
+          class="icon icon-bitbucket"
+        {% endif %}> Edit on {{ config.repo_name }}</a>
+      {% endif %}
+      {%- endblock %}
+    </li>
+  </ul>
+
+</div>

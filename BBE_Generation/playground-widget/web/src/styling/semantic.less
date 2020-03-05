@@ -1,0 +1,40 @@
+/*
+  Import this file into your LESS project to use Semantic UI without build tools:
+  import 'styling/styles.less'
+
+  Here you can disable unused styling for unused components.
+*/
+
+/* Global */
+& { @import "~semantic-ui-less/definitions/globals/reset.less"; }
+& { @import "~semantic-ui-less/definitions/globals/site.less"; }
+& { @import "~semantic-ui-less/definitions/elements/button.less"; }
+& { @import "~semantic-ui-less/definitions/elements/container.less"; }
+& { @import "~semantic-ui-less/definitions/elements/loader.less"; }
+& { @import "~semantic-ui-less/definitions/elements/segment.less"; }
+& { @import "~semantic-ui-less/definitions/collections/menu.less"; }
+& { @import "~semantic-ui-less/definitions/modules/dimmer.less"; }
+& { @import "~semantic-ui-less/definitions/modules/popup.less"; }
+
+@offWhite: rgb(243, 243, 243);
+@white: #fff;
+
+@import "~@ballerina/theme/src/themes/default/semantic-overrides/globals/site.variables";
+@import "~@ballerina/theme/src/themes/default/composer/views/diagram.variables";
+@import "~@ballerina/theme/src/definitions/views/diagram.less";
+
+
+// override source-linked text hover styles
+.diagram-container {
+  .diagram-canvas {
+    text {
+      font-family: "font-ballerina"
+    }
+    .source-linked-label {
+      &:hover {
+        text-decoration: none!important;
+        cursor: default!important;
+      }
+    }
+  }
+}

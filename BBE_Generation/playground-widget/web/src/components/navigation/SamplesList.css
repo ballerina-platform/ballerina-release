@@ -1,0 +1,23 @@
+.samples-navigation-list button {
+    margin-right: 10px;
+}
+
+.samples-navigation-list .ui.text.menu .active.item,
+.samples-navigation-list .ui.text.menu .item {
+    font-family: "Calibre-Semibold";
+    font-size: 0.8em;
+    text-transform: uppercase;
+    color: #585A5E;
+    margin: 0;
+    letter-spacing: 1px;
+    font-weight: 100;
+}
+
+.samples-navigation-list .ui.text.menu .active.item,
+.samples-navigation-list .ui.text.menu .active.item:hover {
+    color: #20b6b0;
+}
+
+.samples-navigation-list .ui.vertical.menu {
+    width: 10.5rem;
+}

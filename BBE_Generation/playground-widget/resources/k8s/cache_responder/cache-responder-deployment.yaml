@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bpg-cache-responder-dep
+  namespace: ballerina-playground
+  labels:
+    app: bpg-cache-responder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bpg-cache-responder
+  template:
+    metadata:
+      labels:
+        app: bpg-cache-responder
+    spec:
+      containers:
+      - name: bpg-cache-responder-container
+        imagePullPolicy: Always
+        image: gcr.io/${BPG_GCP_PROJECT_ID}/cache-responder:v0.1-20180423-1428
+        env:
+        -
+          name: BPG_REDIS_WRITE_HOST
+          value: "redis-master"
+        -
+          name: BPG_REDIS_WRITE_PORT
+          value: "6379"
+        -
+          name: BPG_REDIS_READ_HOST
+          value: "redis-slave"
+        -
+          name: BPG_REDIS_READ_PORT
+          value: "6379"
+        ports:
+        -
+          name: http-port
+          containerPort: 80
+        -
+          name: https-port
+          containerPort: 8443
+        readinessProbe:
+          tcpSocket:
+            port: https-port
+          initialDelaySeconds: 3
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: https-port
+          initialDelaySeconds: 5
+          periodSeconds: 20
+        volumeMounts:
+        -
+          mountPath: /mnt/build/cache
+          name: nfs-build-cache
+      volumes:
+      -
+        name: nfs-build-cache
+        nfs:
+          path: /exports/build-cache
+          server: 10.142.0.5

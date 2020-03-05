@@ -1,0 +1,77 @@
+{
+    "samples":
+    [
+    {
+        "name": "Hello Service",
+        "fileName": "hello-service/hello_service.bal",
+        "file": "playground-hello-service/src/hello_service.bal",
+        "image": "http-service.svg",
+        "curl": "curl -s http://playground.localhost/hello/sayHello",
+        "url": "https://github.com/ballerina-guides/playground-hello-service.git"
+    },
+    {
+        "name": "POST Service",
+        "fileName": "post-service/greeting_service.bal",
+        "file": "playground-post-service/src/greeting_service.bal",
+        "image": "http-service.svg",
+        "curl": "curl -s -X POST -d 'Ballerina' http://playground.localhost/greeting",
+        "url": "https://github.com/ballerina-guides/playground-post-service.git"
+    },
+    {
+        "name": "Use Connectors",
+        "fileName": "use-connectors/connector_invocation_service.bal",
+        "file": "playground-external-service/src/connector_invocation_service.bal",
+        "image": "talking-to-endpoints.svg",
+        "dependantService": "backend_time_service",
+        "curl": "curl -s http://playground.localhost/time",
+        "url": "https://github.com/ballerina-guides/playground-external-service.git"
+    },
+    {
+        "name": "Data Service",
+        "fileName": "data-service/data_service.bal",
+        "file": "playground-data-service/src/data_service.bal",
+        "image": "data-service.svg",
+        "curl": "curl -s http://playground.localhost/customer",
+        "url": "https://github.com/ballerina-guides/playground-data-service.git",
+        "resources": ["data-service/ballerina.conf", "data-service/CUSTOMER_DB.h2.db"]
+    },
+    {
+        "name": "Circuit Breaker",
+        "fileName": "circuit-breaker/resilient_service.bal",
+        "file": "playground-circuit-breaker/src/resilient_service.bal",
+        "image": "circuit-breaker.svg",
+        "dependantService": "legacy_service",
+        "curl": "curl -s http://playground.localhost/resilient/time",
+        "noOfCurlExecutions": 12,
+        "url": "https://github.com/ballerina-guides/playground-circuit-breaker"
+    },
+    {
+        "name": "Asynchronous Service",
+        "fileName": "async-invocation/async_invoking_service.bal",
+        "file": "playground-async-invocation/src/async_invoking_service.bal",
+        "image": "async-service.svg",
+        "dependantService": "stock_quote_service",
+        "curl": "curl -s http://playground.localhost/quote",
+        "url": "https://github.com/ballerina-guides/playground-async-invocation"
+    },
+    {
+        "name": "Streaming Service",
+        "fileName": "streaming/streaming_service.bal",
+        "file": "playground-streaming/src/streaming_service.bal",
+        "image": "streaming-service.svg",
+        "curl": "curl -s -X POST -d 1001.1 http://playground.localhost/nasdaq/publishQuote",
+        "url": "https://github.com/ballerina-guides/playground-streaming",
+        "noOfCurlExecutions": 4,
+        "postCurlDelay": 4000
+    },
+    {
+        "name": "Hello Main Parallel",
+        "fileName": "hello-main/hello_main.bal",
+        "file": "playground-hello-main/src/hello_main.bal",
+        "image": "hello-main.svg",
+        "main": true,
+        "curl": "",
+        "url": "https://github.com/ballerina-guides/playground-hello-main.git"
+    }
+    ]
+}

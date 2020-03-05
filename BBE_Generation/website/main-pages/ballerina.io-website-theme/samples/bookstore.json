@@ -1,0 +1,40 @@
+{
+    "store": {
+        "id": 3926402,
+        "name": "ABC",
+        "city": "Colombo",
+        "country": "LK",
+        "books": [
+            {
+                "title": "Othello",
+                "author": "William Shakespeare",
+                "language": "English",
+                "year": 1609
+            },
+            {
+                "title": "Anna Karenina",
+                "author": "Leo Tolstoy",
+                "language": "Russian",
+                "year": 1877
+            },
+            {
+                "title": "The Great Gatsby",
+                "author": "Scott Fitzgerald",
+                "language": "English",
+                "year": 1925
+            },
+            {
+                "title": "Madol Duwa",
+                "author": "Martin Wikcramasinghe",
+                "language": "Sinhala",
+                "year": 1947
+            },
+            {
+                "title": "War and Peace",
+                "author": "Leo Tolstoy",
+                "language": "Russian",
+                "year": 1867
+            }
+        ]
+    }
+}

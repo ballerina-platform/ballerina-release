@@ -1,0 +1,168 @@
+---
+layout: ballerina-example-page
+title: {{.Name}}
+description: Ballerina by Example is a hands-on introduction to Ballerina using annotated example programs. Check out the first example or browse the full list below.
+permalink: /{{.Version}}/learn/by-example/{{.Id}}
+---
+<div class="row cBallerina-io-Gray-row">
+        <div class="container cBallerinaBySampleContainer">
+            <div class="FullCode">
+                {{.FullCode}}
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <table class="cTopInfoContainer cTopControlsContainer">
+                    <tr>
+                        <td class="cLeftTD">
+                            <h2>{{.Name}}</h2>
+                            <p>{{.Descs}}</p>
+
+                        </td>
+                        <td class="cRightTD">
+                            <div class="cTopButtonContainer">
+                                {{if .PrevExample}}
+                                <div class="cButtonInfoContainer">
+                                    <a class="prev" href="{{.PrevExample.Id}}.html">
+                                        <span>< PREVIOUS</span>
+                                        <p>{{.PrevExample.Name}}</p>
+                                    </a>
+                                </div>
+                                {{end}} {{if .NextExample}}
+                                <div class="cButtonInfoContainer">
+                                    <a class="next" href="{{.NextExample.Id}}.html">
+                                        <span>NEXT ></span>
+                                        <p>{{.NextExample.Name}}</p>
+                                    </a>
+                                </div>
+                                {{end}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="example" id="{{.Id}}">
+                <div class="col-xs-12 col-sm-12 col-md-12 cBBETable-container cCodeLeft">
+                    <table class="cTopControlsContainer">
+                        <tr>
+                            <td class="cLeftTD">
+                                <div class="cBBE-links">
+                                    <ul>
+                                        <li>
+                                            <a class="copy"><img src="/img/copy-icon.svg" /></a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="{{.GithubLink}}"><img src="/img/github-logo-green.svg" /></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                    <table class="cTopBorder-table">
+                        <tr>
+                            <td class="cCodeTD"></td>
+                            <td class="cDescTD"></td>
+                        </tr>
+                    </table>
+
+                    {{range  $i, $element := .Segs}}
+                        {{range .}}
+                            {{if ne $i 0}}
+                                {{if and (not .CodeLeading) (not .IsConsoleOutput)}}
+                                    <div class="bal-separator">
+                                        <!-- This table is a temporary table to add spacing between output and next bal file-->
+                                        <table class="cTopBorder-table">
+                                            <tbody><tr>
+                                                <td class="cCodeTD"></td>
+                                                <td class="cDescTD"></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </div>
+                                {{end}}
+                            {{end}}
+                        {{end}}
+
+                    <div>
+
+                        <table class="cBBE-body">
+                            {{range $element}}
+                            <tr class="cTR{{if and (not .DocEmpty)}} hover-enable{{end}}{{if .IsConsoleOutput}} cOutputTr{{end}}">
+
+                                <td class="code{{if .CodeEmpty}} empty{{end}}{{if .CodeLeading}} leading{{end}}{{if .IsConsoleOutput}} cOutput{{end}}">
+                                    {{.CodeRendered}}
+                                </td>
+                                <td class="docs">
+                                    {{if and (not .DocEmpty)}}
+                                    <div class="cCodeDesription">
+                                        <div>
+                                            {{.DocsRendered}}
+                                        </div>
+                                    </div>
+                                    {{end}}
+                                </td>
+                            </tr>
+                            {{end}}
+                        </table>
+                    </div>
+                    {{end}}
+
+
+                    <table class="cBottomBorder-table">
+                        <tr>
+                            <td class="cCodeTD"></td>
+                            <td class="cDescTD"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <script>
+            $(document).ready(function() {
+
+                hljs.initHighlightingOnLoad();
+
+                $(".switch").click(function() {
+                    $(".cCodeRight").toggleClass('cShow');
+                    $(".cCodeLeft").toggleClass('cHide');
+                });
+
+                // register "copy to clipboard" event to elements with "copy" class
+                var clipboard = new ClipboardJS('.copy', {
+                    text: function(trigger) {
+                        return $('.FullCode').find('pre').text();
+                    }
+                });
+
+                // Register events show hide tooltip on click event
+                clipboard.on('success', function(e) {
+                    setTooltip(e.trigger, 'Copied!');
+                    hideTooltip(e.trigger);
+                });
+
+                clipboard.on('error', function(e) {
+                    setTooltip(e.trigger, 'Failed!');
+                    hideTooltip(e.trigger);
+                });
+
+                $('.copy').tooltip({
+                    trigger: 'click',
+                    placement: 'bottom'
+                });
+                $("a.copy").unbind("click");
+            });
+
+            function setTooltip(btn, message) {
+                $(btn).attr('data-original-title', message)
+                    .tooltip('show');
+            }
+
+            function hideTooltip(btn) {
+                setTimeout(function() {
+                    $(btn).tooltip('hide').removeAttr('data-original-title');
+                }, 1000);
+            }
+        </script>

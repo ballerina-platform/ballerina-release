@@ -1,0 +1,418 @@
+@font-face {
+ font-family: CalibreWeb-Semibold;
+ src: url(../ballerina-fonts/CalibreWeb-Regular.woff);
+        
+        ;
+    
+}
+body.cBallerina-io {
+  background-color: #e7eaeb;
+  font-family: "pragmatica",sans-serif;
+}
+body.cBallerina-io {
+  background-color: #e7eaeb;
+}
+
+body.cBallerina-io .row {
+    margin: 0;
+}
+
+body.cBallerina-io .container {
+    padding: 0;
+}
+
+
+
+/*.col-lg-3 {
+     width: 22%;
+}
+.col-lg-6 {
+    width: 56%;
+}*/
+
+
+a {
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.row.cBallerina-io {
+    padding: 0;
+    margin: 0;
+    height: 10px;
+}
+
+.cTopLineContainer {
+    padding-left: 60px;
+}
+
+.cTopLine {
+    background-color: #3ad1ca;
+/*    padding: 0;
+    margin: 0;*/
+    height: 10px;
+    width: 100%;
+}
+
+.cBallerina-io-Nav {
+    
+}
+
+.cBallerina-io p {
+  font-size: 12px; 
+  color: #57595d;
+  line-height: 18px;
+}
+
+.row.cBallerina-io-Nav {
+    padding: 36px 0;
+}
+
+.row.cBallerina-io-Logo-row {
+    
+}
+
+.cBallerina-io-Logo-Container {
+    padding-top: 30px
+}
+a.cLogo img {
+    width: 200px;
+}
+
+.navbar {
+    margin-bottom: 0;
+    padding: 0;
+}
+.navbar-nav > li > a {
+    padding-top: 0;
+    line-height: 12px;
+    padding: 0px 16px;
+    color: #57595d;
+}
+
+.navbar-nav.cTopNav > li:first-child , .navbar-nav.cTopNav > li:nth-child(2) {
+    display: none;
+}
+
+
+.nav.navbar-nav.cTopNav li ul {
+    display: none;
+}
+
+ul.navbar-nav {
+    float: right;
+}
+
+.navbar-brand {
+    padding: 0;
+    margin: -5px 0 0 0;
+}
+.cHr {
+    border: 1px solid #a6a8ab;
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
+
+.cBallerina-io-Gray-row {
+    background-image: url("../img/gray-bg.svg");
+     background-repeat: no-repeat;
+     background-position: bottom center;
+     margin-top: 30px;
+     padding-bottom: 30px;
+}
+
+.cBallerina-io-White-row {
+    background-color: #ffffff;
+}
+
+
+/*COLUMNS*/
+
+.cBallerina-io-left-col {
+    padding-right: 0;
+}
+
+
+
+
+.col-lg-3.cBallerina-io-Home-Left-col , .col-lg-3.cBallerina-io-Home-Right-col {
+    width: 22%;
+    padding-top: 40px;
+}
+
+.cBallerina-io-Home-Left-col .cBlallerina-io-docs-left-nav-box a {
+    font-size: 10px;
+    padding: 1px 0;
+}
+
+
+
+/*HOME*/
+
+
+.cBallerina-io-Home-Left-col {
+    padding-top: 50px;
+}
+.cBallerina-io-Home-Left-col p {
+    font-size: 23px;
+    line-height: 30px;
+    margin-bottom: 0;
+}
+.cBallerina-io-Home-Left-col a {
+    font-size: 14px;
+    color: #22b7b1;
+}
+.cHomeButtonContainer {
+    display: inline-block;
+    width: 100%;
+}
+a.cBallerina-io-Home-main-download-button {
+    font-size: 25px;
+    background-color: #57595d;
+    color: #ffffff;
+    padding: 20px 50px 20px 74px;
+    display: inline-block;
+    float: left;
+    
+     background-image: url("../img/download-bg.svg");
+     background-repeat: no-repeat;
+     background-position: 26px center;
+     margin-top: 30px;
+    
+    
+}
+p.cBallerina-io-Home-OS {
+    font-size: 10px;
+    line-height: 14px;
+
+display: inline-block;
+
+
+margin-top: 10px;
+}
+
+.cBallerina-io-Home-main-content-wraper {
+    padding: 0;
+}
+.cBallerina-io-Home-main-instructions {
+/*    padding-left: 0;*/
+    margin-bottom: 20px;
+    padding-left: 0;
+}
+
+/*.cBallerina-io-Home-main-instructions.cLeft-pading-none {
+    padding-left: 0;
+}*/
+
+.cBallerina-io-Home-main-instructions p {
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.cBallerina-io-Home-main-instructions p span {
+    color: #22b7b1;
+    text-transform: uppercase;
+}
+.cBallerina-io-Home-widget img {
+    max-width: 100%;
+}
+
+
+
+
+
+
+
+
+
+/*INNER PAGE */
+
+.cBallerina-io-Home-Middle-col {
+    background-color: #ffffff;
+}
+
+
+
+/*FOOTER*/
+
+#iBallerinaFooter {
+    background: #ffffff;
+    padding: 40px 0;
+}
+.cBallerinaFooterLinks ul {
+    padding: 0;
+}
+.cBallerinaFooterLinks ul li {
+ list-style: none;
+ font-size: 10px;
+ color: #57595d;
+ font-weight: 400;
+}
+
+.cBallerinaFooterLinks ul li a {
+    color: #57595d;
+}
+
+.cBallerinaFooterSignUp p {
+    font-size: 10px;
+    margin-bottom: 0px;
+}
+
+.cBallerinaFooterSignUp p span {
+    font-weight: 400;
+}
+
+.cBallerina-io-middle-col.cBallerinaFooterSignUp {
+    padding-left: 0;
+}
+
+
+#iBallerinaFooter .cBallerina-io-right-col p {
+    font-size: 10px;
+    padding-left: 40px;
+}
+
+.cSocialmedia ul {
+    padding: 0;
+    margin: 0;
+}
+
+.cSocialmedia ul li {
+   list-style: none;
+
+display: inline-block;
+
+float: left;
+
+margin-right: 20px;
+
+padding-top: 3px;
+
+padding-left: 2px;
+}
+#emailUser {
+    background-color: #e6e9ea;
+    height: 20px;
+    font-size: 10px;
+    width: 230px;
+    border: none;
+    padding-left: 7px;
+}
+
+/*MOBILE */
+
+button.navbar-toggle {
+    background: #464646;
+    border-radius: 0;
+}
+
+.navbar-toggle .icon-bar {
+    border-radius: 0;
+    background-color: #ffffff;
+}
+.navbar-collapse.collapse.in {
+    
+}
+
+.navbar-collapse.collapse.in .ul.navbar-nav {
+    text-align: right;
+    width: 100%;
+}
+
+.cMobileLogo {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    
+    
+    .cBallerina-io-Gray-row {
+        padding-top: 70px;
+    }
+  
+    .cMobileLogo {
+        display: block;
+        width: 100px;
+        margin-top: 8px;
+    } 
+    .cMobileLogo img {
+        max-width: 100%;
+    }
+    .navbar-header {
+        padding-left: 0px;
+                height: 65px;
+width: 100%;
+display: inline-block;
+
+       
+    }
+    
+
+    
+  
+    p.navbar-brand  {
+        font-size: 10px;
+line-height: 11px;
+margin-top: 10px;
+float: left;
+    }
+    
+    .cBallerina-io-Nav {
+       position: fixed;
+       top: 0;
+       width: 100%;
+       background-color: #e7eaeb;
+       z-index: 999;
+    }
+    
+    .navbar-toggle {
+        margin-top: 15px;
+margin-right: 0;
+    }
+    
+    .nav.navbar-nav {
+        text-align: right;
+    }
+    .nav.navbar-nav.cTopNav > li > a {
+        font-size: 18px;
+        color: #ffffff;
+        
+    }
+    
+    .nav.navbar-nav.cTopNav > li > a:hover {
+        background-color: transparent;
+        color: #23b8b1;
+    }
+    .nav.navbar-nav.cTopNav > li {
+        padding: 20px 0;
+        
+    }
+    
+    .navbar-collapse {
+        background-color: #464646;
+        padding-right: 20px;
+    }
+    
+    .row.cBallerina-io-Nav {
+        padding: 10px 0 20px 0;
+        border-top: 10px solid #3ad1ca;
+        height: 100px;
+    }
+
+/*    FOOTER
+    */
+    
+    .cBallerina-io-middle-col.cBallerinaFooterSignUp {
+        padding-left: 15px;
+    }
+    #iBallerinaFooter .cBallerina-io-right-col p {
+        padding-left: 0;
+    }
+    .cBallerinaFooterSignUp {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+}

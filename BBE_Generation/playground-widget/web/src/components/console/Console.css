@@ -1,0 +1,32 @@
+.console-area {
+    height: 100%;
+}
+
+.console-area {
+    padding: 8px 8px 8px 8px;
+    font-size: 0.8em;
+}
+
+.console-area .try-it-btn {
+    margin-left: 10px;
+    background-color: #E6EAEB;
+    color: #585556;
+    padding: 3px;
+    cursor: pointer;
+}
+.console-area .try-it-btn:hover {
+    background-color: #E6EAEB;
+}
+
+.console-line {
+    line-height: 15px;
+    color: #20b6b0;
+}
+
+.console-line.curl-output {
+    color: white;
+}
+
+.console-line.bvm-output {
+    color: white;
+}

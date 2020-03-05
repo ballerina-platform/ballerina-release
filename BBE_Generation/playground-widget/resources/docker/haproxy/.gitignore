@@ -1,0 +1,9 @@
+# Certificates and key files
+certs/*
+!certs/.gitkeep
+
+*.pem
+*.crt
+*.key
+
+Godeps/

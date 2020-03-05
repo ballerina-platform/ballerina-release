@@ -1,0 +1,129 @@
+[submodule "playground-widget/guides/playground-hello-service"]
+	path = playground-widget/web/guides/playground-hello-service
+	url = https://github.com/ballerina-guides/playground-hello-service.git
+[submodule "playground-widget/guides/playground-async-invocation"]
+	path = playground-widget/web/guides/playground-async-invocation
+	url = https://github.com/ballerina-guides/playground-async-invocation.git
+[submodule "playground-widget/guides/playground-circuit-breaker"]
+	path = playground-widget/web/guides/playground-circuit-breaker
+	url = https://github.com/ballerina-guides/playground-circuit-breaker.git
+[submodule "playground-widget/guides/playground-external-service"]
+	path = playground-widget/web/guides/playground-external-service
+	url = https://github.com/ballerina-guides/playground-external-service.git
+[submodule "playground-widget/guides/playground-data-service"]
+	path = playground-widget/web/guides/playground-data-service
+	url = https://github.com/ballerina-guides/playground-data-service.git
+[submodule "playground-widget/guides/playground-post-service"]
+	path = playground-widget/web/guides/playground-post-service
+	url = https://github.com/ballerina-guides/playground-post-service.git
+[submodule "website/guides/restful-service"]
+	path = website/guides/repos/restful-service
+	url = https://github.com/ballerina-guides/restful-service.git
+[submodule "website/guides/websocket-integration"]
+	path = website/guides/repos/websocket-integration
+	url = https://github.com/ballerina-guides/websocket-integration.git
+[submodule "website/guides/resiliency-timeouts"]
+	path = website/guides/repos/resiliency-timeouts
+	url = https://github.com/ballerina-guides/resiliency-timeouts.git
+[submodule "website/guides/loadbalancing-failover"]
+	path = website/guides/repos/loadbalancing-failover
+	url = https://github.com/ballerina-guides/loadbalancing-failover.git
+[submodule "website/guides/data-backed-service"]
+	path = website/guides/repos/data-backed-service
+	url = https://github.com/ballerina-guides/data-backed-service.git
+[submodule "website/guides/open-api-based-service"]
+	path = website/guides/repos/open-api-based-service
+	url = https://github.com/ballerina-guides/open-api-based-service.git
+[submodule "website/guides/managing-database-transactions"]
+	path = website/guides/repos/managing-database-transactions
+	url = https://github.com/ballerina-guides/managing-database-transactions.git
+[submodule "website/guides/messaging-with-jms-queues"]
+	path = website/guides/repos/messaging-with-jms-queues
+	url = https://github.com/ballerina-guides/messaging-with-jms-queues.git
+[submodule "website/guides/parallel-service-orchestration"]
+	path = website/guides/repos/parallel-service-orchestration
+	url = https://github.com/ballerina-guides/parallel-service-orchestration.git
+[submodule "website/guides/service-composition"]
+	path = website/guides/repos/service-composition
+	url = https://github.com/ballerina-guides/service-composition.git
+[submodule "website/guides/resiliency-circuit-breaker"]
+	path = website/guides/repos/resiliency-circuit-breaker
+	url = https://github.com/ballerina-guides/resiliency-circuit-breaker.git
+[submodule "website/guides/messaging-with-kafka"]
+	path = website/guides/repos/messaging-with-kafka
+	url = https://github.com/ballerina-guides/messaging-with-kafka.git
+[submodule "playground-widget/web/guides/playground-streaming"]
+	path = playground-widget/web/guides/playground-streaming
+	url = https://github.com/ballerina-guides/playground-streaming.git
+[submodule "website/guides/repos/api-gateway"]
+	path = website/guides/repos/api-gateway
+	url = https://github.com/ballerina-guides/api-gateway
+[submodule "website/guides/repos/salesforce-twilio-integration"]
+	path = website/guides/repos/salesforce-twilio-integration
+	url = https://github.com/ballerina-guides/salesforce-twilio-integration
+[submodule "website/guides/repos/gmail-spreadsheet-integration"]
+	path = website/guides/repos/gmail-spreadsheet-integration
+	url = https://github.com/ballerina-guides/gmail-spreadsheet-integration
+[submodule "website/guides/repos/sonarqube-github-integration"]
+	path = website/guides/repos/sonarqube-github-integration
+	url = https://github.com/ballerina-guides/sonarqube-github-integration
+[submodule "website/guides/repos/messaging-with-ballerina"]
+	path = website/guides/repos/messaging-with-ballerina
+	url = https://github.com/ballerina-guides/messaging-with-ballerina
+[submodule "website/guides/repos/stream-processing"]
+	path = website/guides/repos/stream-processing
+	url = https://github.com/ballerina-guides/stream-processing
+[submodule "website/guides/repos/asynchronous-invocation"]
+	path = website/guides/repos/asynchronous-invocation
+	url = https://github.com/ballerina-guides/asynchronous-invocation
+[submodule "website/guides/repos/grpc-service"]
+	path = website/guides/repos/grpc-service
+	url = https://github.com/ballerina-guides/grpc-service
+[submodule "website/guides/repos/ballerina-with-istio"]
+	path = website/guides/repos/ballerina-with-istio
+	url = https://github.com/ballerina-guides/ballerina-with-istio
+[submodule "website/guides/repos/content-based-routing"]
+	path = website/guides/repos/content-based-routing
+	url = https://github.com/ballerina-guides/content-based-routing
+[submodule "website/guides/repos/pass-through-messaging"]
+	path = website/guides/repos/pass-through-messaging
+	url = https://github.com/ballerina-guides/pass-through-messaging
+[submodule "website/guides/repos/message-filtering"]
+	path = website/guides/repos/message-filtering
+	url = https://github.com/ballerina-guides/message-filtering
+[submodule "website/guides/repos/scatter-gather-messaging"]
+	path = website/guides/repos/scatter-gather-messaging
+	url = https://github.com/ballerina-guides/scatter-gather-messaging
+[submodule "website/guides/repos/backend-for-frontend"]
+	path = website/guides/repos/backend-for-frontend
+	url = https://github.com/ballerina-guides/backend-for-frontend
+[submodule "website/guides/repos/eip-message-construction"]
+	path = website/guides/repos/eip-message-construction
+	url = https://github.com/ballerina-guides/eip-message-construction
+[submodule "website/guides/repos/messaging-with-activemq"]
+	path = website/guides/repos/messaging-with-activemq
+	url = https://github.com/ballerina-guides/messaging-with-activemq
+[submodule "website/guides/repos/eip-message-transformation"]
+	path = website/guides/repos/eip-message-transformation
+	url = https://github.com/ballerina-guides/eip-message-transformation
+[submodule "website/guides/repos/ballerina-honeycomb"]
+	path = website/guides/repos/ballerina-honeycomb
+	url = https://github.com/ballerina-guides/ballerina-honeycomb
+[submodule "website/guides/repos/inter-microservice-communication"]
+	path = website/guides/repos/inter-microservice-communication
+	url = https://github.com/ballerina-guides/inter-microservice-communication
+[submodule "website/guides/repos/ballerina-aks-deployment"]
+	path = website/guides/repos/ballerina-aks-deployment
+	url = https://github.com/ballerina-guides/ballerina-aks-deployment
+[submodule "website/guides/repos/securing-restful-services-with-ldap"]
+	path = website/guides/repos/securing-restful-services-with-ldap
+	url = https://github.com/ballerina-guides/securing-restful-services-with-ldap
+[submodule "website/guides/repos/ballerina-gke-deployment"]
+	path = website/guides/repos/ballerina-gke-deployment
+	url = https://github.com/ballerina-guides/ballerina-gke-deployment
+[submodule "website/guides/repos/message-tracing-with-stream-processor"]
+	path = website/guides/repos/message-tracing-with-stream-processor
+	url = https://github.com/ballerina-guides/message-tracing-with-stream-processor
+[submodule "website/guides/repos/ballerina-awslambda-deployment"]
+	path = website/guides/repos/ballerina-awslambda-deployment
+	url = https://github.com/ballerina-guides/ballerina-awslambda-deployment

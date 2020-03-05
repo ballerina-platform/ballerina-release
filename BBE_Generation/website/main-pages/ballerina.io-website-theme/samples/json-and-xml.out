@@ -1,0 +1,7 @@
+$ ballerina run sample_json.bal
+Constructed JSON:
+{"Store":{"@id":"AST","name":"Jane","address":{"street":"Main","city":"94"},"codes":[4,8]}}
+Produced XML:
+<Store id="AST"><name>Jane</name><address><street>Main</street><city>94</city></address><codes><item>4</item><item>8</item></codes></Store><!--I am a comment-->
+Value of an individual element:
+Jane

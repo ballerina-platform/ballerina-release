@@ -1,0 +1,24 @@
+.ballerina-playground {
+    .ui {
+        &.segments {
+            .segment {
+                .btn-popout {
+                    float: right;
+                    cursor: pointer;
+                    span {
+                        font-family: "Calibre-Semibold";
+                        font-size: 0.8em;
+                        text-transform: uppercase;
+                        float: right;
+                        margin-right: 15px;
+                    }
+                    img {
+                        width: 20px;
+                        height: 20px;
+                        float: right;
+                    }
+                }
+            }
+        }
+    }
+}

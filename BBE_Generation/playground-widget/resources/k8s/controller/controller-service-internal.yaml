@@ -1,0 +1,22 @@
+apiVersion: v1 
+kind: Service 
+metadata: 
+  annotations: 
+     serviceloadbalancer/lb.private: "true"
+  labels:
+    app: bpg-controller 
+  name: bpg-controller-internal
+  namespace: ballerina-playground 
+spec: 
+  ports: 
+  -
+    name: "web-port-http"
+    port: 80
+    targetPort: 8080
+#  -
+#    name: "web-port-https"
+#    port: 443
+#    targetPort: 443
+  selector: 
+    app: bpg-controller 
+ 

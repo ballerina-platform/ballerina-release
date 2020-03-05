@@ -1,0 +1,28 @@
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs" id="breadcrumb-list">
+    <li><a href="/">Home</a> &raquo;</li>
+    {% if page %}
+      {% for doc in page.ancestors %}
+        {% if doc.link %}
+          <li><a href="{{ doc.link|e }}">{{ doc.title }}</a> &raquo;</li>
+        {% else %}
+          <li link_candidate="{{ doc.title }}"><a href="#" >{{ doc.title }}</a> &raquo;</li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    {% if page %}<li>{{ page.title }}</li>{% endif %}
+    <li class="wy-breadcrumbs-aside" id="iGitEdit">
+      {%- block repo %}
+      {% if page and page.edit_url %}
+        <a href="{{ page.edit_url }}" target="_blank"
+        {%- if config.repo_name|lower == 'github' %}
+          class="icon icon-github"
+        {%- elif config.repo_name|lower == 'bitbucket' %}
+          class="icon icon-bitbucket"
+        {% endif %}> Edit on {{ config.repo_name }}</a>
+      {% endif %}
+      {%- endblock %}
+    </li>
+  </ul>
+
+</div>

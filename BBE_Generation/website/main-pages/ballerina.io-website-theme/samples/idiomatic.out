@@ -1,0 +1,4 @@
+error: .::idiomatic.bal:11:5: variable assignment is required
+error: .::idiomatic.bal:21:5: cannot assign a value to function argument 'filePath'
+error: .::idiomatic.bal:23:22: undefined function 'isExists'
+error: .::idiomatic.bal:29:12: undefined function 'delete'

@@ -1,0 +1,41 @@
+$ ballerina build
+Pulling dependencies…
+  ballerinax/http     [====>] 56/56 
+  ballerinax/rpc      [====>] 98/98
+  ballerinax/twitter  [====>] 79/79 
+
+Building binaries…
+  something.bal ⇒ target/something.balo
+  something.bal ⇒ target/something.balo
+  something.bal ⇒ target/something.balo
+
+Running tests…
+  Test <mytest> ⇒ RUNNING … SUCCESS
+  Test <mytest> ⇒ RUNNING … SUCCESS
+  Test <mytest> ⇒ RUNNING … SUCCESS
+
+Generating deployment artifacts…
+  @docker                 - complete 1/1
+  @kubernetes:ingress     - complete 3/3
+  @kubernetes:svc         - complete 3/3
+  @kubernetes:deployment  - complete 1/1
+
+SUCCESS
+
+$ tree
+/
+  .ballerina/
+  Ballerina.toml
+  my.package/               
+    RouterService.bal           
+    tests/
+      RouterTests.bal
+  target/
+      kubernetes
+         docker
+             Dockerfile
+         something_k8s_svc.yaml
+         something_k8s_deployment.yaml
+
+
+$ kubectl apply -f target/kubernetes/

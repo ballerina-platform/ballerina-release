@@ -1,0 +1,30 @@
+.ballerina-playground {
+    .view-select-panel {
+        height: 300px;
+        width: 30px;
+        margin: 0;
+        background: #FFF !important;
+        position: absolute;
+        top: 0;
+        left: -30px;
+        box-shadow: -5px 5px 30px -12px #585a5e;
+        .btn {
+            padding-top: 8.3px;
+            height: 110px;
+            width: 30px;
+            border: 1px solid white;
+            background: #E6EAEB;
+            border-bottom: none;
+            cursor: pointer;
+            &:hover, &.active {
+                background: white;
+            }
+            &.active {
+                cursor: default;
+            }
+            &:last-child {
+                border-bottom: 1px solid white;
+            }
+        }
+    }
+}
