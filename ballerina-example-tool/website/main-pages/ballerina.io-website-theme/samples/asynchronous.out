@@ -1,2 +1,0 @@
-$ ballerina run sample_async.bal
-SQ + CB = 8100

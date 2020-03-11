@@ -7,7 +7,7 @@
 Steps
 
 1. Clone this repo 
-2. build-bbe.sh is under the ballerina-example-tool/website/tools
+2. build-bbe.sh is under the ballerina-example-tool/tools
 3. run the .sh script
 
 Requirements
@@ -32,3 +32,4 @@ Build the site and make it available on a local server.
 ```
 bundle exec jekyll serve
 ```
+
