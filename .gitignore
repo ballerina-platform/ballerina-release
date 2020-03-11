@@ -29,4 +29,4 @@ gradle-app.setting
 hs_err_pid*
 
 .idea
-test-scripts/ballerina-test-automation/.project
+.project
