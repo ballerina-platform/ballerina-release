@@ -1,4 +1,4 @@
-name: Run Gradle on PRs
+name: Run Gradle on Patch Release
 on: push
 jobs:
   gradle:
