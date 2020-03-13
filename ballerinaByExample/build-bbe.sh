@@ -53,5 +53,5 @@ rm -rf awslambda
 
 # $1 arg is the version of the Ballerina that these BBEs are belongs to. ex: v1-1 or v1-0
 # $2 arg is the location where the generated files suppose to be placed.
-go run tools/ballerinaByExample/tools/generate.go "tools/target/dependencies/ballerina-examples" $1 $2
+go run tools/generate.go "tools/target/dependencies/ballerina-examples" $1 $2
 echo "....Completed building BBE Site...."
