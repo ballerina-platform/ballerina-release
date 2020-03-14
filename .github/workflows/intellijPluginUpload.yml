@@ -14,12 +14,12 @@ jobs:
         java-version: 1.8
     - uses: actions/checkout@v1
       with: 
-        repository: lasinicl/myPluginRepo
+        repository: https://github.com/lasinicl/myPluginRepo.git
     - uses: eskatos/gradle-command-action@v1
       with:
-        build-root-directory: tools-plugin/intellij
+        build-root-directory: /tools-plugin/intellij
         arguments: buildPlugin
     - uses: eskatos/gradle-command-action@v1
       with:
-        build-root-directory: tools-plugin/intellij
+        build-root-directory: /tools-plugin/intellij
         arguments: publishPlugin
