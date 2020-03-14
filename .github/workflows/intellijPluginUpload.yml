@@ -1,4 +1,4 @@
-name: Run Gradle on PR
+name: Run Gradle on PR1
 on: 
   push:
   repository_dispatch:
