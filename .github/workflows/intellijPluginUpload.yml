@@ -12,6 +12,6 @@ jobs:
      steps:
        - name: dispatch intitation
          run: |
-           curl -X POST https://api.github.com/repos/lasinicl/myPluginRepo/dispatches \ -H 'Accept: application/vnd.github.everest-preview+json' \ -u ${{ secrets.MY_PAT }} \ --data '{"event_type": "ping", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+           curl -X POST https://api.github.com/repos/lasinicl/myPluginRepo/.github/workflows \ -H 'Accept: application/vnd.github.everest-preview+json' \ -u ${{ secrets.MY_PAT }} \ --data '{"event_type": "ping", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
           
 
