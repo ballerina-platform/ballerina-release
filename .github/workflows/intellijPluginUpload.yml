@@ -9,20 +9,12 @@ jobs:
        matrix:
          os: [ubuntu-latest, macos-latest, windows-latest]
      runs-on: ${{ matrix.os }}
-     env:
-         MY_PAT: ${{ secrets.MY_PAT }}
      steps:
-       -name: create repository dispatch event
-       if: env.REPOSITORY_DISPATCH=='true'
-       shell: pwsh
-       run: |
-          $pat = $env:MY_PAT
-          $uri = "https://github.com/lasinicl/myPluginRepo/dispatches"
-          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "", $pat)))
-          $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-          $headers.Add("Content-Type", "application/json")
-          $body = "{`"event_type`":`"test`",`"client_payload`":{`"unit`":false,`"integration`":true}}"
-          $response = Invoke-RestMethod -Uri $uri -Headers $headers -Body $body -Method POST
-          $response | ConvertTo-Json
+       - name: dispatch intitation
+         run: |
+           curl -X POST https://api.github.com/repos/lasinicl/myPluginRepo/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.MY_PAT }} \
+          --data '{"event_type": "ping", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
           
 
