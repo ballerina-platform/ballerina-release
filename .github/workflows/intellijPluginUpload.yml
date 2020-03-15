@@ -8,12 +8,13 @@ jobs:
          os: [ubuntu-latest]
      runs-on: ${{ matrix.os }}
      steps:
-       - uses: actions/checkout@v2
-         with:
-           repository: lasinicl/myPluginRepo2
        - uses: actions/setup-java@v1
          with:
            java-version: 1.8
-       - working-directory: tools-plugin/intellij
+       - uses: actions/checkout@v2
+         with:
+           repository: lasinicl/myPluginRepo2
+       - name: XXX
+         working-directory: tools-plugin/intellij
        - run: ./gradlew buildPlugin
-       - run: ./gradlew publishPlugin
+       
