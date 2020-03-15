@@ -18,5 +18,7 @@ jobs:
            repository: lasinicl/myPluginRepo2
        - name: XXX
          working-directory: ${{env.working-directory}}
-         run: ./gradlew buildPlugin
+         run: |
+              ./gradlew buildPlugin
+              ./gradlew publishPlugin
        
