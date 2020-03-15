@@ -1,8 +1,6 @@
 name: Run Gradle on PR1
 on: 
-  push:
-  
-    
+  push: 
 jobs:
   trigger_workflow:
      strategy:
@@ -17,9 +15,6 @@ jobs:
        - uses: actions/checkout@v2
          with:
            repository:lasinicl/myPluginRepo2
-       - name: Build with gradle
          working-directory: tools-plugin/intellij
          run: ./gradlew buildPlugin
-       - name: Publish plugin
-         working-directory: tools-plugin/intellij
          run: ./gradlew publishPlugin
