@@ -7,6 +7,8 @@ jobs:
        matrix:
          os: [ubuntu-latest]
      runs-on: ${{ matrix.os }}
+     env:
+         working-directory: ./tools-plugin/intellij
      steps:
        - uses: actions/setup-java@v1
          with:
@@ -15,6 +17,6 @@ jobs:
          with:
            repository: lasinicl/myPluginRepo2
        - name: XXX
-         working-directory: tools-plugin/intellij
-       - run: ./gradlew buildPlugin
+         working-directory: ${{env.working-directory}}
+         run: ./gradlew buildPlugin
        
