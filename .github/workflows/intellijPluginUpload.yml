@@ -1,7 +1,6 @@
 name: Build and Publish Intellij Plugin
 on:
-  release:
-    types: [published]
+  push:
 jobs:
   trigger_workflow:
      strategy:
@@ -9,7 +8,7 @@ jobs:
          os: [ubuntu-latest]
      runs-on: ${{ matrix.os }}
      env:
-         working-directory: ./tool-plugins/intellij
+         working-directory: ./tools-plugin/intellij
          publish_token: ${{ secrets.PUBLISH_TOKEN }}
      steps:
        - uses: actions/setup-java@v1
@@ -17,8 +16,8 @@ jobs:
            java-version: 1.8
        - uses: actions/checkout@v2
          with:
-           repository: ballerina-platform/ballerina-lang
-           ref: master
+           repository: lasinicl/myPluginRepo2
+           ref: v1.1
        - name: build and publish plugin
          working-directory: ${{env.working-directory}}
          run: |
