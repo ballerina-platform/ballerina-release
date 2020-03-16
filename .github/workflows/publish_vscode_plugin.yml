@@ -1,0 +1,50 @@
+on:
+  push:
+    tags:
+      - '*.*.*'
+# release tag version represent v1.1.4        
+name: Publish Extension
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set output for getting released version
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF:11}
+      - name: Check output
+        env:
+          VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $VERSION
+          echo ${{ steps.vars.outputs.tag }}
+          
+      #- name: Getting Latest tag
+      - run: echo ${{ steps.vars.outputs.tag }}
+                  
+      - name: Check out repository version 02.
+        uses: actions/checkout@v2
+        #with:
+          #repository: lnash94/sails_js_App
+          #token: ${{ secrets._ }}
+          
+      - name: Wget required file 
+        run: |
+          echo ${{ steps.vars.outputs.tag }}
+          npm install
+          echo $URL
+          wget $URL
+    #with wildcard
+    #- run: wget -r --no-parent -A 'ballerina-*.*.*.vsix' https://product-dist.ballerina.io/downloads/1.1.4/
+        env:
+          URL: https://product-dist.ballerina.io/downloads/${{ steps.vars.outputs.tag }}/ballerina-${{ steps.vars.outputs.tag }}.vsix
+      
+      
+      - name: Execute the VSCE commands
+      #- run: ls
+        uses: lannonbr/vsce-action@master
+        with:
+          args: publish -p $VSCE_TOKEN --packagePath ballerina-${{ steps.vars.outputs.tag }}.vsix
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCODE_PAT }}
