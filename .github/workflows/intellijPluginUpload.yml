@@ -9,7 +9,7 @@ jobs:
      runs-on: ${{ matrix.os }}
      env:
          working-directory: ./tool-plugins/intellij
-         publishtoken: perm:bGFzaW5pLjEwMjE=.OTItMTg3MA==.JKyMl7VcyLlwaArORD9pRDgwUqVTVK 
+         publishToken: perm:bGFzaW5pLjEwMjE=.OTItMTg3MA==.JKyMl7VcyLlwaArORD9pRDgwUqVTVK 
      steps:
        - uses: actions/setup-java@v1
          with:
@@ -20,6 +20,6 @@ jobs:
        - name: build and publish plugin
          working-directory: ${{env.working-directory}}
          run: |
-              ./gradlew buildPlugin -PintellijPublishToken=${{env.publishtoken}}
+              ./gradlew buildPlugin -PintellijPublishToken=${{env.publishToken}}
               ./gradlew publishPlugin
        
