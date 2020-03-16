@@ -16,14 +16,12 @@ jobs:
         with:
           python-version: '3.x'
         
-      - name: wget required files
+      - name: Wget required files
         id: version
         run: |
           npm install
-          npm install vsce
-          pwd
           wget -O latest_release.json https://product-dist.ballerina.io/downloads/latest_release.json?982
-          jq .version latest_release_01.json
+          jq .version latest_release.json
           python3  ./publish_scripts/publish_vscode_plugin.py  
              
       - name: Execute the VSCE commands
