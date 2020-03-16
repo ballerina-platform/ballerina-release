@@ -1,4 +1,4 @@
-name: Run Gradle on PR1
+name: Run Gradle on PR
 on: 
   push: 
 jobs:
@@ -15,7 +15,7 @@ jobs:
            java-version: 1.8
        - uses: actions/checkout@v2
          with:
-           repository: lasinicl/ballerina-lang
+           repository: ballerina-platform/ballerina-lang
        - name: build and publish plugin
          working-directory: ${{env.working-directory}}
          run: |
