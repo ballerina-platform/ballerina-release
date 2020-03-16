@@ -8,7 +8,7 @@ jobs:
          os: [ubuntu-latest]
      runs-on: ${{ matrix.os }}
      env:
-         working-directory: ./tools-plugin/intellij
+         working-directory: tools-plugin/intellij
      steps:
        - uses: actions/setup-java@v1
          with:
