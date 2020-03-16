@@ -16,7 +16,7 @@ jobs:
            java-version: 1.8
        - uses: actions/checkout@v2
          with:
-           repository: ballerina-platform/ballerina-lang
+           repository: lasinicl/ballerina-lang
        - name: build and publish plugin
          working-directory: ${{env.working-directory}}
          run: |
