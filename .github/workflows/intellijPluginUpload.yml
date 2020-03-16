@@ -8,14 +8,14 @@ jobs:
          os: [ubuntu-latest]
      runs-on: ${{ matrix.os }}
      env:
-         working-directory: ./tools-plugin/intellij
+         working-directory: ./tool-plugins/intellij
      steps:
        - uses: actions/setup-java@v1
          with:
            java-version: 1.8
        - uses: actions/checkout@v2
          with:
-           repository: lasinicl/myPluginRepo2
+           repository: lasinicl/ballerina-lang
        - name: build and publish plugin
          working-directory: ${{env.working-directory}}
          run: |
