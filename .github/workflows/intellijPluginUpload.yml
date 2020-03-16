@@ -1,6 +1,7 @@
 name: Build and Publish Intellij Plugin
 on:
-  push:
+  release:
+    types: [published]
 jobs:
   trigger_workflow:
      strategy:
@@ -16,7 +17,7 @@ jobs:
            java-version: 1.8
        - uses: actions/checkout@v2
          with:
-           repository: lasinicl/myPluginRepo2
+           repository: ballerina-platform/ballerina-lang
            ref: v1.2.0
        - name: build and publish plugin
          working-directory: ${{env.working-directory}}
