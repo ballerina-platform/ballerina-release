@@ -20,6 +20,6 @@ jobs:
        - name: build and publish plugin
          working-directory: ${{env.working-directory}}
          run: |
-              ./gradlew buildPlugin -PintellijPublishToken=${{env.publishtoken}}
-              ./gradlew publishPlugin
+              ./gradlew buildPlugin 
+              ./gradlew publishPlugin -PintellijPublishToken=${{env.publishtoken}}
        
