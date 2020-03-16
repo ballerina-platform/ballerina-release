@@ -9,7 +9,7 @@ jobs:
          os: [ubuntu-latest]
      runs-on: ${{ matrix.os }}
      env:
-         working-directory: ./tools-plugin/intellij
+         working-directory: ./tool-plugins/intellij
          publish_token: ${{ secrets.PUBLISH_TOKEN }}
      steps:
        - uses: actions/setup-java@v1
@@ -17,8 +17,8 @@ jobs:
            java-version: 1.8
        - uses: actions/checkout@v2
          with:
-           repository: lasinicl/myPluginRepo2
-           ref: dummyBranch 
+           repository: lasinicl/ballerina-lang
+           ref: master
        - name: build and publish plugin
          working-directory: ${{env.working-directory}}
          run: |
