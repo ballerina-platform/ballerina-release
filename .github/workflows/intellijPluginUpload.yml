@@ -1,4 +1,4 @@
-name: Run Gradle 
+name: Build and Publish Intellij Plugin
 on: 
   push: 
 jobs:
