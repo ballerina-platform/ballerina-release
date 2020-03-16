@@ -1,6 +1,7 @@
 name: Build and Publish Intellij Plugin
-on: 
-  push: 
+on:
+  release:
+    types: [published]
 jobs:
   trigger_workflow:
      strategy:
