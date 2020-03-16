@@ -1,50 +1,34 @@
 on:
-  push:
-    tags:
-      - '*.*.*'
-# release tag version represent v1.1.4        
-name: Publish Extension
+  release:
+    types: [published]
+          
+name: Publish Extension with json
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Set output for getting released version
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF:11}
-      - name: Check output
-        env:
-          VERSION: ${{ steps.vars.outputs.tag }}
-        run: |
-          echo $VERSION
-          echo ${{ steps.vars.outputs.tag }}
-          
-      #- name: Getting Latest tag
-      - run: echo ${{ steps.vars.outputs.tag }}
-                  
-      - name: Check out repository version 02.
+      - name: Check out repository.
         uses: actions/checkout@v2
-        #with:
-          #repository: lnash94/sails_js_App
-          #token: ${{ secrets._ }}
-          
-      - name: Wget required file 
+      
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+        
+      - name: wget required files
+        id: version
         run: |
-          echo ${{ steps.vars.outputs.tag }}
           npm install
-          echo $URL
-          wget $URL
-    #with wildcard
-    #- run: wget -r --no-parent -A 'ballerina-*.*.*.vsix' https://product-dist.ballerina.io/downloads/1.1.4/
-        env:
-          URL: https://product-dist.ballerina.io/downloads/${{ steps.vars.outputs.tag }}/ballerina-${{ steps.vars.outputs.tag }}.vsix
-      
-      
+          npm install vsce
+          pwd
+          wget -O latest_release.json https://product-dist.ballerina.io/downloads/latest_release.json?982
+          jq .version latest_release_01.json
+          python3  ./publish_scripts/publish_vscode_plugin.py  
+             
       - name: Execute the VSCE commands
-      #- run: ls
         uses: lannonbr/vsce-action@master
         with:
-          args: publish -p $VSCE_TOKEN --packagePath ballerina-${{ steps.vars.outputs.tag }}.vsix
+          args: publish -p $VSCE_TOKEN --packagePath ballerina.vsix
         env:
           VSCE_TOKEN: ${{ secrets.VSCODE_PAT }}
