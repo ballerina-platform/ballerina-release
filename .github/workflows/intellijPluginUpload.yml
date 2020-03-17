@@ -1,0 +1,27 @@
+name: Build and Publish Intellij Plugin
+on:
+  release:
+    types: [published]
+jobs:
+  trigger_workflow:
+     strategy:
+       matrix:
+         os: [ubuntu-latest]
+     runs-on: ${{ matrix.os }}
+     env:
+         working-directory: ./tool-plugins/intellij
+         publish_token: ${{ secrets.IDEA_TOKEN }}
+     steps:
+       - uses: actions/setup-java@v1
+         with:
+           java-version: 1.8
+       - uses: actions/checkout@v2
+         with:
+           repository: ballerina-platform/ballerina-lang
+           ref: v1.2.0
+       - name: build and publish plugin
+         working-directory: ${{env.working-directory}}
+         run: |
+              ./gradlew buildPlugin 
+              ./gradlew publishPlugin -PintellijPublishToken=${{ env.publish_token }}
+       
