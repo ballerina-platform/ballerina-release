@@ -10,7 +10,7 @@ jobs:
      runs-on: ${{ matrix.os }}
      env:
          working-directory: ./tool-plugins/intellij
-         publish_token: ${{ secrets.PUBLISH_TOKEN }}
+         publish_token: ${{ secrets.IDEA_TOKEN }}
      steps:
        - uses: actions/setup-java@v1
          with:
