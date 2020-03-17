@@ -47,19 +47,3 @@ jobs:
         
         sudo snap install hub --classic
         hub pull-request -m 'api-docs update'
-
-
-#   update:
-#     needs: build
-#     # The type of runner that the job will run on
-#     runs-on: ubuntu-latest
-# #     This will make the final pull request to ballerina dev website  
-#     # Steps represent a sequence of tasks that will be executed as part of the job
-#     steps:
-#       - name: Commit to state repository
-#         run : |
-#           git config --global user.email "rdulmina@gmail.com"
-#           git config --global user.name "rdulmina"
-#           git clone https://github.com/rdulmina/ballerina-dev-website.git
-          
-#           ls
