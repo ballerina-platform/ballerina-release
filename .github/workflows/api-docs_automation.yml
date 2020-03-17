@@ -44,6 +44,9 @@ jobs:
         git commit -m 'api-docs update'
         git push --set-upstream origin automate-api-docs-update
         echo 'Successfully pushed to automate-api-docs-update branch'
+        
+        sudo snap install hub --classic
+        hub pull-request -m 'api-docs update'
 
 
 #   update:
