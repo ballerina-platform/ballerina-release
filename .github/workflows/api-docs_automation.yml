@@ -27,12 +27,12 @@ jobs:
         GITHUB_TOKEN: ${{secrets.rdulmina_auth_tok}} 
       run: |
 
-        svn export https://github.com/rdulmina/ballerina-dev-website/trunk/v1-1/learn/api-docs/ballerina
+        svn export https://github.com/ballerina-platform/ballerina-dev-website/trunk/v1-1/learn/api-docs/ballerina
         
         git config --global user.email "rdulmina@gmail.com"
         git config --global user.name "rdulmina"
         
-        git clone https://rdulmina:$token@github.com/rdulmina/ballerina-dev-website.git
+        git clone https://rdulmina:$token@github.com/ballerina-platform/ballerina-dev-website.git
         
         cd ballerina-dev-website
         git checkout automate-api-docs-update
