@@ -29,7 +29,7 @@ for line in ballerina_rb_file.decoded_content.decode("utf-8").split("\n"):
     elif(line.startswith('  sha256 "')):
         updated_line = sha256_replacement
 
-    updated_ballerina_rb += updated_line
+    updated_ballerina_rb += updated_line+"\n"
 
             
 
