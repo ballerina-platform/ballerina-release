@@ -13,6 +13,8 @@ url_replacement = '  url "'+url+'"\n'
 
 updated_ballerina_rb = ""
 
+g = Github(token)
+
 # Getting an instance of the Homebrew/homebrew-core repo
 homebrew_user = g.get_user("iHomebrew")
 homebrew_core_repo = homebrew_user.get_repo("homebrew-core")
@@ -33,8 +35,6 @@ for line in ballerina_rb_file.decoded_content.decode("utf-8").split("\n"):
 
 commit_msg = "ballerina "+str(version)
 
-
-g = Github(token)
 
 current_user = g.get_user()
 current_user_login = current_user.login
