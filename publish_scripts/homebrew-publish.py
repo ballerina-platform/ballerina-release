@@ -16,7 +16,7 @@ updated_ballerina_rb = ""
 g = Github(token)
 
 # Getting an instance of the Homebrew/homebrew-core repo
-homebrew_user = g.get_user("iHomebrew")
+homebrew_user = g.get_user("Homebrew")
 homebrew_core_repo = homebrew_user.get_repo("homebrew-core")
 
 # Reading the current ballerina.rb Formula file and updating it.
