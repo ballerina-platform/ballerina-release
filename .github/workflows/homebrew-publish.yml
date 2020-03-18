@@ -1,0 +1,38 @@
+# Github action to open a PR in Homebrew/homebrew-core when a new release of ballerina is being published
+name: Update Homebrew
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.x
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+        
+    - name: wget required files
+      run: wget -O ./publish_scripts/latest_release.json https://product-dist.ballerina.io/downloads/latest_release.json?982
+    
+    - name: Send the PR to Homebrew
+      run: |
+        python -m pip install --upgrade pip
+        pip insatll PyGithub
+        version=$(cat ./publish_scripts/latest_release.json | jq '.version')
+        version=$(sed -e 's/^"//' -e 's/"$//' <<<"$version")
+        
+        dist_url="https://product-dist.ballerina.io/downloads/$version/ballerina-$version.zip"
+        
+        checksum="$(curl -fsSL "$dist_url" | shasum -a 256 -b | awk '{print $1}')"
+
+        if [ -z "$checksum" ]; then
+          echo "ERROR: calculating the checksum failed for $url" >&2
+          exit 1
+        fi
+
+        python3 ./publish_scripts/homebrew_publish.py ${{ secrets.ACCESS_TOKEN }} "$version" "$checksum" "$zip_url"
+      
