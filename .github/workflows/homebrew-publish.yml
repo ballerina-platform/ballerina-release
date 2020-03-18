@@ -23,7 +23,7 @@ jobs:
       - name: Send the PR to Homebrew
         run: |
           python -m pip install --upgrade pip
-          pip insatll PyGithub
+          pip install PyGithub
           version=$(cat ./publish_scripts/latest_release.json | jq '.version')
           version=$(sed -e 's/^"//' -e 's/"$//' <<<"$version")
           
