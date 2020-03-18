@@ -1,0 +1,32 @@
+on:
+  release:
+    types: [published]
+          
+name: Publish Extension with json
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository.
+        uses: actions/checkout@v2
+      
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+        
+      - name: Wget required files
+        id: version
+        run: |
+          npm install
+          wget -O latest_release.json https://product-dist.ballerina.io/downloads/latest_release.json?982
+          jq .version latest_release.json
+          python3  ./publish_scripts/publish_vscode_plugin.py  
+             
+      - name: Execute the VSCE commands
+        uses: lannonbr/vsce-action@master
+        with:
+          args: publish -p $VSCE_TOKEN --packagePath ballerina.vsix
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCODE_PAT }}
