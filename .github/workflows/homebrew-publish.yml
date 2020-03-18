@@ -8,12 +8,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out repository.
+      uses: actions/checkout@v2
 
     - name: Set up Python 3.x
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.x'
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
         
     - name: wget required files
       run: wget -O ./publish_scripts/latest_release.json https://product-dist.ballerina.io/downloads/latest_release.json?982
@@ -34,5 +35,5 @@ jobs:
           exit 1
         fi
 
-        python3 ./publish_scripts/homebrew_publish.py ${{ secrets.ACCESS_TOKEN }} "$version" "$checksum" "$zip_url"
+        python3 ./publish_scripts/homebrew-publish.py ${{ secrets.ACCESS_TOKEN }} "$version" "$checksum" "$zip_url"
       
