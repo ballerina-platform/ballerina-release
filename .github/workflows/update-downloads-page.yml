@@ -31,13 +31,20 @@ jobs:
       run: |
 
         cd ballerina-dev-website
-        git checkout -b automate-downloads-page-update
+        git checkout -B automate-downloads-page-update
         git pull origin master
         python3 ../publish_scripts/update-downloads-page.py $latest_version
         
-    - name: Commit on automate-downloads-page-update branch
-      run: |
-        git branch -a
+        git config --global user.email "rdulmina@gmail.com"
+        git config --global user.name "rdulmina"
+        git add .
+        git commit --allow-empty -m 'downloads page update'
+        git push --set-upstream origin automate-downloads-page-update
+        echo 'Successfully pushed to automate-downloads-page-update branch'
+
+        sudo snap install hub --classic
+        hub pull-request -m 'This is an automated pull request to update downloads page for new release'
+        echo 'Successfully sent a pull request to ballerina-platform/ballerina-dev-website'
 
       
 
