@@ -32,14 +32,14 @@ jobs:
 
         cd ballerina-dev-website
         git checkout -B automate-downloads-page-update
-        git pull origin master
+        
         python3 ../publish_scripts/update-downloads-page.py $latest_version
         
         git config --global user.email "rdulmina@gmail.com"
         git config --global user.name "rdulmina"
         git add .
         git commit --allow-empty -m 'downloads page update'
-        
+        git pull origin master
         git push --set-upstream origin automate-downloads-page-update
         echo 'Successfully pushed to automate-downloads-page-update branch'
 
