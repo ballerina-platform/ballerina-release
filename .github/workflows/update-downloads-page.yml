@@ -29,6 +29,7 @@ jobs:
       env:
         latest_version: 1.2
       run: |
+        ls -a
         cd ballerina-dev-website
         git checkout -B automate-downloads-page-update
         git pull origin master
