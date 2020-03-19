@@ -27,6 +27,7 @@ jobs:
     - name: Obtaining the latest version of ballerina
       env:
         latest_vesion: 1.2
+      run: echo $latest_vesion
       
     - name: Updating downloads.html
       run: echo $latest_vesion
