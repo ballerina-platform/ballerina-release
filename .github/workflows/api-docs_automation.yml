@@ -38,7 +38,7 @@ jobs:
         git checkout automate-api-docs-update 2>/dev/null || git checkout -b automate-api-docs-update
         git pull origin master
         
-        mkdir -p v1-3/learn/api-docs
+        mkdir -p v1-4/learn/api-docs
         cp -avr ../ballerina-1.2.0/distributions/jballerina-1.2.0/lib/repo/ballerina/ v1-4/learn/api-docs
         git add .
         git commit --allow-empty -m 'api-docs update'
