@@ -40,13 +40,8 @@ jobs:
         
         mkdir -p v1-2/learn/api-docs
         cp -avr ../ballerina-1.2.0/distributions/jballerina-1.2.0/lib/repo/ballerina/ v1-2/learn/api-docs
+        cd v1-2/learn/api-docs
+        ls
         
-        git add .
-        git commit --allow-empty -m 'api-docs update'
-        git push --set-upstream origin automate-api-docs-update
-        echo 'Successfully pushed to automate-api-docs-update branch'
-        
-        sudo snap install hub --classic
-        hub pull-request -m 'This is an automated pull request to update api-docs for new release'
-        echo 'Successfully sent a pull request to ballerina-platform/ballerina-dev-website'
+
 
