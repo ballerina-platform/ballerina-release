@@ -30,7 +30,7 @@ jobs:
         latest_version: 1.2
       run: |
         cd ballerina-dev-website
-        git checkout automate-downloads-page-update
+        git checkout -B automate-downloads-page-update
         git pull origin master
         python3 ../update-downloads-page.py $latest_version
         
