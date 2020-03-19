@@ -37,6 +37,7 @@ jobs:
         
     - name: Commit on automate-downloads-page-update branch
       run: |
+        git branch -a
         git config --global user.email "rdulmina@gmail.com"
         git config --global user.name "rdulmina"
         git add .
