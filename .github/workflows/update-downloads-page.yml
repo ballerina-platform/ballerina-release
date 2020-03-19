@@ -10,7 +10,8 @@ jobs:
   Update:
 
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_TOKEN: ${{secrets.WEBSITE_TOKEN}}
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Check out repository
@@ -21,13 +22,29 @@ jobs:
       with:
         python-version: '3.x'
    
-    - name: Downloading downloads.html
-      run: svn export --force https://github.com/ballerina-platform/ballerina-dev-website/trunk/downloads.html
+    - name: Cloning ballerina-dev-website
+      run: git clone https://rdulmina:$GITHUB_TOKEN@github.com/rdulmina/ballerina-dev-website.git
     # For now we have hard coded the latest version number  
-    - name: Obtaining the latest version of ballerina
-      env:
-        latest_vesion: 1.2
-      run: echo $latest_vesion
-      
     - name: Updating downloads.html
-      run: echo $latest_vesion
+      env:
+        latest_version: 1.2
+      run: |
+        cd ballerina-dev-website
+        git checkout automate-downloads-page-update
+        git pull origin master
+        python3 ../update-downloads-page.py $latest_version
+        
+    - name: Commit on automate-downloads-page-update branch
+      run: |
+        git add .
+        git commit --allow-empty -m 'downloads page update'
+        git push --set-upstream origin automate-downloads-page-update
+        echo 'Successfully pushed to automate-downloads-page-update branch'
+        
+    - name: Openning pull request to base
+      run: |
+        sudo snap install hub --classic
+        hub pull-request -m 'This is an automated pull request to update downloads page for new release'
+        echo 'Successfully sent a pull request to ballerina-platform/ballerina-dev-website'
+      
+
