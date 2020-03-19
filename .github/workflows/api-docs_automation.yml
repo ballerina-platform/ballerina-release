@@ -40,7 +40,7 @@ jobs:
         
         mkdir -p v1-2/learn/api-docs
         cp -avr ../ballerina-1.2.0/distributions/jballerina-1.2.0/lib/repo/ballerina/ v1-2/learn/api-docs
-        cd v1-2/learn/api-docs
+        cd v1-2/learn/api-docs/ballerina
         ls
         
 
