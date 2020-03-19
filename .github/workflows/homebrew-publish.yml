@@ -36,5 +36,5 @@ jobs:
             exit 1
           fi
 
-          python3 ./publish_scripts/homebrew-publish.py ${{ secrets.ACCESS_TOKEN }} "$version" "$checksum" "$dist_url"
+          python3 ./publish_scripts/homebrew-publish.py ${{ secrets.WEBSITE_TOKEN }} "$version" "$checksum" "$dist_url"
       
