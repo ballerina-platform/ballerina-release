@@ -32,7 +32,7 @@ for line in ballerina_rb_file.decoded_content.decode("utf-8").split("\n"):
 
     updated_ballerina_rb += updated_line+"\n"
 
-            
+updated_ballerina_rb = updated_ballerina_rb[:-1]
 
 commit_msg = "ballerina "+str(version)
 
