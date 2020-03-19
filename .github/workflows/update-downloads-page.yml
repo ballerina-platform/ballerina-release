@@ -3,8 +3,8 @@ name: Update download page of the ballerina.io
 # Controls when the action will run. Triggers the workflow on release
 # events but only for the master branch
 on:
-  release:
-    branches: [ master ]
+  push:
+    branches: [ website-update ]
 
 jobs:
   Update:
