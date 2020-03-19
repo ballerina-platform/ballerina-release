@@ -37,6 +37,8 @@ jobs:
         
     - name: Commit on automate-downloads-page-update branch
       run: |
+        git config --global user.email "rdulmina@gmail.com"
+        git config --global user.name "rdulmina"
         git add .
         git commit --allow-empty -m 'downloads page update'
         git push --set-upstream origin automate-downloads-page-update
