@@ -35,7 +35,7 @@ jobs:
         git clone https://rdulmina:$GITHUB_TOKEN@github.com/rdulmina/ballerina-dev-website.git
         
         cd ballerina-dev-website
-        git checkout automate-api-docs-update
+        git checkout automate-api-docs-update 2>/dev/null || git checkout -b automate-api-docs-update
         git pull origin master
         
         mkdir -p v1-2/learn/api-docs
