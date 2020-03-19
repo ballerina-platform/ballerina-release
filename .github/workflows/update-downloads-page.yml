@@ -3,7 +3,7 @@ name: Update download page of the ballerina.io
 # Controls when the action will run. Triggers the workflow on release
 # events but only for the master branch
 on:
-  push:
+  release:
     branches: [ master ]
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
         python-version: '3.x'
    
     - name: Cloning ballerina-dev-website
-      run: git clone https://rdulmina:$GITHUB_TOKEN@github.com/rdulmina/ballerina-dev-website.git
+      run: git clone https://rdulmina:$GITHUB_TOKEN@github.com/ballerina-platform/ballerina-dev-website.git
     # For now we have hard coded the latest version number  
     - name: Updating downloads.html
       env:
