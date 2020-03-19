@@ -32,7 +32,7 @@ jobs:
           checksum="$(curl -fsSL "$dist_url" | shasum -a 256 -b | awk '{print $1}')"
 
           if [ -z "$checksum" ]; then
-            echo "ERROR: calculating the checksum failed for $url" >&2
+            echo "ERROR: calculating the checksum failed for $dist_url" >&2
             exit 1
           fi
 
