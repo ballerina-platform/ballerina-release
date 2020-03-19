@@ -42,7 +42,7 @@ jobs:
         cp -avr ../ballerina-1.2.0/distributions/jballerina-1.2.0/lib/repo/ballerina/ v1-2/learn/api-docs
 
         git add .
-        git commit --allow-empty -m 'api-docs update'
+        git commit -m 'api-docs update'
         git push --set-upstream origin automate-api-docs-update
         echo 'Successfully pushed to automate-api-docs-update branch'
         
