@@ -24,8 +24,7 @@ jobs:
         GITHUB_TOKEN: ${{secrets.WEBSITE_TOKEN}} 
         NEW_VERSION: 1.2.0
       run: |
-
-        wget https://product-dist.ballerina.io/downloads/$NEW_VERSION/ballerina-$NEW_VERSION.zip
+        snv https://github.com/rdulmina/ballerina-v1.2/trunk/ballerina-1.2.0.zip?raw=true
         sudo apt-get install unzip
         unzip ballerina-$NEW_VERSION.zip
         
@@ -39,7 +38,7 @@ jobs:
         git pull origin master
         
         mkdir -p v1-2/learn/api-docs
-        cp -avr ../ballerina-1.2.0/distributions/jballerina-1.2.0/lib/repo/ballerina/ v1-2/learn/api-docs
+        cp -avr ../ballerina-1.2.0/distributions/jballerina-1.2.0/docs/ v1-2/learn/api-docs
         git add .
         git commit --allow-empty -m 'api-docs update'
         git push --set-upstream origin automate-api-docs-update
