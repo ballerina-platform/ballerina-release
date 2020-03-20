@@ -24,9 +24,10 @@ jobs:
         GITHUB_TOKEN: ${{secrets.WEBSITE_TOKEN}} 
         NEW_VERSION: 1.2.0
       run: |
-        svn export https://github.com/rdulmina/ballerina-v1.2/trunk/ballerina-1.2.0.zip?raw=true
-        sudo apt-get install unzip
-        unzip ballerina-$NEW_VERSION.zip
+        wget https://github.com/rdulmina/ballerina-v1.2/raw/master/ballerina-1.2.0.tar.xz
+
+        sudo apt-get install xz-utils
+        tar -xf ballerina-1.2.0.tar.xz
         
         git config --global user.email "rdulmina@gmail.com"
         git config --global user.name "rdulmina"
