@@ -24,7 +24,7 @@ jobs:
         GITHUB_TOKEN: ${{secrets.WEBSITE_TOKEN}} 
         NEW_VERSION: 1.2.0
       run: |
-        svn https://github.com/rdulmina/ballerina-v1.2/trunk/ballerina-1.2.0.zip?raw=true
+        svn export https://github.com/rdulmina/ballerina-v1.2/trunk/ballerina-1.2.0.zip?raw=true
         sudo apt-get install unzip
         unzip ballerina-$NEW_VERSION.zip
         
