@@ -28,6 +28,10 @@ jobs:
 
     - name: Clone the ballerina-dev-website repo
       run: git clone https://github.com/ballerina-platform/ballerina-dev-website.git
+    - name: Install Ruby
+      run: |
+        sudo apt update
+        sudo apt install ruby-full        
     - name: Install Jekyll and bundler gems
       run: gem install jekyll bundler
     - name: Go to the cloned folder
