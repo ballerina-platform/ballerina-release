@@ -13,11 +13,6 @@ jobs:
       uses: actions/setup-go@v1
       with:
         go-version: '1.10.4'
-    - name: Set up ruby
-      uses: clupprich/ruby-build-action@master
-      id: ruby
-      with:
-        ruby-version: 2.5
 
     - name: Clone the ballerina-release repo
       run: git clone https://github.com/ballerina-platform/ballerina-release.git
