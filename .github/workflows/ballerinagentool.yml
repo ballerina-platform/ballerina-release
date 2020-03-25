@@ -17,9 +17,11 @@ jobs:
     - name: Clone the ballerina-release repo
       run: git clone https://github.com/ballerina-platform/ballerina-release.git
     - name: Go to the ballerina example tool folder 
-      run: cd ballerinaByExample
+      run: |
+        cd ballerina-release
+        cd ballerinaByExample
     - name: Execute the bash file
-      run: ./tools/build-bbe.sh 
+      run: ./build-bbe.sh 
 
     - name: Clone the ballerina-dev-website repo
       run: git clone https://github.com/ballerina-platform/ballerina-dev-website.git
