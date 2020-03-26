@@ -32,6 +32,6 @@ jobs:
     - name: Go to the cloned folder
       run: cd ballerina-dev-website
     - name: Build the site and make it available on a local server
-      run: bundle exec jekyll serve
+      run: sudo jekyll build
       
       
