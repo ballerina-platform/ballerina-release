@@ -28,10 +28,10 @@ jobs:
         sudo apt update
         sudo apt install ruby-full        
     - name: Install Jekyll and bundler gems
-      run: sudo gem install jekyll bundler
+      run: sudo gem install jekyll
     - name: Go to the cloned folder
       run: cd ballerina-dev-website
-    - name: Build the site and make it available on a local server
+    - name: Build the site
       run: sudo jekyll build
       
       
