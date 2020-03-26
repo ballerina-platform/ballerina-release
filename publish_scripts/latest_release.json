@@ -1,0 +1,18 @@
+{
+	"version":"1.1.4",
+	"release-date":"2020-02-27",
+	"windows-installer":"ballerina-windows-installer-x64-1.1.4.msi",
+	"windows-installer-size":"128mb",
+	"linux-installer":"ballerina-linux-installer-x64-1.1.4.deb",
+	"linux-installer-size":"124mb",
+	"macos-installer":"ballerina-macos-installer-x64-1.1.4.pkg",
+	"macos-installer-size":"139mb",
+	"other-artefacts":[  
+		"ballerina-1.1.4.zip",
+		"ballerina-linux-installer-x64-1.1.4.rpm",
+		"ballerina-vscode-plugin-1.1.4.vsix",
+		"ballerina-metrics-grafana-dashboard-prometheus.json"
+ 	],
+	"api-docs":"ballerina-api-docs-1.1.4.zip",
+	"release-notes":"ballerina-release-notes-1.1.4.md"
+}
