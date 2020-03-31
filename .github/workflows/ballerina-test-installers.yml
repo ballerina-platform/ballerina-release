@@ -12,8 +12,6 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      env:
-        OS_TYPE: ubuntu
       working-directory: ./test-scripts/ballerina-test-automation
       run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
   windows-build:
@@ -25,8 +23,6 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      env:
-        OS_TYPE: windows
       working-directory: ./test-scripts/ballerina-test-automation
       run: ./gradlew.bat build --stacktrace -scan --console=plain --no-daemon
   # macos-build:
@@ -38,8 +34,6 @@ jobs:
   #     with:
   #       java-version: 1.8
   #   - name: Build with Gradle
-  #     env:
-  #       OS_TYPE: macos
   #     working-directory: ./test-scripts/ballerina-test-automation
   #     run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
   # centos-build:
