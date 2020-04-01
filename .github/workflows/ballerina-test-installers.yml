@@ -23,7 +23,9 @@ jobs:
       with:
         java-version: 1.8
     - name: Get installer
-      run: wget https://product-dist.ballerina.io/downloads/1.1.2/ballerina-windows-installer-x64-1.1.2.msi
+      uses: wei/wget@v1
+      with:
+        args: https://product-dist.ballerina.io/downloads/1.1.2/ballerina-windows-installer-x64-1.1.2.msi
     - name: Install Ballerina
       run : msiexec /i ballerina-windows-installer-x64-1.1.2.msi /qn /l "install-log.log"
     - name: Build with Gradle
