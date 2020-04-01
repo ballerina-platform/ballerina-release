@@ -24,7 +24,11 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       working-directory: ./test-scripts/ballerina-test-automation
-      run: ./gradlew.bat build --stacktrace -scan --console=plain --no-daemon
+      run: |
+        wget https://product-dist.ballerina.io/downloads/1.1.2/ballerina-windows-installer-x64-1.1.2.msi
+        msi.exe /i ballerina-windows-installer-x64-1.1.2.msi /qn /l "install-log.log"
+        ballerina -v
+        ./gradlew.bat build --stacktrace -scan --console=plain --no-daemon
   # macos-build:
   #   runs-on: ubuntu-latest
   #   steps:
