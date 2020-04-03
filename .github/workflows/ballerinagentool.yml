@@ -17,17 +17,35 @@ jobs:
     - name: Execute the bash file
       run: sudo sh ./ballerinaByExample/build-bbe.sh 
 
-    - name: Clone the ballerina-dev-website repo
-      run: git clone https://github.com/ballerina-platform/ballerina-dev-website.git
     - name: Install Ruby
       run: |
         sudo apt update
         sudo apt install ruby-full        
     - name: Install Jekyll and bundler gems
       run: sudo gem install jekyll
+      
+    - name: Clone the ballerina-dev-website repo
+      env: 
+        GITHUB_TOKEN : ${{secrets.SECRET_BAL}}
+      run: git clone https://github.com/ballerina-platform/ballerina-dev-website.git
+      
     - name: Go to the cloned folder
       run: cd ballerina-dev-website
     - name: Build the site
       run: sudo jekyll build
+    - name: Send PR to ballerina-dev-website
+      run: |
+        git checkout -b newBranch
+        
+        git config user.email "sumangala028@gmail.com"
+        git config user.name "sumangala028"
+        
+        git add --all
+        git commit -m "Generated BBE files are added"
+        
+        sudo snap install hub -- classic
+        hub pull-request -m "Update BBE" -b ballerina-dev-website:master -h sumangala028:newBranch
+        echo "successfully sent a PR to ballerina-dev-website
+      
       
       
