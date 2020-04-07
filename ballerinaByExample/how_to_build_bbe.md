@@ -1,18 +1,10 @@
-Welcome to the Ballerina.io website content repository.
-
-# 1. How to build BBE
+# How to build BBE
 
 This will guide you through the process of using the `build-bbe.sh` tool to generate BBEs as html.
 
-
 ### How to run
 
-##### Requirements
-1. Go installed in machine
-
-##### Steps
-1. Clone this repo.
-2. execute the build-bbe.sh 
+run the following command.
 
 ```bash
 sudo ./build-bbe.sh <site_version> <output_dir> <ballerina_repo_tag> <generateWithJekyll>
@@ -60,15 +52,3 @@ sudo ./tools/build-bbe.sh v1-2 bbes v1.2.0 false
 
 This will generate BBE without jekyll front matter but as plain html.
 
-# 2. *ballerina-dev-website*
-Clone the repo.
-
-Install Jekyll and bundler gems
-```
-gem install jekyll bundler
-```
-
-Build the site and make it available on a local server.
-```
-bundle exec jekyll serve
-```

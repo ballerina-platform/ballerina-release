@@ -10,6 +10,7 @@ import (
     "os/exec"
     "path/filepath"
     "regexp"
+    "strconv"
     "strings"
     "text/template"
     "bytes"
@@ -18,11 +19,13 @@ import (
 )
 
 var cacheDir = filepath.FromSlash("/tmp/gobyexample-cache")
-var pygmentizeBin = filepath.FromSlash("tools/ballerinaByExample/vendor/pygments/pygmentize")
+var pygmentizeBin = filepath.FromSlash("vendor/pygments/pygmentize")
 var githubBallerinaByExampleBaseURL = "https://github.com/ballerina-lang/ballerina/tree/master"
+var templateDir = "templates/"
 var examplesDir = os.Args[1]
 var version = os.Args[2]
 var siteDir = os.Args[3]
+var genJekyll, err = strconv.ParseBool(os.Args[4])
 var dirPathWordSeparator = "-"
 var filePathWordSeparator = "_"
 var consoleOutputExtn = ".out"
@@ -179,7 +182,7 @@ type BBECategory struct {
 }
 
 func getBBECategories() []BBECategory {
-    allBBEsFile := "tools/ballerinaByExample/tools/all-bbes.json"
+    allBBEsFile := "tools/all-bbes.json"
     rawCategories, err := ioutil.ReadFile(allBBEsFile)
     if err != nil {
         fmt.Fprintln(os.Stderr, "[ERROR] An error occured while processing : "+allBBEsFile,err)
@@ -484,7 +487,7 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
 
 func renderIndex(examples []*Example) {
     indexTmpl := template.New("index")
-    _, err := indexTmpl.Parse(mustReadFile("tools/ballerinaByExample/templates/index.tmpl"))
+    _, err := indexTmpl.Parse(mustReadFile(templateDir + "index.tmpl"))
     check(err)
     indexF, err := os.Create(siteDir + "/withoutfrontmatter/index.html")
     check(err)
@@ -493,7 +496,7 @@ func renderIndex(examples []*Example) {
 
 func renderIndexTemp(examples []*Example) {
     indexTmpl := template.New("indexTemp")
-    _, err := indexTmpl.Parse(mustReadFile("tools/ballerinaByExample/templates/index-temp.tmpl"))
+    _, err := indexTmpl.Parse(mustReadFile(templateDir + "index-temp.tmpl"))
     check(err)
     indexF, err := os.Create(siteDir + "/withfrontmatter/index.html")
     check(err)
@@ -502,7 +505,7 @@ func renderIndexTemp(examples []*Example) {
 
 func renderExamples(examples []*Example) {
     exampleTmpl := template.New("example")
-    _, err := exampleTmpl.Parse(mustReadFile("tools/ballerinaByExample/templates/example.tmpl"))
+    _, err := exampleTmpl.Parse(mustReadFile(templateDir + "example.tmpl"))
     check(err)
 
     var exampleItem bytes.Buffer
@@ -519,7 +522,7 @@ func renderExamples(examples []*Example) {
 
 func renderExamplesTemp(examples []*Example) {
     exampleTmpl := template.New("example")
-    _, err := exampleTmpl.Parse(mustReadFile("tools/ballerinaByExample/templates/example-temp.tmpl"))
+    _, err := exampleTmpl.Parse(mustReadFile(templateDir + "example-temp.tmpl"))
     check(err)
 
     var exampleItem bytes.Buffer
@@ -568,24 +571,30 @@ func isFileExist(path string) bool {
 }
 
 func main() {
-    copyFile("tools/ballerinaByExample/templates/site.css", siteDir+"/site.css")
-    copyFile("tools/ballerinaByExample/templates/ballerina-example.css", siteDir+"/ballerina-example.css")
-    copyFile("tools/ballerinaByExample/templates/favicon.ico", siteDir+"/favicon.ico")
-    copyFile("tools/ballerinaByExample/templates/404.html", siteDir+"/404.html")
-    copyFile("tools/ballerinaByExample/templates/play.png", siteDir+"/play.png")
-    copyFile("tools/ballerinaByExample/tools/all-bbes.json", siteDir+"/all-bbes.json")
+    copyFile(templateDir + "site.css", siteDir+"/site.css")
+    copyFile(templateDir + "ballerina-example.css", siteDir+"/ballerina-example.css")
+    copyFile(templateDir + "favicon.ico", siteDir+"/favicon.ico")
+    copyFile(templateDir + "404.html", siteDir+"/404.html")
+    copyFile(templateDir + "play.png", siteDir+"/play.png")
+    copyFile("tools/all-bbes.json", siteDir+"/all-bbes.json")
     bbeCategories := getBBECategories()
     examples := parseExamples(bbeCategories)
 
-    // Render index without front matter.
-    renderIndex(examples)
+    if genJekyll {
+        fmt.Fprintln(os.Stderr, "Generate Examples with Jekyll front matter")
 
-    // Render index for examples with front matter for Jekyll
-    renderIndexTemp(examples)
+        // Render index for examples with front matter for Jekyll
+        renderIndexTemp(examples)
 
-    // Render examples without front matter.
-    renderExamples(examples)
+        // Render examples with front matter for Jekyll
+        renderExamplesTemp(examples)
+    } else {
+        fmt.Fprintln(os.Stderr, "Generate Examples without Jekyll front matter")
 
-    // Render examples with front matter for Jekyll
-    renderExamplesTemp(examples)
+        // Render index without front matter.
+        renderIndex(examples)
+
+        // Render examples without front matter.
+        renderExamples(examples)
+    }
 }
