@@ -1,0 +1,22 @@
+name: Generate Ballerina by examples
+
+on:
+    schedule:
+      - cron:  '*/20 * * * *'
+
+jobs:
+  bbe-gen:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Go
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.6.2
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Generate BBEs
+      run: sh ballerinaByExample/build-bbe.sh v1-2 bbes v1.2.0 true
+    - uses: actions/upload-artifact@v1
+      with:
+        name: bbe-artifact
+        path: bbes
