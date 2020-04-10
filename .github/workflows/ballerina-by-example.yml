@@ -1,8 +1,6 @@
 name: Generate ballerina by examples
 
-on:
-    schedule:
-      - cron:  '*/20 * * * *'
+on: [push, pull_request]
 
 jobs:
   bbe-gen:
