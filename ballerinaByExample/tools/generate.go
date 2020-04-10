@@ -19,9 +19,9 @@ import (
 )
 
 var cacheDir = filepath.FromSlash("/tmp/gobyexample-cache")
-var pygmentizeBin = filepath.FromSlash("vendor/pygments/pygmentize")
+var pygmentizeBin = filepath.FromSlash("ballerinaByExample/vendor/pygments/pygmentize")
 var githubBallerinaByExampleBaseURL = "https://github.com/ballerina-lang/ballerina/tree/master"
-var templateDir = "templates/"
+var templateDir = "ballerinaByExample/templates/"
 var examplesDir = os.Args[1]
 var version = os.Args[2]
 var siteDir = os.Args[3]
@@ -182,7 +182,7 @@ type BBECategory struct {
 }
 
 func getBBECategories() []BBECategory {
-    allBBEsFile := "tools/all-bbes.json"
+    allBBEsFile := "ballerinaByExample/tools/all-bbes.json"
     rawCategories, err := ioutil.ReadFile(allBBEsFile)
     if err != nil {
         fmt.Fprintln(os.Stderr, "[ERROR] An error occured while processing : "+allBBEsFile,err)
@@ -576,7 +576,7 @@ func main() {
     copyFile(templateDir + "favicon.ico", siteDir+"/favicon.ico")
     copyFile(templateDir + "404.html", siteDir+"/404.html")
     copyFile(templateDir + "play.png", siteDir+"/play.png")
-    copyFile("tools/all-bbes.json", siteDir+"/all-bbes.json")
+    copyFile("ballerinaByExample/tools/all-bbes.json", siteDir+"/all-bbes.json")
     bbeCategories := getBBECategories()
     examples := parseExamples(bbeCategories)
 
