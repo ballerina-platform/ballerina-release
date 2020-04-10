@@ -47,7 +47,7 @@ If pass in `false` it will generate BBEs without jekyll front matter but as a no
 * When building examples for website.
 
 ```bash
-sudo ./tools/build-bbe.sh v1-2 bbes v1.2.0 true
+sudo ./ballerinaByExample/build-bbe.sh v1-2 bbes v1.2.0 true
 ```
 
 This will generate BBE with jekyll front matter.
@@ -55,7 +55,7 @@ This will generate BBE with jekyll front matter.
 * When building examples for normal use.
 
 ```bash
-sudo ./tools/build-bbe.sh v1-2 bbes v1.2.0 false
+sudo ./ballerinaByExample/build-bbe.sh v1-2 bbes v1.2.0 false
 ```
 
 This will generate BBE without jekyll front matter but as plain html.
