@@ -489,7 +489,7 @@ func renderIndex(examples []*Example) {
     indexTmpl := template.New("index")
     _, err := indexTmpl.Parse(mustReadFile(templateDir + "index.tmpl"))
     check(err)
-    indexF, err := os.Create(siteDir + "/withoutfrontmatter/index.html")
+    indexF, err := os.Create(siteDir + "/index.html")
     check(err)
     indexTmpl.Execute(indexF, examples)
 }
@@ -498,7 +498,7 @@ func renderIndexTemp(examples []*Example) {
     indexTmpl := template.New("indexTemp")
     _, err := indexTmpl.Parse(mustReadFile(templateDir + "index-temp.tmpl"))
     check(err)
-    indexF, err := os.Create(siteDir + "/withfrontmatter/index.html")
+    indexF, err := os.Create(siteDir + "/index.html")
     check(err)
     indexTmpl.Execute(indexF, examples)
 }
@@ -511,7 +511,7 @@ func renderExamples(examples []*Example) {
     var exampleItem bytes.Buffer
     var renderedBBEs = []string{}
     for _, example := range examples {
-        exampleF, err := os.Create(siteDir + "/withoutfrontmatter/" + example.Id+".html")
+        exampleF, err := os.Create(siteDir + "/" + example.Id+".html")
         exampleItem.WriteString(example.Id)
         check(err)
         exampleTmpl.Execute(exampleF, example)
@@ -528,7 +528,7 @@ func renderExamplesTemp(examples []*Example) {
     var exampleItem bytes.Buffer
     var renderedBBEs = []string{}
     for _, example := range examples {
-        exampleF, err := os.Create(siteDir + "/withfrontmatter/" + example.Id+".html")
+        exampleF, err := os.Create(siteDir + "/" + example.Id+".html")
         exampleItem.WriteString(example.Id)
         check(err)
         exampleTmpl.Execute(exampleF, example)
