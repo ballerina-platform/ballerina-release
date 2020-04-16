@@ -19,8 +19,6 @@ subDir = "/target/output/"
 
 # output filename
 outputJson_rel = "release_notes_versions.json"
-outputJson_arch = "archived_releases.json"
-
 
 # getting the archived_realease.json
 with open(path_archived, 'r') as content_file:
@@ -39,10 +37,6 @@ baseDir = os.path.dirname(os.path.realpath(__file__))
 outputFile_rel = baseDir + subDir + outputJson_rel
 os.makedirs(os.path.dirname(outputFile_rel), exist_ok=True)
 with open(outputFile_rel, "w") as f:
-    json.dump(data, f)
-
-# write a copy to archived_releases.json
-outputFile_arch = baseDir + subDir + outputJson_arch
-copyfile(outputFile_rel, outputFile_arch)
+    json.dump(data, f, indent=3)
 
 print ("Check .../target/output/")
