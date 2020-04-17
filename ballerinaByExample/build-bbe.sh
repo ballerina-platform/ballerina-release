@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo ".....Building BBE Site....."
 
 BASEDIR=$(dirname $0)
