@@ -16,14 +16,21 @@
 
 package io.ballerina.test;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
-public class InstallerTest {
-    String version = System.getProperty("jballerina-version");
-    String specVersion = System.getProperty("spec-version");
-    String toolVersion = System.getProperty("tool-version");
+public class UpdateToolTest {
+    String version = "1.1.0";
+    String specVersion = "2019R3";
+    String toolVersion = "0.8.0";
+
+    String latestToolVersion = System.getProperty("tool-version");
+
+    String previousVersion = "1.0.0";
+    String previousSpecVersion = "2019R3";
+    String previousVersionsLatestPatch = "1.0.5";
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {
@@ -33,11 +40,22 @@ public class InstallerTest {
     }
 
     @Test(dataProvider = "getExecutors")
-    public void testSmoke(Executor executor) {
+    public void testUpdateTool(Executor executor) {
         executor.transferArtifacts();
         executor.install();
 
-        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
+        //Test installation
+        Assert.assertEquals(executor.executeCommand("ballerina -v", false),
+                TestUtils.getVersionOutput(version, specVersion, toolVersion));
+
+        //Test `ballerina update`
+        executor.executeCommand("ballerina update", true);
+        Assert.assertEquals(executor.executeCommand("ballerina -v", false),
+                TestUtils.getVersionOutput(version, specVersion, latestToolVersion));
+
+        //Execute all ballerina dist commands once updated
+        TestUtils.testDistCommands(executor, version, specVersion, latestToolVersion, previousVersion, previousSpecVersion,
+                previousVersionsLatestPatch);
 
         executor.uninstall();
         executor.cleanArtifacts();

@@ -16,26 +16,34 @@
 
 package io.ballerina.test;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
-public class SmokeTest {
+public class UpdateDistTest {
+    String version = System.getProperty("jballerina-version");
+    String specVersion = System.getProperty("spec-version");
+    String toolVersion = System.getProperty("tool-version");
+
+    String previousVersion = "1.1.0";
+    String previousSpecVersion = "2019R3";
+    String previousVersionsLatestPatch = "1.1.4";
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {
-        String version = "1.1.2";
         Executor[][] result = new Executor[1][1];
         result[0][0] = TestUtils.getExecutor(version);
         return result;
     }
 
     @Test(dataProvider = "getExecutors")
-    public void testSmoke(Executor executor) {
+    public void testDistCommands(Executor executor) {
         executor.transferArtifacts();
         executor.install();
-        Assert.assertEquals(executor.executeCommand("ballerina -v", false), TestUtils.getVersionOutput("1.1.2"));
+
+        TestUtils.testDistCommands(executor, version, specVersion, toolVersion, previousVersion, previousSpecVersion,
+                previousVersionsLatestPatch);
+
         executor.uninstall();
         executor.cleanArtifacts();
     }

@@ -16,14 +16,13 @@
 
 package io.ballerina.test;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
-public class InstallerTest {
+public class CentralTest {
     String version = System.getProperty("jballerina-version");
-    String specVersion = System.getProperty("spec-version");
-    String toolVersion = System.getProperty("tool-version");
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {
@@ -33,12 +32,12 @@ public class InstallerTest {
     }
 
     @Test(dataProvider = "getExecutors")
-    public void testSmoke(Executor executor) {
+    public void testPull(Executor executor) {
         executor.transferArtifacts();
         executor.install();
-
-        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
-
+        //Checks part as output varies depending on the network speed
+        Assert.assertTrue(executor.executeCommand("ballerina pull wso2/twitter", false)
+                .contains("wso2/twitter:0.9.26 pulled from central successfully"));
         executor.uninstall();
         executor.cleanArtifacts();
     }
