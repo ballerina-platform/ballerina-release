@@ -15,7 +15,7 @@ This will guide you through the process of using the `build-bbe.sh` tool to gene
 2. execute the build-bbe.sh 
 
 ```bash
-sudo ./build-bbe.sh <site_version> <output_dir> <ballerina_repo_tag> <generateWithJekyll>
+sudo ./ballerinaByExample/build-bbe.sh <site_version> <output_dir> <ballerina_repo_tag> <generateWithJekyll>
 ```
 
 **site_version**
