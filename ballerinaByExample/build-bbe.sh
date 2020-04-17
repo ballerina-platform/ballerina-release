@@ -11,10 +11,18 @@ BAL_VERSION=$3
 # If true, Generate BBE with jekyll front matter. If false, Generate BBE without jekyll front matter.
 GEN_FOR_JEKYLL=$4
 
+if [ -z "$BBE_GEN_DIR" ] && [ -z "$BAL_VERSION" ] && [ -z "$GEN_FOR_JEKYLL" ];
+then
+  site_folder="`jq -r '.version' $SITE_VERSION`"
+  array=($(echo $site_folder | tr "." "\n"))
+  SITE_VERSION="v${array[0]}-${array[1]}"
+  BBE_GEN_DIR="by-example"
+  BAL_VERSION="v${site_folder}"
+  GEN_FOR_JEKYLL="true"
+fi
+
 rm -rf $BBE_GEN_DIR
 mkdir -p $BBE_GEN_DIR
-mkdir -p $BBE_GEN_DIR/withfrontmatter
-mkdir -p $BBE_GEN_DIR/withoutfrontmatter
 
 go get github.com/russross/blackfriday
 rm -rf target/dependencies/ballerina-examples
