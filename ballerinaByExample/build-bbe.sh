@@ -15,7 +15,7 @@ if [ -z "$BBE_GEN_DIR" ] && [ -z "$BAL_VERSION" ] && [ -z "$GEN_FOR_JEKYLL" ];
 then
   site_folder="`jq -r '.version' $SITE_VERSION`"
   array=($(echo $site_folder | tr "." "\n"))
-  SITE_VERSION="v${array[0]}-${array[1]}"
+  SITE_VERSION="${array[0]}.${array[1]}"
   BBE_GEN_DIR="by-example"
   BAL_VERSION="v${site_folder}"
   GEN_FOR_JEKYLL="true"
