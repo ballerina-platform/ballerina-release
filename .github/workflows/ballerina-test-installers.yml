@@ -1,4 +1,4 @@
-name: Java CI
+name: Installer Tests
 
 on: [push, pull_request]
 
