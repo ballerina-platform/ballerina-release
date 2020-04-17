@@ -27,6 +27,3 @@ jobs:
     - name: Build with Gradle
       working-directory: ./test-scripts/ballerina-test-automation
       run: ./gradlew.bat build --stacktrace -scan --console=plain --no-daemon
-    - name: Build with Gradle
-      working-directory: ./test-scripts/ballerina-test-automation
-      run: ./gradlew.bat build --stacktrace -scan --console=plain --no-daemon
