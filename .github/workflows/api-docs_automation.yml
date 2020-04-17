@@ -1,10 +1,10 @@
-name: CI
+name: Api-docs update
 
 # Controls when the action will run. Triggers the workflow on push or pull request 
 # events but only for the master branch
 on:
-  release:
-    branches: [ master ]
+  push:
+    branches: [ website-update ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -22,9 +22,12 @@ jobs:
     - name : Update Api-docs
       env:
         GITHUB_TOKEN: ${{secrets.WEBSITE_TOKEN}} 
+        NEW_VERSION: 1.2.0
       run: |
+        wget https://github.com/rdulmina/ballerina-v1.2/raw/master/ballerina-1.2.0.tar.xz
 
-        svn export https://github.com/ballerina-platform/ballerina-dev-website/trunk/v1-1/learn/api-docs/ballerina
+        sudo apt-get install xz-utils
+        tar -xf ballerina-1.2.0.tar.xz
         
         git config --global user.email "rdulmina@gmail.com"
         git config --global user.name "rdulmina"
@@ -32,11 +35,11 @@ jobs:
         git clone https://rdulmina:$GITHUB_TOKEN@github.com/ballerina-platform/ballerina-dev-website.git
         
         cd ballerina-dev-website
-        git checkout automate-api-docs-update
+        git checkout automate-api-docs-update 2>/dev/null || git checkout -b automate-api-docs-update
         git pull origin master
-
-        cp -avr ../ballerina/ v1-2/learn/api-docs
-
+        
+        mkdir -p v1-2/learn/api-docs
+        cp -avr ../ballerina-1.2.0/distributions/jballerina-1.2.0/docs/ v1-2/learn/api-docs
         git add .
         git commit --allow-empty -m 'api-docs update'
         git push --set-upstream origin automate-api-docs-update
@@ -45,3 +48,6 @@ jobs:
         sudo snap install hub --classic
         hub pull-request -m 'This is an automated pull request to update api-docs for new release'
         echo 'Successfully sent a pull request to ballerina-platform/ballerina-dev-website'
+        
+
+

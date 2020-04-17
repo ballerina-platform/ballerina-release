@@ -54,8 +54,8 @@ public class Utils {
     public static String executeWindowsCommand(String command) {
         String output = "";
         try {
-            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", command);
-            Process p = pb.start();
+            Runtime runtime = Runtime.getRuntime();
+            Process p = runtime.exec("runas /profile /user:Administrator \"" + command + "\"");
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -98,7 +98,7 @@ public class Utils {
      *
      * @return user home directory
      */
-    private static String getUserHome() {
+    public static String getUserHome() {
         String userHome = System.getenv("HOME");
         if (userHome == null) {
             userHome = System.getProperty("user.home");

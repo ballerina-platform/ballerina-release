@@ -15,10 +15,18 @@ GEN_FOR_JEKYLL=$4
 IS_LATEST_VERSION=$4
 
 
+if [ -z "$BBE_GEN_DIR" ] && [ -z "$BAL_VERSION" ] && [ -z "$GEN_FOR_JEKYLL" ];
+then
+  site_folder="`jq -r '.version' $SITE_VERSION`"
+  array=($(echo $site_folder | tr "." "\n"))
+  SITE_VERSION="${array[0]}.${array[1]}"
+  BBE_GEN_DIR="by-example"
+  BAL_VERSION="v${site_folder}"
+  GEN_FOR_JEKYLL="true"
+fi
+
 rm -rf $BBE_GEN_DIR
 mkdir -p $BBE_GEN_DIR
-mkdir -p $BBE_GEN_DIR/withfrontmatter
-mkdir -p $BBE_GEN_DIR/withoutfrontmatter
 
 go get github.com/russross/blackfriday
 rm -rf target/dependencies/ballerina-examples
@@ -31,8 +39,8 @@ git --git-dir=ballerina-lang/.git --work-tree=ballerina-lang/ checkout $BAL_VERS
 mkdir -p target/dependencies/ballerina-examples/
 
 # move and rename examples/index.json to all-bbes.json
-rm -rf tools/all-bbes.json
-cp ballerina-lang/examples/index.json tools/all-bbes.json
+rm -rf ballerinaByExample/tools/all-bbes.json
+cp ballerina-lang/examples/index.json ballerinaByExample/tools/all-bbes.json
 
 mv ballerina-lang/examples target/dependencies/ballerina-examples/examples/
 rm -rf ballerina-lang
@@ -76,5 +84,5 @@ mv target/dependencies/ballerina-examples/examples/aws-lambda-deployment/aws_lam
 
 rm -rf awslambda
 
-go run tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
+go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
 echo "....Completed building BBE Site...."

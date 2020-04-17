@@ -15,7 +15,7 @@ This will guide you through the process of using the `build-bbe.sh` tool to gene
 2. execute the build-bbe.sh 
 
 ```bash
-sudo ./build-bbe.sh <site_version> <output_dir> <ballerina_repo_tag> <generateWithJekyll> <isLatestVersion>
+sudo ./ballerinaByExample/build-bbe.sh <site_version> <output_dir> <ballerina_repo_tag> <generateWithJekyll> <isLatestVersion>
 ```
 
 **site_version**
@@ -53,7 +53,7 @@ If pass in `false` it will generate BBE with permalink set to `/<version>/learn/
 * When building examples for website.
 
 ```bash
-sudo ./tools/build-bbe.sh v1-2 bbes v1.2.0 true false
+sudo ./ballerinaByExample/build-bbe.sh v1-2 bbes v1.2.0 true false
 ```
 
 This will generate BBE with jekyll front matter.
@@ -61,7 +61,7 @@ This will generate BBE with jekyll front matter.
 * When building examples for normal use.
 
 ```bash
-sudo ./tools/build-bbe.sh v1-2 bbes v1.2.0 false false
+sudo ./ballerinaByExample/build-bbe.sh v1-2 bbes v1.2.0 false false
 ```
 
 This will generate BBE without jekyll front matter but as plain html.
