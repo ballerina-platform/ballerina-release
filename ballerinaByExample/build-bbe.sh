@@ -10,6 +10,10 @@ BBE_GEN_DIR=$2
 BAL_VERSION=$3
 # If true, Generate BBE with jekyll front matter. If false, Generate BBE without jekyll front matter.
 GEN_FOR_JEKYLL=$4
+# If true, Generate BBE for latest version hence ditch the version in perma link.
+# If false, Generate BBE with version in permalink.
+IS_LATEST_VERSION=$4
+
 
 if [ -z "$BBE_GEN_DIR" ] && [ -z "$BAL_VERSION" ] && [ -z "$GEN_FOR_JEKYLL" ];
 then
@@ -80,5 +84,5 @@ mv target/dependencies/ballerina-examples/examples/aws-lambda-deployment/aws_lam
 
 rm -rf awslambda
 
-go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL
+go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
 echo "....Completed building BBE Site...."
