@@ -26,7 +26,7 @@ var examplesDir = os.Args[1]
 var version = os.Args[2]
 var siteDir = os.Args[3]
 var genJekyll, err = strconv.ParseBool(os.Args[4])
-var isLatest, err1 = strconv.ParseBool(os.Args[5])
+// var isLatest, err1 = strconv.ParseBool(os.Args[5])
 var dirPathWordSeparator = "-"
 var filePathWordSeparator = "_"
 var consoleOutputExtn = ".out"
@@ -342,12 +342,9 @@ func  parseExamples(categories []BBECategory) []*Example {
             fmt.Println("\tprocessing bbe: " + exampleName )
             example := Example{Name: exampleName}
             example.Id = exampleId
-            if isLatest {
-                example.Version = ""
-            } else {
-                example.Version = version
-            }
+            example.Version = version
             example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
+            // example.IsLatest = isLatest
             example.Segs = make([][]*Seg, 0)
             sourcePaths := mustGlob(examplesDir + "/" + "examples/" + exampleId + "/*")
 
