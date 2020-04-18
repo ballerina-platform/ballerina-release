@@ -15,13 +15,13 @@ This will guide you through the process of using the `build-bbe.sh` tool to gene
 2. execute the build-bbe.sh 
 
 ```bash
-sudo ./ballerinaByExample/build-bbe.sh <site_version> <output_dir> <ballerina_repo_tag> <generateWithJekyll>
+sudo ./ballerinaByExample/build-bbe.sh <site_version> <output_dir> <ballerina_repo_tag> <generateWithJekyll> <isLatestVersion>
 ```
 
 **site_version**
 
 This is the version of the site that the tool should generate the BBEs for.
-Ex: v1-2 or v1-1
+Ex: 1.2 or 1.1
 
 **output_dir**
 
@@ -41,12 +41,19 @@ This is the flag to indicate the tool to generate BBEs with or without jekyll fr
 If pass in `true` it will generate BBEs with jekyll front matter.
 If pass in `false` it will generate BBEs without jekyll front matter but as a normal html file.
 
+**isLatestVersion**
+
+This is the flag to indicate the tool to generate BBE for the latest version of Ballerina.
+
+If pass in `true` it will generate BBE with permalink set to `/learn/<etc>`
+If pass in `false` it will generate BBE with permalink set to `/<version>/learn/<etc>`
+
 ##### Example Usage
 
 * When building examples for website.
 
 ```bash
-sudo ./ballerinaByExample/build-bbe.sh v1-2 bbes v1.2.0 true
+sudo ./ballerinaByExample/build-bbe.sh 1.2 bbes v1.2.0 true false
 ```
 
 This will generate BBE with jekyll front matter.
@@ -54,10 +61,18 @@ This will generate BBE with jekyll front matter.
 * When building examples for normal use.
 
 ```bash
-sudo ./ballerinaByExample/build-bbe.sh v1-2 bbes v1.2.0 false
+sudo ./ballerinaByExample/build-bbe.sh 1.2 bbes v1.2.0 false false
 ```
 
 This will generate BBE without jekyll front matter but as plain html.
+
+* When building examples for latest ballerina version for the site.
+
+```bash
+sudo ./tools/build-bbe.sh 1.2 bbes v1.2.0 true true
+```
+
+This will generate BBE with jekyll permalink set to `/learn` as root.
 
 # 2. *ballerina-dev-website*
 Clone the repo.
