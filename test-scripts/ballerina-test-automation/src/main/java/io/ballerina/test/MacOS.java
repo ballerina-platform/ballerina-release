@@ -16,38 +16,41 @@
 
 package io.ballerina.test;
 
-public class Windows implements Executor {
+
+public class MacOS implements Executor {
     private String installerName;
     private String version;
 
-    public Windows(String version) {
+    public MacOS(String version) {
         this.version = version;
-        installerName = "ballerina-windows-installer-x64-" + version + ".msi";
+        this.installerName = "ballerina-macos-installer-x64-" + version + ".pkg";
     }
+
 
     @Override
     public String transferArtifacts() {
         Utils.downloadFile(version, installerName);
-        return "";
+        return Utils.executeCommand("cp " + installerName + " ~");
     }
 
     @Override
     public String install() {
-        return "";
+        return Utils.executeCommand("sudo installer -pkg " + installerName + " -target /");
     }
 
     @Override
     public String executeCommand(String command, boolean isAdminMode) {
-        return Utils.executeWindowsCommand(command);
+        String sudoCommand = isAdminMode ? "sudo " : "";
+        return Utils.executeCommand(sudoCommand + command);
     }
 
     @Override
     public String uninstall() {
-        return "";
+        return Utils.executeCommand("sudo rm -rf /Library/Ballerina/");
     }
 
     @Override
     public String cleanArtifacts() {
-        return Utils.executeWindowsCommand("del " + Utils.getUserHome() + "\\.ballerina");
+        return Utils.executeCommand("rm ~/" + installerName + " && sudo rm -rf ~/.ballerina");
     }
 }

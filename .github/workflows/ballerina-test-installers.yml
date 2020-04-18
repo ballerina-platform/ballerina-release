@@ -12,7 +12,5 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      env:
-        OS_TYPE: ubuntu
       working-directory: ./test-scripts/ballerina-test-automation
       run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
