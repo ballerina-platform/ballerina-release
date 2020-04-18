@@ -53,23 +53,12 @@
                 "url": "functions-with-rest-parameter"
             },
             {
-                "name": "Quoted Identifiers",
-                "url": "quoted-identifiers"
-            }
-        ]
-    },
-    {
-        "title": "Documentation",
-        "column": 0,
-        "category": "Language concepts",
-        "samples": [
-            {
-                "name": "Basic documentation",
-                "url": "basic-documentation"
+                "name": "Documentation",
+                "url": "documentation"
             },
             {
-                "name": "Deprecation",
-                "url": "deprecation"
+                "name": "Quoted Identifiers",
+                "url": "quoted-identifiers"
             }
         ]
     },
@@ -88,10 +77,6 @@
             {
                 "name": "Closures",
                 "url": "closures"
-            },
-            {
-                "name": "Expression-bodied Functions",
-                "url": "expression-bodied-functions"
             },
             {
                 "name": "Functional Iteration",
@@ -150,20 +135,6 @@
         ]
     },
     {
-        "title": "Query",
-        "column": 0,
-        "category": "Language concepts",
-        "samples": [{
-            "name": "Query Expression",
-            "url": "query-expression"
-        },
-            {
-                "name": "Query Action",
-                "url": "query-action"
-            }
-        ]
-    },
-    {
         "title": "Values and Types",
         "column": 1,
         "category": "Language concepts",
@@ -218,10 +189,6 @@
             {
                 "name": "String Template Literal",
                 "url": "string-template"
-            },
-            {
-                "name": "Let Expression",
-                "url": "let-expression"
             }
         ]
     },
@@ -291,14 +258,6 @@
         "category": "Language concepts",
         "samples": [
             {
-                "name": "Shift Expressions",
-                "url": "shift-expressions"
-            },
-            {
-                "name": "Binary Bitwise Expressions",
-                "url": "binary-bitwise-expressions"
-            },
-            {
                 "name": "Compound Assignment Operators",
                 "url": "compound-assignment-operators"
             },
@@ -330,16 +289,6 @@
                 "name": "Type Conversion",
                 "url": "type-conversion"
             }
-        ]
-    },
-     {
-        "title": "Streams",
-        "column": 1,
-        "category": "Language concepts",
-        "samples": [{
-            "name": "Streams",
-            "url": "streams"
-        }
         ]
     },
     {
@@ -479,21 +428,7 @@
             {
                 "name": "Async",
                 "url": "async"
-            },
-            {
-                "name": "Threads and Strands",
-                "url": "threads-and-strands"
             }
-        ]
-    },
-    {
-        "title": "Lock",
-        "column": 2,
-        "category": "Language concepts",
-        "samples": [{
-            "name": "Lock",
-            "url": "locks"
-        }
         ]
     },
     {
@@ -503,10 +438,6 @@
         "samples": [{
                 "name": "Byte I/O",
                 "url": "byte-io"
-            },
-            {
-                "name": "Data I/O",
-                "url": "data-io"
             },
             {
                 "name": "Record I/O",
@@ -578,7 +509,7 @@
                 "url": "time"
             },
             {
-                "name": "Cache",
+                "name": "Caching",
                 "url": "cache"
             },
             {
@@ -620,10 +551,6 @@
             {
                 "name": "Task Service Timer",
                 "url": "task-service-timer"
-            },
-            {
-                "name": "XSLT Transformation",
-                "url": "xslt-transformation"
             }
         ]
     },
@@ -638,14 +565,6 @@
             {
                 "name": "Cryptographic Operations",
                 "url": "crypto"
-            },
-            {
-                "name": "JWT Issue/Validate",
-                "url": "jwt-issue-validate"
-            },
-            {
-                "name": "URL Encode/Decode Operations",
-                "url": "url-encode-decode"
             }
         ]
     },
@@ -676,15 +595,7 @@
             {
                 "name": "Guarantee Test Execution Order",
                 "url": "testerina-guarantee-test-execution-order"
-            },
-            {
-                "name": "Function Mocks",
-                "url": "testerina-function-mocks"
-            },
-            {
-                "name": "Group Tests",
-                "url": "testerina-group-tests"
-            }        
+            }
         ]
     },
     {
@@ -706,10 +617,6 @@
             {
                 "name": "AWS Lambda Deployment",
                 "url": "awslambda-deployment"
-            },
-            {
-                "name": "Knative Deployment",
-                "url": "knative-deployment"
             }
         ]
     },
@@ -840,14 +747,6 @@
             {
                 "name": "Chat Application",
                 "url": "websocket-chat-application"
-            },
-            {
-                "name": "Failover",
-                "url": "websocket-failover"
-            },
-            {
-                "name": "Retry",
-                "url": "websocket-retry"
             }
         ]
     },
@@ -1123,20 +1022,16 @@
         "column": 3,
         "category": "Working over the network",
         "samples": [{
+                "name": "Secured Service with JWT",
+                "url": "secured-service-with-jwt"
+            },
+            {
                 "name": "Secured Service with Basic Auth",
                 "url": "secured-service-with-basic-auth"
             },
             {
-                "name": "Secured Service with JWT Auth",
-                "url": "secured-service-with-jwt-auth"
-            },
-            {
                 "name": "Secured Service with OAuth2",
                 "url": "secured-service-with-oauth2"
-            },
-            {
-                "name": "Secured Service with LDAP",
-                "url": "secured-service-with-ldap"
             },
             {
                 "name": "Secured Client with Basic Auth",
@@ -1153,64 +1048,48 @@
         ]
     },
     {
-        "title": "Email",
-        "column": 2,
-        "category": "Working over the network",
-        "samples": [{
-                "name": "Send and Receive Emails",
-                "url": "send-and-receive-emails"
-            }
-        ]
-    },
-    {
-        "title": "JDBC Database Connector",
+        "title": "Lock",
         "column": 0,
-        "category": "Preview features",
-        "samples": [
-            {
-                "name": "JDBC Client Initialization",
-                "url": "jdbc2-init-options"
-            },
-            {
-                "name": "JDBC Select Query Operations",
-                "url": "jdbc2-query-operation"
-            },
-            {
-                "name": "JDBC Query with Complex Types",
-                "url": "jdbc2-complex-type-queries"
-            },
-            {
-                "name": "JDBC DDL and DML Operations",
-                "url": "jdbc2-execute-operation"
-            }
+        "category": "Experimental features",
+        "samples": [{
+            "name": "Lock",
+            "url": "locks"
+        }
         ]
     },
     {
-        "title": "MySQL Database Connector",
+        "title": "Streams",
         "column": 1,
-        "category": "Preview features",
-        "samples": [
-            {
-                "name": "MySQL Client Initialization",
-                "url": "mysql-init-options"
+        "category": "Experimental features",
+        "samples": [{
+                "name": "Streams",
+                "url": "streams"
             },
             {
-                "name": "MySQL Select Query Operations",
-                "url": "mysql-query-operation"
+              "name": "Simple Filtering",
+              "url": "simple-filtering"
             },
             {
-                "name": "MySQL Query with Complex Types",
-                "url": "mysql-complex-type-queries"
+              "name": "Projection",
+              "url": "projection"
             },
             {
-                "name": "MySQL DDL and DML Operations",
-                "url": "mysql-execute-operation"
+                "name": "Temporal Aggregations",
+                "url": "temporal-aggregations-and-windows"
+            },
+            {
+                "name": "Join Multiple Streams",
+                "url": "join-multiple-streams"
+            },
+            {
+              "name": "Join Tables and Streams",
+              "url": "join-tables-and-streams"
             }
         ]
     },
     {
         "title": "Transactions",
-        "column": 0,
+        "column": 2,
         "category": "Experimental features",
         "samples": [{
                 "name": "Local Transactions",
@@ -1227,6 +1106,40 @@
             {
                 "name": "Distributed Transactions",
                 "url": "transactions-distributed"
+            }
+        ]
+    },
+    {
+        "title": "Table Queries",
+        "column": 3,
+        "category": "Experimental features",
+        "samples": [{
+                "name": "Select all the fields",
+                "url": "table-queries"
+            },
+            {
+                "name": "Select a few field for the output",
+                "url": "table-queries-select-with-few-output-fields"
+            },
+            {
+                "name": "Select with filtering",
+                "url": "table-queries-select-with-filtering"
+            },
+            {
+                "name": "Select with order-by clause",
+                "url": "table-queries-select-with-order-by"
+            },
+            {
+                "name": "Select with group-by clause",
+                "url": "table-queries-select-with-group-by"
+            },
+            {
+                "name": "Join two tables",
+                "url": "table-queries-join"
+            },
+            {
+                "name": "Join two tables with filtering",
+                "url": "table-queries-join-with-filtering"
             }
         ]
     }

@@ -12,7 +12,7 @@ BAL_VERSION=$3
 GEN_FOR_JEKYLL=$4
 # If true, Generate BBE for latest version hence ditch the version in perma link.
 # If false, Generate BBE with version in permalink.
-IS_LATEST_VERSION=$4
+# IS_LATEST_VERSION=$4
 
 
 if [ -z "$BBE_GEN_DIR" ] && [ -z "$BAL_VERSION" ] && [ -z "$GEN_FOR_JEKYLL" ];
@@ -84,5 +84,5 @@ mv target/dependencies/ballerina-examples/examples/aws-lambda-deployment/aws_lam
 
 rm -rf awslambda
 
-go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
+go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL
 echo "....Completed building BBE Site...."
