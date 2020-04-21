@@ -22,6 +22,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Disable Firewall
+      run: netsh advfirewall set allprofiles state off
     - name: Build with Gradle
       working-directory: ./test-scripts/ballerina-test-automation
       run: ./gradlew.bat build --stacktrace -scan --console=plain --no-daemon
