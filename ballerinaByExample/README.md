@@ -72,9 +72,19 @@ This will generate BBE without jekyll front matter but as plain html.
 sudo ./tools/build-bbe.sh 1.2 bbes v1.2.0 true true
 ```
 
+# 2. Executing BBE gen-tool in github workflows
+
+In addition to above, the tool can be executed by pointing to metadata.json
+file which is generated for each release along with the new installers.
+This mode is quite useful when used for automation.
+
+```
+./ballerinaByExample/build-bbe.sh _data/metadata.json
+```
+
 This will generate BBE with jekyll permalink set to `/learn` as root.
 
-# 2. *ballerina-dev-website*
+# 3. *ballerina-dev-website*
 Clone the repo.
 
 Install Jekyll and bundler gems
