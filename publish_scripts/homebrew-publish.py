@@ -7,9 +7,9 @@ version = sys.argv[2]
 sha256 = sys.argv[3]
 url = sys.argv[4]
 
-sha256_replacement = '  sha256 "'+sha256+'"\n'
+sha256_replacement = '  sha256 "'+sha256+'"'
 
-url_replacement = '  url "'+url+'"\n'
+url_replacement = '  url "'+url+'"'
 
 updated_ballerina_rb = ""
 
