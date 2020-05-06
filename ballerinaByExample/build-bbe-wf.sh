@@ -30,7 +30,7 @@ go get github.com/russross/blackfriday
 
 echo "-----------------------------------------------------------------------------------------------------------------------"
 echo "curl https://dist-dev.ballerina.io/downloads/$BALLERINA_VERSION/ballerina-$BALLERINA_VERSION.zip --output ballerina.zip"
-# curl https://dist-dev.ballerina.io/downloads/$BALLERINA_VERSION/ballerina-$BALLERINA_VERSION.zip --output ballerina.zip
+curl https://dist-dev.ballerina.io/downloads/$BALLERINA_VERSION/ballerina-$BALLERINA_VERSION.zip --output ballerina.zip
 unzip ballerina.zip
 
 rm -rf target/dependencies/ballerina-examples
