@@ -76,10 +76,11 @@ sudo ./tools/build-bbe.sh 1.2 bbes v1.2.0 true true
 
 In addition to above, the tool can be executed by pointing to metadata.json
 file which is generated for each release along with the new installers.
-This mode is quite useful when used for automation.
+This mode is quite useful when used for automation. Instead of taking the 
+BBEs from the code, this tool takes the BBEs from ballerina-<version>.zip.
 
 ```
-./ballerinaByExample/build-bbe.sh _data/metadata.json
+./ballerinaByExample/build-bbe-wf.sh _data/metadata.json
 ```
 
 This will generate BBE with jekyll permalink set to `/learn` as root.
