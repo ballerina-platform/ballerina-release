@@ -29,10 +29,13 @@ type APIDoc struct {
 func main() {
 	var files []string
 	createDir(outputLocation)
+	apidDocDirPath := filepath.Join(apiDocsDir)
 	err := filepath.Walk(apiDocsDir, func(path string, info os.FileInfo, err error) error {
 		files = append(files, path)
-		split := strings.Split(path, permalinkPreFix)
-		fileRelativeURL := split[len(split)-1]
+		split := strings.Split(path, apidDocDirPath)
+		splits := strings.Split(split[len(split)-1], permalinkPreFix)
+
+		fileRelativeURL := splits[len(splits)-1]
 		fileName := info.Name()
 		dirForFile := strings.Split(fileRelativeURL, fileName)[0]
 		fullPathToOutput := filepath.Join(outputLocation, dirForFile)
