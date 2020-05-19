@@ -16,6 +16,9 @@ BALLERINA_VERSION="";
 
 if [ -z "$BBE_GEN_DIR" ] && [ -z "$BAL_VERSION" ] && [ -z "$GEN_FOR_JEKYLL" ] && [ -z "$IS_LATEST_VERSION" ];
 then
+  if ! cat $SITE_VERSION; then
+    exit 1
+  fi
   site_folder="`jq -r '.version' $SITE_VERSION`"
   array=($(echo $site_folder | tr "." "\n"))
   SITE_VERSION="${array[0]}.${array[1]}"
@@ -31,7 +34,10 @@ go get github.com/russross/blackfriday
 echo "-----------------------------------------------------------------------------------------------------------------------"
 echo "curl https://dist-dev.ballerina.io/downloads/$BALLERINA_VERSION/ballerina-$BALLERINA_VERSION.zip --output ballerina.zip"
 curl https://dist-dev.ballerina.io/downloads/$BALLERINA_VERSION/ballerina-$BALLERINA_VERSION.zip --output ballerina.zip
-unzip ballerina.zip
+
+if ! unzip ballerina.zip; then
+  exit 1
+fi
 
 rm -rf target/dependencies/ballerina-examples
 mkdir -p target/dependencies/ballerina-examples/
