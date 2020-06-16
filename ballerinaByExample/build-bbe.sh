@@ -39,10 +39,6 @@ echo "checkout Ballerina lang repo: $BAL_VERSION"
 git --git-dir=ballerina-lang/.git --work-tree=ballerina-lang/ checkout $BAL_VERSION
 mkdir -p target/dependencies/ballerina-examples/
 
-# move and rename examples/index.json to all-bbes.json
-rm -rf ballerinaByExample/tools/all-bbes.json
-cp ballerina-lang/examples/index.json ballerinaByExample/tools/all-bbes.json
-
 mv ballerina-lang/examples target/dependencies/ballerina-examples/examples/
 rm -rf ballerina-lang
 
