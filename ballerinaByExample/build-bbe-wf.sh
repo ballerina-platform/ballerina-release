@@ -39,17 +39,12 @@ if ! unzip ballerina.zip; then
   exit 1
 fi
 
-rm -rf target/dependencies/ballerina-examples
-mkdir -p target/dependencies/ballerina-examples/
-mv ./ballerina-$BALLERINA_VERSION/distributions/jballerina-$BALLERINA_VERSION/examples/index.json ballerinaByExample/tools/all-bbes.json
-mv ./ballerina-$BALLERINA_VERSION/distributions/jballerina-$BALLERINA_VERSION/examples target/dependencies/ballerina-examples/
-
 rm -rf $BBE_GEN_DIR
 mkdir -p $BBE_GEN_DIR
 
 echo "------------------------------------------------------------------------------------------------------------------------------------------------"
-echo "go run ballerinaByExample/tools/generate.go target/dependencies/ballerina-examples $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION"
-go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
+echo "go run ballerinaByExample/tools/generate.go ballerina-$BALLERINA_VERSION/distributions/jballerina-$BALLERINA_VERSION/examples $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION"
+go run ballerinaByExample/tools/generate.go "ballerina-${BALLERINA_VERSION}/distributions/jballerina-${BALLERINA_VERSION}/examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
 echo "....Completed building BBE Site...."
 
 echo "-------------------------------------"

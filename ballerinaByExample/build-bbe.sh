@@ -85,5 +85,5 @@ mv target/dependencies/ballerina-examples/examples/aws-lambda-deployment/aws_lam
 
 rm -rf awslambda
 
-go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
+go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples/examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
 echo "....Completed building BBE Site...."
