@@ -39,10 +39,6 @@ echo "checkout Ballerina lang repo: $BAL_VERSION"
 git --git-dir=ballerina-lang/.git --work-tree=ballerina-lang/ checkout $BAL_VERSION
 mkdir -p target/dependencies/ballerina-examples/
 
-# move and rename examples/index.json to all-bbes.json
-rm -rf ballerinaByExample/tools/all-bbes.json
-cp ballerina-lang/examples/index.json ballerinaByExample/tools/all-bbes.json
-
 mv ballerina-lang/examples target/dependencies/ballerina-examples/examples/
 rm -rf ballerina-lang
 
@@ -85,5 +81,5 @@ mv target/dependencies/ballerina-examples/examples/aws-lambda-deployment/aws_lam
 
 rm -rf awslambda
 
-go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
+go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples/examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
 echo "....Completed building BBE Site...."

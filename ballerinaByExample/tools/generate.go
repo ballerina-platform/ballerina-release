@@ -185,7 +185,7 @@ type BBECategory struct {
 }
 
 func getBBECategories() []BBECategory {
-    allBBEsFile := "ballerinaByExample/tools/all-bbes.json"
+    allBBEsFile := examplesDir + "/all-bbes.json"
     rawCategories, err := ioutil.ReadFile(allBBEsFile)
     if err != nil {
         fmt.Fprintln(os.Stderr, "[ERROR] An error occured while processing : "+allBBEsFile,err)
@@ -347,11 +347,11 @@ func  parseExamples(categories []BBECategory) []*Example {
             example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
             example.IsLatest = isLatest
             example.Segs = make([][]*Seg, 0)
-            sourcePaths := mustGlob(examplesDir + "/" + "examples/" + exampleId + "/*")
+            sourcePaths := mustGlob(examplesDir + "/" + exampleId + "/*")
 
             // Re-arranging the order of files
             rearrangedPaths := make([]string, 0)
-            fileDirPath := examplesDir + "/examples/" + exampleId + "/"
+            fileDirPath := examplesDir + "/" +  exampleId + "/"
 
             if  !isFileExist(fileDirPath) {
                 fmt.Fprintln(os.Stderr,"\t[WARN] Skipping bbe : " + exampleName + ". "+ fileDirPath +" is not found")
@@ -581,7 +581,6 @@ func main() {
     copyFile(templateDir + "favicon.ico", siteDir+"/favicon.ico")
     copyFile(templateDir + "404.html", siteDir+"/404.html")
     copyFile(templateDir + "play.png", siteDir+"/play.png")
-    copyFile("ballerinaByExample/tools/all-bbes.json", siteDir+"/all-bbes.json")
     bbeCategories := getBBECategories()
     examples := parseExamples(bbeCategories)
 
