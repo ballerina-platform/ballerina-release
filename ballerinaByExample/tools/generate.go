@@ -577,12 +577,12 @@ func isFileExist(path string) bool {
 
 func main() {
 
-    // Madirectory for the output location
+    // Make directory for the output location
     err := os.Mkdir(siteDir, 0755)
     if err != nil {
         panic(err)
     }
-    
+
     copyFile(templateDir + "site.css", siteDir+"/site.css")
     copyFile(templateDir + "ballerina-example.css", siteDir+"/ballerina-example.css")
     copyFile(templateDir + "favicon.ico", siteDir+"/favicon.ico")
