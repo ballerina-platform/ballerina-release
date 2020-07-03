@@ -290,7 +290,7 @@ func parseAndRenderSegs(sourcePath string) ([]*Seg, string, string) {
             var matchCloseSpan = regexp.MustCompile("</span>")
             var matchOpenPre = regexp.MustCompile("<pre>")
             var matchClosePre = regexp.MustCompile("</pre>")
-            var codeCssClass = "ballerina"
+            var codeCssClass = "language-ballerina"
 
             if(seg.IsConsoleOutput){
                 codeCssClass = "shell-session"
