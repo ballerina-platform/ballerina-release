@@ -82,7 +82,7 @@ public class TestUtils {
             String expectedOutput = "A new version of Ballerina is available: jballerina-" + previousVersionsLatestPatch
                     + "\nUse 'ballerina dist pull jballerina-" + previousVersionsLatestPatch
                     + "' to download and use the distribution\n\n";
-            Assert.assertEquals(expectedOutput, executor.executeCommand("ballerina build", false));
+            Assert.assertEquals(executor.executeCommand("ballerina build", false), expectedOutput);
         }
 
         //Test `ballerina dist use`
@@ -118,8 +118,8 @@ public class TestUtils {
      * @param toolVersion Installed tool version
      */
     public static void testInstallation(Executor executor, String version, String specVersion, String toolVersion) {
-        Assert.assertEquals(TestUtils.getVersionOutput(version, specVersion, toolVersion),
-                executor.executeCommand("ballerina -v", false));
+        Assert.assertEquals(executor.executeCommand("ballerina -v", false),
+                TestUtils.getVersionOutput(version, specVersion, toolVersion));
     }
 
     /**
@@ -157,11 +157,11 @@ public class TestUtils {
                 "Next:\n" +
                 "    Move into the project directory and use `ballerina add <module-name>` to\n" +
                 "    add a new Ballerina module.\n";
-        Assert.assertEquals(expectedOutput, executor.executeCommand("ballerina new project1", false));
+        Assert.assertEquals(executor.executeCommand("ballerina new project1", false), expectedOutput);
 
         executor.executeCommand("cd project1", false);
         expectedOutput = "Added new ballerina module at 'src/module1'\n";
-        Assert.assertEquals(expectedOutput, executor.executeCommand("ballerina add module1'", false));
+        Assert.assertEquals(executor.executeCommand("ballerina add module1'", false), expectedOutput);
     }
 
     private static String getSupportedVersion(String toolVersion, String version) {
