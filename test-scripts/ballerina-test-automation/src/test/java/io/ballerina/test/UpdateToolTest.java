@@ -51,7 +51,7 @@ public class UpdateToolTest {
         TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
 
         //Execute all ballerina dist commands once updated
-        TestUtils.testDistCommands(executor, previousVersion, previousVersion, toolVersion, previousVersion,
+        TestUtils.testDistCommands(executor, previousVersion, previousSpecVersion, toolVersion, previousVersion,
                 previousSpecVersion, previousVersionsLatestPatch);
 
         executor.uninstall();
