@@ -29,7 +29,7 @@ public class UpdateToolTest {
     String previousVersion = "1.1.0";
     String previousSpecVersion = "2019R3";
     String previousVersionsLatestPatch = "1.1.4";
-    String previousToolVersion = "0.8.5";
+    String previousToolVersion = "0.8.0";
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {
