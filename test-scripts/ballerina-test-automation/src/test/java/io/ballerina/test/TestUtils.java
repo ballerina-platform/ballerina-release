@@ -83,7 +83,7 @@ public class TestUtils {
                     + "\nUse 'ballerina dist pull jballerina-" + previousVersionsLatestPatch
                     + "' to download and use the distribution\n\n";
             executor.executeCommand("rm -rf ~/.ballerina/command-notice ", false);
-            Assert.assertEquals(executor.executeCommand("ballerina build", false), expectedOutput);
+            Assert.assertEquals(executor.executeCommand("ballerina build help", false), expectedOutput);
         }
 
         //Test `ballerina dist use`
