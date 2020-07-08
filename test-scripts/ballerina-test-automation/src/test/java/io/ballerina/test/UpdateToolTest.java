@@ -48,7 +48,7 @@ public class UpdateToolTest {
 
         //Test `ballerina update`
         executor.executeCommand("ballerina update", true);
-        TestUtils.testInstallation(executor,  "1.2.1",  "2020R1", toolVersion);
+        TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
 
         //Execute all ballerina dist commands once updated
         TestUtils.testDistCommands(executor, version, specVersion, toolVersion, previousVersion, previousSpecVersion,
