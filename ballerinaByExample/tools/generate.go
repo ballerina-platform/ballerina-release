@@ -185,7 +185,7 @@ type BBECategory struct {
 }
 
 func getBBECategories() []BBECategory {
-    allBBEsFile := examplesDir + "/index.json"
+    allBBEsFile := examplesDir + "/all-bbes.json"
     rawCategories, err := ioutil.ReadFile(allBBEsFile)
     if err != nil {
         fmt.Fprintln(os.Stderr, "[ERROR] An error occured while processing : "+allBBEsFile,err)
@@ -588,7 +588,7 @@ func main() {
     copyFile(templateDir + "favicon.ico", siteDir+"/favicon.ico")
     copyFile(templateDir + "404.html", siteDir+"/404.html")
     copyFile(templateDir + "play.png", siteDir+"/play.png")
-    copyFile(examplesDir + "/index.json", siteDir+"/index.json")
+    copyFile(examplesDir + "/all-bbes.json", siteDir+"/all-bbes.json")
     
     bbeCategories := getBBECategories()
     examples := parseExamples(bbeCategories)
