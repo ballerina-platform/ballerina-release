@@ -176,6 +176,7 @@ type Example struct {
 type BBEMeta struct {
     Name string `json:"name"`
     Url  string `json:"url"`
+    GithubLink string `json:"githubLink"`
 }
 
 type BBECategory struct {
@@ -331,6 +332,7 @@ func  parseExamples(categories []BBECategory) []*Example {
         for _, bbeMeta := range samples {
             exampleName := bbeMeta.Name
             exampleId := strings.ToLower(bbeMeta.Url)
+            githubLink := bbeMeta.GithubLink
             if  len(exampleId) == 0 {
                 fmt.Fprintln(os.Stderr,"\t[WARN] Skipping bbe : " + exampleName + ". Folder path is not defined")
                 continue
@@ -343,6 +345,7 @@ func  parseExamples(categories []BBECategory) []*Example {
             fmt.Println("\tprocessing bbe: " + exampleName )
             example := Example{Name: exampleName}
             example.Id = exampleId
+            example.GithubLink = githubLink;
             example.Version = version
             example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
             example.IsLatest = isLatest
@@ -485,7 +488,10 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
     if example.GoCodeHash != newCodeHash {
         example.UrlHash = resetUrlHashFile(newCodeHash, example.GoCode, "examples/"+example.Id+"/"+example.Id+".hash")
     }
-    example.GithubLink = githubBallerinaByExampleBaseURL + "/examples/" + example.Id + "/"
+    // If an explicit "githubLink" meta property is not given for the BBE, use the default derived location
+    if example.GithubLink == "" {
+        example.GithubLink = githubBallerinaByExampleBaseURL + "/examples/" + example.Id + "/"
+    }
     currentExamplesList = append(currentExamplesList, &example)
     return currentExamplesList, nil
 }
