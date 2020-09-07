@@ -27,6 +27,7 @@ var version = os.Args[2]
 var siteDir = os.Args[3]
 var genJekyll, err = strconv.ParseBool(os.Args[4])
 var isLatest, err1 = strconv.ParseBool(os.Args[5])
+var generatePlaygroundLinks, err2 = strconv.ParseBool(os.Args[6])
 var dirPathWordSeparator = "-"
 var filePathWordSeparator = "_"
 var consoleOutputExtn = ".out"
@@ -168,6 +169,7 @@ type Example struct {
     PrevExample                 *Example
     FullCode			string
     GithubLink          string
+    PlaygroundLink      string
     Version             string
     RedirectVersion     string
     IsLatest            bool
@@ -176,12 +178,23 @@ type Example struct {
 type BBEMeta struct {
     Name string `json:"name"`
     Url  string `json:"url"`
+    GithubLink string `json:"githubLink"`
 }
 
 type BBECategory struct {
     Title string      `json:"title"`
     Column int        `json:"column"`
     Samples []BBEMeta `json:"samples"`
+}
+
+type PlaygroundRequest struct {
+    Content string `json:"content"`
+    Description string `json:"description"`
+    FileName string `json:"fileName"`
+}
+
+type PlaygroundResponse struct {
+    Id string `json:"id"`
 }
 
 func getBBECategories() []BBECategory {
@@ -202,18 +215,24 @@ func parseHashFile(sourcePath string) (string, string) {
     return lines[0], lines[1]
 }
 
-func resetUrlHashFile(codehash, code, sourcePath string) string {
-    payload := strings.NewReader(code)
-    resp, err := http.Post("https://play.golang.org/share", "text/plain", payload)
+func generatePlaygroundLink(example Example) string {
+    fileName := strings.ReplaceAll(example.Id, "-", "_") + ".bal";
+    req := &PlaygroundRequest { Content: example.GoCode, Description: example.Name, FileName: fileName };
+    jsp, _ := json.Marshal(req);
+    payload := string(jsp);
+    resp, err := http.Post("https://play.ballerina.io/gists", "application/json; charset=utf-8", strings.NewReader(payload));
     if err != nil {
-        panic(err)
+        panic(err);
     }
-    defer resp.Body.Close()
-    body, err := ioutil.ReadAll(resp.Body)
-    urlkey := string(body)
-    data := fmt.Sprintf("%s\n%s\n", codehash, urlkey)
-    ioutil.WriteFile(sourcePath, []byte(data), 0644)
-    return urlkey
+    defer resp.Body.Close();
+    body, err := ioutil.ReadAll(resp.Body);
+    if err != nil {
+        panic(err);
+    }
+    presp := PlaygroundResponse{};
+    json.Unmarshal(body, &presp);
+    link := "https://play.ballerina.io/?gist=" + presp.Id + "&file" + "=" + fileName;
+    return link;
 }
 
 func parseSegs(sourcePath string) ([]*Seg, string) {
@@ -317,9 +336,6 @@ func parseAndRenderSegs(sourcePath string) ([]*Seg, string, string) {
         }
     }
 
-    if lexer != "go" || lexer != "bal" || lexer != "yaml" {
-        filecontent = ""
-    }
     return segs, filecontent, completeCode
 }
 
@@ -331,6 +347,7 @@ func  parseExamples(categories []BBECategory) []*Example {
         for _, bbeMeta := range samples {
             exampleName := bbeMeta.Name
             exampleId := strings.ToLower(bbeMeta.Url)
+            githubLink := bbeMeta.GithubLink
             if  len(exampleId) == 0 {
                 fmt.Fprintln(os.Stderr,"\t[WARN] Skipping bbe : " + exampleName + ". Folder path is not defined")
                 continue
@@ -343,6 +360,7 @@ func  parseExamples(categories []BBECategory) []*Example {
             fmt.Println("\tprocessing bbe: " + exampleName )
             example := Example{Name: exampleName}
             example.Id = exampleId
+            example.GithubLink = githubLink;
             example.Version = version
             example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
             example.IsLatest = isLatest
@@ -464,7 +482,7 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
             example.GoCodeHash, example.UrlHash = parseHashFile(sourcePath)
         } else {
             sourceSegs, filecontents, fullcode := parseAndRenderSegs(sourcePath)
-            if filecontents != "" {
+            if strings.HasSuffix(sourcePath, ".bal") {
                 example.GoCode = filecontents
             }
 
@@ -481,11 +499,13 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
         }
     }
     example.FullCode = cachedPygmentize("bal", example.FullCode)
-    newCodeHash := sha1Sum(example.GoCode)
-    if example.GoCodeHash != newCodeHash {
-        example.UrlHash = resetUrlHashFile(newCodeHash, example.GoCode, "examples/"+example.Id+"/"+example.Id+".hash")
+    // If an explicit "githubLink" meta property is not given for the BBE, use the default derived location
+    if example.GithubLink == "" {
+        example.GithubLink = githubBallerinaByExampleBaseURL + "/examples/" + example.Id + "/"
     }
-    example.GithubLink = githubBallerinaByExampleBaseURL + "/examples/" + example.Id + "/"
+    if generatePlaygroundLinks {
+        example.PlaygroundLink = generatePlaygroundLink(example);
+    }
     currentExamplesList = append(currentExamplesList, &example)
     return currentExamplesList, nil
 }
