@@ -18,9 +18,11 @@ import (
     "encoding/json"
 )
 
+const defaultBBEBaseURL = "https://github.com/ballerina-platform/ballerina-distribution/tree/master"
+
+var bbeDirMeta = getExampleDirMeta();
 var cacheDir = filepath.FromSlash("/tmp/gobyexample-cache")
 var pygmentizeBin = filepath.FromSlash("ballerinaByExample/vendor/pygments/pygmentize")
-var githubBallerinaByExampleBaseURL = "https://github.com/ballerina-platform/ballerina-distribution/tree/master"
 var templateDir = "ballerinaByExample/templates/"
 var examplesDir = os.Args[1]
 var version = os.Args[2]
@@ -173,12 +175,14 @@ type Example struct {
     Version             string
     RedirectVersion     string
     IsLatest            bool
+    EnablePlayground    bool
 }
 
 type BBEMeta struct {
     Name string `json:"name"`
     Url  string `json:"url"`
     GithubLink string `json:"githubLink"`
+    DisablePlayground bool `json:"disablePlayground"`
 }
 
 type BBECategory struct {
@@ -197,8 +201,24 @@ type PlaygroundResponse struct {
     Id string `json:"id"`
 }
 
+type ExampleDirMeta struct {
+    GithubBBEBaseURL string  `json:"githubBallerinaByExampleBaseURL"`
+}
+
+func getExampleDirMeta() ExampleDirMeta {
+    metaFile := examplesDir + "/meta.json"
+    metaContent, err := ioutil.ReadFile(metaFile)
+    meta := ExampleDirMeta {};
+    if err != nil {
+        meta.GithubBBEBaseURL = defaultBBEBaseURL;
+        return meta;
+    }
+    json.Unmarshal(metaContent, &meta)
+    return meta;
+}
+
 func getBBECategories() []BBECategory {
-    allBBEsFile := examplesDir + "/all-bbes.json"
+    allBBEsFile := examplesDir + "/index.json"
     rawCategories, err := ioutil.ReadFile(allBBEsFile)
     if err != nil {
         fmt.Fprintln(os.Stderr, "[ERROR] An error occured while processing : "+allBBEsFile,err)
@@ -348,6 +368,7 @@ func  parseExamples(categories []BBECategory) []*Example {
             exampleName := bbeMeta.Name
             exampleId := strings.ToLower(bbeMeta.Url)
             githubLink := bbeMeta.GithubLink
+            disablePlayground := bbeMeta.DisablePlayground
             if  len(exampleId) == 0 {
                 fmt.Fprintln(os.Stderr,"\t[WARN] Skipping bbe : " + exampleName + ". Folder path is not defined")
                 continue
@@ -361,6 +382,12 @@ func  parseExamples(categories []BBECategory) []*Example {
             example := Example{Name: exampleName}
             example.Id = exampleId
             example.GithubLink = githubLink;
+            if !generatePlaygroundLinks {
+                // the global setting to disable BBE generation take the highest procedence
+                example.EnablePlayground = false;
+            } else {
+                example.EnablePlayground = !disablePlayground;
+            }
             example.Version = version
             example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
             example.IsLatest = isLatest
@@ -501,9 +528,9 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
     example.FullCode = cachedPygmentize("bal", example.FullCode)
     // If an explicit "githubLink" meta property is not given for the BBE, use the default derived location
     if example.GithubLink == "" {
-        example.GithubLink = githubBallerinaByExampleBaseURL + "/examples/" + example.Id + "/"
+        example.GithubLink = bbeDirMeta.GithubBBEBaseURL + "/examples/" + example.Id + "/"
     }
-    if generatePlaygroundLinks {
+    if example.EnablePlayground {
         example.PlaygroundLink = generatePlaygroundLink(example);
     }
     currentExamplesList = append(currentExamplesList, &example)
@@ -608,7 +635,7 @@ func main() {
     copyFile(templateDir + "favicon.ico", siteDir+"/favicon.ico")
     copyFile(templateDir + "404.html", siteDir+"/404.html")
     copyFile(templateDir + "play.png", siteDir+"/play.png")
-    copyFile(examplesDir + "/all-bbes.json", siteDir+"/all-bbes.json")
+    copyFile(examplesDir + "/index.json", siteDir+"/all-bbes.json")
     
     bbeCategories := getBBECategories()
     examples := parseExamples(bbeCategories)
