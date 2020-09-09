@@ -18,9 +18,11 @@ import (
     "encoding/json"
 )
 
+const defaultBBEBaseURL = "https://github.com/ballerina-platform/ballerina-distribution/tree/master"
+
+var bbeDirMeta = getExampleDirMeta();
 var cacheDir = filepath.FromSlash("/tmp/gobyexample-cache")
 var pygmentizeBin = filepath.FromSlash("ballerinaByExample/vendor/pygments/pygmentize")
-var githubBallerinaByExampleBaseURL = "https://github.com/ballerina-platform/ballerina-distribution/tree/master"
 var templateDir = "ballerinaByExample/templates/"
 var examplesDir = os.Args[1]
 var version = os.Args[2]
@@ -197,6 +199,22 @@ type PlaygroundRequest struct {
 
 type PlaygroundResponse struct {
     Id string `json:"id"`
+}
+
+type ExampleDirMeta struct {
+    GithubBBEBaseURL string  `json:"githubBallerinaByExampleBaseURL"`
+}
+
+func getExampleDirMeta() ExampleDirMeta {
+    metaFile := examplesDir + "/meta.json"
+    metaContent, err := ioutil.ReadFile(metaFile)
+    meta := ExampleDirMeta {};
+    if err != nil {
+        meta.GithubBBEBaseURL = defaultBBEBaseURL;
+        return meta;
+    }
+    json.Unmarshal(metaContent, &meta)
+    return meta;
 }
 
 func getBBECategories() []BBECategory {
@@ -510,7 +528,7 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
     example.FullCode = cachedPygmentize("bal", example.FullCode)
     // If an explicit "githubLink" meta property is not given for the BBE, use the default derived location
     if example.GithubLink == "" {
-        example.GithubLink = githubBallerinaByExampleBaseURL + "/examples/" + example.Id + "/"
+        example.GithubLink = bbeDirMeta.GithubBBEBaseURL + "/examples/" + example.Id + "/"
     }
     if example.EnablePlayground {
         example.PlaygroundLink = generatePlaygroundLink(example);
