@@ -617,7 +617,7 @@ func main() {
     copyFile(templateDir + "favicon.ico", siteDir+"/favicon.ico")
     copyFile(templateDir + "404.html", siteDir+"/404.html")
     copyFile(templateDir + "play.png", siteDir+"/play.png")
-    copyFile(examplesDir + "/index.json", siteDir+"/index.json")
+    copyFile(examplesDir + "/index.json", siteDir+"/all-bbes.json")
     
     bbeCategories := getBBECategories()
     examples := parseExamples(bbeCategories)
