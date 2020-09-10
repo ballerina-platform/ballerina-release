@@ -157,6 +157,11 @@
                                         <li>
                                             <a target="_blank" href="{{.GithubLink}}"><img src="/img/github-logo-green.svg" /></a>
                                         </li>
+                                        {{if .EnablePlayground}}
+                                        <li>
+                                            <a target="_blank" href="{{.PlaygroundLink}}"><img src="/img/main-play-green-btn.svg" /></a>
+                                        </li>
+                                        {{end}}
                                     </ul>
                                 </div>
                             </td>
