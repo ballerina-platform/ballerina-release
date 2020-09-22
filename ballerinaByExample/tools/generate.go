@@ -511,6 +511,7 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
             sourceSegs, filecontents, fullcode := parseAndRenderSegs(sourcePath)
             if strings.HasSuffix(sourcePath, ".bal") {
                 example.GoCode = filecontents
+                example.FullCode = example.FullCode + fullcode
             }
 
             // We do this since the ".description" file is not read first. If it is the first file in the
@@ -521,8 +522,6 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
             } else {
                 example.Segs = append(example.Segs, sourceSegs)
             }
-            example.FullCode = example.FullCode + fullcode
-
         }
     }
     example.FullCode = cachedPygmentize("bal", example.FullCode)
