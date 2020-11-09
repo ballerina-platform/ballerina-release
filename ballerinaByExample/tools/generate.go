@@ -349,7 +349,7 @@ func parseAndRenderSegs(sourcePath string) ([]*Seg, string, string) {
             if (!ignoreSegment) {
                 if (!strings.Contains(seg.Code, "$ ")) {
                     // When segments are broken, sometimes a segment will start with a line break.
-                    // e.g. when a comment is available, or else, there may not be one, e.g. when
+                    // E.g., When we have a line break without a comment (i.e., when
                     // just an empty line is there in the code, so we will explicitely add the line break
                     // in this situation. We wil not be able to detect multiple empty lines from the source
                     // since this information is lost when the segments are broken.
