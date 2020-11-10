@@ -517,10 +517,10 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
         if strings.HasSuffix(sourcePath, ".hash") {
             example.GoCodeHash, example.UrlHash = parseHashFile(sourcePath)
         } else {
-            sourceSegs, filecontents, fullcode := parseAndRenderSegs(sourcePath)
+            sourceSegs, filecontents, _ := parseAndRenderSegs(sourcePath)
             if strings.HasSuffix(sourcePath, ".bal") {
                 example.GoCode = filecontents
-                example.FullCode = example.FullCode + fullcode
+                example.FullCode = example.FullCode + filecontents
             }
 
             // We do this since the ".description" file is not read first. If it is the first file in the
