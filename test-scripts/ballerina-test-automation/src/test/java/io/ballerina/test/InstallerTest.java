@@ -21,9 +21,9 @@ import org.testng.annotations.Test;
 
 
 public class InstallerTest {
-    String version = System.getProperty("BALLERINA_VERSION");
-    String specVersion = System.getProperty("SPEC_VERSION");
-    String toolVersion = System.getProperty("TOOL_VERSION");
+    String version = System.getProperty("LATEST_PATCH_VERSION");
+    String specVersion = System.getProperty("LATEST_SPEC_VERSION");
+    String toolVersion = System.getProperty("LATEST_TOOL_VERSION");
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {

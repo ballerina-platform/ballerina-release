@@ -16,26 +16,26 @@
 
 package io.ballerina.test;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 
 public class UpdateToolTest {
     String version = System.getProperty("BALLERINA_VERSION");
     String specVersion = System.getProperty("SPEC_VERSION");
     String toolVersion = System.getProperty("TOOL_VERSION");
+    String latestVersion = System.getProperty("LATEST_BALLERINA_VERSION");
+    String latestSpecVersion = System.getProperty("LATEST_SPEC_VERSION");
     String latestToolVersion = System.getProperty("LATEST_TOOL_VERSION");
 
-    String previousVersion = "1.2.0";
-    String previousSpecVersion = "2020R1";
-    String previousVersionsLatestPatch = System.getProperty("LATEST_PATCH_VERSION");
-    String previousToolVersion = "0.8.5";
+    String previousVersion = System.getProperty("PREVIOUS_BALLERINA_VERSION");
+    String previousSpecVersion = System.getProperty("PREVIOUS_SPEC_VERSION");
+    String previousVersionsLatestPatch = System.getProperty("PREVIOUS_VERSIONS_LATEST_PATCH");
+    String previousVersionsLatestSpec = System.getProperty("PREVIOUS_VERSIONS_LATEST_ SPEC");
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {
         Executor[][] result = new Executor[1][1];
-        result[0][0] = TestUtils.getExecutor(previousVersion);
+        result[0][0] = TestUtils.getExecutor(version);
         return result;
     }
 
@@ -47,15 +47,15 @@ public class UpdateToolTest {
         //Test dist list
         TestUtils.verifyDistList(executor);
         //Test installation
-        TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, previousToolVersion);
+        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
 
         //Test `ballerina update`
         executor.executeCommand("ballerina update", true);
-        TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
+        TestUtils.testInstallation(executor, version, specVersion, latestToolVersion);
 
         //Execute all ballerina dist commands once updated
-        TestUtils.testDistCommands(executor, previousVersion, previousSpecVersion, toolVersion, previousVersion,
-                previousSpecVersion, previousVersionsLatestPatch, latestToolVersion);
+        TestUtils.testDistCommands(executor, latestVersion, latestSpecVersion, latestToolVersion, previousVersion,
+                previousSpecVersion, previousVersionsLatestPatch);
 
         executor.uninstall();
         executor.cleanArtifacts();

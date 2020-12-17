@@ -46,8 +46,16 @@ test {
     systemProperty 'BALLERINA_VERSION', project.properties['ballerinaVersion']
     systemProperty 'SPEC_VERSION', project.properties['specVersion']
     systemProperty 'TOOL_VERSION', project.properties['toolVersion']
-    systemProperty 'LATEST_TOOL_VERSION', project.properties['latestToolVersion']
     systemProperty 'LATEST_PATCH_VERSION', project.properties['latestPatchVersion']
+    systemProperty 'LATEST_SPEC_VERSION', project.properties['latestSpecVersion']
+    systemProperty 'LATEST_TOOL_VERSION', project.properties['latestToolVersion']
+
+    systemProperty 'PREVIOUS_BALLERINA_VERSION', project.properties['previousBallerinaVersion']
+    systemProperty 'PREVIOUS_SPEC_VERSION', project.properties['previousSpecVersion']
+    systemProperty 'PREVIOUS_TOOL_VERSION', project.properties['previousToolVersion']
+    systemProperty 'PREVIOUS_VERSIONS_LATEST_PATCH', project.properties['previousVersionsLatestPatch']
+    systemProperty 'PREVIOUS_VERSIONS_LATEST_SPEC', project.properties['previousVersionsLatestSpec']
+    systemProperty 'PREVIOUS_VERSIONS_LATEST_TOOL', project.properties['previousVersionsLatestTool']
 }
 
 repositories {
