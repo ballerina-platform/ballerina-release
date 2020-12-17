@@ -100,6 +100,7 @@ public class Utils {
             file.createNewFile();
             file.setExecutable(true);
             PrintWriter writer = new PrintWriter(file.getPath(), "UTF-8");
+            System.out.println(command);
             writer.println(command);
             writer.close();
 
