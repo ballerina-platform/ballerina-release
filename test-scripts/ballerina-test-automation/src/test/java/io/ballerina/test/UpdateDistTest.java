@@ -44,7 +44,7 @@ public class UpdateDistTest {
     public void testDistCommands(Executor executor) {
         executor.transferArtifacts();
         executor.install();
-
+        executor.executeCommand("ballerina dist list", false);
         //Test installation
         TestUtils.testInstallation(executor, version, specVersion, toolVersion);
         executor.executeCommand("ballerina update", true);

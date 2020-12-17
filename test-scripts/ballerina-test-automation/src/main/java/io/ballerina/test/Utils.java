@@ -115,6 +115,7 @@ public class Utils {
         } catch (Exception e) {
             System.out.print("Error occurred");
         }
+        System.out.println(output);
         return output;
     }
 

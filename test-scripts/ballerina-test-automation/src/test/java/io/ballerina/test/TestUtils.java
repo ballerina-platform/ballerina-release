@@ -66,7 +66,6 @@ public class TestUtils {
 
         //Test `ballerina dist list`
         String actualOutput = executor.executeCommand("ballerina dist list", false);
-        System.out.println(actualOutput);
         Assert.assertTrue(actualOutput.contains("1.0.0"));
         Assert.assertTrue(actualOutput.contains("1.1.0"));
         Assert.assertTrue(actualOutput.contains("1.2.0"));
@@ -118,7 +117,6 @@ public class TestUtils {
      * @param toolVersion Installed tool version
      */
     public static void testInstallation(Executor executor, String version, String specVersion, String toolVersion) {
-        System.out.println(executor.executeCommand("ballerina -v", false));
         Assert.assertEquals(executor.executeCommand("ballerina -v", false),
                 TestUtils.getVersionOutput(version, specVersion, toolVersion));
     }
@@ -133,11 +131,10 @@ public class TestUtils {
         executor.executeCommand("ballerina dist list", false);
         //Test `Fetching compatible JRE dependency`
         String output = executor.executeCommand("ballerina dist pull 1.2.10", true);
-        System.out.println(output);
         Assert.assertTrue(output.contains("Downloading 1.2.10"));
         Assert.assertTrue(output.contains("Fetching the dependencies for '1.2.10' from the remote server..."));
-        Assert.assertTrue(output.contains("Downloading jdk8u202-b08-jre"));
-        Assert.assertTrue(output.contains("'slp1' successfully set as the active distribution"));
+        Assert.assertTrue(output.contains("Downloading jdk8u265-b01-jre"));
+        Assert.assertTrue(output.contains("'1.2.10' successfully set as the active distribution"));
         TestUtils.testInstallation(executor, "1.2.10", "2020R1", toolVersion);
 
         Path userDir = Paths.get(System.getProperty("user.dir"));
@@ -149,7 +146,6 @@ public class TestUtils {
         Assert.assertTrue(Files.exists(projectPath.resolve("target/bin/module1.jar")));
 
         output = executor.executeCommand("ballerina dist pull slp7", true);
-        System.out.println(output);
         Assert.assertTrue(output.contains("Downloading slp7"));
         Assert.assertTrue(output.contains("Fetching the dependencies for 'slp7' from the remote server..."));
         Assert.assertTrue(output.contains("Downloading jdk-11.0.8+10-jre"));
