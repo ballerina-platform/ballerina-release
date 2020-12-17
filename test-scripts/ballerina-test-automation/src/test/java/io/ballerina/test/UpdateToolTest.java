@@ -23,7 +23,7 @@ public class UpdateToolTest {
     String version = System.getProperty("BALLERINA_VERSION");
     String specVersion = System.getProperty("SPEC_VERSION");
     String toolVersion = System.getProperty("TOOL_VERSION");
-    String latestVersion = System.getProperty("LATEST_BALLERINA_VERSION");
+    String latestVersion = System.getProperty("LATEST_PATCH_VERSION");
     String latestSpecVersion = System.getProperty("LATEST_SPEC_VERSION");
     String latestToolVersion = System.getProperty("LATEST_TOOL_VERSION");
 
