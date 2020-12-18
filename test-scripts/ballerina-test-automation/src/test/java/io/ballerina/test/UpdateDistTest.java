@@ -24,11 +24,11 @@ public class UpdateDistTest {
     String version = System.getProperty("BALLERINA_VERSION");
     String specVersion = System.getProperty("SPEC_VERSION");
     String toolVersion = System.getProperty("TOOL_VERSION");
-    String latestToolVersion = System.getProperty("LATEST_TOOL_VERSION");
 
-    String previousVersion = "1.2.0";
-    String previousSpecVersion = "2020R1";
-    String previousVersionsLatestPatch = System.getProperty("LATEST_PATCH_VERSION");;
+
+    String previousVersion = System.getProperty("PREVIOUS_BALLERINA_VERSION");
+    String previousSpecVersion = System.getProperty("PREVIOUS_SPEC_VERSION");
+    String previousToolVersion = System.getProperty("PREVIOUS_TOOL_VERSION");
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {
@@ -42,8 +42,7 @@ public class UpdateDistTest {
         executor.transferArtifacts();
         executor.install();
 
-        TestUtils.testDistCommands(executor, version, specVersion, toolVersion, previousVersion, previousSpecVersion,
-                previousVersionsLatestPatch, latestToolVersion);
+        TestUtils.testDistCommands(executor, version, specVersion, toolVersion, previousVersion, previousSpecVersion, previousToolVersion);
 
         executor.uninstall();
         executor.cleanArtifacts();

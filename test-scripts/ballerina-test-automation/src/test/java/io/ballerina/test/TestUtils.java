@@ -61,8 +61,7 @@ public class TestUtils {
     }
 
     public static void testDistCommands(Executor executor, String version, String specVersion, String toolVersion,
-                                        String previousVersion, String previousSpecVersion,
-                                        String previousVersionsLatestPatch, String latestToolVersion) {
+                                        String previousVersion, String previousSpecVersion, String latestToolVersion) {
         //Test installation
         TestUtils.testInstallation(executor, version, specVersion, toolVersion);
 
@@ -75,39 +74,39 @@ public class TestUtils {
 
         //Test `ballerina dist pull`
         executor.executeCommand("ballerina dist pull "
-                + TestUtils.getSupportedVersion(toolVersion, previousVersion), true);
+                + TestUtils.getSupportedVersion(toolVersion), true);
 
         TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
 
         //Test Update notification message
         if (isSupportedRelease(previousVersion)) {
             //TODO : This is a bug and have fixed in the update tool. Need to update here once new version is released.
-            String expectedOutput = "A new version of Ballerina is available: jballerina-" + previousVersionsLatestPatch
-                    + "\nUse 'ballerina dist pull jballerina-" + previousVersionsLatestPatch
+            String expectedOutput = "A new version of Ballerina is available: jballerina-" + version
+                    + "\nUse 'ballerina dist pull jballerina-" + version
                     + "' to download and use the distribution\n\n";
             //  Assert.assertEquals(executor.executeCommand("ballerina build help", false), expectedOutput);
         }
 
         //Test `ballerina dist use`
-        executor.executeCommand("ballerina dist use " + TestUtils.getSupportedVersion(toolVersion, version), true);
+        executor.executeCommand("ballerina dist use " + TestUtils.getSupportedVersion(version), true);
 
         //Verify the the installation
         TestUtils.testInstallation(executor, version, specVersion, toolVersion);
 
         //Test `ballerina dist update`
-        executor.executeCommand("ballerina dist use " + TestUtils.getSupportedVersion(toolVersion, previousVersion),
+        executor.executeCommand("ballerina dist use " + TestUtils.getSupportedVersion(previousVersion),
                 true);
-        executor.executeCommand("ballerina dist remove " + TestUtils.getSupportedVersion(toolVersion, version), true);
+        executor.executeCommand("ballerina dist remove " + TestUtils.getSupportedVersion(version), true);
 
 
         //TODO: Temporary attempt
         executor.executeCommand("ballerina update", true);
 
         executor.executeCommand("ballerina dist update", true);
-        TestUtils.testInstallation(executor, previousVersionsLatestPatch, previousSpecVersion, latestToolVersion);
+        TestUtils.testInstallation(executor, version, specVersion, latestToolVersion);
 
         //Try `ballerina dist remove`
-        executor.executeCommand("ballerina dist remove " + TestUtils.getSupportedVersion(toolVersion, previousVersion),
+        executor.executeCommand("ballerina dist remove " + TestUtils.getSupportedVersion(previousVersion),
                 true);
     }
 
@@ -221,8 +220,8 @@ public class TestUtils {
         Assert.assertEquals(executor.executeCommand("ballerina add module1'", false), expectedOutput);
     }
 
-    private static String getSupportedVersion(String toolVersion, String version) {
-        if (TestUtils.isOldToolVersion(toolVersion)) {
+    private static String getSupportedVersion(String version) {
+        if (version.contains("1.")) {
             return "jballerina-" + version;
         }
         if (version.contains(TestUtils.SWAN_LAKE_KEYWORD)) {
