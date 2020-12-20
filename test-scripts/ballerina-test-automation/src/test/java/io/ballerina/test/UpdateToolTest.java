@@ -16,7 +16,6 @@
 
 package io.ballerina.test;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -25,7 +24,6 @@ public class UpdateToolTest {
     String version = System.getProperty("BALLERINA_VERSION");
     String specVersion = System.getProperty("SPEC_VERSION");
     String toolVersion = System.getProperty("TOOL_VERSION");
-
 
     String previousVersion = System.getProperty("PREVIOUS_BALLERINA_VERSION");
     String previousSpecVersion = System.getProperty("PREVIOUS_SPEC_VERSION");
@@ -45,6 +43,7 @@ public class UpdateToolTest {
 
         //Test dist list
         TestUtils.verifyDistList(executor);
+
         //Test installation
         TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, previousToolVersion);
 
@@ -54,7 +53,7 @@ public class UpdateToolTest {
 
         //Execute all ballerina dist commands once updated
         TestUtils.testDistCommands(executor, previousVersion, previousSpecVersion, toolVersion, previousVersion,
-                previousSpecVersion, previousToolVersion);
+                previousSpecVersion, version);
 
         executor.uninstall();
         executor.cleanArtifacts();

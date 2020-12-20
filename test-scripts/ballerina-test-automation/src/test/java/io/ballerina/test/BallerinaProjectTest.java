@@ -20,13 +20,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
-public class UpdateDistTest {
+public class BallerinaProjectTest {
     String version = System.getProperty("BALLERINA_VERSION");
     String specVersion = System.getProperty("SPEC_VERSION");
     String toolVersion = System.getProperty("TOOL_VERSION");
-
-    String previousVersion = System.getProperty("PREVIOUS_BALLERINA_VERSION");
-    String previousSpecVersion = System.getProperty("PREVIOUS_SPEC_VERSION");
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {
@@ -36,12 +33,12 @@ public class UpdateDistTest {
     }
 
     @Test(dataProvider = "getExecutors")
-    public void testDistCommands(Executor executor) {
+    public void testProject(Executor executor) {
         executor.transferArtifacts();
         executor.install();
 
-        TestUtils.testDistCommands(executor, version, specVersion, toolVersion, previousVersion, previousSpecVersion,
-                version);
+        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
+        TestUtils.testProject(executor);
 
         executor.uninstall();
         executor.cleanArtifacts();

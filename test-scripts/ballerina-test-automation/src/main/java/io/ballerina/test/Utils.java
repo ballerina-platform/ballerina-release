@@ -101,9 +101,8 @@ public class Utils {
             file.setExecutable(true);
             PrintWriter writer = new PrintWriter(file.getPath(), "UTF-8");
             writer.println(command);
-            System.out.println(command);
             writer.close();
-
+            System.out.println(command);
             ProcessBuilder pb = new ProcessBuilder(file.getPath());
             Process p = pb.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));

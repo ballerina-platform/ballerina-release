@@ -36,7 +36,7 @@ public class CentralTest {
         executor.transferArtifacts();
         executor.install();
         //Checks part as output varies depending on the network speed
-        Assert.assertTrue(executor.executeCommand("ballerina pull ballerinax/sdfc", false)
+        Assert.assertTrue(executor.executeCommand("ballerina pull ballerinax/sdfc", true)
                 .contains("ballerinax/sfdc:2.1.3 pulled from central successfully"));
         executor.uninstall();
         executor.cleanArtifacts();

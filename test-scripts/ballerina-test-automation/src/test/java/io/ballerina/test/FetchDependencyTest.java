@@ -21,14 +21,18 @@ import org.testng.annotations.Test;
 
 
 public class FetchDependencyTest {
-    String version = "1.2.10";
-    String specVersion = "2020R1";
-    String toolVersion = "0.8.10";
+    String version = System.getProperty("BALLERINA_VERSION");
+    String specVersion = System.getProperty("SPEC_VERSION");
+    String toolVersion = System.getProperty("TOOL_VERSION");
+
+    String previousVersion = System.getProperty("PREVIOUS_BALLERINA_VERSION");
+    String previousSpecVersion = System.getProperty("PREVIOUS_SPEC_VERSION");
+    String previousToolVersion = System.getProperty("PREVIOUS_TOOL_VERSION");
 
     @DataProvider(name = "getExecutors")
     public Object[][] dataProviderMethod() {
         Executor[][] result = new Executor[1][1];
-        result[0][0] = TestUtils.getExecutor(version);
+        result[0][0] = TestUtils.getExecutor(previousVersion);
         return result;
     }
 
@@ -37,7 +41,11 @@ public class FetchDependencyTest {
         executor.transferArtifacts();
         executor.install();
 
-        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
+        TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, previousToolVersion);
+        //Test `ballerina update`
+        executor.executeCommand("ballerina update", true);
+        TestUtils.testInstallation(executor, version, version, toolVersion);
+
         TestUtils.testDependencyFetch(executor, version, specVersion, toolVersion);
 
         executor.uninstall();
