@@ -19,6 +19,7 @@ package io.ballerina.test;
 
 import org.testng.Assert;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -177,7 +178,6 @@ public class TestUtils {
      * @param toolVersion Installed tool version
      */
     public static void testInstallation(Executor executor, String version, String specVersion, String toolVersion) {
-        System.out.println(executor.executeCommand("ballerina -v", true));
         Assert.assertEquals(executor.executeCommand("ballerina -v", true),
                 TestUtils.getVersionOutput(version, specVersion, toolVersion));
     }
