@@ -1,6 +1,8 @@
-name: Python package
+name: Website Update
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ website-update ]
 
 jobs:
   build:
