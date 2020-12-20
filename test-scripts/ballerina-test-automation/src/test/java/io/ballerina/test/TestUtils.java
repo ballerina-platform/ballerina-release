@@ -74,9 +74,9 @@ public class TestUtils {
 
         //Test `ballerina dist pull`
         executor.executeCommand("ballerina dist pull "
-                + TestUtils.getSupportedVersion(toolVersion), true);
+                + TestUtils.getSupportedVersion(version), true);
 
-        TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
+        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
 
         //Test Update notification message
         if (isSupportedRelease(previousVersion)) {
