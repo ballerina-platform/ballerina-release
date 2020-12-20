@@ -61,9 +61,10 @@ public class TestUtils {
     }
 
     public static void testDistCommands(Executor executor, String version, String specVersion, String toolVersion,
-                                        String previousVersion, String previousSpecVersion, String latestToolVersion) {
+                                        String previousVersion, String previousSpecVersion, String previousToolVersion) {
         //Test installation
         TestUtils.testInstallation(executor, version, specVersion, toolVersion);
+        executor.executeCommand("ballerina update", true);
 
         //Test `ballerina dist list`
         String actualOutput = executor.executeCommand("ballerina dist list", false);
@@ -98,12 +99,8 @@ public class TestUtils {
                 true);
         executor.executeCommand("ballerina dist remove " + TestUtils.getSupportedVersion(version), true);
 
-
-        //TODO: Temporary attempt
-        executor.executeCommand("ballerina update", true);
-
         executor.executeCommand("ballerina dist update", true);
-        TestUtils.testInstallation(executor, version, specVersion, latestToolVersion);
+        TestUtils.testInstallation(executor, version, specVersion, previousToolVersion);
 
         //Try `ballerina dist remove`
         executor.executeCommand("ballerina dist remove " + TestUtils.getSupportedVersion(previousVersion),
