@@ -207,18 +207,27 @@ public class TestUtils {
      * Test project and module creation.
      *
      * @param executor Executor for relevant operating system
+     * @param previousVersion Ballerina version to be installed
+     * @param previousSpecVersion Installed language specification
+     * @param toolVersion Installed tool version
      */
-    public void testProject(Executor executor) {
-        String expectedOutput = "Created new Ballerina project at project1\n" +
-                "\n" +
-                "Next:\n" +
-                "    Move into the project directory and use `ballerina add <module-name>` to\n" +
-                "    add a new Ballerina module.\n";
-        Assert.assertEquals(executor.executeCommand("ballerina new project1", false), expectedOutput);
+    public static void testProject(Executor executor, String previousVersion, String previousSpecVersion, String toolVersion) {
+        executor.executeCommand("ballerina new sampleProject1 && cd sampleProject1 && ballerina add module1" +
+                " && ballerina build", false);
+        Path userDir = Paths.get(System.getProperty("user.dir"));
+        Path projectPath = userDir.resolve("sampleProject1");
+        Assert.assertTrue(Files.exists(projectPath));
+        Assert.assertTrue(Files.isDirectory(projectPath.resolve("modules").resolve("module1")));
+        Assert.assertTrue(Files.exists(projectPath.resolve("target/bin/sampleProject1.jar")));
 
-        executor.executeCommand("cd project1", false);
-        expectedOutput = "Added new ballerina module at 'src/module1'\n";
-        Assert.assertEquals(executor.executeCommand("ballerina add module1'", false), expectedOutput);
+        executor.executeCommand("ballerina dist pull " + previousVersion, true);
+        testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
+        executor.executeCommand("ballerina new sampleProject2 && cd sampleProject2 && ballerina add module1" +
+                " && ballerina build module1", false);
+        projectPath = userDir.resolve("sampleProject2");
+        Assert.assertTrue(Files.exists(projectPath));
+        Assert.assertTrue(Files.isDirectory(projectPath.resolve("src").resolve("module1")));
+        Assert.assertTrue(Files.exists(projectPath.resolve("target/bin/module1.jar")));
     }
 
     private static String getSupportedVersion(String toolVersion, String version) {
