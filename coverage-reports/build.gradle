@@ -25,12 +25,125 @@ configurations {
 }
 
 dependencies {
-//    exec group: 'org.ballerinalang',  name: 'graphql-ballerina', version: '0.1.3-SNAPSHOT', ext: "exec", classifier: 'jacoco'
-    exec group: 'org.ballerinalang',  name: 'project-api-test', version: '2.0.0-alpha3-SNAPSHOT', ext: "exec", classifier: 'jacoco'
-    exec group: 'org.ballerinalang',  name: 'testerina-integration-test', version: '2.0.0-alpha3-SNAPSHOT', ext: "exec", classifier: 'jacoco'
+    /* jacoco exec files */
 
-    jar group: 'org.ballerinalang',  name: 'ballerina-cli', version: '2.0.0-alpha3-SNAPSHOT'
-    jar group: 'org.ballerinalang',  name: 'ballerina-lang', version: '2.0.0-alpha3-SNAPSHOT'
+    // Standard Libraries
+//    exec group: 'org.ballerinalang',  name: 'graphql-ballerina', version: '0.1.3-SNAPSHOT', ext: "exec", classifier: 'jacoco'
+
+    // ballerina-lang repo
+    exec group: 'org.ballerinalang',  name: 'observability-symbol-collector', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-core', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-config', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+//    exec group: 'org.ballerinalang',  name: 'lib-creator', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'jballerina-benchmark-test', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'toml-parser', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'observability-test-utils', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-bindgen', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-lang-test', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-cli-module', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'language-server-commons', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+//    exec group: 'org.ballerinalang',  name: 'ballerina-io', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-compiler-api-test', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-observability', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'jballerina-unit-test', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'maven-resolver', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+//    exec group: 'org.ballerinalang',  name: 'docerina-gradle-plugin', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'project-api-test', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'formatter-cli', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-treegen', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'central-client', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'diagram-util', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'formatter-core', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-cli', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'testerina-integration-test', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'bir-spec', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-lang', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-parser', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'testerina-runtime', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-test-utils', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'benchmarks', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerinalang-data-mapper', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-compiler-plugin-test', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-observability-internal', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-tools-api', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+//    exec group: 'org.ballerinalang',  name: 'ballerina-test-common', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-logging', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-runtime', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'jballerina-integration-test', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-runtime-api', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'docerina', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang',  name: 'ballerina-spec-conformance-tests', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
+
+    /* Jar dependencies*/
+
+    // Standard Libraries
+
+    // ballerina-lang
+    jar group: 'org.ballerinalang',  name: 'observability-symbol-collector', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'debug-adapter-runtime', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'debug-adapter-core', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'debug-adapter-cli', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-metrics-extension', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'language-server-core', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'language-server-cli', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'language-server-stdio-launcher', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'language-server-stdlib', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-core', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-config', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'toml-parser', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-bindgen', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-cli-module', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'language-server-commons', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-observability', version: project.ballerinaLangVersion
+//    jar group: 'org.ballerinalang',  name: 'maven-resolver', version: project.ballerinaLangVersion  // TODO: check why irrelevant classes are added
+    jar group: 'org.ballerinalang',  name: 'formatter-cli', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-treegen', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'central-client', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'diagram-util', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'formatter-core', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-cli', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-lang', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'bir-spec', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-parser', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'testerina-runtime', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'benchmarks', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerinalang-data-mapper', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-observability-internal', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-tools-api', version: project.ballerinaLangVersion
+//    jar group: 'org.ballerinalang',  name: 'ballerina-test-common', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-logging', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-runtime', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-runtime-api', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'docerina', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'testerina-core', version: project.ballerinaLangVersion
+
+    // ballerina-lang - langlibs
+    jar group: 'org.ballerinalang',  name: 'jballerina.java', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'internal', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'annotations', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'array', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'bool', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'decimal', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'error', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'floatingpoint', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'future', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'integer', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'map', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'object', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'query', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'runtime', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'stream', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'string', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'table', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'ballerina-lang-test', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'transaction', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'typedesc', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'value', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'xml', version: project.ballerinaLangVersion
+
+    /* Other */
+    jar group: 'org.ballerinalang',  name: 'shell-cli', version: project.ballerinaLangVersion
+    jar group: 'org.ballerinalang',  name: 'shell-core', version: project.ballerinaLangVersion
 }
 
 repositories {
