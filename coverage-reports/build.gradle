@@ -19,14 +19,18 @@ apply plugin: 'jacoco'
 
 configurations {
     exec
-    jar
+    jar {
+        transitive = false
+    }
 }
 
 dependencies {
+//    exec group: 'org.ballerinalang',  name: 'graphql-ballerina', version: '0.1.3-SNAPSHOT', ext: "exec", classifier: 'jacoco'
     exec group: 'org.ballerinalang',  name: 'project-api-test', version: '2.0.0-alpha3-SNAPSHOT', ext: "exec", classifier: 'jacoco'
     exec group: 'org.ballerinalang',  name: 'testerina-integration-test', version: '2.0.0-alpha3-SNAPSHOT', ext: "exec", classifier: 'jacoco'
 
-    jar group: 'org.ballerinalang',  name: 'project-api-test', version: '2.0.0-alpha3-SNAPSHOT'
+    jar group: 'org.ballerinalang',  name: 'ballerina-cli', version: '2.0.0-alpha3-SNAPSHOT'
+    jar group: 'org.ballerinalang',  name: 'ballerina-lang', version: '2.0.0-alpha3-SNAPSHOT'
 }
 
 repositories {
@@ -50,22 +54,28 @@ task getDeps(type: Copy) {
     into "$buildDir/jacoco"
 }
 
-task getClassFiles(type: Copy) {
-    from configurations.jar
-    into "$buildDir/classes"
+task extractClassFiles(type: Copy) {
+    for(file in configurations.jar) {
+        from zipTree(file).matching {
+            include '**/*.class'
+            exclude 'module-info.class'
+        }
+        into "$buildDir/classes"
+    }
 }
 
 task codeCoverageReport(type: JacocoReport) {
     executionData fileTree("$buildDir/jacoco/").matching {
         include "**.exec"
     }
+    additionalClassDirs files("$buildDir/classes/")
     reports {
         html.enabled true
     }
 }
 
 codeCoverageReport.dependsOn(getDeps)
-codeCoverageReport.dependsOn(getClassFiles)
+codeCoverageReport.dependsOn(extractClassFiles)
 
 group 'io.ballerina'
 version '1.0-SNAPSHOT'
