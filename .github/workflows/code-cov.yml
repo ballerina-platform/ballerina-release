@@ -6,6 +6,7 @@ on:
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron:  '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   ubuntu-build:
@@ -18,14 +19,17 @@ jobs:
           java-version: 1.8
 
       - name: Build with Gradle
-        working-directory: ./code-coverage
+        env:
+          packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
+        working-directory: ./coverage-reports
         run: ./gradlew codeCoverageReport --stacktrace -scan --console=plain --no-daemon
 
       - name: Zip Code Coverage html file
-        run: zip -r codecoverage.zip code-coverage/build/reports/jacoco/codeCoverageReport/html
+        run: zip -r codecoverage.zip coverage-reports/build/reports/jacoco/codeCoverageReport/html
 
       - name: Archive Code Coverage JSON
         uses: actions/upload-artifact@v2
         with:
           name: Code Coverage JSON
-          path: code-coverage/build/reports/jacoco/codeCoverageReport/codecoverage.zip
+          path: coverage-reports/build/reports/jacoco/codeCoverageReport/codecoverage.zip
