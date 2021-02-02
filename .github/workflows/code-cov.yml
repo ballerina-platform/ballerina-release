@@ -1,0 +1,31 @@
+# This workflow will generate a code coverage report
+
+name: Generate and archive a Jacoco code coverage report
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 0 * * *'
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Build with Gradle
+        working-directory: ./code-coverage
+        run: ./gradlew codeCoverageReport --stacktrace -scan --console=plain --no-daemon
+
+      - name: Zip Code Coverage html file
+        run: zip -r codecoverage.zip code-coverage/build/reports/jacoco/codeCoverageReport/html
+
+      - name: Archive Code Coverage JSON
+        uses: actions/upload-artifact@v2
+        with:
+          name: Code Coverage JSON
+          path: code-coverage/build/reports/jacoco/codeCoverageReport/codecoverage.zip
