@@ -179,12 +179,10 @@ def classesDirectory = "${buildDir}/classes"
 def jacocoDirectory = "${buildDir}/jacoco"
 
 task unzipStdlibs() {
-    doLast {
-        configurations.zip.asFileTree.each { artifact ->
-            copy {
-                from zipTree(artifact)
-                into new File("${testableJarDirectory}")
-            }
+    configurations.zip.asFileTree.each { artifact ->
+        copy {
+            from zipTree(artifact)
+            into new File("${testableJarDirectory}")
         }
     }
 }
