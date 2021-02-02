@@ -153,6 +153,13 @@ repositories {
         url = 'https://repo.maven.apache.org/maven2'
     }
     maven {
+        url = 'https://maven.pkg.github.com/ballerina-platform/ballerina-lang'
+        credentials {
+            username System.getenv("packageUser")
+            password System.getenv("packagePAT")
+        }
+    }
+    maven {
          name = "GitHubPackages"
          url = uri("https://maven.pkg.github.com/ballerina-platform/module-ballerina-graphql")
          credentials {
