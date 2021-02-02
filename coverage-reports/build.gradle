@@ -29,7 +29,8 @@ dependencies {
     /* jacoco exec files */
 
     // Standard Libraries
-    exec group: 'org.ballerinalang',  name: 'encoding-ballerina', version: "${stdlibEncodingVersion}", ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang', name: 'encoding-ballerina', version: "${stdlibEncodingVersion}", ext: "exec", classifier: 'jacoco'
+    exec group: 'org.ballerinalang', name: 'graphql-ballerina', version: "${stdlibGraphqlVersion}", ext: "exec", classifier: 'jacoco'
 
     // ballerina-lang repo
     exec group: 'org.ballerinalang',  name: 'observability-symbol-collector', version: project.ballerinaLangVersion, ext: "exec", classifier: 'jacoco'
@@ -78,7 +79,8 @@ dependencies {
     /* Jar dependencies*/
 
     // Standard Libraries
-    zip group: 'org.ballerinalang',  name: 'encoding-ballerina', version: "${stdlibEncodingVersion}", ext: "zip", classifier: 'testable-jars'
+    zip group: 'org.ballerinalang', name: 'encoding-ballerina', version: "${stdlibEncodingVersion}", ext: "zip", classifier: 'testable-jars'
+    zip group: 'org.ballerinalang', name: 'graphql-ballerina', version: "${stdlibGraphqlVersion}", ext: "zip", classifier: 'testable-jars'
 
     // ballerina-lang
     jar group: 'org.ballerinalang',  name: 'observability-symbol-collector', version: project.ballerinaLangVersion
@@ -155,59 +157,76 @@ repositories {
         url = 'https://repo.maven.apache.org/maven2'
     }
     maven {
-         name = "GitHubPackages"
-         url = uri("https://maven.pkg.github.com/ballerina-platform/module-ballerina-encoding")
-         credentials {
-           username = System.getenv("packageUser")
-           password = System.getenv("packagePAT")
-         }
-     }
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/ballerina-platform/module-ballerina-encoding")
+        credentials {
+            username = System.getenv("packageUser")
+            password = System.getenv("packagePAT")
+        }
+    }
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/ballerina-platform/module-ballerina-graphql")
+        credentials {
+            username = System.getenv("packageUser")
+            password = System.getenv("packagePAT")
+        }
+    }
 }
 
-task getTestableJars(type: Copy) {
-    from configurations.zip
-    into "${buildDir}/testable-jars"
-}
+def testableJarDirectory = "${buildDir}/testable-jars"
+def classesDirectory = "${buildDir}/classes"
+def jacocoDirectory = "${buildDir}/jacoco"
 
 task unzipStdlibs() {
-    dependsOn (getTestableJars)
     doLast {
         configurations.zip.asFileTree.each { artifact ->
             copy {
                 from zipTree(artifact)
-                into new File("${buildDir}/classes")
+                into new File("${testableJarDirectory}")
             }
         }
     }
 }
 
+task unpackTestableJars(type: Copy) {
+    fileTree("${testableJarDirectory}").forEach { file ->
+        from zipTree(file).matching {
+            exclude 'tests'
+            include '**/*.class'
+        }
+        into "${classesDirectory}"
+    }
+}
+
 task getDeps(type: Copy) {
     from configurations.exec
-    into "$buildDir/jacoco"
+    into "${jacocoDirectory}"
 }
 
 task extractClassFiles(type: Copy) {
-    for(file in configurations.jar) {
+    for (file in configurations.jar) {
         from zipTree(file).matching {
             include '**/*.class'
             exclude 'module-info.class'
         }
-        into "$buildDir/classes"
+        into "${classesDirectory}"
     }
 }
 
 task codeCoverageReport(type: JacocoReport) {
-    executionData fileTree("$buildDir/jacoco/").matching {
+    executionData fileTree("${jacocoDirectory}").matching {
         include "**.exec"
     }
-    additionalClassDirs files("$buildDir/classes/")
+    additionalClassDirs files("${classesDirectory}")
     reports {
         html.enabled true
     }
 }
 
 codeCoverageReport.dependsOn(getDeps)
-codeCoverageReport.dependsOn(unzipStdlibs)
+unpackTestableJars.dependsOn(unzipStdlibs)
+codeCoverageReport.dependsOn(unpackTestableJars)
 codeCoverageReport.dependsOn(extractClassFiles)
 
 group 'io.ballerina'
