@@ -28,8 +28,8 @@ jobs:
       - name: Zip Code Coverage html file
         run: zip -r codecoverage.zip coverage-reports/build/reports/jacoco/codeCoverageReport/html
 
-      - name: Archive Code Coverage JSON
+      - name: Archive Code Coverage Zip
         uses: actions/upload-artifact@v2
         with:
-          name: Code Coverage JSON
-          path: coverage-reports/build/reports/jacoco/codeCoverageReport/codecoverage.zip
+          name: Code Coverage Zip
+          path: codecoverage.zip
