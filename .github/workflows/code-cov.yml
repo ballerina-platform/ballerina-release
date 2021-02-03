@@ -25,11 +25,8 @@ jobs:
         working-directory: ./coverage-reports
         run: ./gradlew codeCoverageReport --stacktrace -scan --console=plain --no-daemon
 
-      - name: Zip Code Coverage html file
-        run: zip -r codecoverage.zip coverage-reports/build/reports/jacoco/codeCoverageReport/html
-
       - name: Archive Code Coverage Zip
         uses: actions/upload-artifact@v2
         with:
-          name: Code Coverage Zip
-          path: codecoverage.zip
+          name: CoverageReport
+          path: coverage-reports/build/reports/jacoco/codeCoverageReport/html
