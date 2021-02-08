@@ -28,18 +28,25 @@ public class TestUtils {
     private static final String OS = System.getProperty("os.name").toLowerCase(Locale.getDefault());
     private static final String SWAN_LAKE_KEYWORD = "swan-lake";
 
-
-    public static String getVersionOutput(String jBallerinaVersion, String specVersion, String toolVersion) {
+    /**
+     * Get version output for version command.
+     *  @param jBallerinaVersion Installed jBallerina version
+     *  @param specVersion Installed language specification
+     *  @param toolVersion Installed tool version
+     *  @param versionDisplayText display text for installed jBallerina version
+     *
+     * @return version output
+     */
+    public static String getVersionOutput(String jBallerinaVersion, String specVersion, String toolVersion,
+                                          String versionDisplayText) {
         String toolText = TestUtils.isOldToolVersion(toolVersion) ? "Ballerina tool" : "Update Tool";
         if (jBallerinaVersion.contains(TestUtils.SWAN_LAKE_KEYWORD)) {
-            String[] versionParts = jBallerinaVersion.split("-");
-            return "Ballerina Swan Lake Preview " + versionParts[versionParts.length - 1].replace("preview", "") + "\n"
-                    + "Language specification " + specVersion + "\n" + toolText + " " + toolVersion + "\n";
+            return "Ballerina Swan Lake " + versionDisplayText + "\n" + "Language specification " + specVersion +
+                    "\n" + toolText + " " + toolVersion + "\n";
         }
 
         String ballerinaReference = isSupportedRelease(jBallerinaVersion) ? "jBallerina" : "Ballerina";
-        return ballerinaReference + " " + jBallerinaVersion + "\n" +
-                "Language specification " + specVersion + "\n" +
+        return ballerinaReference + " " + jBallerinaVersion + "\n" + "Language specification " + specVersion + "\n" +
                 toolText + " " + toolVersion + "\n";
     }
 
@@ -64,7 +71,8 @@ public class TestUtils {
                                         String previousVersion, String previousSpecVersion,
                                         String previousVersionsLatestPatch, String latestToolVersion) {
         //Test installation
-        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
+        TestUtils.testInstallation(executor, version, specVersion, toolVersion,
+                System.getProperty("VERSION_DISPLAY_TEXT"));
 
         //Test `ballerina dist list`
         String actualOutput = executor.executeCommand("bal dist list", false);
@@ -77,7 +85,7 @@ public class TestUtils {
         executor.executeCommand("bal dist pull "
                 + TestUtils.getSupportedVersion(toolVersion, previousVersion), true);
 
-        TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
+        TestUtils.testInstallation(executor, previousVersion, previousSpecVersion, toolVersion, "1.2.0");
 
         //Test Update notification message
         if (isSupportedRelease(previousVersion)) {
@@ -85,14 +93,14 @@ public class TestUtils {
             String expectedOutput = "A new version of Ballerina is available: jballerina-" + previousVersionsLatestPatch
                     + "\nUse 'ballerina dist pull jballerina-" + previousVersionsLatestPatch
                     + "' to download and use the distribution\n\n";
-            //  Assert.assertEquals(executor.executeCommand("ballerina build help", false), expectedOutput);
+              Assert.assertEquals(executor.executeCommand("ballerina build help", false), expectedOutput);
         }
 
         //Test `ballerina dist use`
         executor.executeCommand("bal dist use " + TestUtils.getSupportedVersion(toolVersion, version), true);
 
         //Verify the the installation
-        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
+        TestUtils.testInstallation(executor, version, specVersion, toolVersion, System.getProperty("VERSION_DISPLAY_TEXT"));
 
         //Test `ballerina dist update`
         executor.executeCommand("bal dist use " + TestUtils.getSupportedVersion(toolVersion, previousVersion),
@@ -104,7 +112,7 @@ public class TestUtils {
         executor.executeCommand("bal update", true);
 
         executor.executeCommand("bal dist update", true);
-        TestUtils.testInstallation(executor, previousVersionsLatestPatch, previousSpecVersion, latestToolVersion);
+        TestUtils.testInstallation(executor, previousVersionsLatestPatch, previousSpecVersion, latestToolVersion, "1.2.13");
 
         //Try `ballerina dist remove`
         executor.executeCommand("bal dist remove " + TestUtils.getSupportedVersion(toolVersion, previousVersion),
@@ -119,9 +127,10 @@ public class TestUtils {
      * @param specVersion Installed language specification
      * @param toolVersion Installed tool version
      */
-    public static void testInstallation(Executor executor, String version, String specVersion, String toolVersion) {
+    public static void testInstallation(Executor executor, String version, String specVersion, String toolVersion,
+                                        String versionDisplayText) {
         Assert.assertEquals(executor.executeCommand("bal -v", false),
-                TestUtils.getVersionOutput(version, specVersion, toolVersion));
+                TestUtils.getVersionOutput(version, specVersion, toolVersion, versionDisplayText));
     }
 
     /**
@@ -134,7 +143,7 @@ public class TestUtils {
      */
     public static void testDependencyFetch(Executor executor, String version, String specVersion, String toolVersion) {
         //Test installation
-        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
+        TestUtils.testInstallation(executor, version, specVersion, toolVersion, "1.2.10");
         executor.executeCommand("bal dist list", false);
         //Test `Fetching compatible JRE dependency`
         String output = executor.executeCommand("bal dist pull slp1", true);
@@ -142,7 +151,7 @@ public class TestUtils {
         Assert.assertTrue(output.contains("Fetching the dependencies for 'slp1' from the remote server..."));
         Assert.assertTrue(output.contains("Downloading jdk8u202-b08-jre"));
         Assert.assertTrue(output.contains("'slp1' successfully set as the active distribution"));
-        TestUtils.testInstallation(executor, "swan-lake-preview1", "v2020-06-18", toolVersion);
+        TestUtils.testInstallation(executor, "swan-lake-preview1", "v2020-06-18", toolVersion, "Preview 1");
 
         Path userDir = Paths.get(System.getProperty("user.dir"));
         executor.executeCommand("bal new project1 && cd project1 && bal add module1 && " +
@@ -157,7 +166,7 @@ public class TestUtils {
         Assert.assertTrue(output.contains("Fetching the dependencies for 'slp7' from the remote server..."));
         Assert.assertTrue(output.contains("Downloading jdk-11.0.8+10-jre"));
         Assert.assertTrue(output.contains("'slp7' successfully set as the active distribution"));
-        TestUtils.testInstallation(executor, "swan-lake-preview7", "v2020-09-22", toolVersion);
+        TestUtils.testInstallation(executor, "swan-lake-preview7", "v2020-09-22", toolVersion, "Preview 7");
 
         executor.executeCommand("bal new project2 && cd project2 && bal add module1 && " +
                 "bal build", false);
@@ -221,7 +230,7 @@ public class TestUtils {
         Assert.assertTrue(Files.exists(projectPath.resolve("target/bin/sampleProject1.jar")));
 
         executor.executeCommand("bal dist pull " + previousVersion, true);
-        testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
+        testInstallation(executor, previousVersion, previousSpecVersion, toolVersion, "1.2.13");
         executor.executeCommand("bal new sampleProject2 && cd sampleProject2 && bal add module1" +
                 " && bal build module1", false);
         projectPath = userDir.resolve("sampleProject2");
