@@ -19,6 +19,9 @@ package io.ballerina.test;
 
 import org.testng.Assert;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
 
 public class TestUtils {
@@ -59,7 +62,7 @@ public class TestUtils {
 
     public static void testDistCommands(Executor executor, String version, String specVersion, String toolVersion,
                                         String previousVersion, String previousSpecVersion,
-                                        String previousVersionsLatestPatch) {
+                                        String previousVersionsLatestPatch, String latestToolVersion) {
         //Test installation
         TestUtils.testInstallation(executor, version, specVersion, toolVersion);
 
@@ -99,10 +102,9 @@ public class TestUtils {
 
         //TODO: Temporary attempt
         executor.executeCommand("ballerina update", true);
-        toolVersion = "0.8.8";
 
         executor.executeCommand("ballerina dist update", true);
-        TestUtils.testInstallation(executor, previousVersionsLatestPatch, previousSpecVersion, toolVersion);
+        TestUtils.testInstallation(executor, previousVersionsLatestPatch, previousSpecVersion, latestToolVersion);
 
         //Try `ballerina dist remove`
         executor.executeCommand("ballerina dist remove " + TestUtils.getSupportedVersion(toolVersion, previousVersion),
@@ -120,6 +122,61 @@ public class TestUtils {
     public static void testInstallation(Executor executor, String version, String specVersion, String toolVersion) {
         Assert.assertEquals(executor.executeCommand("ballerina -v", false),
                 TestUtils.getVersionOutput(version, specVersion, toolVersion));
+    }
+
+    /**
+     * Execute smoke testing to verify fetching dependencies.
+     *
+     * @param executor    Executor for relevant operating system
+     * @param version     Installed Ballerina version
+     * @param specVersion Installed language specification
+     * @param toolVersion Installed tool version
+     */
+    public static void testDependencyFetch(Executor executor, String version, String specVersion, String toolVersion) {
+        //Test installation
+        TestUtils.testInstallation(executor, version, specVersion, toolVersion);
+        executor.executeCommand("ballerina dist list", false);
+        //Test `Fetching compatible JRE dependency`
+        String output = executor.executeCommand("ballerina dist pull slp1", true);
+        Assert.assertTrue(output.contains("Downloading slp1"));
+        Assert.assertTrue(output.contains("Fetching the dependencies for 'slp1' from the remote server..."));
+        Assert.assertTrue(output.contains("Downloading jdk8u202-b08-jre"));
+        Assert.assertTrue(output.contains("'slp1' successfully set as the active distribution"));
+        TestUtils.testInstallation(executor, "swan-lake-preview1", "v2020-06-18", toolVersion);
+
+        Path userDir = Paths.get(System.getProperty("user.dir"));
+        executor.executeCommand("ballerina new project1 && cd project1 && ballerina add module1 && " +
+                "ballerina build module1", false);
+        Path projectPath = userDir.resolve("project1");
+        Assert.assertTrue(Files.isDirectory(projectPath));
+        Assert.assertTrue(Files.isDirectory(projectPath.resolve("src").resolve("module1")));
+        Assert.assertTrue(Files.exists(projectPath.resolve("target/bin/module1.jar")));
+
+        output = executor.executeCommand("ballerina dist pull slp7", true);
+        Assert.assertTrue(output.contains("Downloading slp7"));
+        Assert.assertTrue(output.contains("Fetching the dependencies for 'slp7' from the remote server..."));
+        Assert.assertTrue(output.contains("Downloading jdk-11.0.8+10-jre"));
+        Assert.assertTrue(output.contains("'slp7' successfully set as the active distribution"));
+        TestUtils.testInstallation(executor, "swan-lake-preview7", "v2020-09-22", toolVersion);
+
+        executor.executeCommand("ballerina new project2 && cd project2 && ballerina add module1 && " +
+                "ballerina build", false);
+        projectPath = userDir.resolve("project2");
+        Assert.assertTrue(Files.isDirectory(projectPath));
+        Assert.assertTrue(Files.isDirectory(projectPath.resolve("modules").resolve("module1")));
+        Assert.assertTrue(Files.exists(projectPath.resolve("target/bin/project2.jar")));
+    }
+
+    /**
+     * Execute smoke testing to verify dist list.
+     *
+     * @param executor    Executor for relevant operating system
+     */
+    public static void verifyDistList(Executor executor) {
+        String actualOutput = executor.executeCommand("ballerina dist list", false);
+        Assert.assertTrue(actualOutput.contains("1.0.0"));
+        Assert.assertTrue(actualOutput.contains("1.1.0"));
+        Assert.assertTrue(actualOutput.contains("1.2.0"));
     }
 
     /**
@@ -150,18 +207,27 @@ public class TestUtils {
      * Test project and module creation.
      *
      * @param executor Executor for relevant operating system
+     * @param previousVersion Ballerina version to be installed
+     * @param previousSpecVersion Installed language specification
+     * @param toolVersion Installed tool version
      */
-    public void testProject(Executor executor) {
-        String expectedOutput = "Created new Ballerina project at project1\n" +
-                "\n" +
-                "Next:\n" +
-                "    Move into the project directory and use `ballerina add <module-name>` to\n" +
-                "    add a new Ballerina module.\n";
-        Assert.assertEquals(executor.executeCommand("ballerina new project1", false), expectedOutput);
+    public static void testProject(Executor executor, String previousVersion, String previousSpecVersion, String toolVersion) {
+        executor.executeCommand("ballerina new sampleProject1 && cd sampleProject1 && ballerina add module1" +
+                " && ballerina build", false);
+        Path userDir = Paths.get(System.getProperty("user.dir"));
+        Path projectPath = userDir.resolve("sampleProject1");
+        Assert.assertTrue(Files.exists(projectPath));
+        Assert.assertTrue(Files.isDirectory(projectPath.resolve("modules").resolve("module1")));
+        Assert.assertTrue(Files.exists(projectPath.resolve("target/bin/sampleProject1.jar")));
 
-        executor.executeCommand("cd project1", false);
-        expectedOutput = "Added new ballerina module at 'src/module1'\n";
-        Assert.assertEquals(executor.executeCommand("ballerina add module1'", false), expectedOutput);
+        executor.executeCommand("ballerina dist pull " + previousVersion, true);
+        testInstallation(executor, previousVersion, previousSpecVersion, toolVersion);
+        executor.executeCommand("ballerina new sampleProject2 && cd sampleProject2 && ballerina add module1" +
+                " && ballerina build module1", false);
+        projectPath = userDir.resolve("sampleProject2");
+        Assert.assertTrue(Files.exists(projectPath));
+        Assert.assertTrue(Files.isDirectory(projectPath.resolve("src").resolve("module1")));
+        Assert.assertTrue(Files.exists(projectPath.resolve("target/bin/module1.jar")));
     }
 
     private static String getSupportedVersion(String toolVersion, String version) {
