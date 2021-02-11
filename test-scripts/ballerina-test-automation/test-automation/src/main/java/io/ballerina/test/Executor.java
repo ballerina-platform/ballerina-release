@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2020, WSO2 Inc. (http://wso2.com) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,14 +12,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
-rootProject.name = 'ballerina-test-automation'
-include 'test-automation'
-include 'installer-test'
-include 'update-tool-test'
+package io.ballerina.test;
 
-project(':test-automation').projectDir = "$rootDir/test-automation" as File
-project(':installer-test').projectDir = "$rootDir/installer-test" as File
-project(':update-tool-test').projectDir = "$rootDir/update-tool-test" as File
+public interface Executor {
+    String transferArtifacts();
+
+    String install();
+
+    String executeCommand(String command, boolean isAdminMode, String toolVersion);
+
+    String uninstall();
+
+    String cleanArtifacts();
+}
