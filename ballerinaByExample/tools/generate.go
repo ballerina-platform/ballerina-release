@@ -450,7 +450,7 @@ func  parseExamples(categories []BBECategory) []*Example {
             }
 
             rearrangedPaths = appendFilePath(rearrangedPaths, descFilePath)
-			rearrangedPaths = appendFilePath(rearrangedPaths, metatagsFilePath)
+            rearrangedPaths = appendFilePath(rearrangedPaths, metatagsFilePath)
             for _, balFilePath := range balFiles {
                 var extension = filepath.Ext(balFilePath)
                 var currentSample = balFilePath[0:len(balFilePath)-len(extension)]
