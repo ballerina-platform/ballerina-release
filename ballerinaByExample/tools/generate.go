@@ -239,7 +239,6 @@ func parseHashFile(sourcePath string) (string, string) {
 }
 
 func parseMetatagsFile(sourcePath string) map[string]string {
-    fmt.Println("Source: ", sourcePath);
     lines := readLines(sourcePath)
     tagMap := make(map[string]string)
     for _, line := range lines {
