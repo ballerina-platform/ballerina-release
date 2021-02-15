@@ -37,6 +37,7 @@ var balFileExtn = ".bal"
 var protoFilePathExtn = ".proto"
 var yamlFileExtn = ".yaml"
 var descriptionFileExtn = ".description"
+var metatagsFileExtn = ".metatags"
 var serverOutputPrefix = ".server"
 var clientOutputPrefix = ".client"
 
@@ -167,6 +168,8 @@ type Example struct {
     GoCode, GoCodeHash, UrlHash string
     Segs                        [][]*Seg
     Descs			string
+    MetaDescription             string
+    MetaKeywords                string
     NextExample                 *Example
     PrevExample                 *Example
     FullCode			string
@@ -233,6 +236,22 @@ func getBBECategories() []BBECategory {
 func parseHashFile(sourcePath string) (string, string) {
     lines := readLines(sourcePath)
     return lines[0], lines[1]
+}
+
+func parseMetatagsFile(sourcePath string) map[string]string {
+    lines := readLines(sourcePath)
+    tagMap := make(map[string]string)
+    for _, line := range lines {
+        line = strings.TrimSpace(line);
+        if len(line) == 0 {
+            continue;
+        }
+        i := strings.Index(line, ":")
+        key := strings.TrimSpace(line[:i])
+        value := strings.TrimSpace(line[i+1:])
+        tagMap[key] = value;
+    }
+    return tagMap
 }
 
 func generatePlaygroundLink(example Example) string {
@@ -418,6 +437,12 @@ func  parseExamples(categories []BBECategory) []*Example {
                 continue
             }
 
+            metatagsFilePath := fileDirPath + exampleBaseFilePattern + metatagsFileExtn
+            if !isFileExist(metatagsFilePath) {
+                fmt.Fprintln(os.Stderr, "\t[WARN] Skipping bbe : "+exampleName+". "+metatagsFilePath+" is not found")
+                continue
+            }
+
             balFiles := getAllBalFiles(fileDirPath);
             if len(balFiles) == 0 {
                 fmt.Fprintln(os.Stderr, "\t[WARN] Skipping bbe : " + exampleName + ". No *.bal files are found")
@@ -425,6 +450,7 @@ func  parseExamples(categories []BBECategory) []*Example {
             }
 
             rearrangedPaths = appendFilePath(rearrangedPaths, descFilePath)
+            rearrangedPaths = appendFilePath(rearrangedPaths, metatagsFilePath)
             for _, balFilePath := range balFiles {
                 var extension = filepath.Ext(balFilePath)
                 var currentSample = balFilePath[0:len(balFilePath)-len(extension)]
@@ -513,8 +539,11 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
         }
     }()
     for _, sourcePath := range sourcePaths {
-
-        if strings.HasSuffix(sourcePath, ".hash") {
+        if strings.HasSuffix(sourcePath, metatagsFileExtn) {
+            metaTags := parseMetatagsFile(sourcePath)
+            example.MetaDescription = metaTags["description"];
+            example.MetaKeywords = metaTags["keywords"];
+        } else if strings.HasSuffix(sourcePath, ".hash") {
             example.GoCodeHash, example.UrlHash = parseHashFile(sourcePath)
         } else {
             sourceSegs, filecontents, _ := parseAndRenderSegs(sourcePath)
