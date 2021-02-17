@@ -417,7 +417,12 @@ func  parseExamples(categories []BBECategory) []*Example {
                 example.EnablePlayground = !disablePlayground;
             }
             example.Version = version
-            example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
+            // Only in Ballerina 1.x versions, the "v" prefix was used
+            if strings.HasPrefix(version, "1.") {
+                example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
+            } else {
+                example.RedirectVersion = version;
+            }
             example.IsLatest = isLatest
             example.Segs = make([][]*Seg, 0)
             sourcePaths := mustGlob(examplesDir + "/" + exampleId + "/*")
