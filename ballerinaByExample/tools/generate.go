@@ -443,10 +443,6 @@ func  parseExamples(categories []BBECategory) []*Example {
             }
 
             metatagsFilePath := fileDirPath + exampleBaseFilePattern + metatagsFileExtn
-            if !isFileExist(metatagsFilePath) {
-                fmt.Fprintln(os.Stderr, "\t[WARN] Skipping bbe : "+exampleName+". "+metatagsFilePath+" is not found")
-                continue
-            }
 
             balFiles := getAllBalFiles(fileDirPath);
             if len(balFiles) == 0 {
@@ -455,7 +451,9 @@ func  parseExamples(categories []BBECategory) []*Example {
             }
 
             rearrangedPaths = appendFilePath(rearrangedPaths, descFilePath)
-            rearrangedPaths = appendFilePath(rearrangedPaths, metatagsFilePath)
+            if isFileExist(metatagsFilePath) {
+                rearrangedPaths = appendFilePath(rearrangedPaths, metatagsFilePath)
+            }
             for _, balFilePath := range balFiles {
                 var extension = filepath.Ext(balFilePath)
                 var currentSample = balFilePath[0:len(balFilePath)-len(extension)]
