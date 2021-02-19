@@ -13,7 +13,7 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       working-directory: ./test-scripts/ballerina-test-automation/installer-test
-      run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
+      run: .././gradlew build --stacktrace -scan --console=plain --no-daemon
   installer-macos-build:
     runs-on: macos-latest
     steps:
@@ -24,7 +24,7 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       working-directory: ./test-scripts/ballerina-test-automation/installer-test
-      run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
+      run: .././gradlew build --stacktrace -scan --console=plain --no-daemon
   update-tool-ubuntu-build:
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +35,7 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       working-directory: ./test-scripts/ballerina-test-automation/update-tool-test
-      run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
+      run: .././gradlew build --stacktrace -scan --console=plain --no-daemon
   update-tool-macos-build:
     runs-on: macos-latest
     steps:
@@ -46,7 +46,7 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       working-directory: ./test-scripts/ballerina-test-automation/update-tool-test
-      run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
+      run: .././gradlew build --stacktrace -scan --console=plain --no-daemon
   # windows-build:
   #   runs-on: windows-latest
   #   steps:
