@@ -3,7 +3,7 @@ name: Installer Tests
 on: [push, pull_request]
 
 jobs:
-  ubuntu-build:
+  installer-ubuntu-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -12,9 +12,9 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      working-directory: ./test-scripts/ballerina-test-automation
+      working-directory: ./test-scripts/ballerina-test-automation/installer-test
       run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
-  macos-build:
+  installer-macos-build:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -23,7 +23,29 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      working-directory: ./test-scripts/ballerina-test-automation
+      working-directory: ./test-scripts/ballerina-test-automation/installer-test
+      run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
+  update-tool-ubuntu-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build with Gradle
+      working-directory: ./test-scripts/ballerina-test-automation/update-tool-test
+      run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
+  update-tool-macos-build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build with Gradle
+      working-directory: ./test-scripts/ballerina-test-automation/update-tool-test
       run: ./gradlew build --stacktrace -scan --console=plain --no-daemon
   # windows-build:
   #   runs-on: windows-latest
