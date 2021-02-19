@@ -238,6 +238,12 @@ func parseHashFile(sourcePath string) (string, string) {
     return lines[0], lines[1]
 }
 
+func yamlEscape(val string) string {
+    val = strings.ReplaceAll(val, "&", "&amp;");
+    val = strings.ReplaceAll(val, ":", "&#58;");
+    return val;
+}
+
 func parseMetatagsFile(sourcePath string) map[string]string {
     lines := readLines(sourcePath)
     tagMap := make(map[string]string)
@@ -577,8 +583,10 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
     return currentExamplesList, nil
 }
 
+var funcMap = template.FuncMap{"yamlEscape": yamlEscape};
+
 func renderIndex(examples []*Example) {
-    indexTmpl := template.New("index")
+    indexTmpl := template.New("index").Funcs(funcMap);
     _, err := indexTmpl.Parse(mustReadFile(templateDir + "index.tmpl"))
     check(err)
     indexF, err := os.Create(siteDir + "/index.html")
@@ -587,7 +595,7 @@ func renderIndex(examples []*Example) {
 }
 
 func renderIndexTemp(examples []*Example) {
-    indexTmpl := template.New("indexTemp")
+    indexTmpl := template.New("indexTemp").Funcs(funcMap);
     _, err := indexTmpl.Parse(mustReadFile(templateDir + "index-temp.tmpl"))
     check(err)
     indexF, err := os.Create(siteDir + "/index.html")
@@ -596,7 +604,7 @@ func renderIndexTemp(examples []*Example) {
 }
 
 func renderExamples(examples []*Example) {
-    exampleTmpl := template.New("example")
+    exampleTmpl := template.New("example").Funcs(funcMap);
     _, err := exampleTmpl.Parse(mustReadFile(templateDir + "example.tmpl"))
     check(err)
 
@@ -613,7 +621,7 @@ func renderExamples(examples []*Example) {
 }
 
 func renderExamplesTemp(examples []*Example) {
-    exampleTmpl := template.New("example")
+    exampleTmpl := template.New("example").Funcs(funcMap);
     _, err := exampleTmpl.Parse(mustReadFile(templateDir + "example-temp.tmpl"))
     check(err)
 
