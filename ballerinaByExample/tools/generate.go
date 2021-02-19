@@ -417,7 +417,12 @@ func  parseExamples(categories []BBECategory) []*Example {
                 example.EnablePlayground = !disablePlayground;
             }
             example.Version = version
-            example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
+            // Only in Ballerina 1.x versions, the "v" prefix was used
+            if strings.HasPrefix(version, "1.") {
+                example.RedirectVersion = "v" + strings.ReplaceAll(version, ".", "-");
+            } else {
+                example.RedirectVersion = version;
+            }
             example.IsLatest = isLatest
             example.Segs = make([][]*Seg, 0)
             sourcePaths := mustGlob(examplesDir + "/" + exampleId + "/*")
@@ -438,10 +443,6 @@ func  parseExamples(categories []BBECategory) []*Example {
             }
 
             metatagsFilePath := fileDirPath + exampleBaseFilePattern + metatagsFileExtn
-            if !isFileExist(metatagsFilePath) {
-                fmt.Fprintln(os.Stderr, "\t[WARN] Skipping bbe : "+exampleName+". "+metatagsFilePath+" is not found")
-                continue
-            }
 
             balFiles := getAllBalFiles(fileDirPath);
             if len(balFiles) == 0 {
@@ -450,7 +451,9 @@ func  parseExamples(categories []BBECategory) []*Example {
             }
 
             rearrangedPaths = appendFilePath(rearrangedPaths, descFilePath)
-            rearrangedPaths = appendFilePath(rearrangedPaths, metatagsFilePath)
+            if isFileExist(metatagsFilePath) {
+                rearrangedPaths = appendFilePath(rearrangedPaths, metatagsFilePath)
+            }
             for _, balFilePath := range balFiles {
                 var extension = filepath.Ext(balFilePath)
                 var currentSample = balFilePath[0:len(balFilePath)-len(extension)]
