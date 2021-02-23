@@ -35,6 +35,8 @@ var filePathWordSeparator = "_"
 var consoleOutputExtn = ".out"
 var balFileExtn = ".bal"
 var protoFilePathExtn = ".proto"
+var confFilePathExtn = ".conf"
+var tomlFilePathExtn = ".toml"
 var yamlFileExtn = ".yaml"
 var descriptionFileExtn = ".description"
 var metatagsFileExtn = ".metatags"
@@ -137,6 +139,10 @@ func whichLexer(path string) string {
     } else if strings.HasSuffix(path, balFileExtn) {
         return "bal"
     } else if strings.HasSuffix(path, protoFilePathExtn) {
+        return "bal"
+    } else if strings.HasSuffix(path, confFilePathExtn) {
+        return "bal"
+    } else if strings.HasSuffix(path, tomlFilePathExtn) {
         return "bal"
     } else if strings.HasSuffix(path, yamlFileExtn) {
         return "yaml"
@@ -487,6 +493,21 @@ func  parseExamples(categories []BBECategory) []*Example {
                     }
                 }
             }
+
+            confFiles := getFilesWithExtension(fileDirPath, confFilePathExtn);
+            for _, confFilePath := range confFiles {
+                rearrangedPaths = appendFilePath(rearrangedPaths, confFilePath)
+            }
+            tomlFiles := getFilesWithExtension(fileDirPath, tomlFilePathExtn);
+            for _, tomlFilePath := range tomlFiles {
+                rearrangedPaths = appendFilePath(rearrangedPaths, tomlFilePath)
+            }
+
+            // When there are files like .conf and .toml files (e.g. Config.toml), they will end up as the last content
+            // in the BBE. And we can't order them by associating those files with the source file names. So we make 
+            // a best effort approach at the end to put the last .out file to the end of the BBE.
+            rearrangedPaths = bringLastOutFileToEnd(rearrangedPaths);
+
             sourcePaths = rearrangedPaths
             updatedExamplesList, pErr := prepareExample(sourcePaths, example, examples)
             if pErr != nil {
@@ -512,6 +533,19 @@ func  parseExamples(categories []BBECategory) []*Example {
     return examples
 }
 
+func bringLastOutFileToEnd(filePaths []string) ([]string) {
+    for i := len(filePaths) - 1; i >= 0; i-- {
+        path := filePaths[i]
+        var extension = filepath.Ext(path)
+        if extension == consoleOutputExtn {
+            filePaths = append(filePaths[:i], filePaths[i+1:]...);
+            filePaths = append(filePaths, path);
+            break;
+        }
+    }
+    return filePaths;
+}
+
 func getAllBalFiles(sourceDir string) []string {
     var files []string
     filepath.Walk(sourceDir, func(path string, f os.FileInfo, _ error) error {
@@ -522,6 +556,21 @@ func getAllBalFiles(sourceDir string) []string {
                     files = append(files,sourceDir+ f.Name())
                 }
 
+            }
+        }
+        return nil
+    })
+    return files
+}
+
+func getFilesWithExtension(sourceDir string, ext string) []string {
+    var files []string
+    filepath.Walk(sourceDir, func(path string, f os.FileInfo, _ error) error {
+        if !f.IsDir() {
+            if filepath.Ext(path) == ext {
+                if filepath.FromSlash(sourceDir + f.Name())  == filepath.FromSlash(path) {
+                    files = append(files,sourceDir + f.Name())
+                }
             }
         }
         return nil
