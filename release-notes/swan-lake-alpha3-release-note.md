@@ -10,7 +10,7 @@ This Alpha3 release includes the language features planned for the Ballerina Swa
     - [For Existing Users](#for-existing-users)
     - [For New Users](#for-new-users)
 - [Highlights](#highlights)
-- [What is new in Ballerina Swan Lake Alpha2](#what-is-new-in-ballerina-swan-lake-alpha2)
+- [What is new in Ballerina Swan Lake Alpha3](#what-is-new-in-ballerina-swan-lake-alpha3)
     - [Language](#language)
     - [Runtime](#runtime)
     - [Standard Library](#standard-library)
