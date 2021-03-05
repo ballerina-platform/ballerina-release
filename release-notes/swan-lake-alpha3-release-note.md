@@ -42,6 +42,31 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Language
 
+##### Improvements in annotations support
+
+`mapping-constructor-expr` is now allowed be optional in annotations, if the annotation type requires a map.
+```ballerina
+type Annot record {|
+    int[] i = [];
+|};
+
+public annotation Annot v1 on function;
+
+@v1
+public function main(string... argv) {
+}
+```
+
+##### New `xml:text()` function
+
+This method can be used to select all the items in a sequence that are of type `xml:Text`.
+
+```ballerina
+xml name = xml `<name>Dan<middleName>Gerhard</middleName><!-- This is a comment -->Brown</name>`;
+xml:Text nameText = (name/*).text();
+io:println(nameText); // "DanBrown"
+```
+
 #### Runtime
 
 #### Standard Library
