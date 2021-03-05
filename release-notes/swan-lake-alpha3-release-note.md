@@ -55,4 +55,4 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 ##### Debugger
 
 #### Breaking Changes
-1. Restrict `==` and `!=` equality operators being used with `readonly` type.
+1. Restrict the `==` and `!=` equality operators being used with the `readonly` type.
