@@ -42,9 +42,11 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Language
 
-##### Improvements in annotations support
+##### Improvement to Annotation Attachment with Empty Mapping Constructor Expression
 
-`mapping-constructor-expr` is now allowed be optional in annotations, if the annotation type requires a map.
+If the type of the annotation is a mapping type for which an empty mapping constructor is valid, the mapping constructor expression is no longer mandatory in the annotation attachment.
+
+The absence of the mapping constructor expression in such an annotation attachment is equivalent to specifying a mapping constructor expression with no fields.
 ```ballerina
 type Annot record {|
     int[] i = [];
@@ -52,14 +54,16 @@ type Annot record {|
 
 public annotation Annot v1 on function;
 
-@v1
-public function main(string... argv) {
+@v1 // Same as `@v1 {}`
+public function main() {
 }
 ```
 
-##### New `xml:text()` function
+##### Improved lang library functions
 
-This method can be used to select all the items in a sequence that are of type `xml:Text`.
+###### New `xml:text()` function
+
+This function can be used to select all the items in a sequence that are of type `xml:Text`.
 
 ```ballerina
 xml name = xml `<name>Dan<middleName>Gerhard</middleName><!-- This is a comment -->Brown</name>`;
