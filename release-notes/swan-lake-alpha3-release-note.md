@@ -42,39 +42,34 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Language
 
-##### Module level complex variable support
+##### Support for Module level complex variables
 
-Tuple variable, Record variable and Error variable declaration is now allowed at module level. Unlike simple variables, complex variable declaration must have an initialization.
-Complex variable declaration cannot contain `isolated` or `configurable` qualifier.
+Variable declarations with list, mapping, and error binding patterns are now allowed at module level. Unlike simple variables, these variables must be initialized in the declaration.
+
+Complex variable declarations cannot contain `isolated` or `configurable` qualifier.
+
 ```ballerina
-// Module level tuple variable declaration
+// Module-level variable declaration with a list binding pattern. 
 [int, float] [a, b] = [1, 2.5];
 
-// Module level record variable declaration
-Person {name: Fname, married: Married} = {name: "Jhone", married: true};
+// Module-level variable declaration with a mapping binding pattern.
+Person {name: firstname, married: isMarried} = {name: "Jhone", married: true};
 
 type Person record {|
     string name;
     boolean married;
 |};
 
-// Module level error variable declaration
-UserDefinedError error(message, basicErrorNo = detail) = getError();
-
-type UserDefinedError error <BasicErrorDetail>;
-type BasicErrorDetail record {|
-    int basicErrorNo?;
-    anydata...;
-|};
-
-function getError() returns UserDefinedError {
-    return error UserDefinedError("error message", basicErrorNo = 1);
-}
+// Module-level variable declaration with an error binding pattern.
+error error(message) = error("error message");
 ```
 
-##### Module level public variable support
+##### Support for Module-level Public Variables
 
-Module level variable can be declared as public using `public` qualifier which will be visible to any module. Isolated variables and variables declared with `var` cannot contain `public` qualifier.
+Module-level variables can now be declared as public using the `public` qualifier. Such variables will be visible outside the modules in which they are declared.
+
+Isolated variables and variables declared with `var` cannot be declared as public variables.
+
 ```ballerina
 public string publicName = "Ballerina";
 
