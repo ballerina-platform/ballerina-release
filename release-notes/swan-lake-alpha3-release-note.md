@@ -42,6 +42,35 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Language
 
+##### Improvement to Annotation Attachment with Empty Mapping Constructor Expression
+
+If the type of the annotation is a mapping type for which an empty mapping constructor is valid, the mapping constructor expression is no longer mandatory in the annotation attachment.
+
+The absence of the mapping constructor expression in such an annotation attachment is equivalent to specifying a mapping constructor expression with no fields.
+```ballerina
+type Annot record {|
+    int[] i = [];
+|};
+
+public annotation Annot v1 on function;
+
+@v1 // Same as `@v1 {}`
+public function main() {
+}
+```
+
+##### Improved lang library functions
+
+###### New `xml:text()` function
+
+This function can be used to select all the items in a sequence that are of type `xml:Text`.
+
+```ballerina
+xml name = xml `<name>Dan<middleName>Gerhard</middleName><!-- This is a comment -->Brown</name>`;
+xml:Text nameText = (name/*).text();
+io:println(nameText); // "DanBrown"
+```
+
 #### Runtime
 
 #### Standard Library
