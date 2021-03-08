@@ -42,6 +42,45 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Language
 
+##### Module level complex variable support
+
+Tuple variable, Record variable and Error variable declaration is now allowed at module level. Unlike simple variables, complex variable declaration must have an initialization.
+Complex variable declaration cannot contain `isolated` or `configurable` qualifier.
+```ballerina
+// Module level tuple variable declaration
+[int, float] [a, b] = [1, 2.5];
+
+// Module level record variable declaration
+Person {name: Fname, married: Married} = {name: "Jhone", married: true};
+
+type Person record {|
+    string name;
+    boolean married;
+|};
+
+// Module level error variable declaration
+UserDefinedError error(message, basicErrorNo = detail) = getError();
+
+type UserDefinedError error <BasicErrorDetail>;
+type BasicErrorDetail record {|
+    int basicErrorNo?;
+    anydata...;
+|};
+
+function getError() returns UserDefinedError {
+    return error UserDefinedError("error message", basicErrorNo = 1);
+}
+```
+
+##### Module level public variable support
+
+Module level variable can be declared as public using `public` qualifier which will be visible to any module. Isolated variables and variables declared with `var` cannot contain `public` qualifier.
+```ballerina
+public string publicName = "Ballerina";
+
+public [int, float] [a, b] = [1, 2.5];
+```
+
 ##### Improvement to Annotation Attachment with Empty Mapping Constructor Expression
 
 If the type of the annotation is a mapping type for which an empty mapping constructor is valid, the mapping constructor expression is no longer mandatory in the annotation attachment.
