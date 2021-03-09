@@ -42,26 +42,32 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Language
 
-##### Support for Module level complex variables
+##### Support for Module-level Variables with List, Mapping, and Error Binding Patterns
 
 Variable declarations with list, mapping, and error binding patterns are now allowed at module level. Unlike simple variables, these variables must be initialized in the declaration.
 
-Complex variable declarations cannot contain `isolated` or `configurable` qualifier.
+Also, these variable declarations cannot contain an `isolated` or `configurable` qualifier.
 
 ```ballerina
-// Module-level variable declaration with a list binding pattern. 
-[int, float] [a, b] = [1, 2.5];
-
-// Module-level variable declaration with a mapping binding pattern.
-Person {name: firstname, married: isMarried} = {name: "Jhone", married: true};
-
 type Person record {|
     string name;
     boolean married;
 |};
 
+function getList() returns [int, float] => [1, 2.5];
+
+function getPerson() returns Person => {name: "John", married: true};
+
+function getError() returns error => error("error message", code = 1001, fatal = true);
+
+// Module-level variable declaration with a list binding pattern. 
+[int, float] [a, b] = getList();
+
+// Module-level variable declaration with a mapping binding pattern.
+Person {name: firstName, married: isMarried} = getPerson();
+
 // Module-level variable declaration with an error binding pattern.
-error error(message) = error("error message");
+error error(message, code = errCode) = getError();
 ```
 
 ##### Support for Module-level Public Variables
@@ -71,7 +77,7 @@ Module-level variables can now be declared as public using the `public` qualifie
 Isolated variables and variables declared with `var` cannot be declared as public variables.
 
 ```ballerina
-public string publicName = "Ballerina";
+public string name = "Ballerina";
 
 public [int, float] [a, b] = [1, 2.5];
 ```
