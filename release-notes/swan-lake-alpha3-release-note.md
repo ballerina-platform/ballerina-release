@@ -123,4 +123,6 @@ io:println(nameText); // "DanBrown"
 
 ##### Debugger
 
+Conditional breakpoints are now supported by ballerina debugger.
+
 #### Breaking Changes
