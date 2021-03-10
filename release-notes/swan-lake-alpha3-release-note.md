@@ -120,9 +120,11 @@ io:println(nameText); // "DanBrown"
 #### Developer Tools
 
 ##### Language Server
+###### Completions
 - Completion support for field accesses, varible declarations and assignment expressions are now context aware. i.e: 
   - When we declara a vairiable or perform an assignment, suggestions show the methods/variables which return/are values of same type as the variable.
   - Object and record field accesses now suggest object/record fields sorted at the top.
+###### Rename
 - Rename now validates the `newText` for a valid identifier before performing the rename
 
 ##### Debugger
