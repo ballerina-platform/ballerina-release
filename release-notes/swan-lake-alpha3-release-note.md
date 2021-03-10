@@ -123,6 +123,6 @@ io:println(nameText); // "DanBrown"
 
 ##### Debugger
 
-The debugger now supports conditional breakpoints.
+Now, the debugger supports conditional breakpoints. Conditional expressions can be configured for Ballerina breakpoints in the VSCode debug view.
 
 #### Breaking Changes
