@@ -121,6 +121,44 @@ io:println(nameText); // "DanBrown"
 
 ##### Language Server
 
+##### Ballerina Shell
+
+Ballerina Shell now supports redefining module-level declarations and variable declarations. `/remove NAMES` command can be used to remove one or multiple declarations from snippet memory.
+
+```ballerina
+=$ int i = 3;
+=$ string j = "Hi";
+=$ string i = "Hello";  // Same variable can be redefined
+=$ /remove i j   // Variables can be removed
+=$ i
+| error: undefined symbol 'i'
+|       i
+|       ^
+| Compilation aborted due to errors.
+```
+
+A command-line argument was added with `-f` or `--file` argument name to load module-level declarations within a file. `/file <FILENAME` command can also be used for this purpose, from within the shell. Note that `--force-debug` will now have only a long option; `-f` short option is now used to open the file.
+
+```bash
+$ bal shell -f my_file.bal
+```
+
+Also, error messages for error objects, panics, and fails will show distinct error messages from each other. Panics will show `panic: ERROR` and fails will show `fail ERROR`. Error-values will simply be evaluated to their value.
+
+```ballerina
+=$ error("Error") // Error values will simply evaluate
+error("Error")
+=$ panic error("Error")  // Panics will show as panic runtime errors
+panic: {ballerina}DivisionByZero {"message":" / by zero"}
+| Execution aborted due to unhandled runtime error.
+=$ fail error("Error")  // Fails will show as fails
+fail: Error {}
+```
+
+Qualifiers (e.g., `final`) will now correctly work and `public` will declarations are allowed. Additionally, Ballerina Shell will now correctly work with cyclic type definitions and array binding patterns.
+
+A bug causing some snippets (e.g., `json x = {`) to be incorrectly identified as complete, was fixed.
+
 ##### Debugger
 
 Now, the debugger supports conditional breakpoints. Conditional expressions can be configured for Ballerina breakpoints in the VSCode debug view.
