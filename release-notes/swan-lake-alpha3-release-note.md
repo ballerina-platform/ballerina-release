@@ -137,7 +137,7 @@ Ballerina Shell now supports redefining module-level declarations and variable d
 | Compilation aborted due to errors.
 ```
 
-A command-line argument was added with `-f` or `--file` argument name to load module-level declarations within a file. `/file <FILENAME` command can also be used for this purpose, from within the shell. Note that `--force-debug` will now have only a long option; `-f` short option is now used to open the file.
+Module-level declarations within a file can be loaded using the `-f` or `--file` command-line arguments. `/file <FILENAME` command can also be used for this purpose, from within the shell. Note that `--force-debug` will now have only a long option; `-f` short option is now used to open the file.
 
 ```bash
 $ bal shell -f my_file.bal
