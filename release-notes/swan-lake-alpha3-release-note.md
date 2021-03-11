@@ -124,13 +124,19 @@ io:println(nameText); // "DanBrown"
 ##### Ballerina Shell
 
 - Ballerina Shell now supports redefining module-level definitions and variable declarations. 
-- The `/remove` command can be used to remove one or more declarations from snippet memory.
 
 ```ballerina
 =$ int i = 3;
 =$ string j = "Hi";
 =$ string i = "Hello";  // Same variable can be redefined
-=$ /remove i j   // Variables can be removed
+```
+
+- The `/remove` command can be used to remove one or more declarations from snippet memory.
+
+```ballerina
+=$ int i = 3;
+=$ string j = "Hi";
+=$ /remove i j
 =$ i
 | error: undefined symbol 'i'
 |       i
@@ -144,9 +150,9 @@ io:println(nameText); // "DanBrown"
 $ bal shell -f my_file.bal
 ```
 
-- The `--force-dumb` command-line option will now have only a long option and the short option `-f` is now used to load from a file.
+The `--force-dumb` command-line option will now have only a long option and the short option `-f` is now used to load from a file.
 
-- Ballerina Shell now supports qualifiers, cyclic type definitions, and list binding patterns.
+- Ballerina Shell now supports cyclic type definitions and list binding patterns.
 
 - Ballerina Shell now preserves qualifiers such as the `final` qualifier of a variable declaration.
 
