@@ -144,7 +144,7 @@ io:println(nameText); // "DanBrown"
 | Compilation aborted due to errors.
 ```
 
-- Ballerina Shell can now load definitions and declarations from a file. The file to load from can be specified using the `-f` or `--file` command-line options when launching Ballerina Shell. Alternatively the `/file` command can also be used for this purpose, from within the shell. 
+- Ballerina Shell can now load definitions and declarations from a file. The file to load from can be specified using the `-f` or `--file` command-line options when launching the Ballerina Shell. Alternatively, the `/file` command can also be used for this purpose from within the Shell. 
 
 ```bash
 $ bal shell -f my_file.bal
