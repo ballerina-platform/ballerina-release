@@ -99,6 +99,35 @@ public function main() {
 }
 ```
 
+##### Introduce a new function type
+
+New type `function` has been introduced which belongs all the function values.
+
+```ballerina
+import ballerina/io;
+
+function add(int v1, int v2) returns int {
+    return v1 + v2;
+}
+
+function calculate(int a, int b, int c) returns int {
+    return a + 2 * b + 3 * c;
+}
+
+
+function process(function func, int v1, int v2) returns int {
+    if (func is function (int, int) returns int) {
+        return func(v1, v2);
+    } 
+    return v1 + 2 * v2;
+}
+
+public function main() {
+    io:println("Process Add 1, 2: ", process(add, 1, 2));
+    io:println("Process Calculate 1, 2: ", process(calculate, 1, 2);
+}
+```
+
 ##### Improved lang library functions
 
 ###### New `xml:text()` function
