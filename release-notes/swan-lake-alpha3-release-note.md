@@ -154,7 +154,7 @@ The `--force-dumb` command-line option will now have only a long option and the 
 
 - Ballerina Shell now supports cyclic type definitions and list binding patterns.
 
-- Ballerina Shell now preserves qualifiers such as the `final` qualifier of a variable declaration.
+- The Ballerina Shell now preserves qualifiers such as the `final` qualifier of a variable declaration.
 
 ##### Debugger
 
