@@ -121,6 +121,41 @@ io:println(nameText); // "DanBrown"
 
 ##### Language Server
 
+##### Ballerina Shell
+
+- The Ballerina Shell now supports redefining module-level definitions and variable declarations. 
+
+```ballerina
+=$ int i = 3;
+=$ string j = "Hi";
+=$ string i = "Hello";  // Same variable can be redefined
+```
+
+- A new `/remove` command has been introduced to be used from within the Ballerina Shell to remove one or more declarations from the snippet memory.
+
+```ballerina
+=$ int i = 3;
+=$ string j = "Hi";
+=$ /remove i j
+=$ i
+| error: undefined symbol 'i'
+|       i
+|       ^
+| Compilation aborted due to errors.
+```
+
+- Ballerina Shell can now load definitions and declarations from a file. The file to load from can be specified using the `-f` or `--file` command-line options when launching the Ballerina Shell. Alternatively, the `/file` command can also be used for this purpose from within the Shell. 
+
+```bash
+$ bal shell -f my_file.bal
+```
+
+The `--force-dumb` command-line option will now have only a long option and the short option `-f` is now used to load from a file.
+
+- The Ballerina Shell now supports cyclic type definitions and list binding patterns.
+
+- The Ballerina Shell now preserves qualifiers such as the `final` qualifier of a variable declaration.
+
 ##### Debugger
 
 Now, the debugger supports conditional breakpoints. Conditional expressions can be configured for Ballerina breakpoints in the VSCode debug view.
