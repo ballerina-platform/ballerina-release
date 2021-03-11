@@ -123,7 +123,8 @@ io:println(nameText); // "DanBrown"
 
 ##### Ballerina Shell
 
-Ballerina Shell now supports redefining module-level declarations and variable declarations. `/remove NAMES` command can be used to remove one or multiple declarations from snippet memory.
+- Ballerina Shell now supports redefining module-level definitions and variable declarations. 
+- The `/remove` command can be used to remove one or more declarations from snippet memory.
 
 ```ballerina
 =$ int i = 3;
@@ -137,27 +138,17 @@ Ballerina Shell now supports redefining module-level declarations and variable d
 | Compilation aborted due to errors.
 ```
 
-Module-level declarations within a file can be loaded using the `-f` or `--file` command-line arguments. `/file <FILENAME` command can also be used for this purpose, from within the shell. Note that `--force-debug` will now have only a long option; `-f` short option is now used to open the file.
+- Ballerina Shell can now load definitions and declarations from a file. The file to load from can be specified using the `-f` or `--file` command-line options when launching Ballerina Shell. Alternatively the `/file` command can also be used for this purpose, from within the shell. 
 
 ```bash
 $ bal shell -f my_file.bal
 ```
 
-Also, error messages for error objects, panics, and fails will show distinct error messages from each other. Panics will show `panic: ERROR` and fails will show `fail ERROR`. Error-values will simply be evaluated to their value.
+- The `--force-dumb` command-line option will now have only a long option and the short option `-f` is now used to load from a file.
 
-```ballerina
-=$ error("Error") // Error values will simply evaluate
-error("Error")
-=$ panic error("Error")  // Panics will show as panic runtime errors
-panic: {ballerina}DivisionByZero {"message":" / by zero"}
-| Execution aborted due to unhandled runtime error.
-=$ fail error("Error")  // Fails will show as fails
-fail: Error {}
-```
+- Ballerina Shell now supports qualifiers, cyclic type definitions, and list binding patterns.
 
-Qualifiers (e.g., `final`) will now correctly work and `public` will declarations are allowed. Additionally, Ballerina Shell will now correctly work with cyclic type definitions and array binding patterns.
-
-A bug causing some snippets (e.g., `json x = {`) to be incorrectly identified as complete, was fixed.
+- Ballerina Shell now preserves qualifiers such as the `final` qualifier of a variable declaration.
 
 ##### Debugger
 
