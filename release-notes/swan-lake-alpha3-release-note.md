@@ -123,7 +123,7 @@ io:println(nameText); // "DanBrown"
 
 ##### Ballerina Shell
 
-- Ballerina Shell now supports redefining module-level definitions and variable declarations. 
+- The Ballerina Shell now supports redefining module-level definitions and variable declarations. 
 
 ```ballerina
 =$ int i = 3;
