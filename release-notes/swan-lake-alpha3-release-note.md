@@ -126,3 +126,4 @@ io:println(nameText); // "DanBrown"
 Now, the debugger supports conditional breakpoints. Conditional expressions can be configured for Ballerina breakpoints in the VSCode debug view.
 
 #### Breaking Changes
+1. `==` and `!=` equality expressions can no longer be used with variables of type `readonly`.
