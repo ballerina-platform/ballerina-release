@@ -152,7 +152,7 @@ $ bal shell -f my_file.bal
 
 The `--force-dumb` command-line option will now have only a long option and the short option `-f` is now used to load from a file.
 
-- The Ballerina Shell now supports cyclic-type definitions and list binding patterns.
+- The Ballerina Shell now supports cyclic type definitions and list binding patterns.
 
 - The Ballerina Shell now preserves qualifiers such as the `final` qualifier of a variable declaration.
 
