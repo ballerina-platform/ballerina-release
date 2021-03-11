@@ -131,7 +131,7 @@ io:println(nameText); // "DanBrown"
 =$ string i = "Hello";  // Same variable can be redefined
 ```
 
-- The `/remove` command can be used to remove one or more declarations from snippet memory.
+- A new `/remove` command has been introduced to be used from within the Ballerina Shell to remove one or more declarations from snippet memory.
 
 ```ballerina
 =$ int i = 3;
