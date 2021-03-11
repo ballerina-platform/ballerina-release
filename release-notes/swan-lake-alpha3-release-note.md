@@ -99,32 +99,28 @@ public function main() {
 }
 ```
 
-##### Introduce a new function type
+##### Introduction of the `function` Function Type Descriptor to Represent Any Function
 
-New type `function` has been introduced which belongs all the function values.
+A new `function` function type descriptor has been introduced to represent all function values.
 
 ```ballerina
 import ballerina/io;
-
-function add(int v1, int v2) returns int {
-    return v1 + v2;
+function add(int v1, int v2) returns int => v1 + v2;
+function compare(int v1, int v2) returns boolean => v1 < v2;
+public function main() {
+    // A variable of type `function` can hold any function value.
+    function f = add;
+    io:println("Process (add, 1, 2): ", process(f, 1, 2)); // Prints `Process (add, 1, 2): 3`
+    io:println("Process (compare, 1, 2): ", process(compare, 1, 2)); // Prints `Process (compare, 1, 2): 0`
 }
-
-function calculate(int a, int b, int c) returns int {
-    return a + 2 * b + 3 * c;
-}
-
-
 function process(function func, int v1, int v2) returns int {
+    // A function of type `function` cannot be called directly.
+    // A function value assigned to a `function` typed variable 
+    // can only be called after the type is narrowed to the relevant type.
     if (func is function (int, int) returns int) {
         return func(v1, v2);
-    } 
-    return v1 + 2 * v2;
-}
-
-public function main() {
-    io:println("Process Add 1, 2: ", process(add, 1, 2));
-    io:println("Process Calculate 1, 2: ", process(calculate, 1, 2);
+    }
+    return 0;
 }
 ```
 
