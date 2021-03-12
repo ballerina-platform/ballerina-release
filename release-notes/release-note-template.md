@@ -4,7 +4,7 @@ title: Release Note
 ---
 ### Overview of Ballerina Swan Lake <VERSION>
 
-This <VERSION> release includes the language features planned for the Ballerina Swan Lake release. Moreover, this release includes improvements and bug fixes to the lamguage, runtime, standard library, code to cloud, and developer tooling. This release note lists only the features and updates added after the <VERSION> release of Ballerina Swan Lake.
+This <VERSION> release includes the language features planned for the Ballerina Swan Lake release. Moreover, this release includes improvements and bug fixes to the language, runtime, standard library, code to cloud, and developer tooling. This release note lists only the features and updates added after the <VERSION> release of Ballerina Swan Lake.
 
 - [Updating Ballerina](#updating-ballerina)
     - [For Existing Users](#for-existing-users)
@@ -76,4 +76,3 @@ To view bug fixes, see the Github issues on [C2C](https://github.com/ballerina-p
 To view bug fixes, see the Github milestone issues on the [Lang](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FDevTools), [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32), [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha%22) repos.
 
 #### Breaking Changes
-
