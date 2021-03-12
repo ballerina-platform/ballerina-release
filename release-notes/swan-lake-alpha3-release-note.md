@@ -101,7 +101,7 @@ public function main() {
 
 ##### Introduction of the `function` Function Type Descriptor to Represent Any Function
 
-A new `function` function type descriptor has been introduced to represent all function values.
+A new `function` type descriptor has been introduced to represent all function values.
 
 ```ballerina
 import ballerina/io;
