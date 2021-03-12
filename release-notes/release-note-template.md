@@ -61,7 +61,7 @@ To view bug fixes, see the [Github milestone issues](https://github.com/ballerin
 
 ##### Bug Fixes
 
-To view bug fixes, see the [Github milestone issues](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Swan+Lake+Alpha3%22+label%3AType%2FBug).
+To view bug fixes, see the [Github milestone issues](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+Alpha3%22+label%3AType%2FBug).
 
 #### Code to Cloud
 
