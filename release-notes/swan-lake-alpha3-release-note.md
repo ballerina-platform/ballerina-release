@@ -115,18 +115,17 @@ io:println(nameText); // "DanBrown"
 
 ##### JAVA Runtime API
 
-New runtime java API is introduced for creating distinct errors which supports hierarchical errors.
-
+A new runtime Java API is introduced for creating distinct errors.
 ```java
 BError createError(Module module, String errorTypeName, BString message, BError cause, Object details)
 ```
 
-The runtime java API 'createDistinctError' is deprecated and recommend to use above error creation API. 
+With this change, the `createDistinctError` runtime Java API has been deprecated.
 
 ##### Configurable Variables
 
-Improved error messages for configurable variables by including more information and `Config.toml` line numbers.
-
+Improved error messages are introduced for configurable variables by including more information and the relevant
+ `Config.toml` line numbers.
 #### Standard Library
 
 #### Code to Cloud
