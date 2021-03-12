@@ -105,14 +105,18 @@ A new `function` type descriptor has been introduced to represent all function v
 
 ```ballerina
 import ballerina/io;
+
 function add(int v1, int v2) returns int => v1 + v2;
+
 function compare(int v1, int v2) returns boolean => v1 < v2;
+
 public function main() {
     // A variable of type `function` can hold any function value.
     function f = add;
     io:println("Process (add, 1, 2): ", process(f, 1, 2)); // Prints `Process (add, 1, 2): 3`
     io:println("Process (compare, 1, 2): ", process(compare, 1, 2)); // Prints `Process (compare, 1, 2): 0`
 }
+
 function process(function func, int v1, int v2) returns int {
     // A function of type `function` cannot be called directly.
     // A function value assigned to a `function` typed variable 
