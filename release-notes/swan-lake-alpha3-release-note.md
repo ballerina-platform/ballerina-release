@@ -125,7 +125,7 @@ io:println(nameText); // "DanBrown"
   - When we declare a variable or perform an assignment, suggestions show the variables which are of same type as the variable and methods that return a value of the same type.
   - Object and record field access now suggests object and record fields first.
 ###### Rename
-- Rename now validates the `newText` for a valid identifier before performing the rename
+- Rename now validates if the new name is a valid identifier before performing the rename.
 
 ##### Debugger
 
