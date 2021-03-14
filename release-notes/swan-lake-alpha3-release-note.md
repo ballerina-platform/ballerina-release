@@ -121,7 +121,7 @@ io:println(nameText); // "DanBrown"
 
 ##### Language Server
 ###### Completions
-- Completion support for field accesses, varible declarations and assignment expressions are now context aware. i.e: 
+- Completion support for field access, variable declarations, and assignment expressions are now context aware. i.e: 
   - When we declara a vairiable or perform an assignment, suggestions show the methods/variables which return/are values of same type as the variable.
   - Object and record field accesses now suggest object/record fields sorted at the top.
 ###### Rename
