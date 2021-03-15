@@ -149,8 +149,9 @@ io:println(nameText); // "DanBrown"
 #### Ballerina Packages
 
 #### Introduced Local Repository Support
-Apart from the Ballerina Central remote repository, developers can now push packages to the local repository which can be found at `<user-home>/.ballerina/repositories/local`. Refer the section on changes to CLI commands for information regarding pushing to the local repository.
-To use a package from the local repository, the ‘repository’ has to be specified in the TOML table of the relevant dependency in the `Dependencies.toml` file.
+
+- Apart from the Ballerina Central remote repository, you can now push packages to the local repository which can be found at `<user-home>/.ballerina/repositories/local`. Refer the section on changes to CLI commands for information regarding pushing to the local repository.
+- To use a package from the local repository, the ‘repository’ has to be specified in the TOML table of the relevant dependency in the `Dependencies.toml` file.
 
 E.g., to test a developed package before pushing it to Ballerina Central, build and push it to the local repository using the `push` command and add it to the `Dependencies.toml` file of the depending package as shown below.
 
@@ -207,7 +208,7 @@ repository = "local"
 
 #### OpenAPI
 
-- Added JSON file generated support to the Ballerina to OpenAPI command.
+- Added JSON file generation support to the Ballerina to OpenAPI command.
 
 ```shell
 bal openapi -i <ballerina file> --json
