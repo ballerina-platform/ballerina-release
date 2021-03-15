@@ -146,49 +146,49 @@ io:println(nameText); // "DanBrown"
 
 #### Code to Cloud
 
-### Ballerina Packages
+#### Ballerina Packages
 
-Introduced the local repository support
-Apart from the Ballerina Central remote repository, developers can now push packages to the local repository which can be found at `<user-home>/.ballerina/repositories/local`. Refer CLI changes on the command usage on pushing to local repository
-To use a package from the local repository, the ‘repository’ has to be specified in the toml table of the relevant dependency in Dependencies.toml file
+#### Introduced Local Repository Support
+Apart from the Ballerina Central remote repository, developers can now push packages to the local repository which can be found at `<user-home>/.ballerina/repositories/local`. Refer the section on changes to CLI commands for information regarding pushing to the local repository.
+To use a package from the local repository, the ‘repository’ has to be specified in the TOML table of the relevant dependency in the `Dependencies.toml` file.
 
-E.g. To test a developed package before pushing to Ballerina Central, build and push it to the local repository using the `push` command and add it to the Dependencies.toml file of the depending package as shown below.
+E.g., to test a developed package before pushing it to Ballerina Central, build and push it to the local repository using the `push` command and add it to the `Dependencies.toml` file of the depending package as shown below.
 
 ```toml
 [[dependency]]
 org = "ballerinax"
 name = "googleapis_sheets"
 version = "1.0.0"
-repository = “local”
+repository = "local"
 ```
 
 ### Developer Tools
 
 #### CLI
 
-##### Changes to CLI commands
+##### Changes to CLI Commands
 
 - Build and test commands
   - Support for providing `[(--key=value)...]` is removed from `bal build`. 
 
 - Run command
-  - Providing the project path to the run command is now optional. The default sourceroot is the the present working directory similar to how build command works
-  - Program arguments should be followed by the end-of-options delimiter `--`
+  - Providing the project path to the run command is now optional. The default source root is the present working directory similar to how the build command works.
+  - Program arguments should be followed by the end-of-options delimiter `--`.
 - New and init commands
-  - Introduced creation of `Pacakge.md` file for library template. Passing the `--template lib` flag will create the `Package.md` file additional to the `Ballerina.toml` and the source bal files.
+  - Introduced creation of the `Pacakge.md` file for a library template. Passing the `--template lib` flag will create the `Package.md` file in addition to the `Ballerina.toml` file and the source BAL files.
 - Push command
-  - Introduced pushing to the local repository. Passing `--repository=local` will push the Ballerina archive (.bala) to the local repository. For information about local repository support refer Ballerina Packages changelist[<link>]
+  - Introduced pushing to the local repository. Passing `--repository=local` will push the Ballerina archive (.bala) to the local repository. For information about local repository support, see the [Ballerina Packages Changelist](<link>).
 - Run `bal help <command>` to get more information on the command changes.
 
 - CLI Auto Completion
   - Installing On Linux Bash
-    - Setup auto completion in the current bash shell.
+    - Set up auto-completion in the current bash shell.
   
     ```shell
     source <(bal completion bash)
     ```
 
-    - Setup auto completion permanently in the bash shell.
+    - Set up auto-completion permanently in the bash shell.
 
     ```shell
     echo “source <(bal completion bash)” >> ~/.bashrc
@@ -196,28 +196,28 @@ repository = “local”
 
 #### Test Framework
 
-- Moved Project Test Suite execution to single JVM. Changed from running each Test Suite in a JVM instance. (Improves user experience when debugging tests. No longer prompts to debug each test suite of a project)
-- Support for seamless integration to CICD tools by adding inbuilt path fixes to the Jacoco XML generated for ballerina packages
+- Moved the Project Test Suite execution to a single JVM. Changed from running each Test Suite in a JVM instance. This Improves the user experience when debugging tests. It no longer prompts to debug each test suite of a project.
+- Support for seamless integration of CICD tools by adding inbuilt path fixes to the Jacoco XML generated for Ballerina packages.
 
 #### Debugger
 
-- Added conditional breakpoint support. (Users can now configure conditional expressions for Ballerina breakpoints in the VSCode debug view)
-- Added support to configure environment variables in launch mode.
+- Added conditional breakpoint support. (Conditional expressions can now be configured for Ballerina breakpoints in the Visual Studio Code Debug view).
+- Added support to configure environment variables in the launch mode.
 - Added expression evaluation support for type cast expressions.
 
 #### OpenAPI
 
-- Added json file generated support to the ballerina to openapi command
+- Added JSON file generated support to the Ballerina to OpenAPI command.
 
 ```shell
 bal openapi -i <ballerina file> --json
 ```
 
-- Added improvements for handling ballerina resource function response type in openapi to ballerina command.
+- Added improvements for handling the Ballerina resource function response type in OpenAPI to the Ballerina command.
 
 #### Documentation
 
-- Moved out standard library API documentation to [Ballerina Central Docs](https://docs.central.ballerina.io).
+- Moved the standard library API documentation out to [Ballerina Central Docs](https://docs.central.ballerina.io) from the Ballerina Website.
 
 ##### Language Server
 
