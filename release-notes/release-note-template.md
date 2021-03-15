@@ -68,7 +68,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 ##### Bug Fixes
 
-To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the below repositories.
+To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repositories below.
 
 - [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22)
 - [Docker](https://github.com/ballerina-platform/module-ballerina-docker/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22)
@@ -79,7 +79,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the below
 
 ##### Bug Fixes
 
-To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the below repositories.
+To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repositories below.
 
 - [Lang](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FDevTools)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
