@@ -191,7 +191,7 @@ repository = "local"
     - Set up auto-completion permanently in the bash shell.
 
     ```shell
-    echo “source <(bal completion bash)” >> ~/.bashrc
+    echo "source <(bal completion bash)" >> ~/.bashrc
     ```
 
 #### Test Framework
