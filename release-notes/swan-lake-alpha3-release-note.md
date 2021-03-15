@@ -146,7 +146,78 @@ io:println(nameText); // "DanBrown"
 
 #### Code to Cloud
 
-#### Developer Tools
+### Ballerina Packages
+
+Introduced the local repository support
+Apart from the Ballerina Central remote repository, developers can now push packages to the local repository which can be found at `<user-home>/.ballerina/repositories/local`. Refer CLI changes on the command usage on pushing to local repository
+To use a package from the local repository, the ‘repository’ has to be specified in the toml table of the relevant dependency in Dependencies.toml file
+
+E.g. To test a developed package before pushing to Ballerina Central, build and push it to the local repository using the `push` command and add it to the Dependencies.toml file of the depending package as shown below.
+
+```toml
+[[dependency]]
+org = "ballerinax"
+name = "googleapis_sheets"
+version = "1.0.0"
+repository = “local”
+```
+
+### Developer Tools
+
+#### CLI
+
+##### Changes to CLI commands
+
+- Build and test commands
+  - Support for providing `[(--key=value)...]` is removed from `bal build`. 
+
+- Run command
+  - Providing the project path to the run command is now optional. The default sourceroot is the the present working directory similar to how build command works
+  - Program arguments should be followed by the end-of-options delimiter `--`
+- New and init commands
+  - Introduced creation of `Pacakge.md` file for library template. Passing the `--template lib` flag will create the `Package.md` file additional to the `Ballerina.toml` and the source bal files.
+- Push command
+  - Introduced pushing to the local repository. Passing `--repository=local` will push the Ballerina archive (.bala) to the local repository. For information about local repository support refer Ballerina Packages changelist[<link>]
+- Run `bal help <command>` to get more information on the command changes.
+
+- CLI Auto Completion
+  - Installing On Linux Bash
+    - Setup auto completion in the current bash shell.
+  
+    ```shell
+    source <(bal completion bash)
+    ```
+
+    - Setup auto completion permanently in the bash shell.
+
+    ```shell
+    echo “source <(bal completion bash)” >> ~/.bashrc
+    ```
+
+#### Test Framework
+
+- Moved Project Test Suite execution to single JVM. Changed from running each Test Suite in a JVM instance. (Improves user experience when debugging tests. No longer prompts to debug each test suite of a project)
+- Support for seamless integration to CICD tools by adding inbuilt path fixes to the Jacoco XML generated for ballerina packages
+
+#### Debugger
+
+- Added conditional breakpoint support. (Users can now configure conditional expressions for Ballerina breakpoints in the VSCode debug view)
+- Added support to configure environment variables in launch mode.
+- Added expression evaluation support for type cast expressions.
+
+#### OpenAPI
+
+- Added json file generated support to the ballerina to openapi command
+
+```shell
+bal openapi -i <ballerina file> --json
+```
+
+- Added improvements for handling ballerina resource function response type in openapi to ballerina command.
+
+#### Documentation
+
+- Moved out standard library API documentation to [Ballerina Central Docs](https://docs.central.ballerina.io).
 
 ##### Language Server
 
