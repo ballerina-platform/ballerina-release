@@ -148,7 +148,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://githu
 
 ##### Bug Fixes
 
-To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
+To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
 
 #### Standard Library
 
