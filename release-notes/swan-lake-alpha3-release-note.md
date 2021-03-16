@@ -146,7 +146,7 @@ io:println(nameText); // "DanBrown"
 
 ##### HTTP Package Updates
 
-Changed the return types of client methods to depend on the `targetType` argument. The default `targetType` is `http:Response`.
+Changed the return types of the client methods to depend on the `targetType` argument. The default `targetType` is `http:Response`.
 ```ballerina 
 http:Client myClient = check new ("http://localhost:9090”);
 http:Response response = check myClient->post("/backend/getResponse", "want response");
@@ -154,10 +154,10 @@ json jsonPayload = check myClient->post("/backend/getJson", "want json", targetT
 xml xmlPayload = check myClient->post("/backend/getXml", "want xml", targetType = xml);
 ```
 
-Introduced header map as an optional argument for non-entity body client remote methods (GET, HEAD, OPTIONS). 
+Introduced a header map as an optional argument for non-entity-body client remote methods (GET, HEAD, OPTIONS). 
 ```ballerina
 http:Client myClient = check new ("http://localhost:9090”);
-map<string|string[]> accHeaders = {};
+map<string|string[]> accHeaders = { "Accept" : "application/json" };
 var response = myclient->get("/some/endpoint", accHeaders);
 ```
 
@@ -165,14 +165,14 @@ Introduced header map and media type as optional arguments for entity body clien
 ```ballerina
 http:Client myClient = check new ("http://localhost:9090”);
 json payload = {}; 
-map<string|string[]> accHeaders = {};
+map<string|string[]> accHeaders = { "Accept" : "application/json" };
 var response = myclient->post("/some/endpoint", payload, headers = accHeaders);
 ```
 
 Improved the data types of outbound request/response payloads which can be set directly.  
 ```ballerina
-type RequestMessage Request|string|xml|json|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
-                      (map<json>|table<map<json>>)[]|mime:Entity[]|stream<byte[], io:Error>|();
+type RequestMessage Request|string|xml|json[]|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
+                      table<map<json>>[]|mime:Entity[]|stream<byte[], io:Error>|();
 
 type ResponseMessage Response|string|xml|json|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
                       (map<json>|table<map<json>>)[]|mime:Entity[]|stream<byte[], io:Error>|();
