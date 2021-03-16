@@ -140,9 +140,21 @@ xml:Text nameText = (name/*).text();
 io:println(nameText); // "DanBrown"
 ```
 
+##### Bug Fixes
+
+To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
+
 #### Runtime
 
+##### Bug Fixes
+
+To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
+
 #### Standard Library
+
+##### Bug Fixes
+
+To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Swan+Lake+Alpha3%22).
 
 ##### HTTP Package Updates
 
@@ -590,9 +602,99 @@ service class EchoService {
 
 #### Code to Cloud
 
+##### Bug Fixes
+
+To view bug fixes, see the GitHub milestone for Swan Lake Alpha3 of the repositories below.
+
+- [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22)
+- [Docker](https://github.com/ballerina-platform/module-ballerina-docker/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22)
+- [AWS Lambda](https://github.com/ballerina-platform/module-ballerinax-aws.lambda/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22)
+- [Azure Functions](https://github.com/ballerina-platform/module-ballerinax-azure.functions/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22) 
+
 #### Developer Tools
+#### Ballerina Packages
+
+#### Introduced Local Repository Support
+
+- Apart from the Ballerina Central remote repository, you can now push packages to the local repository which can be found at `<user-home>/.ballerina/repositories/local`. Refer the section on changes to CLI commands for information regarding pushing to the local repository.
+- To use a package from the local repository, the 'repository' has to be specified in the TOML table of the relevant dependency in the `Dependencies.toml` file.
+
+E.g., to test a developed package before pushing it to Ballerina Central, build and push it to the local repository using the `push` command and add it to the `Dependencies.toml` file of the depending package as shown below.
+
+```toml
+[[dependency]]
+org = "ballerinax"
+name = "googleapis_sheets"
+version = "1.0.0"
+repository = "local"
+```
+
+### Developer Tools
+
+#### CLI
+
+##### Changes to CLI Commands
+
+- Build and test commands
+  - Support for providing `[(--key=value)...]` is removed from `bal build`. 
+
+- Run command
+  - Providing the project path to the run command is now optional. The default source root is the present working directory similar to how the build command works.
+  - Program arguments should be followed by the end-of-options delimiter `--`.
+- New and init commands
+  - Introduced creation of the `Pacakge.md` file for a library template. Passing the `--template lib` flag will create the `Package.md` file in addition to the `Ballerina.toml` file and the source BAL files.
+- Push command
+  - Introduced pushing to the local repository. Passing `--repository=local` will push the Ballerina archive (.bala) to the local repository. For information about local repository support, see the [Ballerina Packages Changelist](<link>).
+- Run `bal help <command>` to get more information on the command changes.
+
+- CLI Auto Completion
+  - Installing On Linux Bash
+    - Set up auto-completion in the current bash shell.
+  
+    ```shell
+    source <(bal completion bash)
+    ```
+
+    - Set up auto-completion permanently in the bash shell.
+
+    ```shell
+    echo "source <(bal completion bash)" >> ~/.bashrc
+    ```
+
+#### Test Framework
+
+- Moved the Project Test Suite execution to a single JVM. Changed from running each Test Suite in a JVM instance. This improves the user experience when debugging tests. It no longer prompts to debug each test suite of a project.
+- Support for seamless integration of CICD tools by adding inbuilt path fixes to the Jacoco XML generated for Ballerina packages.
+
+#### Debugger
+
+- Added conditional breakpoint support. (Conditional expressions can now be configured for Ballerina breakpoints in the Visual Studio Code Debug view).
+- Added support to configure environment variables in the launch mode.
+- Added expression evaluation support for type cast expressions.
+
+#### OpenAPI
+
+- Added JSON file generation support to the Ballerina to OpenAPI command.
+
+```shell
+bal openapi -i <ballerina file> --json
+```
+
+- Added improvements for handling the Ballerina resource method response type in the OpenAPI to Ballerina command.
+
+#### Documentation
+
+- Moved the standard library API documentation out to [Ballerina Central Docs](https://docs.central.ballerina.io) from the Ballerina Website.
+
+To view bug fixes, see the GitHub milestone for Swan Lake Alpha3 of the repositories below.
+
+- [Language](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FDevTools)
+- [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
+- [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha%22) 
 
 ##### Language Server
+
+To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer).
 
 ##### Ballerina Shell
 
