@@ -184,8 +184,8 @@ Introduced module error inheritance and remove error union types.
 
 ##### WebSocket Package Updates
 
-Introduced auth support for the websocket client.
-Bearer token, Basic auth, JWT, and OAuth2 support has been introduced with the WebSocket client declarative authentication.
+Introduced auth support for the WebSocket client.
+The bearer token, Basic Auth, JWT, and OAuth2 support have been introduced with the WebSocket client declarative authentication.
 
 Introduced HTTP cookie support for the WebSocket client.
 ```ballerina
@@ -202,7 +202,7 @@ websocket:Client wsClient = check new ("ws://localhost:21316/ws", config = clien
 Made the `websocket:Caller` optional in WebSocket service remote functions.
 
 Introduced support to send text, binary, and pong messages by returning them from the remote methods. 
-Users can send text/binary data to the peer by returning a `string` or a `byte[]` value from the `onTextMessage` and `onBinaryMessage` remote methods. And users can send a pong frame to the peer by returning a `byte[]` value from the `onPing` remote method.
+Text/binary data can now be sent to the peer by returning a `string` or a `byte[]` value from the `onTextMessage` and `onBinaryMessage` remote methods. Also, a pong frame can be sent to the peer by returning a `byte[]` value from the `onPing` remote method.
 ```ballerina
 remote function onTextMessage(string text) returns string {
     return "Hello World!";
@@ -214,7 +214,7 @@ remote function onPing(byte[] pingData) returns byte[] {
 }
 ```
 
-Removed the support for `websocket:AsyncClient`.
+Removed the support for the `websocket:AsyncClient`.
 
 ##### GraphQL Package Updates
 
@@ -253,7 +253,7 @@ resource function get profile/name/first(int id) returns string? {
 
 Enabled read/listen for multiple emails in a single TCP connection.
 Each POP3 or IMAP client/listener creation initiates the connection.
-Then email sending, receiving or listening operation can be performed many times.
+Then, the email sending, receiving, or listening operations can be performed many times.
 Finally the client/listener has to be closed.
 
 POP3 Client example
@@ -263,7 +263,7 @@ email:Message? emailResponse = check popClient->receiveMessage();
 check popClient->close();
 ```
 
-In IMAP Client a similar format is used.
+A similar format is used in the IMAP client. 
 
 POP3 Service example
 ```ballerina
@@ -290,26 +290,26 @@ Made email body a mandatory field in `sendEmail` method API.
 Renamed email sending method names removing `Email` in each of them 
 Renamed `sendEmail` as `send`, `sendEmailMessage` as `sendMessage`, `receiveEmailMessage` as `receiveMessage` and `onEmailMessage` as `onMessage`.
 
-Set default `from` address of `email:Message` record from the `SmtpClient` authentication field, `username`.
-Earlier the username for authentication was decoupled from message data. Now the field `from` is made optional and default value will be set from the username.
+Set the default `from` address of the `email:Message` record from the `SmtpClient` authentication field, `username`.
+Earlier, the username for authentication was decoupled from the message data. Now, the `from` field is made optional and the default value will be set from the username.
 
-Made POP3 and IMAP clients as blocking clients by providing an optional `timeout` argument
-Time unit is seconds and the data type is `decimal`. Default value is 0 where the inbuilt polling interval is 100 milliseconds.
+Made POP3 and IMAP clients as blocking clients by providing an optional `timeout` argument.
+The time unit is in seconds and the data type is `decimal`. The default value is 0 in which the inbuilt polling interval is 100 milliseconds.
 A sample client code is as follows.
 ```ballerina
 email:Message|email:Error? email = popClient->receiveMessage(timeout = 2);
 ```
-In `PopListener` and `ImapListener` configuration polling interval is not set with `decimal` type in seconds to the field, `pollingInterval`, which was earlier named as `pollingIntervalInMillis`.
+In the `PopListener` and `ImapListener` configurations, the polling interval is not set with the  `decimal` type in seconds to the `pollingInterval` field, which was earlier named as `pollingIntervalInMillis`.
 
-Renamed `email:SmtpConfig`, `email:PopConfig`, `email:ImapConfig`, `email:PopListenerConfig` and `email:ImapListenerConfiguration` as `email:SmtpConfiguration`, `email:PopConfiguration`, `email:ImapConfiguration`, `email:PopListenerConfiguration` and `email:ImapListenerConfiguration` respectively.
+Renamed the `email:SmtpConfig`, `email:PopConfig`, `email:ImapConfig`, `email:PopListenerConfig`, and `email:ImapListenerConfiguration` as `email:SmtpConfiguration`, `email:PopConfiguration`, `email:ImapConfiguration`, `email:PopListenerConfiguration`, and `email:ImapListenerConfiguration` respectively.
 
-Removed the field, `cronExpression` from `email:ImapListenerConfig` and `email:PopListenerConfig`.
+Removed the `cronExpression` field from the `email:ImapListenerConfig` and `email:PopListenerConfig`.
 
-Made the `body` field of `send` method mandatory in `email:SmtpClient`. 
+Made the `body` field of the `send` method mandatory in the `email:SmtpClient`. 
 
 ##### WebSub Package Updates
 
-Introduced websub-listener-configuration for websub-listener
+Introduced a websub-listener configuration for the websub-listener.
 ```ballerina
 import ballerina/websub;
 
@@ -330,7 +330,7 @@ service /subscriber on new websub:Listener(9090, configs) {
 
 ##### WebSubHub Package Updates
 
-Included HTTP Headers parameter into WebSub Hub API
+Included HTTP Headers parameter into the WebSub Hub API.
 ```ballerina
 import ballerina/websubhub;
 import ballerina/http;
@@ -346,7 +346,7 @@ service /websubhub on new websubhub:Listener(9090) {
 }
 ```
 
-Introduced pre-initialized constant responses to be used in `websubhub:Service` implementation
+Introduced pre-initialized constant responses to be used in the `websubhub:Service` implementation.
 ```ballerina
 import ballerina/websubhub;
 
@@ -362,7 +362,7 @@ service /websubhub on new websubhub:Listener(9090) {
 }
 ```
 
-Initializing `websubhub:HubClient` with client configurations
+Initializing the `websubhub:HubClient` with the client configurations.
 ```ballerina
 import ballerina/websubhub;
 
@@ -384,7 +384,7 @@ websubhub:ContentDistributionMessage msg = {content: "This is sample content del
 var publishResponse = hubClientEP->notifyContentDistribution(msg);
 ```
 
-Introduced websubhub listener configuration to configure websubhub listener. 
+Introduced an websubhub-listener configuration to configure a websubhub listener. 
 ```ballerina
 import ballerina/websubhub;
 
@@ -414,7 +414,7 @@ string|url:Error encoded = url:encode("http://localhost:9090", "UTF-8");
 string|url:Error decoded = url:decode("http%3A%2F%2Flocalhost%3A9090", "UTF-8");
 ```
 
-The Ballerina HTTP listener can be configured to authenticate and authorize the inbound requests with Basic Auth file user store.
+The Ballerina HTTP listener can be configured to authenticate and authorize the inbound requests with a Basic Auth file user store.
 
 Improved client and listener `SecureSocket` APIs of HTTP, GRPC, WebSocket, GraphQL, WebSub, WebSubHub, TCP, Email, NATS, STAN and RabbitMQ modules.
 ```ballerina
@@ -482,9 +482,9 @@ public enum CertValidationType {
 }
 ```
 
-Improved `SecureSocket` configuration of JDK11 client of JWT and OAuth2 modules.
+Improved the `SecureSocket` configuration of the JDK11 client of the JWT and OAuth2 modules.
 
-Added support for OAuth2 client authentication of JDK11 client, which is used to call authorization endpoint.
+Added support for OAuth2 client authentication of the JDK11 client, which is used to call an authorization endpoint.
 
 ##### TCP Package Updates
 
@@ -545,7 +545,7 @@ service class EchoService {
 }
 ```
 
-Included tcp:Caller as an optional parameter in onBytes() method.
+Included a `tcp:Caller` as an optional parameter in the `onBytes()` method.
 ```
 service class EchoService {
   
@@ -558,31 +558,31 @@ service class EchoService {
 
 ##### Kafka Package Updates
 
-Renamed `sendProducerRecord` function in the client object `Producer` to `send`.
+Renamed the `sendProducerRecord` function in the client object `Producer` to `send`.
 
-Renamed `flushRecords` function in the client object `Producer` to `’flush`.
+Renamed the `flushRecords` function in the client object `Producer` to `’flush`.
 
-Replaced `kafka:ConsumerError` and `kafka:ProducerError` with `kafka:Error`.
+Replaced the `kafka:ConsumerError` and `kafka:ProducerError` with `kafka:Error`.
 
 ##### NATS Package Updates
 
-Renamed `ConnectionConfig` record to `ConnectionConfiguration`. 
+Renamed the `ConnectionConfig` record to `ConnectionConfiguration`. 
 
-Included `url` as a field in `ConnectionConfiguration` record. 
+Included `url` as a field in the `ConnectionConfiguration` record. 
 
-Changed `ConnectionConfiguration` in client and listener init functions to an included record parameter. This allows the users to pass the record field values as named parameters. 
+Changed the `ConnectionConfiguration` in the client and listener init functions to an included record parameter. This allows the record field values to be passed as named parameters. 
 
 ##### STAN Package Updates
 
-Renamed `StreamingConfig` record to `StreamingConfiguration`. 
+Renamed the `StreamingConfig` record to `StreamingConfiguration`. 
 
-Included `url` as a field in `StreamingConfiguration` record. 
+Included the `url` as a field in the `StreamingConfiguration` record. 
 
-Changed `StreamingConfiguration` in client and listener init functions to an included record parameter. This allows the users to pass the record field values as named parameters. 
+Changed the `StreamingConfiguration` in the client and listener init functions to an included record parameter. This allows the record field values to be passed as named parameters. 
 
 ##### RabbitMQ Package Updates
 
-Renamed `ConnectionConfig` record to `ConnectionConfiguration`. 
+Renamed the `ConnectionConfig` record to `ConnectionConfiguration`. 
 
 ###### Common Standard Library Updates
 
