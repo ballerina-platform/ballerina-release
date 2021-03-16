@@ -152,9 +152,145 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://githu
 
 #### Standard Library
 
-##### Bug Fixes
+##### Log Package Updates
 
-To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Swan+Lake+Alpha3%22).
+###### Introduce additional log levels and log functions
+
+There are 4 log levels: `DEBUG`, `ERROR`, `INFO`,and `WARN` and their respective functions: `printDebug`, `printError`, `printInfo`, and `printWarn`. To set the global log level, place the entry given below in the `Config.toml` file:
+```
+[log] 
+level = "[LOG_LEVEL]"
+```
+
+Each module can also be assigned its own log level. To assign a log level to a module, provide the following entry in the `Config.toml` file:
+```
+[[log.modules]] 
+name = "[MODULE_NAME]" 
+level = "[LOG_LEVEL]"
+```
+
+#### OS Package Updates
+
+- Removed the `exec` function.
+
+#### Task Package Updates
+
+The module has been revamped by removing `Scheduler` and `Listener` classes and introducing the following functions to schedule and manage the job either one-time or periodically.
+
+- Configure the scheduler worker pool with worker count and max waiting time.
+```ballerina
+task:Error? output = task:configureWorkerPool(6, 7000);
+```
+
+- Schedule the Ballerina job at specified time.
+```ballerina
+class MyJob {
+   *task:Job;
+
+   public function execute() {
+       // logic goes here
+   }
+}
+
+ZoneOffset zoneOffset = {hours: 5, minutes: 30};
+Civil time = {
+    year: 2021,
+    month: 4,
+    day: 12,
+    hour: 23,
+    minute: 20,
+    second: 50.52,
+    timeAbbrev: "Asia/Colombo",
+    utcOffset: zoneOffset
+};
+task:Error|task:JobId id = task:scheduleOneTimeJob(new MyJob(), time);
+```
+
+- Schedule the recurring Ballerina job according to the given duration.
+```ballerina
+class MyJob {
+   *task:Job;
+
+   public function execute() {
+       // logic goes here
+   }
+}
+task:Error|task:JobId id = task:scheduleJobRecurByFrequency(new MyJob(), 1);
+```
+
+- Unschedule the particular `job`.
+```ballerina
+task:Error? result = unscheduleJob(id);
+```
+
+- Pauses all the jobs.
+```ballerina
+task:Error? result = pauseAllJobs();
+```
+
+- Resumes all the jobs.
+```ballerina
+task:Error? result = resumeAllJobs();
+```
+
+- Pauses the particular job.
+```ballerina
+task:Error? result = pauseJob(id);
+```
+
+- Resumes the particular job.
+```ballerina
+task:Error? result = resumeJob(id);
+```
+
+- Gets all the running jobs.
+```ballerina
+task:Error? result = getRunningJobs();
+```
+
+#### Time Package Updates
+
+Revamped the entire time package as follows:
+
+- Introduced `time:Utc` to represent the UTC timestamp.
+- Introduced `time:Civil` to represent the localized time.
+- Added necessary APIs to do time generation, manipulations, and conversions.
+
+Necessary migrations steps from the previous version to the current version are listed [here](https://github.com/ballerina-platform/ballerina-standard-library/issues/1079).
+
+#### Cache Package Updates
+
+- Introduced the new configuration as `EvictionPolicy` to set the eviction policy in the `CacheConfig`.
+
+The `EvictionPolicy` has been introduced with the option `LRU` as the module only supports the LRU eviction policy to evict the cache data when the cache is full.
+
+- Removed the `AbstractEvictionPolicy` Object.
+
+This object had the common APIs for the cache eviction functionalities to implement the custom eviction policy. It has been removed by introducing the above configuration.
+
+#### New `xmldata` Package
+
+A new module is added to convert a natural representation of data in XML into a natural representation of data in JSON and vice-versa
+
+- Converts a JSON object to an XML representation.
+```ballerina
+json data = {
+    name: "John",
+    age: 30
+};
+xml|Error x = fromJson(data);
+```
+
+- Converts an XML object to its JSON representation.
+```ballerina
+json|Error j = toJson(xml `foo`);
+```
+
+#### Remove `jsonutils`, `xmlutils`, `runtime`, and `reflect` Packages
+
+The `jsonutils`, `xmlutils`, `runtime` and `reflect` packages are removed from Standard Libraries.
+
+The XML/JSON conversation APIs in `jsonutils`, `xmltutils` packages are now supported in `xmldata` package.
 
 ##### HTTP Package Updates
 
@@ -599,6 +735,10 @@ service class EchoService {
 ###### Common Standard Library Updates
 
 ###### All the timeout configurations are converted to accept decimal values and the time unit is in seconds.
+
+##### Bug Fixes
+
+To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Swan+Lake+Alpha3%22).
 
 #### Code to Cloud
 
