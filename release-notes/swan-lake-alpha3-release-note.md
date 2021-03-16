@@ -216,6 +216,11 @@ repository = "local"
     ```shell
     echo "source <(bal completion bash)" >> ~/.bashrc
     ```
+  - Installing On Mac Bash
+    - Set up auto-completion permanently in the bash shell.
+    ```shell
+    echo "$(bal completion bash)" >> ~/.bash_profile
+    ```
 
 #### Test Framework
 
