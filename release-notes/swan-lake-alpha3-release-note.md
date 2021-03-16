@@ -174,8 +174,8 @@ var response = myclient->post("/some/endpoint", payload, headers = accHeaders);
 type RequestMessage Request|string|xml|json[]|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
                       table<map<json>>[]|mime:Entity[]|stream<byte[], io:Error>|();
 
-type ResponseMessage Response|string|xml|json|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
-                      (map<json>|table<map<json>>)[]|mime:Entity[]|stream<byte[], io:Error>|();
+type ResponseMessage Response|string|xml|json[]|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
+                      table<map<json>>[]|mime:Entity[]|stream<byte[], io:Error>|();
 ```
 
 ###### Marked HTTP client remote methods as isolated.
