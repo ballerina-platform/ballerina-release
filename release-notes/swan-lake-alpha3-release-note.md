@@ -197,7 +197,7 @@ repository = "local"
 
 #### Test Framework
 
-- Moved the Project Test Suite execution to a single JVM. Changed from running each Test Suite in a JVM instance. This Improves the user experience when debugging tests. It no longer prompts to debug each test suite of a project.
+- Moved the Project Test Suite execution to a single JVM. Changed from running each Test Suite in a JVM instance. This improves the user experience when debugging tests. It no longer prompts to debug each test suite of a project.
 - Support for seamless integration of CICD tools by adding inbuilt path fixes to the Jacoco XML generated for Ballerina packages.
 
 #### Debugger
