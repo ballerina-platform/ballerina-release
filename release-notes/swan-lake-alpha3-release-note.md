@@ -158,7 +158,6 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://githu
 
 #### Code to Cloud
 
-<<<<<<< HEAD
 ##### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake Alpha3 of the repositories below.
