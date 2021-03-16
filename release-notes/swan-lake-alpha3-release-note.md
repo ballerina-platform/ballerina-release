@@ -241,7 +241,6 @@ bal openapi -i <ballerina file> --json
 #### Documentation
 
 - Moved the standard library API documentation out to [Ballerina Central Docs](https://docs.central.ballerina.io) from the Ballerina Website.
->>>>>>> 40533443d5a4340125dc128d1fe3c9f2a4488610
 
 To view bug fixes, see the GitHub milestone for Swan Lake Alpha3 of the repositories below.
 
