@@ -146,24 +146,24 @@ io:println(nameText); // "DanBrown"
 
 ##### HTTP Package Updates
 
-Change the return type of client method to depend on `targetType` arg. The default targetType is `http:Response`
+Changed the return types of client methods to depend on the `targetType` argument. The default `targetType` is `http:Response`.
 ```ballerina 
-http:Client myClient = check new("http://localhost:9090”);
-http:Response v = check myClient->post("/backend/getResponse", "want response");
-json p = check myClient->post("/backend/getJson", "want json", targetType = json);
-xml q = check myClient->post("/backend/getXml", "want xml", targetType = xml);
+http:Client myClient = check new ("http://localhost:9090”);
+http:Response response = check myClient->post("/backend/getResponse", "want response");
+json jsonPayload = check myClient->post("/backend/getJson", "want json", targetType = json);
+xml xmlPayload = check myClient->post("/backend/getXml", "want xml", targetType = xml);
 ```
 
-Introduce header map as an optional argument for Non-entity body client remote method(GET, HEAD, OPTIONS) 
+Introduced header map as an optional argument for non-entity body client remote methods (GET, HEAD, OPTIONS). 
 ```ballerina
-http:Client myClient = check new("http://localhost:9090”);
+http:Client myClient = check new ("http://localhost:9090”);
 map<string|string[]> accHeaders = {};
 var response = myclient->get("/some/endpoint", accHeaders);
 ```
 
-Introduce header map and media type as optional arguments for Entity body client remote method(POST, PUT, PATCH, DELETE, EXECUTE)
+Introduce header map and media type as optional arguments for entity body client remote methods (POST, PUT, PATCH, DELETE, EXECUTE).
 ```ballerina
-http:Client myClient = check new("http://localhost:9090”);
+http:Client myClient = check new ("http://localhost:9090”);
 json payload = {}; 
 map<string|string[]> accHeaders = {};
 var response = myclient->post("/some/endpoint", payload, headers = accHeaders);
@@ -185,7 +185,7 @@ Introduce module error inheritance and remove error union types.
 ##### WebSocket Package Updates
 
 Introduced auth support for the websocket client.
-Bearer token, Basic auth, JWT and OAuth2 support has been introduced with the websocket client declarative authentication.
+Bearer token, Basic auth, JWT, and OAuth2 support has been introduced with the WebSocket client declarative authentication.
 
 Introduced HTTP cookie support for the WebSocket client.
 ```ballerina
@@ -196,16 +196,16 @@ websocket:ClientConfiguration clientConf = {
   cookies: httpCookies
 };
 
-websocket:Client wsClient = check new("ws://localhost:21316/ws", config = clientConf);
+websocket:Client wsClient = check new ("ws://localhost:21316/ws", config = clientConf);
 ```
 
 Make the `websocket:Caller` optional in WebSocket service remote functions.
 
-Introduced the support to send text/binary/pong messages by returning them from the remote functions. 
-Users can send text/binary data to the peer by returning a `string` or a `byte[]` from `onTextMessage` and `onBinarymessage` remote functions. And users can send a pong frame to the peer by returning a `byte[]` from the `onPing` remote function.
+Introduced support to send text, binary, and pong messages by returning them from the remote methods. 
+Users can send text/binary data to the peer by returning a `string` or a `byte[]` value from the `onTextMessage` and `onBinaryMessage` remote methods. And users can send a pong frame to the peer by returning a `byte[]` value from the `onPing` remote method.
 ```ballerina
 remote function onTextMessage(string text) returns string {
-    return “Hello World!”;
+    return "Hello World!";
 }
 ```
 ```ballerina
@@ -243,15 +243,15 @@ Support resource functions to return optional types.
 The Ballerina GraphQL resources now can return optional types. 
 ```ballerina
 resource function get profile/name/first(int id) returns string? {
-    if (id == 0) {
-        return “sherlock”;
+    if id == 0 {
+        return "sherlock";
     }
 }
 ```
 
 ##### Email Package Updates
 
-Enable to read/listen multiple emails in a single TCP connection
+Enable read/listen for multiple emails in a single TCP connection.
 Each POP3 or IMAP client/listener creation initiates the connection.
 Then email sending, receiving or listening operation can be performed many times.
 Finally the client/listener has to be closed.
@@ -283,9 +283,9 @@ service object {} emailObserver = service object {
 };
 ```
 
-Note how that `close()` method calls the `onClose` method in the service.
+Note how the `close()` method calls the `onClose` method in the service.
 
-Make email body a mandatory field in `sendEmail` method API 
+Make email body a mandatory field in `sendEmail` method API.
 
 Rename email sending method names removing `Email` in each of them 
 Rename `sendEmail` as `send`, `sendEmailMessage` as `sendMessage`, `receiveEmailMessage` as `receiveMessage` and `onEmailMessage` as `onMessage`.
