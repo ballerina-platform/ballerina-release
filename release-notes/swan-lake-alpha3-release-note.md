@@ -168,7 +168,6 @@ To view bug fixes, see the GitHub milestone for Swan Lake Alpha3 of the reposito
 - [Azure Functions](https://github.com/ballerina-platform/module-ballerinax-azure.functions/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22) 
 
 #### Developer Tools
-=======
 #### Ballerina Packages
 
 #### Introduced Local Repository Support
