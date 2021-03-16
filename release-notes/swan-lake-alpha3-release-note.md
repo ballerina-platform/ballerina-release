@@ -161,7 +161,7 @@ map<string|string[]> accHeaders = {};
 var response = myclient->get("/some/endpoint", accHeaders);
 ```
 
-Introduce header map and media type as optional arguments for entity body client remote methods (POST, PUT, PATCH, DELETE, EXECUTE).
+Introduced header map and media type as optional arguments for entity body client remote methods (POST, PUT, PATCH, DELETE, EXECUTE).
 ```ballerina
 http:Client myClient = check new ("http://localhost:9090”);
 json payload = {}; 
@@ -169,7 +169,7 @@ map<string|string[]> accHeaders = {};
 var response = myclient->post("/some/endpoint", payload, headers = accHeaders);
 ```
 
-Improve the data types of outbound request/response payloads which can be set directly.  
+Improved the data types of outbound request/response payloads which can be set directly.  
 ```ballerina
 type RequestMessage Request|string|xml|json|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
                       (map<json>|table<map<json>>)[]|mime:Entity[]|stream<byte[], io:Error>|();
@@ -178,9 +178,9 @@ type ResponseMessage Response|string|xml|json|byte[]|int|float|decimal|boolean|m
                       (map<json>|table<map<json>>)[]|mime:Entity[]|stream<byte[], io:Error>|();
 ```
 
-Mark HTTP client remote methods as isolated.
+Marked HTTP client remote methods as isolated.
 
-Introduce module error inheritance and remove error union types.
+Introduced module error inheritance and remove error union types.
 
 ##### WebSocket Package Updates
 
@@ -199,7 +199,7 @@ websocket:ClientConfiguration clientConf = {
 websocket:Client wsClient = check new ("ws://localhost:21316/ws", config = clientConf);
 ```
 
-Make the `websocket:Caller` optional in WebSocket service remote functions.
+Made the `websocket:Caller` optional in WebSocket service remote functions.
 
 Introduced support to send text, binary, and pong messages by returning them from the remote methods. 
 Users can send text/binary data to the peer by returning a `string` or a `byte[]` value from the `onTextMessage` and `onBinaryMessage` remote methods. And users can send a pong frame to the peer by returning a `byte[]` value from the `onPing` remote method.
@@ -218,7 +218,7 @@ Removed the support for `websocket:AsyncClient`.
 
 ##### GraphQL Package Updates
 
-Add support for hierarchical resource paths.
+Added the support for hierarchical resource paths.
 The Ballerina GraphQL resources now can have hierarchical resource paths. Each intermediate resource path then maps to a new type in the generated schema.
 ```ballerina
 import ballerina/graphql;
@@ -238,7 +238,7 @@ service /graphql on new Listener(9104) {
 }
 ```
 
-Support resource functions to return optional types. 
+Supported resource functions to return optional types. 
 
 The Ballerina GraphQL resources now can return optional types. 
 ```ballerina
@@ -251,7 +251,7 @@ resource function get profile/name/first(int id) returns string? {
 
 ##### Email Package Updates
 
-Enable read/listen for multiple emails in a single TCP connection.
+Enabled read/listen for multiple emails in a single TCP connection.
 Each POP3 or IMAP client/listener creation initiates the connection.
 Then email sending, receiving or listening operation can be performed many times.
 Finally the client/listener has to be closed.
@@ -285,15 +285,15 @@ service object {} emailObserver = service object {
 
 Note how the `close()` method calls the `onClose` method in the service.
 
-Make email body a mandatory field in `sendEmail` method API.
+Made email body a mandatory field in `sendEmail` method API.
 
-Rename email sending method names removing `Email` in each of them 
-Rename `sendEmail` as `send`, `sendEmailMessage` as `sendMessage`, `receiveEmailMessage` as `receiveMessage` and `onEmailMessage` as `onMessage`.
+Renamed email sending method names removing `Email` in each of them 
+Renamed `sendEmail` as `send`, `sendEmailMessage` as `sendMessage`, `receiveEmailMessage` as `receiveMessage` and `onEmailMessage` as `onMessage`.
 
 Set default `from` address of `email:Message` record from the `SmtpClient` authentication field, `username`.
 Earlier the username for authentication was decoupled from message data. Now the field `from` is made optional and default value will be set from the username.
 
-Make POP3 and IMAP clients as blocking clients by providing an optional `timeout` argument
+Made POP3 and IMAP clients as blocking clients by providing an optional `timeout` argument
 Time unit is seconds and the data type is `decimal`. Default value is 0 where the inbuilt polling interval is 100 milliseconds.
 A sample client code is as follows.
 ```ballerina
@@ -301,15 +301,15 @@ email:Message|email:Error? email = popClient->receiveMessage(timeout = 2);
 ```
 In `PopListener` and `ImapListener` configuration polling interval is not set with `decimal` type in seconds to the field, `pollingInterval`, which was earlier named as `pollingIntervalInMillis`.
 
-Rename `email:SmtpConfig`, `email:PopConfig`, `email:ImapConfig`, `email:PopListenerConfig` and `email:ImapListenerConfiguration` as `email:SmtpConfiguration`, `email:PopConfiguration`, `email:ImapConfiguration`, `email:PopListenerConfiguration` and `email:ImapListenerConfiguration` respectively.
+Renamed `email:SmtpConfig`, `email:PopConfig`, `email:ImapConfig`, `email:PopListenerConfig` and `email:ImapListenerConfiguration` as `email:SmtpConfiguration`, `email:PopConfiguration`, `email:ImapConfiguration`, `email:PopListenerConfiguration` and `email:ImapListenerConfiguration` respectively.
 
-Remove the field, `cronExpression` from `email:ImapListenerConfig` and `email:PopListenerConfig`.
+Removed the field, `cronExpression` from `email:ImapListenerConfig` and `email:PopListenerConfig`.
 
-Make the `body` field of `send` method mandatory in `email:SmtpClient`. 
+Made the `body` field of `send` method mandatory in `email:SmtpClient`. 
 
 ##### WebSub Package Updates
 
-Add websub-listener-configuration for websub-listener
+Introduced websub-listener-configuration for websub-listener
 ```ballerina
 import ballerina/websub;
 
@@ -330,7 +330,7 @@ service /subscriber on new websub:Listener(9090, configs) {
 
 ##### WebSubHub Package Updates
 
-Include HTTP Headers parameter into WebSub Hub API
+Included HTTP Headers parameter into WebSub Hub API
 ```ballerina
 import ballerina/websubhub;
 import ballerina/http;
@@ -346,7 +346,7 @@ service /websubhub on new websubhub:Listener(9090) {
 }
 ```
 
-Introduce pre-initialized constant responses to be used in `websubhub:Service` implementation
+Introduced pre-initialized constant responses to be used in `websubhub:Service` implementation
 ```ballerina
 import ballerina/websubhub;
 
@@ -384,7 +384,7 @@ websubhub:ContentDistributionMessage msg = {content: "This is sample content del
 var publishResponse = hubClientEP->notifyContentDistribution(msg);
 ```
 
-Introduce websubhub listener configuration to configure websubhub listener. 
+Introduced websubhub listener configuration to configure websubhub listener. 
 ```ballerina
 import ballerina/websubhub;
 
@@ -488,7 +488,7 @@ Added support for OAuth2 client authentication of JDK11 client, which is used to
 
 ##### TCP Package Updates
 
-Introduce SSL/TLS support for both the client and listener.
+Introduced SSL/TLS support for both the client and listener.
 ```ballerina
 import ballerina/tcp;
 
@@ -509,7 +509,6 @@ public function main() returns error? {
     check socketClient->writeBytes(msgByteArray);
 
     readonly & byte[] receivedData = check socketClient->readBytes();
-    test:assertEquals('string:fromBytes(receivedData), msg, "Found unexpected output");
 
     check socketClient->close();
 }
@@ -546,7 +545,7 @@ service class EchoService {
 }
 ```
 
-Include tcp:Caller as an optional parameter in onBytes() method.
+Included tcp:Caller as an optional parameter in onBytes() method.
 ```
 service class EchoService {
   
@@ -559,31 +558,31 @@ service class EchoService {
 
 ##### Kafka Package Updates
 
-Rename `sendProducerRecord` function in the client object `Producer` to `send`.
+Renamed `sendProducerRecord` function in the client object `Producer` to `send`.
 
-Rename `flushRecords` function in the client object `Producer` to `’flush`.
+Renamed `flushRecords` function in the client object `Producer` to `’flush`.
 
-Replace `kafka:ConsumerError` and `kafka:ProducerError` with `kafka:Error`.
+Replaced `kafka:ConsumerError` and `kafka:ProducerError` with `kafka:Error`.
 
 ##### NATS Package Updates
 
-Rename `ConnectionConfig` record to `ConnectionConfiguration`. 
+Renamed `ConnectionConfig` record to `ConnectionConfiguration`. 
 
-Include `url` as a field in `ConnectionConfiguration` record. 
+Included `url` as a field in `ConnectionConfiguration` record. 
 
-Change `ConnectionConfiguration` in client and listener init functions to an included record parameter. This allows the users to pass the record field values as named parameters. 
+Changed `ConnectionConfiguration` in client and listener init functions to an included record parameter. This allows the users to pass the record field values as named parameters. 
 
 ##### STAN Package Updates
 
-Rename `StreamingConfig` record to `StreamingConfiguration`. 
+Renamed `StreamingConfig` record to `StreamingConfiguration`. 
 
-Include `url` as a field in `StreamingConfiguration` record. 
+Included `url` as a field in `StreamingConfiguration` record. 
 
-Change `StreamingConfiguration` in client and listener init functions to an included record parameter. This allows the users to pass the record field values as named parameters. 
+Changed `StreamingConfiguration` in client and listener init functions to an included record parameter. This allows the users to pass the record field values as named parameters. 
 
 ##### RabbitMQ Package Updates
 
-Rename `ConnectionConfig` record to `ConnectionConfiguration`. 
+Renamed `ConnectionConfig` record to `ConnectionConfiguration`. 
 
 ###### Common Standard Library Updates
 
