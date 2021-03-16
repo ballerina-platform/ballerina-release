@@ -146,7 +146,7 @@ io:println(nameText); // "DanBrown"
 
 ##### HTTP Package Updates
 
-Changed the return types of the client methods to depend on the `targetType` argument. The default `targetType` is `http:Response`.
+###### Changed the return types of the client methods to depend on the `targetType` argument. The default `targetType` is `http:Response`.
 ```ballerina 
 http:Client myClient = check new ("http://localhost:9090”);
 http:Response response = check myClient->post("/backend/getResponse", "want response");
@@ -154,14 +154,14 @@ json jsonPayload = check myClient->post("/backend/getJson", "want json", targetT
 xml xmlPayload = check myClient->post("/backend/getXml", "want xml", targetType = xml);
 ```
 
-Introduced a header map as an optional argument for non-entity-body client remote methods (GET, HEAD, OPTIONS). 
+###### Introduced a header map as an optional argument for non-entity-body client remote methods (GET, HEAD, OPTIONS). 
 ```ballerina
 http:Client myClient = check new ("http://localhost:9090”);
 map<string|string[]> accHeaders = { "Accept" : "application/json" };
 var response = myclient->get("/some/endpoint", accHeaders);
 ```
 
-Introduced header map and media type as optional arguments for entity body client remote methods (POST, PUT, PATCH, DELETE, EXECUTE).
+###### Introduced header map and media type as optional arguments for entity body client remote methods (POST, PUT, PATCH, DELETE, EXECUTE).
 ```ballerina
 http:Client myClient = check new ("http://localhost:9090”);
 json payload = {}; 
@@ -169,7 +169,7 @@ map<string|string[]> accHeaders = { "Accept" : "application/json" };
 var response = myclient->post("/some/endpoint", payload, headers = accHeaders);
 ```
 
-Improved the data types of outbound request/response payloads which can be set directly.  
+###### Improved the data types of outbound request/response payloads which can be set directly.  
 ```ballerina
 type RequestMessage Request|string|xml|json[]|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
                       table<map<json>>[]|mime:Entity[]|stream<byte[], io:Error>|();
@@ -178,9 +178,9 @@ type ResponseMessage Response|string|xml|json|byte[]|int|float|decimal|boolean|m
                       (map<json>|table<map<json>>)[]|mime:Entity[]|stream<byte[], io:Error>|();
 ```
 
-Marked HTTP client remote methods as isolated.
+###### Marked HTTP client remote methods as isolated.
 
-Introduced module error inheritance and remove error union types.
+###### Introduced module error inheritance and remove error union types.
 
 ##### WebSocket Package Updates
 
