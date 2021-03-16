@@ -156,6 +156,450 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://githu
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Swan+Lake+Alpha3%22).
 
+##### HTTP Package Updates
+
+###### Changed the return types of the client methods to depend on the `targetType` argument. The default `targetType` is `http:Response`.
+```ballerina 
+http:Client myClient = check new ("http://localhost:9090”);
+http:Response response = check myClient->post("/backend/getResponse", "want response");
+json jsonPayload = check myClient->post("/backend/getJson", "want json", targetType = json);
+xml xmlPayload = check myClient->post("/backend/getXml", "want xml", targetType = xml);
+```
+
+###### Introduced a header map as an optional argument for non-entity-body client remote methods (GET, HEAD, OPTIONS). 
+```ballerina
+http:Client myClient = check new ("http://localhost:9090”);
+map<string|string[]> accHeaders = { "Accept" : "application/json" };
+var response = myclient->get("/some/endpoint", accHeaders);
+```
+
+###### Introduced header map and media type as optional arguments for entity body client remote methods (POST, PUT, PATCH, DELETE, EXECUTE).
+```ballerina
+http:Client myClient = check new ("http://localhost:9090”);
+json payload = {}; 
+map<string|string[]> accHeaders = { "Accept" : "application/json" };
+var response = myclient->post("/some/endpoint", payload, headers = accHeaders);
+```
+
+###### Improved the data types of outbound request/response payloads which can be set directly.  
+```ballerina
+type RequestMessage Request|string|xml|json[]|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
+                      table<map<json>>[]|mime:Entity[]|stream<byte[], io:Error>|();
+
+type ResponseMessage Response|string|xml|json[]|byte[]|int|float|decimal|boolean|map<json>|table<map<json>>|
+                      table<map<json>>[]|mime:Entity[]|stream<byte[], io:Error>|();
+```
+
+###### Marked HTTP client remote methods as isolated.
+
+###### Introduced module error inheritance and remove error union types.
+
+##### WebSocket Package Updates
+
+###### Introduced auth support for the WebSocket client.
+The bearer token, Basic Auth, JWT, and OAuth2 support have been introduced with the WebSocket client declarative authentication.
+
+###### Introduced HTTP cookie support for the WebSocket client.
+```ballerina
+http:Cookie cookie = new ("username", "name");
+http:Cookie[] httpCookies = [cookie];
+
+websocket:ClientConfiguration clientConf = {
+  cookies: httpCookies
+};
+
+websocket:Client wsClient = check new ("ws://localhost:21316/ws", config = clientConf);
+```
+
+###### Made the `websocket:Caller` optional in WebSocket service remote functions.
+
+###### Introduced support to send text, binary, and pong messages by returning them from the remote methods. 
+Text/binary data can now be sent to the peer by returning a `string` or a `byte[]` value from the `onTextMessage` and `onBinaryMessage` remote methods. Also, a pong frame can be sent to the peer by returning a `byte[]` value from the `onPing` remote method.
+```ballerina
+remote function onTextMessage(string text) returns string {
+    return "Hello World!";
+}
+```
+```ballerina
+remote function onPing(byte[] pingData) returns byte[] {
+    return pingData;
+}
+```
+
+###### Removed the support for the `websocket:AsyncClient`.
+
+##### GraphQL Package Updates
+
+###### Added the support for hierarchical resource paths.
+The Ballerina GraphQL resources now can have hierarchical resource paths. Each intermediate resource path then maps to a new type in the generated schema.
+```ballerina
+import ballerina/graphql;
+
+service /graphql on new Listener(9104) {
+   isolated resource function get profile/name/first() returns string {
+       return "Sherlock";
+   }
+
+   isolated resource function get profile/name/last() returns string {
+       return "Holmes";
+   }
+
+   isolated resource function get profile/age() returns int {
+       return 40;
+   }
+}
+```
+
+###### Supported resource functions to return optional types. 
+
+The Ballerina GraphQL resources now can return optional types. 
+```ballerina
+resource function get profile/name/first(int id) returns string? {
+    if id == 0 {
+        return "sherlock";
+    }
+}
+```
+
+##### Email Package Updates
+
+###### Enabled read/listen for multiple emails in a single TCP connection.
+Each POP3 or IMAP client/listener creation initiates the connection.
+Then, the email sending, receiving, or listening operations can be performed many times.
+Finally the client/listener has to be closed.
+
+POP3 Client example
+```ballerina
+email:PopClient popClient = check new ("pop.email.com", "reader@email.com","pass456");
+email:Message? emailResponse = check popClient->receiveMessage();
+check popClient->close();
+```
+
+A similar format is used in the IMAP client. 
+
+POP3 Service example
+```ballerina
+service object {} emailObserver = service object {
+   remote function onMessage(Message emailMessage) {
+
+   }
+
+   remote function onError(Error emailError) {
+
+   }
+
+   remote function onClose(Error? closeError) {
+
+   }
+
+};
+```
+
+Note how the `close()` method calls the `onClose` method in the service.
+
+###### Made email body a mandatory field in `sendEmail` method API.
+
+###### Renamed email sending method names removing `Email` in each of them 
+Renamed `sendEmail` as `send`, `sendEmailMessage` as `sendMessage`, `receiveEmailMessage` as `receiveMessage` and `onEmailMessage` as `onMessage`.
+
+###### Set the default `from` address of the `email:Message` record from the `SmtpClient` authentication field, `username`.
+Earlier, the username for authentication was decoupled from the message data. Now, the `from` field is made optional and the default value will be set from the username.
+
+###### Made POP3 and IMAP clients as blocking clients by providing an optional `timeout` argument.
+The time unit is in seconds and the data type is `decimal`. The default value is 0 in which the inbuilt polling interval is 100 milliseconds.
+A sample client code is as follows.
+```ballerina
+email:Message|email:Error? email = popClient->receiveMessage(timeout = 2);
+```
+###### In the `PopListener` and `ImapListener` configurations, the polling interval is not set with the  `decimal` type in seconds to the `pollingInterval` field, which was earlier named as `pollingIntervalInMillis`.
+
+###### Renamed the `email:SmtpConfig`, `email:PopConfig`, `email:ImapConfig`, `email:PopListenerConfig`, and `email:ImapListenerConfiguration` as `email:SmtpConfiguration`, `email:PopConfiguration`, `email:ImapConfiguration`, `email:PopListenerConfiguration`, and `email:ImapListenerConfiguration` respectively.
+
+###### Removed the `cronExpression` field from the `email:ImapListenerConfig` and `email:PopListenerConfig`.
+
+###### Made the `body` field of the `send` method mandatory in the `email:SmtpClient`. 
+
+##### WebSub Package Updates
+
+###### Introduced a websub-listener configuration for the websub-listener.
+```ballerina
+import ballerina/websub;
+
+websub:ListenerConfiguration configs = {
+    		secureSocket: {
+        		key: {
+            		certFile: "../resource/path/to/public.crt", 
+                    keyFile: "../resource/path/to/private.key"
+        		}
+    		}    
+    // any additional configurations related to http-listener 
+};
+
+service /subscriber on new websub:Listener(9090, configs) {
+   // resources
+}
+```
+
+##### WebSubHub Package Updates
+
+###### Included HTTP Headers parameter into the WebSub Hub API.
+```ballerina
+import ballerina/websubhub;
+import ballerina/http;
+
+listener websubhub:Listener hubListener = new(9095);
+
+service /websubhub on new websubhub:Listener(9090) {
+    remote function onRegisterTopic(TopicRegistration message, http:Headers requestHeaders)
+                                returns TopicRegistrationSuccess|TopicRegistrationError {
+		return {};
+    }
+    // http:Headers parameter will be an optional parameter for all the API endpoints
+}
+```
+
+###### Introduced pre-initialized constant responses to be used in the `websubhub:Service` implementation.
+```ballerina
+import ballerina/websubhub;
+
+service /websubhub on new websubhub:Listener(9090) {
+
+    remote function onRegisterTopic(websubhub:TopicRegistration message)
+                                returns websubhub:TopicRegistrationSuccess {
+        log:print("Received topic-registration request ", message = message);
+        return websubhub:TOPIC_REGISTRATION_SUCCESS;
+    }
+
+    // implement other service methods
+}
+```
+
+Initializing the `websubhub:HubClient` with the client configurations.
+```ballerina
+import ballerina/websubhub;
+
+websubhub:ClientConfiguration config = {
+    retryConfig: {
+        interval: 3,
+            count: 3,
+            backOffFactor: 2.0,
+            maxWaitInterval: 20,
+            statusCodes: [500]
+        },
+        timeout: 2
+    };
+
+HubClient hubClientEP = check new(subscriptionMsg, config);
+
+websubhub:ContentDistributionMessage msg = {content: "This is sample content delivery"};
+
+var publishResponse = hubClientEP->notifyContentDistribution(msg);
+```
+
+###### Introduced an websubhub-listener configuration to configure a websubhub listener. 
+```ballerina
+import ballerina/websubhub;
+
+websubhub:ListenerConfiguration configs = {
+    		secureSocket: {
+        			key: {
+            			certFile: "../resource/path/to/public.crt", 
+keyFile: "../resource/path/to/private.key"
+        			}
+    		}
+    
+    	// any additional configurations related to http-listener 
+};
+
+service /hub on new websubhub:Listener(9090, configs) {
+    		// resources
+}
+```
+
+##### Security Updates
+
+###### Renamed the `ballerina/encoding` module as `ballerina/url` and updated the APIs.
+```ballerina
+import ballerina/url;
+
+string|url:Error encoded = url:encode("http://localhost:9090", "UTF-8");
+string|url:Error decoded = url:decode("http%3A%2F%2Flocalhost%3A9090", "UTF-8");
+```
+
+###### The Ballerina HTTP listener can be configured to authenticate and authorize the inbound requests with a Basic Auth file user store.
+
+###### Improved client and listener `SecureSocket` APIs of HTTP, GRPC, WebSocket, GraphQL, WebSub, WebSubHub, TCP, Email, NATS, STAN and RabbitMQ modules.
+```ballerina
+public type ListenerSecureSocket record {|
+   crypto:KeyStore|CertKey key;
+   record {|
+       VerifyClient verifyClient = REQUIRE;
+       crypto:TrustStore|string cert;
+   |} mutualSsl?;
+   record {|
+       Protocol name;
+       string[] versions = [];
+   |} protocol?;
+   record {|
+       CertValidationType type = OCSP_STAPLING;
+       int cacheSize;
+       decimal cacheValidityPeriod;
+   |} certValidation?;
+   string[] ciphers = [];
+   boolean shareSession = true;
+   decimal handshakeTimeout?;
+   decimal sessionTimeout?;
+|};
+
+public type ClientSecureSocket record {|
+   boolean enable = true;
+   crypto:TrustStore|string cert?;
+   crypto:KeyStore|CertKey key?;
+   record {|
+       Protocol name;
+       string[] versions = [];
+   |} protocol?;
+   record {|
+       CertValidationType type = OCSP_STAPLING;
+       int cacheSize;
+       decimal cacheValidityPeriod;
+   |} certValidation?;
+   string[] ciphers?;
+   boolean verifyHostName = true;
+   boolean shareSession = true;
+   decimal handshakeTimeout?;
+   decimal sessionTimeout?;
+|};
+
+public type CertKey record {|
+   string certFile;
+   string keyFile;
+   string keyPassword?;
+|};
+ 
+public enum VerifyClient {
+   REQUIRE,
+   OPTIONAL
+}
+ 
+public enum Protocol {
+   SSL,
+   TLS,
+   DTLS
+}
+ 
+public enum CertValidationType {
+   OCSP_CRL,
+   OCSP_STAPLING
+}
+```
+
+###### Improved the `SecureSocket` configuration of the JDK11 client of the JWT and OAuth2 modules.
+
+###### Added support for OAuth2 client authentication of the JDK11 client, which is used to call an authorization endpoint.
+
+##### TCP Package Updates
+
+###### Introduced SSL/TLS support for both the client and listener.
+```ballerina
+import ballerina/tcp;
+
+configurable string certPath = ?;
+
+public function main() returns error? {
+    tcp:Client socketClient = check new ("localhost", 9002, secureSocket = {
+        cert: certPath,
+        protocol: {
+            name: tcp:TLS,
+            versions: ["TLSv1.2", "TLSv1.1"]
+        },
+        ciphers: ["TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
+    });
+
+    string msg = "Hello Ballerina Echo from secure client";
+    byte[] msgByteArray = msg.toBytes();
+    check socketClient->writeBytes(msgByteArray);
+
+    readonly & byte[] receivedData = check socketClient->readBytes();
+
+    check socketClient->close();
+}
+```
+
+```ballerina
+configurable string keyPath = ?;
+configurable string certPath = ?;
+
+service on new tcp:Listener(9002, secureSocket = {
+       key: {
+        certFile: certPath,
+        keyFile: keyPath
+    },
+    protocol: {
+        name: tpc:TLS,
+        versions: ["TLSv1.2", "TLSv1.1"]
+    },
+    ciphers: ["TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
+}) {
+
+    isolated remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService {
+        io:println("Client connected to secureEchoServer: ", caller.remotePort);
+        return new EchoService(caller);
+    }
+}
+
+service class EchoService {
+  
+    remote function onBytes(readonly & byte[] data) returns (readonly & byte[])|tcp:Error? {
+        io:println("Echo: ", 'string:fromBytes(data));
+        return data;
+    }
+}
+```
+
+###### Included a `tcp:Caller` as an optional parameter in the `onBytes()` method.
+```
+service class EchoService {
+  
+    remote function onBytes(tcp:Caller caller, readonly & byte[] data) returns (readonly & byte[])|tcp:Error? {
+        io:println("Echo: ", 'string:fromBytes(data));
+        check caller->writeBytes(data);
+    }
+}
+```
+
+##### Kafka Package Updates
+
+###### Renamed the `sendProducerRecord` function in the client object `Producer` to `send`.
+
+###### Renamed the `flushRecords` function in the client object `Producer` to `’flush`.
+
+###### Replaced the `kafka:ConsumerError` and `kafka:ProducerError` with `kafka:Error`.
+
+##### NATS Package Updates
+
+###### Renamed the `ConnectionConfig` record to `ConnectionConfiguration`. 
+
+###### Included `url` as a field in the `ConnectionConfiguration` record. 
+
+###### Changed the `ConnectionConfiguration` in the client and listener init functions to an included record parameter. This allows the record field values to be passed as named parameters. 
+
+##### STAN Package Updates
+
+###### Renamed the `StreamingConfig` record to `StreamingConfiguration`. 
+
+###### Included the `url` as a field in the `StreamingConfiguration` record. 
+
+###### Changed the `StreamingConfiguration` in the client and listener init functions to an included record parameter. This allows the record field values to be passed as named parameters. 
+
+##### RabbitMQ Package Updates
+
+###### Renamed the `ConnectionConfig` record to `ConnectionConfiguration`. 
+
+###### Common Standard Library Updates
+
+###### All the timeout configurations are converted to accept decimal values and the time unit is in seconds.
+
 #### Code to Cloud
 
 ##### Bug Fixes
