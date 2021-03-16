@@ -214,7 +214,7 @@ repository = "local"
 bal openapi -i <ballerina file> --json
 ```
 
-- Added improvements for handling the Ballerina resource function response type in OpenAPI to the Ballerina command.
+- Added improvements for handling the Ballerina resource method response type in the OpenAPI to Ballerina command.
 
 #### Documentation
 
