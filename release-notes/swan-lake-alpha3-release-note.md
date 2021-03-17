@@ -156,7 +156,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://githu
 
 ###### Introduce additional log levels and log functions
 
-There are 4 log levels: `DEBUG`, `ERROR`, `INFO`,and `WARN` and their respective functions: `printDebug`, `printError`, `printInfo`, and `printWarn`. To set the global log level, place the entry given below in the `Config.toml` file:
+There are 4 log levels: `DEBUG`, `ERROR`, `INFO`, and `WARN` and their respective functions: `printDebug`, `printError`, `printInfo`, and `printWarn`. To set the global log level, place the entry given below in the `Config.toml` file:
 ```
 [log] 
 level = "[LOG_LEVEL]"
