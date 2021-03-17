@@ -290,7 +290,7 @@ json|Error j = toJson(xml `foo`);
 
 The `jsonutils`, `xmlutils`, `runtime`, and `reflect` packages are removed from Standard Libraries.
 
-The XML/JSON conversation APIs in `jsonutils`, `xmltutils` packages are now supported in `xmldata` package.
+The XML/JSON conversation APIs in `jsonutils` and `xmltutils` packages are now supported by the `xmldata` package.
 
 ##### HTTP Package Updates
 
