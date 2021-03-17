@@ -177,13 +177,16 @@ level = "[LOG_LEVEL]"
 
 The module has been revamped by removing the `Scheduler` and `Listener` classes and introducing the following functions to schedule and manage the job either one-time or periodically.
 
-- Configure the scheduler worker pool with the worker count and max waiting time.
+- Configures the scheduler worker pool with the worker count and max waiting time.
 ```ballerina
 task:Error? output = task:configureWorkerPool(6, 7000);
 ```
 
-- Schedule the Ballerina job at a specified time.
+- Schedules the Ballerina job at a specified time.
 ```ballerina
+import ballerina/task;
+import ballerina/time;
+
 class MyJob {
    *task:Job;
 
@@ -192,8 +195,8 @@ class MyJob {
    }
 }
 
-ZoneOffset zoneOffset = {hours: 5, minutes: 30};
-Civil time = {
+time:ZoneOffset zoneOffset = {hours: 5, minutes: 30};
+time:Civil time = {
     year: 2021,
     month: 4,
     day: 12,
@@ -206,8 +209,10 @@ Civil time = {
 task:Error|task:JobId id = task:scheduleOneTimeJob(new MyJob(), time);
 ```
 
-- Schedule the recurring Ballerina job according to the given duration.
+- Schedules the recurring Ballerina job according to the given duration.
 ```ballerina
+import ballerina/task;
+
 class MyJob {
    *task:Job;
 
@@ -218,51 +223,63 @@ class MyJob {
 task:Error|task:JobId id = task:scheduleJobRecurByFrequency(new MyJob(), 1);
 ```
 
-- Unschedule the particular `job`.
+- Unschedules the particular job.
 ```ballerina
-task:Error? result = unscheduleJob(id);
+import ballerina/task;
+
+task:Error? result = task:unscheduleJob(id);
 ```
 
 - Pauses all the jobs.
 ```ballerina
-task:Error? result = pauseAllJobs();
+import ballerina/task;
+
+task:Error? result = task:pauseAllJobs();
 ```
 
 - Resumes all the jobs.
 ```ballerina
-task:Error? result = resumeAllJobs();
+import ballerina/task;
+
+task:Error? result = task:resumeAllJobs();
 ```
 
 - Pauses the particular job.
 ```ballerina
-task:Error? result = pauseJob(id);
+import ballerina/task;
+
+task:Error? result = task:pauseJob(id);
 ```
 
 - Resumes the particular job.
 ```ballerina
-task:Error? result = resumeJob(id);
+import ballerina/task;
+
+task:Error? result = task:resumeJob(id);
 ```
 
 - Gets all the running jobs.
 ```ballerina
-task:Error? result = getRunningJobs();
+import ballerina/task;
+
+task:Error? result = task:getRunningJobs();
 ```
 
 #### Time Package Updates
 
 Revamped the entire time package as follows:
 
-- Introduced `time:Utc` to represent the UTC timestamp.
+- Introduced the `time:Utc` record to represent the UTC timestamp.
 - Introduced `time:Civil` to represent the localized time.
 - Added necessary APIs to do time generation, manipulations, and conversions.
 
-Necessary migrations steps from the previous version to the current version are listed [here](https://github.com/ballerina-platform/ballerina-standard-library/issues/1079).
+Steps for migration from the previous version to the current version are listed [here](https://github.com/ballerina-platform/ballerina-standard-library/issues/1079).
 
 #### Cache Package Updates
 
-- Introduced the new configuration as `EvictionPolicy` to set the eviction policy in the `CacheConfig`.
+- Introduced the new configuration as `EvictionPolicy` to set the eviction policy in the `CacheConfig` record.
 
-The `EvictionPolicy` has been introduced with the option `LRU` as the module only supports the LRU eviction policy to evict the cache data when the cache is full.
+The `EvictionPolicy` record has been introduced with the option `LRU` as the module only supports the LRU eviction policy to evict the cache data when the cache is full.
 
 - Removed the `AbstractEvictionPolicy` object.
 
@@ -281,7 +298,7 @@ json data = {
 xml|Error x = fromJson(data);
 ```
 
-- Converts an XML object to its JSON representation.
+- Converts an XML value to its JSON representation.
 ```ballerina
 json|Error j = toJson(xml `foo`);
 ```
