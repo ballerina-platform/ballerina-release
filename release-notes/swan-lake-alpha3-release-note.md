@@ -285,7 +285,7 @@ The `EvictionPolicy` record has been introduced with the option `LRU` as the mod
 
 - Removed the `AbstractEvictionPolicy` object type.
 
-This object had the common APIs for the cache eviction functionalities to implement the custom eviction policy. It has been removed with the introduction of the above configuration.
+This object type had the common APIs for the cache eviction functionalities to implement a custom eviction policy. It has been removed with the introduction of the above configuration.
 
 #### New `xmldata` Package
 
