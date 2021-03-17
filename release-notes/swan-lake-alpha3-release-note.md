@@ -182,7 +182,7 @@ The module has been revamped by removing the `Scheduler` and `Listener` classes 
 task:Error? output = task:configureWorkerPool(6, 7000);
 ```
 
-- Schedule the Ballerina job at specified time.
+- Schedule the Ballerina job at a specified time.
 ```ballerina
 class MyJob {
    *task:Job;
