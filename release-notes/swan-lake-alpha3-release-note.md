@@ -264,7 +264,7 @@ Necessary migrations steps from the previous version to the current version are 
 
 The `EvictionPolicy` has been introduced with the option `LRU` as the module only supports the LRU eviction policy to evict the cache data when the cache is full.
 
-- Removed the `AbstractEvictionPolicy` Object.
+- Removed the `AbstractEvictionPolicy` object.
 
 This object had the common APIs for the cache eviction functionalities to implement the custom eviction policy. It has been removed by introducing the above configuration.
 
