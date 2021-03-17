@@ -275,7 +275,7 @@ Revamped the entire time package as follows:
 - Introduced the `time:Civil` record to represent the localized time.
 - Added necessary APIs to do time generation, manipulations, and conversions.
 
-Steps for migration from the previous version to the current version are listed [here](https://github.com/ballerina-platform/ballerina-standard-library/issues/1079).
+Steps for migration from the previous version to the current version are listed [in this issue](https://github.com/ballerina-platform/ballerina-standard-library/issues/1079).
 
 #### Cache Package Updates
 
