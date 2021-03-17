@@ -304,6 +304,8 @@ xml|xmldata:Error x = xmldata:fromJson(data);
 
 - Converts an XML value to its JSON representation.
 ```ballerina
+import ballerina/xmldata;
+
 json|xmldata:Error j = xmldata:toJson(xml `foo`);
 ```
 
