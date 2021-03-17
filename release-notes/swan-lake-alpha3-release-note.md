@@ -179,6 +179,8 @@ The module has been revamped by removing the `Scheduler` and `Listener` classes 
 
 - Configures the scheduler worker pool with the worker count and max waiting time.
 ```ballerina
+import ballerina/task;
+
 task:Error? output = task:configureWorkerPool(6, 7000);
 ```
 
@@ -270,37 +272,39 @@ task:Error? result = task:getRunningJobs();
 Revamped the entire time package as follows:
 
 - Introduced the `time:Utc` record to represent the UTC timestamp.
-- Introduced `time:Civil` to represent the localized time.
+- Introduced the `time:Civil` record to represent the localized time.
 - Added necessary APIs to do time generation, manipulations, and conversions.
 
 Steps for migration from the previous version to the current version are listed [here](https://github.com/ballerina-platform/ballerina-standard-library/issues/1079).
 
 #### Cache Package Updates
 
-- Introduced the new configuration as `EvictionPolicy` to set the eviction policy in the `CacheConfig` record.
+- Introduced the new `EvictionPolicy` configuration to set the eviction policy in the `CacheConfig` record.
 
 The `EvictionPolicy` record has been introduced with the option `LRU` as the module only supports the LRU eviction policy to evict the cache data when the cache is full.
 
 - Removed the `AbstractEvictionPolicy` object.
 
-This object had the common APIs for the cache eviction functionalities to implement the custom eviction policy. It has been removed by introducing the above configuration.
+This object had the common APIs for the cache eviction functionalities to implement the custom eviction policy. It has been removed with the introduction of the above configuration.
 
 #### New `xmldata` Package
 
-A new module is added to convert a natural representation of data in XML into a natural representation of data in JSON and vice-versa.
+A new module is added to convert data in XML format to JSON format and vice-versa.
 
 - Converts a JSON object to an XML representation.
 ```ballerina
+import ballerina/xmldata;
+
 json data = {
     name: "John",
     age: 30
 };
-xml|Error x = fromJson(data);
+xml|xmldata:Error x = xmldata:fromJson(data);
 ```
 
 - Converts an XML value to its JSON representation.
 ```ballerina
-json|Error j = toJson(xml `foo`);
+json|xmldata:Error j = xmldata:toJson(xml `foo`);
 ```
 
 #### Remove `jsonutils`, `xmlutils`, `runtime`, and `reflect` Packages
