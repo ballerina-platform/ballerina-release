@@ -163,7 +163,7 @@ level = "[LOG_LEVEL]"
 ```
 
 Each module can also be assigned its own log level. To assign a log level to a module, provide the following entry in the `Config.toml` file:
-```
+```toml
 [[log.modules]] 
 name = "[MODULE_NAME]" 
 level = "[LOG_LEVEL]"
