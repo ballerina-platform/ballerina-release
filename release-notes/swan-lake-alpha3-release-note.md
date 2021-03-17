@@ -270,7 +270,7 @@ This object had the common APIs for the cache eviction functionalities to implem
 
 #### New `xmldata` Package
 
-A new module is added to convert a natural representation of data in XML into a natural representation of data in JSON and vice-versa
+A new module is added to convert a natural representation of data in XML into a natural representation of data in JSON and vice-versa.
 
 - Converts a JSON object to an XML representation.
 ```ballerina
