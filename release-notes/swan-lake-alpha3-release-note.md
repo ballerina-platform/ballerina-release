@@ -177,7 +177,7 @@ level = "[LOG_LEVEL]"
 
 The module has been revamped by removing the `Scheduler` and `Listener` classes and introducing the following functions to schedule and manage the job either one-time or periodically.
 
-- Configure the scheduler worker pool with worker count and max waiting time.
+- Configure the scheduler worker pool with the worker count and max waiting time.
 ```ballerina
 task:Error? output = task:configureWorkerPool(6, 7000);
 ```
