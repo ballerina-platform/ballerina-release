@@ -152,9 +152,168 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://githu
 
 #### Standard Library
 
-##### Bug Fixes
+##### Log Package Updates
 
-To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Swan+Lake+Alpha3%22).
+###### Introduce additional log levels and log functions
+
+There are 4 log levels: `DEBUG`, `ERROR`, `INFO`, and `WARN` and their respective functions: `printDebug`, `printError`, `printInfo`, and `printWarn`. To set the global log level, place the entry given below in the `Config.toml` file:
+```toml
+[log] 
+level = "[LOG_LEVEL]"
+```
+
+Each module can also be assigned its own log level. To assign a log level to a module, provide the following entry in the `Config.toml` file:
+```toml
+[[log.modules]] 
+name = "[MODULE_NAME]" 
+level = "[LOG_LEVEL]"
+```
+
+#### OS Package Updates
+
+- Removed the `exec` function.
+
+#### Task Package Updates
+
+The module has been revamped by removing the `Scheduler` and `Listener` classes and introducing the following functions to schedule and manage the job either one-time or periodically.
+
+- Configures the scheduler worker pool with the worker count and max waiting time.
+```ballerina
+import ballerina/task;
+
+task:Error? output = task:configureWorkerPool(6, 7000);
+```
+
+- Schedules the Ballerina job at a specified time.
+```ballerina
+import ballerina/task;
+import ballerina/time;
+
+class MyJob {
+   *task:Job;
+
+   public function execute() {
+       // logic goes here
+   }
+}
+
+time:ZoneOffset zoneOffset = {hours: 5, minutes: 30};
+time:Civil time = {
+    year: 2021,
+    month: 4,
+    day: 12,
+    hour: 23,
+    minute: 20,
+    second: 50.52,
+    timeAbbrev: "Asia/Colombo",
+    utcOffset: zoneOffset
+};
+task:Error|task:JobId id = task:scheduleOneTimeJob(new MyJob(), time);
+```
+
+- Schedules the recurring Ballerina job according to the given duration.
+```ballerina
+import ballerina/task;
+
+class MyJob {
+   *task:Job;
+
+   public function execute() {
+       // logic goes here
+   }
+}
+task:Error|task:JobId id = task:scheduleJobRecurByFrequency(new MyJob(), 1);
+```
+
+- Unschedules the particular job.
+```ballerina
+import ballerina/task;
+
+task:Error? result = task:unscheduleJob(id);
+```
+
+- Pauses all the jobs.
+```ballerina
+import ballerina/task;
+
+task:Error? result = task:pauseAllJobs();
+```
+
+- Resumes all the jobs.
+```ballerina
+import ballerina/task;
+
+task:Error? result = task:resumeAllJobs();
+```
+
+- Pauses the particular job.
+```ballerina
+import ballerina/task;
+
+task:Error? result = task:pauseJob(id);
+```
+
+- Resumes the particular job.
+```ballerina
+import ballerina/task;
+
+task:Error? result = task:resumeJob(id);
+```
+
+- Gets all the running jobs.
+```ballerina
+import ballerina/task;
+
+task:Error? result = task:getRunningJobs();
+```
+
+#### Time Package Updates
+
+Revamped the entire time package as follows:
+
+- Introduced the `time:Utc` record to represent the UTC timestamp.
+- Introduced the `time:Civil` record to represent the localized time.
+- Added necessary APIs to do time generation, manipulations, and conversions.
+
+Steps for migration from the previous version to the current version are listed [in this issue](https://github.com/ballerina-platform/ballerina-standard-library/issues/1079).
+
+#### Cache Package Updates
+
+- Introduced the new `EvictionPolicy` configuration to set the eviction policy in the `CacheConfig` record.
+
+The `EvictionPolicy` record has been introduced with the option `LRU` as the module only supports the LRU eviction policy to evict the cache data when the cache is full.
+
+- Removed the `AbstractEvictionPolicy` object type.
+
+This object type had the common APIs for the cache eviction functionalities to implement a custom eviction policy. It has been removed with the introduction of the above configuration.
+
+#### New `xmldata` Package
+
+A new module is added to convert data in XML format to JSON format and vice-versa.
+
+- Converts a JSON object to an XML representation.
+```ballerina
+import ballerina/xmldata;
+
+json data = {
+    name: "John",
+    age: 30
+};
+xml|xmldata:Error x = xmldata:fromJson(data);
+```
+
+- Converts an XML value to its JSON representation.
+```ballerina
+import ballerina/xmldata;
+
+json|xmldata:Error j = xmldata:toJson(xml `foo`);
+```
+
+#### Remove `jsonutils`, `xmlutils`, `runtime`, and `reflect` Packages
+
+The `jsonutils`, `xmlutils`, `runtime`, and `reflect` packages are removed from Standard Libraries.
+
+The XML/JSON conversation APIs in `jsonutils` and `xmltutils` packages are now supported by the `xmldata` package.
 
 ##### HTTP Package Updates
 
@@ -599,6 +758,10 @@ service class EchoService {
 ###### Common Standard Library Updates
 
 - All the timeout configurations are converted to accept decimal values and the time unit is in seconds.
+
+##### Bug Fixes
+
+To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Swan+Lake+Alpha3%22).
 
 #### Code to Cloud
 
