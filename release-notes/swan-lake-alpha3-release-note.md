@@ -850,6 +850,11 @@ bal openapi -i <ballerina file> --json
 
 - Added improvements for handling the Ballerina resource method response type in the OpenAPI to Ballerina command.
 
+#### Bindgen Tool
+
+- Improve the generated bindings with the use of distinct type classes.
+- Improve the internal mechanism used to generate the bindings. Previous handlebars based implementation is now changed to a syntax tree based implementation.
+
 #### Documentation
 
 - Moved the standard library API documentation out to [Ballerina Central Docs](https://docs.central.ballerina.io) from the Ballerina Website.
