@@ -663,11 +663,9 @@ public enum CertValidationType {
 ```ballerina
 import ballerina/tcp;
 
-configurable string certPath = ?;
-
 public function main() returns error? {
     tcp:Client socketClient = check new ("localhost", 9002, secureSocket = {
-        cert: certPath,
+        cert: "../resource/path/to/public.crt",
         protocol: {
             name: tcp:TLS,
             versions: ["TLSv1.2", "TLSv1.1"]
@@ -686,20 +684,22 @@ public function main() returns error? {
 ```
 
 ```ballerina
-configurable string keyPath = ?;
-configurable string certPath = ?;
+import ballerina/tcp;
+import ballerina/io;
 
-service on new tcp:Listener(9002, secureSocket = {
-       key: {
-        certFile: certPath,
-        keyFile: keyPath
+tcp:ListenerSecureSocket listenerSecureSocket = {
+    key: {
+        certFile: "../resource/path/to/public.crt",
+        keyFile: "../resource/path/to/private.key"
     },
     protocol: {
-        name: tpc:TLS,
+        name: tcp:TLS,
         versions: ["TLSv1.2", "TLSv1.1"]
     },
     ciphers: ["TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
-}) {
+}
+
+service on new tcp:Listener(9002, secureSocket = listenerSecureSocket) {
 
     isolated remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService {
         io:println("Client connected to secureEchoServer: ", caller.remotePort);
@@ -717,7 +717,7 @@ service class EchoService {
 ```
 
 - Included a `tcp:Caller` as an optional parameter in the `onBytes()` method.
-```
+```ballerina
 service class EchoService {
   
     remote function onBytes(tcp:Caller caller, readonly & byte[] data) returns (readonly & byte[])|tcp:Error? {
