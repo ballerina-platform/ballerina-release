@@ -181,11 +181,11 @@ name = "[MODULE_NAME]"
 level = "[LOG_LEVEL]"
 ```
 
-#### OS Package Updates
+##### OS Package Updates
 
 - Removed the `exec` function.
 
-#### Task Package Updates
+##### Task Package Updates
 
 The module has been revamped by removing the `Scheduler` and `Listener` classes and introducing the following functions to schedule and manage the job either one-time or periodically.
 
@@ -279,7 +279,7 @@ import ballerina/task;
 task:Error? result = task:getRunningJobs();
 ```
 
-#### Time Package Updates
+##### Time Package Updates
 
 Revamped the entire time package as follows:
 
@@ -289,7 +289,7 @@ Revamped the entire time package as follows:
 
 Steps for migration from the previous version to the current version are listed [in this issue](https://github.com/ballerina-platform/ballerina-standard-library/issues/1079).
 
-#### Cache Package Updates
+##### Cache Package Updates
 
 - Introduced the new `EvictionPolicy` configuration to set the eviction policy in the `CacheConfig` record.
 
@@ -299,7 +299,7 @@ The `EvictionPolicy` record has been introduced with the option `LRU` as the mod
 
 This object type had the common APIs for the cache eviction functionalities to implement a custom eviction policy. It has been removed with the introduction of the above configuration.
 
-#### New `xmldata` Package
+##### New `xmldata` Package
 
 A new module is added to convert data in XML format to JSON format and vice-versa.
 
@@ -321,7 +321,7 @@ import ballerina/xmldata;
 json|xmldata:Error j = xmldata:toJson(xml `foo`);
 ```
 
-#### Remove `jsonutils`, `xmlutils`, `runtime`, and `reflect` Packages
+##### Remove `jsonutils`, `xmlutils`, `runtime`, and `reflect` Packages
 
 The `jsonutils`, `xmlutils`, `runtime`, and `reflect` packages are removed from Standard Libraries.
 
