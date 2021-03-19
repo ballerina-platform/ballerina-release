@@ -727,6 +727,12 @@ service class EchoService {
 }
 ```
 
+- Renamed `tcp:ListenerConfig` and `tcp:ClientConfig` to `tcp:ListenerConfiguration` and `tcp:ClientConfiguration`
+
+##### UDP Package Updates
+
+- Renamed `udp:ListenerConfig` and `udp:ClientConfig` to `udp:ListenerConfiguration` and `udp:ClientConfiguration`
+
 ##### Kafka Package Updates
 
 - Renamed the `sendProducerRecord` function in the client object `Producer` to `send`.
