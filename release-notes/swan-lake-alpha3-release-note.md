@@ -146,6 +146,18 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://githu
 
 #### Runtime
 
+##### JAVA Runtime API
+
+A new runtime Java API is introduced to create errors.
+```java
+BError createError(Module module, String errorTypeName, BString message, BError cause, Object details)
+```
+The `createDistinctError` API has been deprecated and should not be used to create distinct errors. The new `createError` API can be used instead.
+
+##### Configurable Variables
+
+Improved error messages are introduced for configurable variables by including more information and the relevant
+ `Config.toml` line numbers.
 ##### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
