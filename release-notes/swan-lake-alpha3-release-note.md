@@ -852,8 +852,8 @@ bal openapi -i <ballerina file> --json
 
 #### Bindgen Tool
 
-- Improve the internal mechanism used to generate the bindings. Previous handlebars based implementation is now changed to a syntax tree based implementation.
 - Improve the generated bindings with the use of distinct type classes.
+- Improve the internal mechanism used to generate the bindings. Previous handlebars based implementation is now changed to a syntax tree based implementation.
 
 #### Documentation
 
