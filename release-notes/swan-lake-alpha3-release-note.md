@@ -929,3 +929,4 @@ Now, the debugger supports conditional breakpoints. Conditional expressions can 
 
 #### Breaking Changes
 1. `==` and `!=` equality expressions can no longer be used with variables of type `readonly`.
+2. Implicit conversion from `xml:Text` to `string` is no longer supported.
