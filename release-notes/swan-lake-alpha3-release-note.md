@@ -2,27 +2,14 @@
 layout: ballerina-blank-page
 title: Release Note
 ---
-### Overview of Ballerina Swan Lake Alpha3
+<em>This is the third alpha in a series of planned alphas and betas leading up to the Ballerina Swan Lake GA release.</em> 
 
-This Alpha3 release includes the language features planned for the Ballerina Swan Lake release. Moreover, this release includes improvements and bug fixes to the compiler, runtime, standard library, and developer tooling. This release note lists only the features and updates added after the Alpha2 release of Ballerina Swan Lake.
+Ballerina Swan Lake Alpha3 contains new language features, improvements, and bug fixes to the compiler, runtime, standard library, and developer tooling. 
 
-- [Updating Ballerina](#updating-ballerina)
-    - [For Existing Users](#for-existing-users)
-    - [For New Users](#for-new-users)
-- [Highlights](#highlights)
-- [What is new in Ballerina Swan Lake Alpha3](#what-is-new-in-ballerina-swan-lake-alpha3)
-    - [Language](#language)
-    - [Runtime](#runtime)
-    - [Standard Library](#standard-library)
-    - [Code to Cloud](#code-to-cloud)
-    - [Developer Tools](#developer-tools)
-    - [Breaking Changes](#breaking-changes)
 
-### Updating Ballerina
 
-You can use the [Update Tool](/learn/tooling-guide/cli-tools/update-tool/) to update to Ballerina Swan Lake Alpha3 as follows.
 
-#### For Existing Users
+### Updating Ballerina to Swan Lake Alpha3
 
 If you are already using Ballerina, you can directly update your distribution to the Swan Lake channel using the [Ballerina Update Tool](/learn/tooling-guide/cli-tools/update-tool/). To do this, first, execute the command below to get the update tool updated to its latest version. 
 
@@ -31,20 +18,26 @@ If you are already using Ballerina, you can directly update your distribution to
 If you are using an **Update Tool version below 0.8.14**, execute the `ballerina update` command to update it. Next, execute the command below to update to Swan Lake Alpha3.
 
 > `bal dist pull slalpha3`
+<br><br>
 
-#### For New Users
+### Installing Ballerina
 
-If you have not installed Ballerina, then download the [installers](/downloads/#swanlake) to install.
+If you haven't installed Ballerina, download the [installers](/downloads/#swanlake) to install. <br><br>
+  
+### New in Ballerina Swan Lake Alpha3
 
-### Highlights
-
-### What is new in Ballerina Swan Lake Alpha3
+- [Language](#language)
+- [Runtime](#runtime)
+- [Standard Library](#standard-library)
+- [Code to Cloud](#code-to-cloud)
+- [Developer Tools](#developer-tools)
+- [Breaking Changes](#breaking-changes) <br><br>
 
 #### Language
 
 ##### Support for Module-level Variables with List, Mapping, and Error Binding Patterns
 
-Variable declarations with list, mapping, and error binding patterns are now allowed at module level. Unlike simple variables, these variables must be initialized in the declaration.
+Variable declarations with list, mapping, and error binding patterns are now allowed at the module level. Unlike simple variables, these variables must be initialized in the declaration.
 
 Also, these variable declarations cannot contain an `isolated` or `configurable` qualifier.
 
@@ -344,7 +337,7 @@ map<string|string[]> accHeaders = { "Accept" : "application/json" };
 var response = myclient->get("/some/endpoint", accHeaders);
 ```
 
-- Introduced header map and media type as optional arguments for entity body client remote methods (POST, PUT, PATCH, DELETE, EXECUTE).
+- Introduced header map and media type as optional arguments for entity-body client remote methods (POST, PUT, PATCH, DELETE, EXECUTE).
 ```ballerina
 http:Client myClient = check new ("http://localhost:9090”);
 json payload = {}; 
@@ -437,7 +430,7 @@ resource function get profile/name/first(int id) returns string? {
 - Enabled read/listen for multiple emails in a single TCP connection.
 Each POP3 or IMAP client/listener creation initiates the connection.
 Then, the email sending, receiving, or listening operations can be performed many times.
-Finally the client/listener has to be closed.
+Finally, the client/listener has to be closed.
 
 POP3 Client example
 ```ballerina
@@ -599,7 +592,7 @@ string|url:Error decoded = url:decode("http%3A%2F%2Flocalhost%3A9090", "UTF-8");
 
 - The Ballerina HTTP listener can be configured to authenticate and authorize the inbound requests with a Basic Auth file user store.
 
-- Improved client and listener `SecureSocket` APIs of HTTP, GRPC, WebSocket, GraphQL, WebSub, WebSubHub, TCP, Email, NATS, STAN and RabbitMQ modules.
+- Improved client and listener `SecureSocket` APIs of HTTP, GRPC, WebSocket, GraphQL, WebSub, WebSubHub, TCP, Email, NATS, STAN, and RabbitMQ modules.
 ```ballerina
 public type ListenerSecureSocket record {|
    crypto:KeyStore|CertKey key;
@@ -797,7 +790,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake Alpha3 of the reposito
 
 #### Introduced Local Repository Support
 
-- Apart from the Ballerina Central remote repository, you can now push packages to the local repository which can be found at `<user-home>/.ballerina/repositories/local`. Refer the section on changes to CLI commands for information regarding pushing to the local repository.
+- Apart from the Ballerina Central remote repository, you can now push packages to the local repository which can be found at `<user-home>/.ballerina/repositories/local`. Refer to the section on changes to CLI commands for information regarding pushing to the local repository.
 - To use a package from the local repository, the 'repository' has to be specified in the TOML table of the relevant dependency in the `Dependencies.toml` file.
 
 E.g., to test a developed package before pushing it to Ballerina Central, build and push it to the local repository using the `push` command and add it to the `Dependencies.toml` file of the depending package as shown below.
@@ -828,7 +821,7 @@ repository = "local"
   - Introduced pushing to the local repository. Passing `--repository=local` will push the Ballerina archive (.bala) to the local repository. For information about local repository support, see the [Ballerina Packages Changelist](<link>).
 - Run `bal help <command>` to get more information on the command changes.
 
-- CLI Auto Completion
+- CLI Auto-Completion
   - Installing On Linux Bash
     - Set up auto-completion in the current bash shell.
   
@@ -871,7 +864,7 @@ bal openapi -i <ballerina file> --json
 #### Bindgen Tool
 
 - Improve the generated bindings with the use of distinct type classes.
-- Improve the internal mechanism used to generate the bindings. Previous handlebars based implementation is now changed to a syntax tree based implementation.
+- Improve the internal mechanism used to generate the bindings. Previous handlebars-based implementation is now changed to a syntax-tree-based implementation.
 
 #### Documentation
 
