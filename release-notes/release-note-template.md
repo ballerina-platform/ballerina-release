@@ -4,7 +4,9 @@ title: Release Note
 ---
 ### Overview of Ballerina Swan Lake <VERSION>
 
-The <VERSION> release includes the language features planned for the Ballerina Swan Lake release. Moreover, this release includes improvements and bug fixes to the language, runtime, standard library, code to cloud, and developer tooling. This release note lists only the features and updates added after the <PREVIOUS_VERSION> release of Ballerina Swan Lake.
+<em>This is the third Alpha release in a series of planned Alpha and Beta releases leading up to the Ballerina Swan Lake GA release.</em> 
+
+It introduces new language features planned for the Swan Lake GA release. Moreover, this release includes improvements and bug fixes done to the compiler, runtime, standard library, and developer tooling after the Swan Lake <PREVIOUS_VERSION> release.
 
 - [Updating Ballerina](#updating-ballerina)
     - [For Existing Users](#for-existing-users)
