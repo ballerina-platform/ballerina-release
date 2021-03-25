@@ -4,7 +4,9 @@ title: Release Note
 ---
 ### Overview of Ballerina Swan Lake <VERSION>
 
-The <VERSION> release includes the language features planned for the Ballerina Swan Lake release. Moreover, this release includes improvements and bug fixes to the language, runtime, standard library, code to cloud, and developer tooling. This release note lists only the features and updates added after the <PREVIOUS_VERSION> release of Ballerina Swan Lake.
+<em>This is the third Alpha release in a series of planned Alpha and Beta releases leading up to the Ballerina Swan Lake GA release.</em> 
+
+It introduces the new language features planned for the Swan Lake GA release and includes improvements and bug fixes done to the compiler, runtime, standard library, and developer tooling after the Swan Lake <PREVIOUS_VERSION> release.
 
 - [Updating Ballerina](#updating-ballerina)
     - [For Existing Users](#for-existing-users)
@@ -26,11 +28,9 @@ The <VERSION> release includes the language features planned for the Ballerina S
 
 ### Updating Ballerina
 
-You can use the [Update Tool](/learn/tooling-guide/cli-tools/update-tool/) to update to Ballerina Swan Lake <VERSION> as follows.
+If you are already using Ballerina, you can use the [Update Tool](/learn/tooling-guide/cli-tools/update-tool/) to directly update to Ballerina Swan Lake <VERSION> as follows. 
 
-#### For Existing Users
-
-If you are already using Ballerina, you can directly update your distribution to the Swan Lake channel using the [Ballerina Update Tool](/learn/tooling-guide/cli-tools/update-tool/). To do this, first, execute the command below to get the update tool updated to its latest version. 
+To do this, first, execute the command below to get the update tool updated to its latest version. 
 
 > `bal update`
 
@@ -38,7 +38,7 @@ If you are using an **Update Tool version below 0.8.14**, execute the `ballerina
 
 > `bal dist pull slalpha3`
 
-#### For New Users
+### Installing Ballerina
 
 If you have not installed Ballerina, then download the [installers](/downloads/#swanlake) to install.
 
