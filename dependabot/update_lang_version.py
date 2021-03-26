@@ -14,7 +14,7 @@ ORGANIZATION = "ballerina-platform"
 LANG_VERSION_KEY = "ballerinaLangVersion"
 VERSION_KEY = "version="
 
-LANG_VERSION_UPDATE_BRANCH = 'automated/stdlib_version_update'
+LANG_VERSION_UPDATE_BRANCH = 'automated/dependency_version_update'
 MASTER_BRANCH = "master"
 MAIN_BRANCH = "main"
 
@@ -31,8 +31,7 @@ COMMIT_MESSAGE_PREFIX = "[Automated] Update lang version to "
 PULL_REQUEST_BODY_PREFIX = "Update ballerina lang version to `"
 PULL_REQUEST_TITLE = "[Automated] Update Dependencies"
 
-MODULE_LIST_FILE = "release/resources/module_list.json"
-BALLERINA_DISTRIBUTION = "ballerina-distribution"
+MODULE_LIST_FILE = "resources/module_list.json"
 PROPERTIES_FILE = "gradle.properties"
 
 
@@ -43,18 +42,18 @@ def main():
 
 
 def get_lang_version():
-    try:
-        properties = open_url(
-            "https://raw.githubusercontent.com/ballerina-platform/ballerina-lang/master/gradle.properties")
-    except Exception as e:
-        print('Failed to gradle.properties file in ballerina-lang' + e)
-        sys.exit(1)
-
-    for line in properties:
-        line = line.decode(ENCODING).strip()
-        if line.startswith(VERSION_KEY):
-            return line.split("=")[-1]
-
+#     try:
+#         properties = open_url(
+#             "https://raw.githubusercontent.com/ballerina-platform/ballerina-lang/master/gradle.properties")
+#     except Exception as e:
+#         print('Failed to gradle.properties file in ballerina-lang' + e)
+#         sys.exit(1)
+#
+#     for line in properties:
+#         line = line.decode(ENCODING).strip()
+#         if line.startswith(VERSION_KEY):
+#             return line.split("=")[-1]
+       return "2.0.0-alpha7-20210326-123700-b2a59ad3"
 
 @retry(
     urllib.error.URLError,
@@ -75,8 +74,6 @@ def get_module_list_json():
         print(e)
         sys.exit(1)
 
-    # Append ballerina distribution to the list to update the lang version
-    module_list[MODULES].append(BALLERINA_DISTRIBUTION)
     return module_list
 
 
@@ -105,10 +102,17 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
     updated_properties_file = ""
     update = False
 
+    splitLangVersion = lang_version.split('-')
+    processedLangVersion = splitLangVersion[2] + splitLangVersion[3]
+
     for line in properties_file.splitlines():
         if line.startswith(LANG_VERSION_KEY):
             current_version = line.split("=")[-1]
-            if current_version != lang_version:
+
+            splitCurrentVersion = current_version.split('-')
+            processedCurrentVersion = splitCurrentVersion[2] + splitCurrentVersion[3]
+
+            if processedCurrentVersion <= processedLangVersion:
                 print("[Info] Updating the lang version in module: \"" + module_name + "\"")
                 updated_properties_file += LANG_VERSION_KEY + "=" + lang_version + "\n"
                 update = True
@@ -135,7 +139,7 @@ def commit_changes(repo, updated_file, lang_version):
             repo.get_branch(LANG_VERSION_UPDATE_BRANCH)
             repo.merge(LANG_VERSION_UPDATE_BRANCH, base.commit.sha, "Sync default branch")
         except GithubException as e:
-            print("Error occurred: " + e)
+            print("Error occurred: ", e)
 
 
     current_file = repo.get_contents(PROPERTIES_FILE, ref=LANG_VERSION_UPDATE_BRANCH)
@@ -172,6 +176,4 @@ def create_pull_request(repo, lang_version):
                 head=LANG_VERSION_UPDATE_BRANCH,
                 base=MAIN_BRANCH
             )
-
-
 main()
