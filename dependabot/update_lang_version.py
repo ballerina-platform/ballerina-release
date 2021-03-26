@@ -5,6 +5,7 @@ from retry import retry
 import sys
 import time
 import urllib.request
+import json
 
 HTTP_REQUEST_RETRIES = 3
 HTTP_REQUEST_DELAY_IN_SECONDS = 2
@@ -31,9 +32,10 @@ COMMIT_MESSAGE_PREFIX = "[Automated] Update lang version to "
 PULL_REQUEST_BODY_PREFIX = "Update ballerina lang version to `"
 PULL_REQUEST_TITLE = "[Automated] Update Dependencies"
 
-MODULE_LIST_FILE = "resources/module_list.json"
+MODULE_LIST_FILE = "dependabot/resources/module_list.json"
 PROPERTIES_FILE = "gradle.properties"
 
+overrideBallerinaVersion = sys.argv[1]
 
 def main():
     lang_version = get_lang_version()
@@ -42,18 +44,17 @@ def main():
 
 
 def get_lang_version():
-#     try:
-#         properties = open_url(
-#             "https://raw.githubusercontent.com/ballerina-platform/ballerina-lang/master/gradle.properties")
-#     except Exception as e:
-#         print('Failed to gradle.properties file in ballerina-lang' + e)
-#         sys.exit(1)
-#
-#     for line in properties:
-#         line = line.decode(ENCODING).strip()
-#         if line.startswith(VERSION_KEY):
-#             return line.split("=")[-1]
-       return "2.0.0-alpha7-20210326-123700-b2a59ad3"
+    if (overrideBallerinaVersion != ''):
+        return overrideBallerinaVersion
+    else:
+        try:
+            versionString = open_url(
+                "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions").read()
+        except Exception as e:
+            print('Failed to get ballerina packages version', e)
+            sys.exit(1)
+        latestVersion = json.loads(versionString)[0]
+        return latestVersion["name"]
 
 @retry(
     urllib.error.URLError,
@@ -62,7 +63,11 @@ def get_lang_version():
     backoff=HTTP_REQUEST_DELAY_MULTIPLIER
 )
 def open_url(url):
-    return urllib.request.urlopen(url)
+    request = urllib.request.Request(url)
+    request.add_header("Accept", "application/vnd.github.v3+json")
+    request.add_header("Authorization", "Bearer " + packagePAT)
+
+    return urllib.request.urlopen(request)
 
 
 def get_module_list_json():
