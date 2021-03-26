@@ -115,14 +115,21 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
             current_version = line.split("=")[-1]
 
             splitCurrentVersion = current_version.split('-')
-            processedCurrentVersion = splitCurrentVersion[2] + splitCurrentVersion[3]
 
-            if processedCurrentVersion < processedLangVersion:
+            if len(splitCurrentVersion) > 3:
+                processedCurrentVersion = splitCurrentVersion[2] + splitCurrentVersion[3]
+
+                if processedCurrentVersion < processedLangVersion:
+                    print("[Info] Updating the lang version in module: \"" + module_name + "\"")
+                    updated_properties_file += LANG_VERSION_KEY + "=" + lang_version + "\n"
+                    update = True
+                else:
+                    updated_properties_file += line + "\n"
+            else:
+                # Stable dependency & SNAPSHOT
                 print("[Info] Updating the lang version in module: \"" + module_name + "\"")
                 updated_properties_file += LANG_VERSION_KEY + "=" + lang_version + "\n"
                 update = True
-            else:
-                updated_properties_file += line + "\n"
         else:
             updated_properties_file += line + "\n"
 
