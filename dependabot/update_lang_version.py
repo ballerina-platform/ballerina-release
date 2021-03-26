@@ -84,6 +84,7 @@ def get_module_list_json():
 
 def check_and_update_lang_version(module_list_json, lang_version):
     for module_name in module_list_json[MODULES]:
+        print ("Update lang dependency in module '" + module_name + "'")
         update_module(module_name, lang_version)
 
 
