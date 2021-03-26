@@ -117,7 +117,7 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
             splitCurrentVersion = current_version.split('-')
             processedCurrentVersion = splitCurrentVersion[2] + splitCurrentVersion[3]
 
-            if processedCurrentVersion <= processedLangVersion:
+            if processedCurrentVersion < processedLangVersion:
                 print("[Info] Updating the lang version in module: \"" + module_name + "\"")
                 updated_properties_file += LANG_VERSION_KEY + "=" + lang_version + "\n"
                 update = True
