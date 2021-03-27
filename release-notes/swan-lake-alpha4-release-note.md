@@ -56,7 +56,64 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### New Features
 
+##### Support for Relational Expressions With All Ordered Types
+
+Relational expressions are supported with all [ordered types](https://ballerina.io/spec/lang/draft/v2020-12-17/#ordering). The static type of both operands must belong to the same ordered type.
+
+##### Support for inferring the `typedesc` argument of a dependently-typed function from the contextually expected type
+
+When the default value of a `typedesc` parameter of a dependently-typed function is `<>` and an argument is not provided for the parameter when calling the function, the argument will be inferred from the contextually expected type of the function call.
+```ballerina
+function func(typedesc<anydata> td = <>) returns td = external;
+
+public function main() {
+    // The argument for `td` is inferred to be `int`.
+    int value = func();
+}
+```
+
 #### Improvements
+
+##### Dependently-typed lang library functions that infer the argument from the contextually expected type
+
+The `cloneWithType`, `fromJsonWithType`, `fromJsonStringWithType`, and `ensureType` lang library functions are dependently-typed functions for which the `typedesc` argument will be inferred from the contextually-expected type if it is not passed as an argument.
+
+```ballerina
+import ballerina/io;
+
+type Person record {|
+    string name;
+    int age;
+|};
+
+public function main() {
+    map<anydata> anydataMap = {name: "Amy", age: 30};
+
+    // The `typedesc` argument is inferred to be `Person`
+    // based on the contextually expected type.
+    Person|error result = anydataMap.cloneWithType();
+    io:println(result is Person); // Prints `true`.
+}
+```
+
+##### The return type of `lang.value:cloneReadOnly` is a subtype of `readonly`
+
+The return type of the `lang.value:cloneReadOnly` lang library function has been changed from the type of the value (`T`) to the intersection of the type and `readonly` (`T & readonly`).
+
+```ballerina
+type Person record {|
+    string name;
+    int age;
+|};
+
+public function main() {
+    Person mutablePerson = {name: "Amy", age: 30};
+
+    // The result of `cloneReadOnly()` can be directly assigned
+    // to a variable of type `Person & readonly`.
+    Person & readonly immutablePerson = mutablePerson.cloneReadOnly();
+}
+```
 
 #### Bug Fixes
 
@@ -118,3 +175,15 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 #### Ballerina Packages Updates
 
 ### Breaking Changes
+
+- Unused variables declared with `var` where the inferred type includes error result in a compilation error.
+- The `error<*>` syntax has been removed.
+- Relational expressions are not supported with numeric values when the static types of the operands belong to different ordered types.
+- `indexOf` and `lastIndexOf` functions of the `lang.array` lang library can only be used with values of type `anydata`.
+- Any iterable object used in foreach and query expressions must be a subtype of `object:Iterable`.
+- `RawTemplate` type is now a distinct type.
+- The filler value of the `decimal` type is now `+0d`.
+- `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString` now return `lang.value:JsonFloat` and `lang.value:JsonDecimal` respectively.
+- Completion type `C` in `stream<T, C>` has been changed from `error|never` to `error?`. `stream<T>` is equivalent to `stream<T, ()>`. `stream<T>` and `stream<T, error>` are assignable to `stream<T, error?>`.
+- Annotations with the `service` attach point cannot be used with service classes.
+- Checking keywords (`check` and `checkpanic`) are allowed in a statement only if the statement is a call statement (i.e., when the expression is a function or method call).
