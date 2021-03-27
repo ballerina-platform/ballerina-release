@@ -58,7 +58,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ##### Support for Relational Expressions With All Ordered Types
 
-Relational expressions are supported with all [ordered types](https://ballerina.io/spec/lang/draft/v2020-12-17/#ordering). The static type of both operands must belong to the same ordered type.
+Relational expressions (`<`, `>`, `<=`, and `>=`) are supported with all [ordered types](https://ballerina.io/spec/lang/draft/v2020-12-17/#ordering). The static type of both operands must belong to the same ordered type.
 
 ##### Support for inferring the `typedesc` argument of a dependently-typed function from the contextually expected type
 
@@ -178,12 +178,12 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 
 - Unused variables declared with `var` where the inferred type includes error result in a compilation error.
 - The `error<*>` syntax has been removed.
-- Relational expressions are not supported with numeric values when the static types of the operands belong to different ordered types.
-- `indexOf` and `lastIndexOf` functions of the `lang.array` lang library can only be used with values of type `anydata`.
-- Any iterable object used in foreach and query expressions must be a subtype of `object:Iterable`.
-- `RawTemplate` type is now a distinct type.
+- Relational expressions are no longer supported with numeric values when the static types of the operands belong to different ordered types.
+- The `indexOf` and `lastIndexOf` functions of the `lang.array` lang library cannot be used with values that do not belong to `anydata`.
+- An object used as the iterable value in a `foreach` statement or a `from` clause must be a subtype of `object:Iterable`.
+- The `RawTemplate` type is now a distinct type.
 - The filler value of the `decimal` type is now `+0d`.
-- `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString` now return `lang.value:JsonFloat` and `lang.value:JsonDecimal` respectively.
+- The `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString` lang library functions now return `lang.value:JsonFloat` and `lang.value:JsonDecimal` respectively.
 - Completion type `C` in `stream<T, C>` has been changed from `error|never` to `error?`. `stream<T>` is equivalent to `stream<T, ()>`. `stream<T>` and `stream<T, error>` are assignable to `stream<T, error?>`.
 - Annotations with the `service` attach point cannot be used with service classes.
 - Checking keywords (`check` and `checkpanic`) are allowed in a statement only if the statement is a call statement (i.e., when the expression is a function or method call).
