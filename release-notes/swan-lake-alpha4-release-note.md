@@ -60,9 +60,9 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 Relational expressions (`<`, `>`, `<=`, and `>=`) are supported with all [ordered types](https://ballerina.io/spec/lang/draft/v2020-12-17/#ordering). The static type of both operands must belong to the same ordered type.
 
-##### Support for inferring the `typedesc` argument of a dependently-typed function from the contextually expected type
+##### Support for Inferring the Argument of a Dependently-Typed Function from the Contextually-Expected Type
 
-When the default value of a `typedesc` parameter of a dependently-typed function is `<>` and an argument is not provided for the parameter when calling the function, the argument will be inferred from the contextually expected type of the function call.
+When the default value of a `typedesc` parameter of a dependently-typed function is `<>` and an argument is not provided for the parameter when calling the function, the argument will be inferred from the contextually-expected type of the function call.
 ```ballerina
 function func(typedesc<anydata> td = <>) returns td = external;
 
@@ -74,7 +74,7 @@ public function main() {
 
 #### Improvements
 
-##### Dependently-typed lang library functions that infer the argument from the contextually expected type
+##### Dependently-Typed Lang Library Functions that Infer the Argument from the Contextually-Expected Type
 
 The `cloneWithType`, `fromJsonWithType`, `fromJsonStringWithType`, and `ensureType` lang library functions are dependently-typed functions for which the `typedesc` argument will be inferred from the contextually-expected type if it is not passed as an argument.
 
@@ -96,7 +96,7 @@ public function main() {
 }
 ```
 
-##### The return type of `lang.value:cloneReadOnly` is a subtype of `readonly`
+##### Improvement to the Return Type of `lang.value:cloneReadOnly`
 
 The return type of the `lang.value:cloneReadOnly` lang library function has been changed from the type of the value (`T`) to the intersection of the type and `readonly` (`T & readonly`).
 
@@ -115,7 +115,7 @@ public function main() {
 }
 ```
 
-##### Changes to the return types of `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString`
+##### Changes to the Return Types of `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString`
 
 The return types of the `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString` lang library functions have been changed from `json` to `lang.value:JsonFloat` and `lang.value:JsonDecimal` respectively.
 
@@ -180,7 +180,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 
 ### Breaking Changes
 
-- Unused variables declared with `var` where the inferred type includes error result in a compilation error.
+- Unused variables declared with `var` of which the inferred type includes subtypes of `error` result in a compilation error.
 - The `error<*>` syntax has been removed.
 - Relational expressions are no longer supported with numeric values when the static types of the operands belong to different ordered types.
 - The `indexOf` and `lastIndexOf` functions of the `lang.array` lang library cannot be used with values that do not belong to `anydata`.
