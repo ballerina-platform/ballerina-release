@@ -115,6 +115,10 @@ public function main() {
 }
 ```
 
+##### Changes to the return types of `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString`
+
+The return types of the `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString` lang library functions have been changed from `json` to `lang.value:JsonFloat` and `lang.value:JsonDecimal` respectively.
+
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha4%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
@@ -180,10 +184,10 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 - The `error<*>` syntax has been removed.
 - Relational expressions are no longer supported with numeric values when the static types of the operands belong to different ordered types.
 - The `indexOf` and `lastIndexOf` functions of the `lang.array` lang library cannot be used with values that do not belong to `anydata`.
-- An object used as the iterable value in a `foreach` statement or a `from` clause must be a subtype of `object:Iterable`.
+- An object used as the iterable value in a `foreach` statement, `from` clause, or `join` clause  must be a subtype of `object:Iterable`.
 - The `RawTemplate` type is now a distinct type.
 - The filler value of the `decimal` type is now `+0d`.
-- The `lang.value:fromJsonFloatString` and `lang.value:fromJsonDecimalString` lang library functions now return `lang.value:JsonFloat` and `lang.value:JsonDecimal` respectively.
 - Completion type `C` in `stream<T, C>` has been changed from `error|never` to `error?`. `stream<T>` is equivalent to `stream<T, ()>`. `stream<T>` and `stream<T, error>` are assignable to `stream<T, error?>`.
 - Annotations with the `service` attach point cannot be used with service classes.
 - Checking keywords (`check` and `checkpanic`) are allowed in a statement only if the statement is a call statement (i.e., when the expression is a function or method call).
+- The precedence of the `trap` expression has been lowered.
