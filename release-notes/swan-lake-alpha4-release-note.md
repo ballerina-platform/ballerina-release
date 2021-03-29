@@ -76,7 +76,7 @@ public function main() {
 
 ##### Dependently-Typed Lang Library Functions that Infer the Argument from the Contextually-Expected Type
 
-The `cloneWithType`, `fromJsonWithType`, `fromJsonStringWithType`, and `ensureType` lang library functions are dependently-typed functions for which the `typedesc` argument will be inferred from the contextually-expected type if it is not passed as an argument.
+The `lang.value:cloneWithType`, `lang.value:fromJsonWithType`, `lang.value:fromJsonStringWithType`, and `lang.value:ensureType` lang library functions are dependently-typed functions for which the `typedesc` argument will be inferred from the contextually-expected type if it is not passed as an argument.
 
 ```ballerina
 import ballerina/io;
@@ -183,7 +183,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 - Unused variables declared with `var` of which the inferred type includes subtypes of `error` result in a compilation error.
 - The `error<*>` syntax has been removed.
 - Relational expressions are no longer supported with numeric values when the static types of the operands belong to different ordered types.
-- The `indexOf` and `lastIndexOf` functions of the `lang.array` lang library cannot be used with values that do not belong to `anydata`.
+- The `lang.array:indexOf` and `lang.array:lastIndexOf` lang library functions cannot be used with values that do not belong to `anydata`.
 - An object used as the iterable value in a `foreach` statement, `from` clause, or `join` clause  must be a subtype of `object:Iterable`.
 - The `RawTemplate` type is now a distinct type.
 - The filler value of the `decimal` type is now `+0d`.
