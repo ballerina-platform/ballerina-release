@@ -5,6 +5,7 @@ import networkx as nx
 import sys
 import time
 from retry import retry
+import os
 
 HTTP_REQUEST_RETRIES = 3
 HTTP_REQUEST_DELAY_IN_SECONDS = 2
@@ -14,6 +15,8 @@ BALLERINA_ORG_NAME = "ballerina-platform"
 BALLERINA_ORG_URL = "https://github.com/ballerina-platform/"
 GITHUB_BADGE_URL = "https://img.shields.io/github/"
 CODECOV_BADGE_URL = "https://codecov.io/gh/"
+
+packagePAT = os.environ["packagePAT"]
 
 def main():
     print('Running main.py')
@@ -29,10 +32,10 @@ def main():
     update_json_file(module_details_json)
     print('Updated module details successfully')
 
-# Sorts the ballerina standard library module list in ascending order
+# Sorts the ballerina extension module list in ascending order
 def sort_module_name_list():
     try:
-        with open('./release/resources/module_list.json') as f:
+        with open('dependabot/resources/module_list.json') as f:
             name_list = json.load(f)
     except:
         print('Failed to read module_list.json')
@@ -41,7 +44,7 @@ def sort_module_name_list():
     name_list['modules'].sort(key=lambda x: x.split('-')[-1])
     
     try:
-        with open('./release/resources/module_list.json', 'w') as json_file:
+        with open('dependabot/resources/module_list.json', 'w') as json_file:
             json_file.seek(0) 
             json.dump(name_list, json_file, indent=4)
             json_file.truncate()
@@ -60,9 +63,13 @@ def sort_module_name_list():
     backoff=HTTP_REQUEST_DELAY_MULTIPLIER
 )
 def url_open_with_retry(url):
-    return urllib.request.urlopen(url)
+    request = urllib.request.Request(url)
+    request.add_header("Accept", "application/vnd.github.v3+json")
+    request.add_header("Authorization", "Bearer " + packagePAT)
 
-# Gets dependencies of ballerina standard library module from build.gradle file in module repository
+    return urllib.request.urlopen(request)
+
+# Gets dependencies of ballerina extension module from build.gradle file in module repository
 # returns: list of dependencies
 def get_dependencies(module_name):
     try:
@@ -84,7 +91,7 @@ def get_dependencies(module_name):
 
     return dependencies
 
-# Gets the version of the ballerina standard library module from gradle.properties file in module repository
+# Gets the version of the ballerina extension module from gradle.properties file in module repository
 # returns: current version of the module
 def get_version(module_name):
     try:
@@ -105,7 +112,7 @@ def get_version(module_name):
 
     return version 
 
-# Gets the default branch of the standard library repository
+# Gets the default branch of the extension repository
 # returns: default branch name
 def get_default_branch(module_name):
     try:
@@ -178,15 +185,15 @@ def calculate_levels(module_name_list, module_details_json):
 
     return module_details_json
 
-# Updates the stdlib_modules.JSON file with dependents of each standard library module
+# Updates the extensions.JSON file with dependents of each standard library module
 def update_json_file(updated_json):
     try:
-        with open('./release/resources/stdlib_modules.json', 'w') as json_file:
+        with open('dependabot/resources/extensions.json', 'w') as json_file:
             json_file.seek(0) 
             json.dump(updated_json, json_file, indent=4)
             json_file.truncate()
     except:
-        print('Failed to write to stdlib_modules.json')
+        print('Failed to write to extensions.json')
         sys.exit()
 
 # Creates a JSON string to store module information
@@ -204,8 +211,6 @@ def initialize_module_details(module_name_list):
             'default_branch': default_branch,
             'release': True, 
             'dependents': [] })
-        
-        time.sleep(10)
 
     return module_details_json
 

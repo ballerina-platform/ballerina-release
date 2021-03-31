@@ -32,7 +32,7 @@ COMMIT_MESSAGE_PREFIX = "[Automated] Update lang version to "
 PULL_REQUEST_BODY_PREFIX = "Update ballerina lang version to `"
 PULL_REQUEST_TITLE = "[Automated] Update Dependencies"
 
-MODULE_LIST_FILE = "dependabot/resources/module_list.json"
+MODULE_LIST_FILE = "dependabot/resources/extensions.json"
 PROPERTIES_FILE = "gradle.properties"
 
 overrideBallerinaVersion = sys.argv[1]
@@ -84,8 +84,8 @@ def get_module_list_json():
 
 def check_and_update_lang_version(module_list_json, lang_version):
     for module_name in module_list_json[MODULES]:
-        print ("Update lang dependency in module '" + module_name + "'")
-        update_module(module_name, lang_version)
+        print ("Update lang dependency in module '" + module_name["name"] + "'")
+        update_module(module_name["name"], lang_version)
 
 
 def update_module(module_name, lang_version):
