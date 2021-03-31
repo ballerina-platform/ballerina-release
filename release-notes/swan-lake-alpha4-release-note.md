@@ -66,7 +66,56 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### New Features
 
-#### Improvements
+##### Support for providing values for configurable variables with Command Line arguments
+
+Configurable values can be provided with the built-in command-line option -C.
+
+```
+-Ckey=value
+```
+
+Key syntax:
+
+```
+key:= [[orgName .] packageName.moduleName .] variable
+```
+
+Command line arguments are supported for config variables with boolean , int , float , decimal , string and xml types.
+
+Example usages
+
+```ballerina
+configurable int port = ?;
+```
+
+If configurable variable defined in the default module.
+
+bal run -- -Cport=9090
+java -jar  -Cport=9090 
+
+If configurable variable defined in diffrent module in same organization.
+
+```
+bal run -- -CpackageName.moduleName.port=9090
+java -jar  -CpackageName.modulename.port=9090 
+```
+
+If configurable variable defined in module of different organization.
+
+```
+bal run -- -CorgName.packageName.modulename.port=9090 
+java -jar  -CorgName.packageName.modulename.port=9090 
+```
+
+##### Support for locating multiple toml files
+
+Configurable values can be provided in multiple TOML files using the environment variable with name `BAL_CONFIG_FILES`.
+
+The file locations can be specified in the environment variable using OS-specific separator. The precedence order to configure the values  will be as specified in the environment variable. If such an environment variable is not specified, the file is located in the current directory with the file name `Config.toml`.
+
+##### Support for providing TOML content through environment variable
+
+The configurable values can be provided using the environment variable `BAL_CONFIG_DATA` where the content is expected to be in TOML (v0.4) format.
 
 #### Bug Fixes
 
