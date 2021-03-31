@@ -105,8 +105,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### New Features
 
-- Added debugging support for package dependency sources. With this feature, now you can step-in to the following
-  dependency package types which are used within your ballerina program.
+- Added debugging support for package dependency sources. With this feature, now you can step-in and debug the sources
+  related to the following dependency package types, that are used within your ballerina program.
   - language library sources
   - standard library sources
   - imported modules from the central
