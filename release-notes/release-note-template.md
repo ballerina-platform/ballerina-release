@@ -126,7 +126,7 @@ xml?|Error x = xmldata:fromJson(data);
 
 ##### Bug Fixes
 
-##### Renamed `java.arrays` Package
+##### Renamed the `java.arrays` Package
 
 The `java.arrays` package’s org and package names were renamed as `ballerina` and `jballerina.java.arrays`. 
 ```ballerina
