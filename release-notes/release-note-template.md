@@ -64,7 +64,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 ###### Time Package
 
-- Introduced the following APIs to support email typed string conversions:
+- Introduced the following APIs to support email-typed string conversions:
     - Converts a given UTC to an email string.
         ```ballerina
         import ballerina/time; 
