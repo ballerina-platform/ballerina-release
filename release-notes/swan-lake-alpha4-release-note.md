@@ -115,7 +115,7 @@ java -jar executable.jar -Corg-name.module-name.port=9090
 Configurable values can be provided in multiple TOML files using the `BAL_CONFIG_FILES` environment variable.
 
 The file locations can be specified in the environment variable using an OS-specific separator. The precedence order
- to configure the values will be as specified in the environment variable. If such an environment variable is not specified, the file located in the current directory with the file name `Config.toml` will be used.
+ will be determined by the order in which the files are specified in the environment variable. If such an environment variable is not specified, the file located in the current directory with the file name `Config.toml` will be used.
 
 ##### Support for Providing TOML Content Through the Environment Variable
 
