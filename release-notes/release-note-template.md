@@ -4,27 +4,20 @@ title: Release Note
 ---
 ### Overview of Ballerina Swan Lake <VERSION>
 
-<em>This is the third Alpha release in a series of planned Alpha and Beta releases leading up to the Ballerina Swan Lake GA release.</em> 
+<em>This is the <third> Alpha release in a series of planned Alpha and Beta releases leading up to the Ballerina Swan Lake GA release.</em> 
 
 It introduces the new language features planned for the Swan Lake GA release and includes improvements and bug fixes done to the compiler, runtime, standard library, and developer tooling after the Swan Lake <PREVIOUS_VERSION> release.
 
 - [Updating Ballerina](#updating-ballerina)
-    - [For Existing Users](#for-existing-users)
-    - [For New Users](#for-new-users)
+- [Installing Ballerina](#installing-ballerina)
 - [Highlights](#highlights)
-- [What is new in Ballerina Swan Lake <VERSION>](#what-is-new-in-ballerina-swan-lake-<VERSION>)
-    - [Language](#language)
-        - [Bug Fixes](#bug-fixes)
-    - [Runtime](#runtime)
-        - [Bug Fixes](#bug-fixes)
-    - [Standard Library](#standard-library)
-        - [Bug Fixes](#bug-fixes)
-    - [Code to Cloud](#code-to-cloud)
-        - [Bug Fixes](#bug-fixes)
-    - [Developer Tools](#developer-tools)
-        - [Bug Fixes](#bug-fixes)
-    - [Ballerina Packages](ballerina-packages)
-    - [Breaking Changes](#breaking-changes)
+- [Language Updates](#language-updates)
+- [Runtime Updates](#runtime-updates)
+- [Standard Library Updates](#standard-library-updates)
+- [Code to Cloud Updates](#code-to-cloud-updates)
+- [Developer Tools Updates](#developer-tools-updates)
+- [Ballerina Packages Updates](ballerina-packages-updates)
+- [Breaking Changes](#breaking-changes)
 
 ### Updating Ballerina
 
@@ -44,29 +37,43 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ### Highlights
 
-### What is new in Ballerina Swan Lake <VERSION>
+### Language Updates
 
-#### Language
+#### New Features
 
-##### Bug Fixes
+#### Improvements
+
+#### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
-#### Runtime
+### Runtime Updates
 
-##### Bug Fixes
+#### New Features
+
+#### Improvements
+
+#### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
 
-#### Standard Library
+### Standard Library Updates
 
-##### Bug Fixes
+#### New Features
+
+#### Improvements
+
+#### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+Alpha3%22+label%3AType%2FBug).
 
-#### Code to Cloud
+### Code to Cloud Updates
 
-##### Bug Fixes
+#### New Features
+
+#### Improvements
+
+#### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repositories below.
 
@@ -75,9 +82,17 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 - [AWS Lambda](https://github.com/ballerina-platform/module-ballerinax-aws.lambda/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22)
 - [Azure Functions](https://github.com/ballerina-platform/module-ballerinax-azure.functions/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22) 
 
-#### Developer Tools
+### Developer Tools Updates
 
-##### Bug Fixes
+#### Language Server 
+
+To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer).
+
+#### New Features
+
+#### Improvements
+
+#### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repositories below.
 
@@ -85,11 +100,6 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
 - [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Alpha%22) 
 
-##### Language Server
-
-To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer).
-
-
-#### Ballerina Packages
+#### Ballerina Packages Updates
 
 ### Breaking Changes
