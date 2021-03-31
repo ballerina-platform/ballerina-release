@@ -28,8 +28,6 @@ def main():
     module_details_json['modules'].sort(key=lambda s: s['level'])
     update_json_file(module_details_json)
     print('Updated module details successfully')
-    update_stdlib_dashboard(module_details_json)
-    print('Updated README file successfully')
 
 # Sorts the ballerina standard library module list in ascending order
 def sort_module_name_list():
@@ -221,65 +219,5 @@ def get_immediate_dependents(module_name_list, module_details_json):
                 module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(module_name)
                     
     return module_details_json
-
-# Updates the stdlib dashboard in README.md
-def update_stdlib_dashboard(module_details_json):
-    try:
-        readme_file = url_open_with_retry("https://raw.githubusercontent.com/ballerina-platform/ballerina-standard-library/main/README.md")
-    except:
-        print('Failed to read README.md file')
-        sys.exit()
-
-    updated_readme_file = ''
-
-    for line in readme_file:
-        processed_line = line.decode("utf-8")
-        updated_readme_file += processed_line
-        if "## Status Dashboard" in processed_line:
-            updated_readme_file += "\n"
-            updated_readme_file += "|Level| Modules | Latest Version | Build | Code Coverage | Open Issues | Open Pull Requests |\n"
-            updated_readme_file += "|:---:|:---:|:---:|:---:|:---:|:---:|:---:|\n"
-            break
-
-    # Modules in levels 0 and 1 are categorized under level 1
-    # A single row in the table is created for each module in the module list    
-    level_column = 1
-    current_level = 1
-    for module in module_details_json['modules']:
-        if module['level'] > current_level:
-            level_column = module['level']
-            current_level = module['level']
-
-        row = ("|" + str(level_column) + "|" + 
-        "[" + module['name'].split('-')[-1] + "](" + BALLERINA_ORG_URL + module['name'] + ")| " + 
-
-        "[![GitHub Release](" + GITHUB_BADGE_URL + "release/" + BALLERINA_ORG_NAME + "/" + module['name'] + ".svg?label=)]" + 
-        "(" + BALLERINA_ORG_URL + module['name'] + "/releases)| " + 
-
-        "[![Build](" + BALLERINA_ORG_URL + module['name'] + "/workflows/Build/badge.svg)]" + 
-        "(" + BALLERINA_ORG_URL + module['name'] + "/actions?query=workflow%3ABuild)| " + 
-
-        "[![CodeCov](" + CODECOV_BADGE_URL + BALLERINA_ORG_NAME + "/" + module['name'] + "/branch/" + module['default_branch'] + "/graph/badge.svg)]" +
-        "(" + CODECOV_BADGE_URL + BALLERINA_ORG_NAME + "/" + module['name'] + ")| " + 
-        
-        "[![Github issues](" + GITHUB_BADGE_URL + "issues" + "/" + BALLERINA_ORG_NAME + "/ballerina-standard-library/module/" 
-        + module['name'].split('-')[-1] + ".svg?label=)]" + 
-        "(" + BALLERINA_ORG_URL + "ballerina-standard-library/labels/module%2F" + module['name'].split('-')[-1] + ")| " + 
-
-        "[![GitHub pull-requests](" + GITHUB_BADGE_URL + "issues-pr" + "/" + BALLERINA_ORG_NAME + "/" + module['name'] + ".svg?label=)]" + 
-        "(" + BALLERINA_ORG_URL + module['name'] + "/pulls)|\n")
-        
-        updated_readme_file += row
-
-        level_column = ''
-
-    try:
-        with open('./README.md', 'w') as README:
-            README.seek(0) 
-            README.write(updated_readme_file)
-            README.truncate()
-    except:
-        print('Failed to write to README.md')
-        sys.exit()
 
 main()
