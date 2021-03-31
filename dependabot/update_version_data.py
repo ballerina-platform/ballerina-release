@@ -3,7 +3,6 @@ import json
 import re
 import networkx as nx
 import sys
-import time
 from retry import retry
 import os
 
@@ -19,7 +18,6 @@ CODECOV_BADGE_URL = "https://codecov.io/gh/"
 packagePAT = os.environ["packagePAT"]
 
 def main():
-    print('Running main.py')
     module_name_list = sort_module_name_list()
     print('Fetched module name list')
     module_details_json = initialize_module_details(module_name_list)
@@ -209,7 +207,7 @@ def initialize_module_details(module_name_list):
             'version':version,
             'level': 0,
             'default_branch': default_branch,
-            'release': True, 
+            'auto_merge': True,
             'dependents': [] })
 
     return module_details_json
