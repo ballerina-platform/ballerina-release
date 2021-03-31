@@ -159,7 +159,8 @@ public class Utils {
      * @return returns the command name
      */
     public static String getCommandName(String toolVersion) {
-        String version = toolVersion.split("\\.")[2];
-        return  Integer.parseInt(version) <= 10 ? "ballerina " : "bal ";
+        String[] version = toolVersion.split("\\.");
+        //command will be ballerina if update tool version is less than 0.8.10.
+        return version[0].equals("0") && Integer.parseInt(version[2]) <= 10 ? "ballerina " : "bal ";
     }
 }

@@ -12,25 +12,10 @@ It introduces the new language features planned for the Swan Lake GA release and
 - [Installing Ballerina](#installing-ballerina)
 - [Highlights](#highlights)
 - [Language Updates](#language-updates)
-    - [New Features](#new-features)
-    - [Improvements](#improvements)
-    - [Bug Fixes](#bug-fixes)
 - [Runtime Updates](#runtime-updates)
-    - [New Features](#new-features)
-    - [Improvements](#improvements)
-    - [Bug Fixes](#bug-fixes)
 - [Standard Library Updates](#standard-library-updates)
-    - [New Features](#new-features)
-    - [Improvements](#improvements)
-    - [Bug Fixes](#bug-fixes)
 - [Code to Cloud Updates](#code-to-cloud-updates)
-    - [New Features](#new-features)
-    - [Improvements](#improvements)
-    - [Bug Fixes](#bug-fixes)
 - [Developer Tools Updates](#developer-tools-updates)
-    - [New Features](#new-features)
-    - [Improvements](#improvements)
-    - [Bug Fixes](#bug-fixes)
 - [Ballerina Packages Updates](ballerina-packages-updates)
 - [Breaking Changes](#breaking-changes)
 
@@ -129,7 +114,61 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### New Features
 
-#### Improvements
+##### Support for providing values for configurable variables with Command Line arguments
+
+Configurable values can be provided with the built-in command-line option `-C`.
+
+```
+-Ckey=value
+```
+
+Key syntax:
+
+```
+key:= [[org-name .] module-name .] variable
+```
+
+Command-line arguments are supported for configurable variables with boolean, int, float, decimal, string, and XML types.
+
+Example usages:
+
+```ballerina
+configurable int port = ?;
+```
+
+If the configurable variable is defined in the default module or if we are using a single Ballerina file.
+
+```
+bal run -- -Cport=9090
+bal run program.bal -- -Cport=9090
+java -jar executable.jar -Cport=9090 
+```
+
+If the configurable variable is defined in a different module of the same organization.
+
+```
+bal run -- -Cmodule-name.port=9090
+java -jar executable.jar -Cmodule-name.port=9090 
+```
+
+If the configurable variable is defined in a module of a different organization.
+
+```
+bal run -- -Corg-name.module-name.port=9090 
+java -jar executable.jar -Corg-name.module-name.port=9090 
+```
+
+##### Support for locating multiple toml files
+
+Configurable values can be provided in multiple TOML files using the `BAL_CONFIG_FILES` environment variable.
+
+The file locations can be specified in the environment variable using an OS-specific separator. The precedence order
+ will be determined by the order in which the files are specified in the environment variable. If such an environment variable is not specified, the file located in the current directory with the file name `Config.toml` will be used.
+
+##### Support for Providing TOML Content Through the Environment Variable
+
+The configurable values can be provided using the `BAL_CONFIG_DATA` environment variable in which the content is
+ expected to be in the TOML (v0.4) format.
 
 #### Bug Fixes
 
