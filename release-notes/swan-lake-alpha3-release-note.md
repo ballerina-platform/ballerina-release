@@ -146,6 +146,18 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://githu
 
 #### Runtime
 
+##### JAVA Runtime API
+
+A new runtime Java API is introduced to create errors.
+```java
+BError createError(Module module, String errorTypeName, BString message, BError cause, Object details)
+```
+The `createDistinctError` API has been deprecated and should not be used to create distinct errors. The new `createError` API can be used instead.
+
+##### Configurable Variables
+
+Improved error messages are introduced for configurable variables by including more information and the relevant
+ `Config.toml` line numbers.
 ##### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Alpha3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Alpha3%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
@@ -663,11 +675,9 @@ public enum CertValidationType {
 ```ballerina
 import ballerina/tcp;
 
-configurable string certPath = ?;
-
 public function main() returns error? {
     tcp:Client socketClient = check new ("localhost", 9002, secureSocket = {
-        cert: certPath,
+        cert: "../resource/path/to/public.crt",
         protocol: {
             name: tcp:TLS,
             versions: ["TLSv1.2", "TLSv1.1"]
@@ -686,20 +696,22 @@ public function main() returns error? {
 ```
 
 ```ballerina
-configurable string keyPath = ?;
-configurable string certPath = ?;
+import ballerina/tcp;
+import ballerina/io;
 
-service on new tcp:Listener(9002, secureSocket = {
-       key: {
-        certFile: certPath,
-        keyFile: keyPath
+tcp:ListenerSecureSocket listenerSecureSocket = {
+    key: {
+        certFile: "../resource/path/to/public.crt",
+        keyFile: "../resource/path/to/private.key"
     },
     protocol: {
-        name: tpc:TLS,
+        name: tcp:TLS,
         versions: ["TLSv1.2", "TLSv1.1"]
     },
     ciphers: ["TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
-}) {
+}
+
+service on new tcp:Listener(9002, secureSocket = listenerSecureSocket) {
 
     isolated remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService {
         io:println("Client connected to secureEchoServer: ", caller.remotePort);
@@ -717,7 +729,7 @@ service class EchoService {
 ```
 
 - Included a `tcp:Caller` as an optional parameter in the `onBytes()` method.
-```
+```ballerina
 service class EchoService {
   
     remote function onBytes(tcp:Caller caller, readonly & byte[] data) returns (readonly & byte[])|tcp:Error? {
@@ -726,6 +738,12 @@ service class EchoService {
     }
 }
 ```
+
+- Renamed `tcp:ListenerConfig` and `tcp:ClientConfig` to `tcp:ListenerConfiguration` and `tcp:ClientConfiguration`
+
+##### UDP Package Updates
+
+- Renamed `udp:ListenerConfig` and `udp:ClientConfig` to `udp:ListenerConfiguration` and `udp:ClientConfiguration`
 
 ##### Kafka Package Updates
 
@@ -911,3 +929,4 @@ Now, the debugger supports conditional breakpoints. Conditional expressions can 
 
 #### Breaking Changes
 1. `==` and `!=` equality expressions can no longer be used with variables of type `readonly`.
+2. Implicit conversion from `xml:Text` to `string` is no longer supported.
