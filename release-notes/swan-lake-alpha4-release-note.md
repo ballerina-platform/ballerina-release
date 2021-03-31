@@ -92,6 +92,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### Improvements
 
+- Introduced a single coverage-report.xml file per package instead of per module coverage-report.xml files. This coverage xml file can be found at 
+<BALLERINA_PACKAGE_ROOT>/target/report/<PACKAGE_NAME>/coverage-report.xml
+
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repositories below.
