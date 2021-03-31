@@ -68,7 +68,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 ##### Support for providing values for configurable variables with Command Line arguments
 
-Configurable values can be provided with the built-in command-line option -C.
+Configurable values can be provided with the built-in command-line option `-C`.
 
 ```
 -Ckey=value
@@ -80,27 +80,27 @@ Key syntax:
 key:= [[orgName .] packageName.moduleName .] variable
 ```
 
-Command line arguments are supported for config variables with boolean , int , float , decimal , string and xml types.
+Command-line arguments are supported for config variables with boolean, int, float, decimal, string, and XML types.
 
-Example usages
+Example usages:
 
 ```ballerina
 configurable int port = ?;
 ```
 
-If configurable variable defined in the default module.
+If the configurable variable is defined in the default module.
 
 bal run -- -Cport=9090
 java -jar  -Cport=9090 
 
-If configurable variable defined in diffrent module in same organization.
+If the configurable variable is defined in a diffrent module of the same organization.
 
 ```
 bal run -- -CpackageName.moduleName.port=9090
 java -jar  -CpackageName.modulename.port=9090 
 ```
 
-If configurable variable defined in module of different organization.
+If the configurable variable is defined in a module of a different organization.
 
 ```
 bal run -- -CorgName.packageName.modulename.port=9090 
@@ -109,13 +109,13 @@ java -jar  -CorgName.packageName.modulename.port=9090
 
 ##### Support for locating multiple toml files
 
-Configurable values can be provided in multiple TOML files using the environment variable with name `BAL_CONFIG_FILES`.
+Configurable values can be provided in multiple TOML files using the `BAL_CONFIG_FILES` environment variable.
 
-The file locations can be specified in the environment variable using OS-specific separator. The precedence order to configure the values  will be as specified in the environment variable. If such an environment variable is not specified, the file is located in the current directory with the file name `Config.toml`.
+The file locations can be specified in the environment variable using an OS-specific separator. The precedence order to configure the values will be as specified in the environment variable. If such an environment variable is not specified, the file located in the current directory with the file name `Config.toml` will be used.
 
-##### Support for providing TOML content through environment variable
+##### Support for Providing TOML Content Through the Environment Variable
 
-The configurable values can be provided using the environment variable `BAL_CONFIG_DATA` where the content is expected to be in TOML (v0.4) format.
+The configurable values can be provided using the `BAL_CONFIG_DATA` environment variable in which the content is expected to be in the TOML (v0.4) format.
 
 #### Bug Fixes
 
