@@ -114,7 +114,7 @@ public type SecureSocket record {|
 
 ###### Xmldata Package
 
-- API for converts a JSON to an XML has been supported the `nil` return value.
+- API to convert a JSON to an XML has been supported by the `nil` return value.
 ```ballerina
 import ballerina/xmldata;
 
