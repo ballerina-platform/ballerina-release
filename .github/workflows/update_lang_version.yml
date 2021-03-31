@@ -30,7 +30,7 @@ jobs:
 
       -   name: Update Ballerina Language Version
           run: |
-            python dependabot/update_lang_version.py ${{ github.event.inputs.ballerinaVersion }}
+            python dependabot/update_lang_version.py "${{ github.event.inputs.ballerinaVersion }}"
           env:
             packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
             packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
