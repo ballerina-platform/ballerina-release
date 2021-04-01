@@ -61,78 +61,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### New Features
 
-##### Time Package
-
-- Introduced the following APIs to support email-typed string conversions:
-    - Converts a given UTC to an email string.
-        ```ballerina
-        import ballerina/time; 
-             
-        string emailFormattedString = time:utcToEmailString(time:utcNow());
-        ```
-    - Converts a given Civil to an email string.
-        ```ballerina
-        import ballerina/time; 
-       
-        time:Civil civil = check time:civilFromString("2021-04-12T23:20:50.520+05:30[Asia/Colombo]");
-        string|time:Error emailDateTime = time:civilToEmailString(civil, "GMT");
-        ```
-    - Converts a given email string to Civil.
-        ```ballerina
-        import ballerina/time; 
-       
-        time:Civil|time:Error emailDateTime = time:civilFromEmailString("Wed, 10 Mar 2021 19:51:55 -0820");
-        ```
-    
 #### Improvements
-
-##### I/O Package
-
-- Improved the print APIs to support string templates.
-```ballerina
-import ballerina/io;
-
-string val = "John";
-io:println(`Hello ${val}!!!`);
-io:print(`Hello ${val}!!!`);
-```
-- Changed streaming APIs to be completed from `nil` return. 
-
-##### MySQL Package
-
-- Changed the previous SSLConfig Record to SecureSocket Record.
-```ballerina
-public type SecureSocket record {|
-    SSLMode mode = SSL_PREFERRED;
-    crypto:KeyStore key?;
-    crypto:TrustStore cert?;
-|};
-```
-
-- Changed the SSLMode value from `SSL_VERIFY_CERT` to `SSL_VERIFY_CA`.
-
-##### Xmldata Package
-
-- API to convert a JSON to an XML has been supported by the `nil` return value.
-```ballerina
-import ballerina/xmldata;
-
-json data = {
-    name: "John"
-};
-xml?|Error x = xmldata:fromJson(data);
-```
-
-#### Bug Fixes
-
-#### Renamed the `java.arrays` Package
-
-The `java.arrays` package’s org and package names were renamed as `ballerina` and `jballerina.java.arrays`. 
-```ballerina
-import ballerina/jballerina.java.arrays;
-
-handle secondWord = arrays:get(input, 1);
-```
 
 #### Bug Fixes
 
