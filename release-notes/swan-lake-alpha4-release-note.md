@@ -246,6 +246,72 @@ import ballerina/jballerina.java.arrays;
 handle secondWord = arrays:get(input, 1);
 ```
 
+##### WebSub Package Updates
+
+ - Add pre-built constants for WebSub common-responses.
+```ballerina
+   @websub:SubscriberServiceConfig {
+        target: ["https://sample.hub", "https://sample.topic.one"], 
+        leaseSeconds: 36000,
+        secret: "secretKey"
+    } 
+    service /subscriber on new websub:Listener(9090) {
+        remote function onSubscriptionValidationDenied(websub:SubscriptionDeniedError msg) 
+                       returns websub:Acknowledgement? {
+            // implement subscription validation denied logic here
+            return websub:ACKNOWLEDGEMENT;
+        }
+
+        remote function onSubscriptionVerification(websub:SubscriptionVerification msg)
+                        returns websub:SubscriptionVerificationSuccess|websub:SubscriptionVerificationError {
+            // implement subscription intent verification logic here
+            return websub:SUBSCRIPTION_VERIFICATION_SUCCESS;
+        }
+
+        remote function onEventNotification(websub:ContentDistributionMessage event) 
+                        returns websub:Acknowledgement|websub:SubscriptionDeletedError? {
+            // implement on event notification logic here
+            return websub:ACKNOWLEDGEMENT;
+        }
+    }
+
+```
+##### Kafka Package Updates
+ - SecureSocket record is updated.
+ - kafka:Producer, kafka:Consumer and kafka:Listener init updated.
+```ballerina
+kafka:Producer kafkaProducer = check new(kafka:DEFAULT_URL, config);
+kafka:Producer kafkaProducer = check new (bootstrapServers=”localhost:9092”);
+kafka:Producer kafkaProducer = check new(”localhost:9092”);
+// Same for listener and consumer initialization
+```
+##### NATS Package Updates
+ - Client and listener init updated.
+```ballerina
+nats:Client client = check new(url=”http://google.com:9090”, ssl=config);
+nats:Client client = check new(nats:DEFAULT_URL);
+nats:Client client = check new(”http://google.com:9090”);
+// Same for listener initialization
+```
+##### STAN Package Updates
+ - Client and listener init updated.
+```ballerina
+stan:Client client = check new(url=”http://localhost:9090”);
+nats:Client client = check new(nats:DEFAULT_URL);
+// Same for listener initialization
+```
+##### RabbitMQ Package Updates
+ - Client and listener init updated.
+```ballerina
+rabbitmq:Client client = check new(host=”localhost”, port=9090);
+rabbitmq:Client client = check new(rabbitmq:DEFAULT_HOST, rabbitmq:DEFAULT_PORT);
+rabbitmq:Client client = check new(”localhost”, 9090);
+// Same for listener initialization
+```
+
+##### Security Updates
+ - Removed encrypted passwords and hashed passwords support for Basic Auth file user store authentication.
+
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+Alpha4%22+label%3AType%2FBug).
