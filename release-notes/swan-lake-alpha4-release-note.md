@@ -339,6 +339,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### New Features
 
+##### Debugging Support for Dependencies
+With this feature, you can now step-in and debug the sources of the following dependencies used within your Ballerina program.
+- language libraries
+- standard libraries
+- modules imported from Ballerina Central
+
 #### Improvements
 
 - Introduced a single `coverage-report.xml` file per package instead of per module `coverage-report.xml` files. This coverage XML file can be found at 
