@@ -35,8 +35,8 @@ MODULE_FAILED_PR_CHECKS = "failed_pr_checks"
 
 COMMIT_MESSAGE_PREFIX = "[Automated] Update lang version to "
 PULL_REQUEST_BODY_PREFIX = "Update ballerina lang version to `"
-PULL_REQUEST_TITLE = "[Automated] Update Dependencies"
-AUTO_MERGE_PULL_REQUEST_TITLE = "[AUTO MERGE] Update Dependencies"
+PULL_REQUEST_TITLE = "[Automated] Update Dependencies (Ballerina Lang : "
+AUTO_MERGE_PULL_REQUEST_TITLE = "[AUTO MERGE] Update Dependencies (Ballerina Lang : "
 
 MODULE_LIST_FILE = "dependabot/resources/extensions.json"
 PROPERTIES_FILE = "gradle.properties"
@@ -275,16 +275,22 @@ def create_pull_request(module, repo, lang_version):
     pr_exists = False
     created_pr = ""
 
+    shaOfLang = lang_version[-7:]
+
     for pull in pulls:
         if (PULL_REQUEST_TITLE in pull.title) or (AUTO_MERGE_PULL_REQUEST_TITLE in pull.title) :
             pr_exists = True
             created_pr = pull
+            newTitle = pull.title[0:-9]
+            pull.edit(title = newTitle + shaOfLang + " )")
 
     if not pr_exists:
         try:
             pull_request_title = PULL_REQUEST_TITLE
             if module[MODULE_AUTO_MERGE]:
                 pull_request_title = AUTO_MERGE_PULL_REQUEST_TITLE
+            pull_request_title = pull_request_title + shaOfLang + " )"
+
             created_pr = repo.create_pull(
                 title=pull_request_title,
                 body=PULL_REQUEST_BODY_PREFIX + lang_version + "`",
