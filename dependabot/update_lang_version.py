@@ -45,6 +45,7 @@ SLEEP_INTERVAL = 30 # 30s
 MAX_WAIT_CYCLES = 80
 
 overrideBallerinaVersion = sys.argv[1]
+autoMergePRs = sys.argv[2]
 
 def main():
     lang_version = get_lang_version()
@@ -98,14 +99,15 @@ def check_and_update_lang_version(github, module_list_json, lang_version):
         module[MODULE_CREATED_PR] = update_module(github, module, lang_version)
         module[MODULE_PR_CHECK_STATUS] = "pending"
 
-    module_details_list = module_list_json[MODULES]
-    module_details_list.sort(reverse=True, key=lambda s: s['level'])
-    last_level = module_details_list[0]['level']
+    if (autoMergePRs.lower() == "true"):
+        module_details_list = module_list_json[MODULES]
+        module_details_list.sort(reverse=True, key=lambda s: s['level'])
+        last_level = module_details_list[0]['level']
 
-    for i in range(last_level):
-        current_level = i + 1
-        current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
-        wait_for_current_level_pr_build(github, current_level_modules, current_level )
+        for i in range(last_level):
+            current_level = i + 1
+            current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
+            wait_for_current_level_pr_build(github, current_level_modules, current_level )
 
 def wait_for_current_level_pr_build(github, modules_list, level):
     print("Waiting for level " + str(level) + " module pr checks.")

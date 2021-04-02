@@ -7,6 +7,10 @@ on:
         description: 'Ballerina Version (Optional)'
         required: false
         default: ''
+      autoMergePRs:
+        description: 'Auto Merge PRs'
+        required: false
+        default: 'true'
 
 jobs:
   update-lang-version:
@@ -30,7 +34,7 @@ jobs:
 
       -   name: Update Ballerina Language Version
           run: |
-            python dependabot/update_lang_version.py "${{ github.event.inputs.ballerinaVersion }}"
+            python dependabot/update_lang_version.py "${{ github.event.inputs.ballerinaVersion }}" "${{ github.event.inputs.autoMergePRs }}"
           env:
             packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
             packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
