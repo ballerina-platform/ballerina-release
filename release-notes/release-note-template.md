@@ -10,7 +10,6 @@ It introduces the new language features planned for the Swan Lake GA release and
 
 - [Updating Ballerina](#updating-ballerina)
 - [Installing Ballerina](#installing-ballerina)
-- [Highlights](#highlights)
 - [Language Updates](#language-updates)
 - [Runtime Updates](#runtime-updates)
 - [Standard Library Updates](#standard-library-updates)
@@ -34,8 +33,6 @@ If you are using an **Update Tool version below 0.8.14**, execute the `ballerina
 ### Installing Ballerina
 
 If you have not installed Ballerina, then download the [installers](/downloads/#swanlake) to install.
-
-### Highlights
 
 ### Language Updates
 
