@@ -16,7 +16,6 @@ It introduces the new language features planned for the Swan Lake GA release and
 - [Code to Cloud Updates](#code-to-cloud-updates)
 - [Developer Tools Updates](#developer-tools-updates)
 - [Ballerina Packages Updates](ballerina-packages-updates)
-- [Breaking Changes](#breaking-changes)
 
 ### Updating Ballerina
 
