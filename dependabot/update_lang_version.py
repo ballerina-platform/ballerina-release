@@ -282,7 +282,7 @@ def create_pull_request(module, repo, lang_version):
             pr_exists = True
             created_pr = pull
             pull.edit(
-                title = pull.title[0:-8] + shaOfLang + ")",
+                title = pull.title[0:-9] + shaOfLang + ")",
                 body = pull.body[0:-8] + shaOfLang + "`"
                 )
 
