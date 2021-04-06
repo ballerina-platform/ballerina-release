@@ -3,7 +3,7 @@ import urllib.request
 import json
 import re
 import networkx as nx
-import sys
+import sys as system
 from retry import retry
 import os
 
@@ -15,7 +15,13 @@ BALLERINA_ORG_NAME = "ballerina-platform"
 MODULE_LIST_FILE = "dependabot/resources/module_list.json"
 EXTENSIONS_FILE = "dependabot/resources/extensions.json"
 
+EXTENSIONS_UPDATE_BRANCH = "extensions-update"
+
+packageUser = os.environ["packageUser"]
 packagePAT = os.environ["packagePAT"]
+packageEmail = os.environ["packageEmail"]
+reviewerPackagePAT = os.environ["reviewerPackagePAT"]
+
 github = Github(packagePAT)
 
 def main():
@@ -30,6 +36,8 @@ def main():
     module_details_json['modules'].sort(key=lambda s: s['level'])
     update_json_file(module_details_json)
     print('Updated module details successfully')
+    commit_json_file()
+    print("Updated module details in 'ballerina-release' successfully")
 
 # Sorts the ballerina extension module list in ascending order
 def sort_module_name_list():
@@ -222,5 +230,69 @@ def get_immediate_dependents(module_name_list, module_details_json):
                 module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(module_name)
                     
     return module_details_json
+
+def commit_json_file():
+    author = InputGitAuthor(packageUser, packageEmail)
+
+    repo = github.get_repo(BALLERINA_ORG_NAME + "/ballerina-release")
+
+    remote_file = ""
+    try:
+        contents = repo.get_contents("dependabot")
+        while len(contents)>0:
+          file_content = contents.pop(0)
+          if file_content.type == 'dir':
+            contents.extend(repo.get_contents(file_content.path))
+          else :
+            if file_content.path == EXTENSIONS_FILE:
+                remote_file = file_content
+                break
+    except Exception as e:
+        print ("Error while accessing remote extensions.json", e)
+        sys.exit(1)
+
+    updated_file = open(EXTENSIONS_FILE, 'r').read()
+    remote_file_contents = remote_file.decoded_content.decode("utf-8")
+
+    if (updated_file == remote_file_contents):
+        print ("No changes to extensions.json file")
+    else:
+        try:
+            repo.update_file(
+                EXTENSIONS_FILE,
+                "[Automated] Update Extensions Dependencies",
+                updated_file,
+                remote_file.sha,
+                branch=EXTENSIONS_UPDATE_BRANCH,
+                author=author
+            )
+        except Exception as e:
+            print ("Error while committing extensions.json", e)
+
+        created_pr = ""
+        try:
+            created_pr = repo.create_pull(
+                title= "[Automated] Update Extensions Dependencies",
+                body= "Update dependencies in extensions.json",
+                head= EXTENSIONS_UPDATE_BRANCH,
+                base= "master"
+            )
+        except Exception as e:
+            print ("Error occurred while creating pull request updating dependencies.", e)
+            system.exit(1)
+
+        r_github = Github(reviewerPackagePAT)
+        repo = r_github.get_repo(BALLERINA_ORG_NAME + "/ballerina-release")
+        pr = repo.get_pull(created_pr.number)
+        try:
+            pr.create_review(event="APPROVE")
+        except:
+            print ("Error occurred while approving Update Extensions Dependencies PR", e)
+            system.exit(1)
+
+        try:
+            created_pr.merge()
+        except:
+            print ("Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
 
 main()
