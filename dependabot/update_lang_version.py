@@ -199,7 +199,7 @@ def update_module(github, module, lang_version):
     properties_file = properties_file.decoded_content.decode(ENCODING)
     update, updated_properties_file = get_updated_properties_file(module[MODULE_NAME], properties_file, lang_version)
     if update:
-        commit_changes(repo, updated_properties_file, lang_version)
+        commit_changes(repo, updated_properties_file, lang_version, module[MODULE_NAME])
         return create_pull_request(module, repo, lang_version)
 
 
@@ -236,31 +236,39 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
     return update, updated_properties_file
 
 
-def commit_changes(repo, updated_file, lang_version):
+def commit_changes(repo, updated_file, lang_version, module_name):
     author = InputGitAuthor(packageUser, packageEmail)
     base = repo.get_branch(repo.default_branch)
+    branch = LANG_VERSION_UPDATE_BRANCH
 
     try:
-        ref = f"refs/heads/" + LANG_VERSION_UPDATE_BRANCH
+        ref = f"refs/heads/" + branch
         repo.create_git_ref(ref=ref, sha=base.commit.sha)
     except :
+        print("[Info] Unmerged update branch existed in module: \"" + module_name + "\"")
+        branch = LANG_VERSION_UPDATE_BRANCH + "_update_tmp"
+        ref = f"refs/heads/" + branch
         try:
-            repo.get_branch(LANG_VERSION_UPDATE_BRANCH)
-            repo.merge(LANG_VERSION_UPDATE_BRANCH, base.commit.sha, "Sync default branch")
+            repo.create_git_ref(ref=ref, sha=base.commit.sha)
         except GithubException as e:
-            print("Error occurred: ", e)
+            print("[Info] deleting update tmp branch existed in module: \"" + module_name + "\"")
+            if e.status == 422: # already exist
+                repo.get_git_ref("heads/" + branch).delete()
+                repo.create_git_ref(ref=ref, sha=base.commit.sha)
 
-
-    current_file = repo.get_contents(PROPERTIES_FILE, ref=LANG_VERSION_UPDATE_BRANCH)
-    repo.update_file(
+    current_file = repo.get_contents(PROPERTIES_FILE, ref=branch)
+    update = repo.update_file(
         current_file.path,
         COMMIT_MESSAGE_PREFIX + lang_version,
         updated_file,
         current_file.sha,
-        branch=LANG_VERSION_UPDATE_BRANCH,
+        branch=branch,
         author=author
     )
-
+    if not branch == LANG_VERSION_UPDATE_BRANCH:
+        update_branch = repo.get_git_ref("heads/" + LANG_VERSION_UPDATE_BRANCH)
+        update_branch.edit(update["commit"].sha, force=True)
+        repo.get_git_ref("heads/" + branch).delete()
 
 def create_pull_request(module, repo, lang_version):
     pulls = repo.get_pulls(state=OPEN, head=LANG_VERSION_UPDATE_BRANCH)
@@ -273,15 +281,17 @@ def create_pull_request(module, repo, lang_version):
         if (PULL_REQUEST_TITLE in pull.title) or (AUTO_MERGE_PULL_REQUEST_TITLE in pull.title) :
             pr_exists = True
             created_pr = pull
-            newTitle = pull.title[0:-9]
-            pull.edit(title = newTitle + shaOfLang + " )")
+            pull.edit(
+                title = pull.title[0:-8] + shaOfLang + ")",
+                body = pull.body[0:-8] + shaOfLang + "`"
+                )
 
     if not pr_exists:
         try:
             pull_request_title = PULL_REQUEST_TITLE
-            if module[MODULE_AUTO_MERGE]:
+            if ((autoMergePRs.lower() == "true") & module[MODULE_AUTO_MERGE]):
                 pull_request_title = AUTO_MERGE_PULL_REQUEST_TITLE
-            pull_request_title = pull_request_title + shaOfLang + " )"
+            pull_request_title = pull_request_title + shaOfLang + ")"
 
             created_pr = repo.create_pull(
                 title=pull_request_title,
