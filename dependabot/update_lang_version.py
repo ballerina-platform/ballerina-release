@@ -194,10 +194,7 @@ def check_pending_pr_checks(github, modules_list, index, pr_passed_modules, pr_f
 
 def update_module(github, module, lang_version):
     repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
-    try:
-        properties_file = repo.get_contents(PROPERTIES_FILE, ref=LANG_VERSION_UPDATE_BRANCH)
-    except:
-        properties_file = repo.get_contents(PROPERTIES_FILE)
+    properties_file = repo.get_contents(PROPERTIES_FILE)
 
     properties_file = properties_file.decoded_content.decode(ENCODING)
     update, updated_properties_file = get_updated_properties_file(module[MODULE_NAME], properties_file, lang_version)
