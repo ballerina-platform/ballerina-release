@@ -14,8 +14,6 @@ ORGANIZATION = "ballerina-platform"
 LANG_VERSION_KEY = "ballerinaLangVersion"
 
 LANG_VERSION_UPDATE_BRANCH = 'automated/dependency_version_update'
-MASTER_BRANCH = "master"
-MAIN_BRANCH = "main"
 
 packageUser = os.environ["packageUser"]
 packagePAT = os.environ["packagePAT"]
@@ -243,10 +241,7 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
 
 def commit_changes(repo, updated_file, lang_version):
     author = InputGitAuthor(packageUser, packageEmail)
-    try:
-        base = repo.get_branch(MASTER_BRANCH)
-    except:
-        base = repo.get_branch(MAIN_BRANCH)
+    base = repo.get_branch(repo.default_branch)
 
     try:
         ref = f"refs/heads/" + LANG_VERSION_UPDATE_BRANCH
@@ -295,7 +290,7 @@ def create_pull_request(module, repo, lang_version):
                 title=pull_request_title,
                 body=PULL_REQUEST_BODY_PREFIX + lang_version + "`",
                 head=LANG_VERSION_UPDATE_BRANCH,
-                base=MASTER_BRANCH
+                base=repo.default_branch
             )
         except Exception as e:
             print ("Error occurred while creating pull request for module '" + module_name + "'.", e)
