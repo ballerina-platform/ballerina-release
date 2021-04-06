@@ -302,7 +302,7 @@ def create_pull_request(module, repo, lang_version):
         except Exception as e:
             print ("[Error] Error occurred while creating pull request for module '" + module_name + "'.", e)
             sys.exit(1)
-        if module[MODULE_AUTO_MERGE]:
+        if ((autoMergePRs.lower() == "true") & module[MODULE_AUTO_MERGE]):
             r_github = Github(reviewerPackagePAT)
             repo = r_github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
             pr = repo.get_pull(created_pr.number)
