@@ -45,12 +45,12 @@ MAX_WAIT_CYCLES = 80
 overrideBallerinaVersion = sys.argv[1]
 autoMergePRs = sys.argv[2]
 
+github = Github(packagePAT)
+
 def main():
     lang_version = get_lang_version()
     module_list_json = get_module_list_json()
-
-    github = Github(packagePAT)
-    check_and_update_lang_version(github, module_list_json, lang_version)
+    check_and_update_lang_version(module_list_json, lang_version)
 
 def get_lang_version():
     if (overrideBallerinaVersion != ''):
@@ -60,7 +60,7 @@ def get_lang_version():
             versionString = open_url(
                 "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions").read()
         except Exception as e:
-            print('Failed to get ballerina packages version', e)
+            print('[Error] Failed to get ballerina packages version', e)
             sys.exit(1)
         latestVersion = json.loads(versionString)[0]
         return latestVersion["name"]
@@ -85,16 +85,16 @@ def get_module_list_json():
             module_list = json.load(f)
 
     except Exception as e:
-        print(e)
+        print("[Error] Error while loading modules list ", e)
         sys.exit(1)
 
     return module_list
 
 
-def check_and_update_lang_version(github, module_list_json, lang_version):
+def check_and_update_lang_version(module_list_json, lang_version):
     for module in module_list_json[MODULES]:
-        print ("Update lang dependency in module '" + module[MODULE_NAME] + "'")
-        module[MODULE_CREATED_PR] = update_module(github, module, lang_version)
+        print ("[Info] Update lang dependency in module '" + module[MODULE_NAME] + "'")
+        module[MODULE_CREATED_PR] = update_module(module, lang_version)
         module[MODULE_PR_CHECK_STATUS] = "pending"
 
     if (autoMergePRs.lower() == "true"):
@@ -105,10 +105,10 @@ def check_and_update_lang_version(github, module_list_json, lang_version):
         for i in range(last_level):
             current_level = i + 1
             current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
-            wait_for_current_level_pr_build(github, current_level_modules, current_level )
+            wait_for_current_level_pr_build(current_level_modules, current_level)
 
-def wait_for_current_level_pr_build(github, modules_list, level):
-    print("Waiting for level " + str(level) + " module pr checks.")
+def wait_for_current_level_pr_build(modules_list, level):
+    print("[Info] Waiting for level '" + str(level) + "' module pr checks.")
     totalModules = len(modules_list)
 
     time.sleep(SLEEP_INTERVAL)
@@ -122,7 +122,7 @@ def wait_for_current_level_pr_build(github, modules_list, level):
         for idx in range(len(modules_list)):
             module = modules_list[idx]
             if (module[MODULE_PR_CHECK_STATUS] == "pending"):
-                check_pending_pr_checks(github, modules_list, idx, pr_passed_modules, pr_failed_modules)
+                check_pending_pr_checks(modules_list, idx, pr_passed_modules, pr_failed_modules)
 
         if len(modules_list) == 0:
             all_modules_checked = True
@@ -141,7 +141,7 @@ def wait_for_current_level_pr_build(github, modules_list, level):
             try:
                 pr.merge()
             except:
-                print ("Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
+                print ("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 all_prs_merged = False
 
     if (len(pr_passed_modules) != totalModules):
@@ -160,8 +160,8 @@ def wait_for_current_level_pr_build(github, modules_list, level):
     if (not all_prs_merged):
         sys.exit(1)
 
-def check_pending_pr_checks(github, modules_list, index, pr_passed_modules, pr_failed_modules):
-    print("[" + modules_list[index][MODULE_NAME] + "] Checking status of the PR...")
+def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_modules):
+    print("[Info] Checking the status of the dependency bump PR in module '" + modules_list[index][MODULE_NAME] + "'")
     passing = True
     pending = False
     repo = github.get_repo(ORGANIZATION + "/" + modules_list[index][MODULE_NAME])
@@ -192,7 +192,7 @@ def check_pending_pr_checks(github, modules_list, index, pr_passed_modules, pr_f
             pr_failed_modules.append(modules_list[index])
         del(modules_list[index])
 
-def update_module(github, module, lang_version):
+def update_module(module, lang_version):
     repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
     properties_file = repo.get_contents(PROPERTIES_FILE)
 
@@ -220,14 +220,14 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
                 processedCurrentVersion = splitCurrentVersion[2] + splitCurrentVersion[3]
 
                 if processedCurrentVersion < processedLangVersion:
-                    print("[Info] Updating the lang version in module: \"" + module_name + "\"")
+                    print("[Info] Updating the lang version in module: '" + module_name + "'")
                     updated_properties_file += LANG_VERSION_KEY + "=" + lang_version + "\n"
                     update = True
                 else:
                     updated_properties_file += line + "\n"
             else:
                 # Stable dependency & SNAPSHOT
-                print("[Info] Updating the lang version in module: \"" + module_name + "\"")
+                print("[Info] Updating the lang version in module: '" + module_name + "'")
                 updated_properties_file += LANG_VERSION_KEY + "=" + lang_version + "\n"
                 update = True
         else:
@@ -245,13 +245,13 @@ def commit_changes(repo, updated_file, lang_version, module_name):
         ref = f"refs/heads/" + branch
         repo.create_git_ref(ref=ref, sha=base.commit.sha)
     except :
-        print("[Info] Unmerged update branch existed in module: \"" + module_name + "\"")
+        print("[Info] Unmerged update branch existed in module: '" + module_name + "'")
         branch = LANG_VERSION_UPDATE_BRANCH + "_update_tmp"
         ref = f"refs/heads/" + branch
         try:
             repo.create_git_ref(ref=ref, sha=base.commit.sha)
         except GithubException as e:
-            print("[Info] deleting update tmp branch existed in module: \"" + module_name + "\"")
+            print("[Info] deleting update tmp branch existed in module: '" + module_name + "'")
             if e.status == 422: # already exist
                 repo.get_git_ref("heads/" + branch).delete()
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
@@ -300,8 +300,8 @@ def create_pull_request(module, repo, lang_version):
                 base=repo.default_branch
             )
         except Exception as e:
-            print ("Error occurred while creating pull request for module '" + module_name + "'.", e)
-            system.exit(1)
+            print ("[Error] Error occurred while creating pull request for module '" + module_name + "'.", e)
+            sys.exit(1)
         if module[MODULE_AUTO_MERGE]:
             r_github = Github(reviewerPackagePAT)
             repo = r_github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
@@ -309,8 +309,8 @@ def create_pull_request(module, repo, lang_version):
             try:
                 pr.create_review(event="APPROVE")
             except:
-                print ("Error occurred while approving dependency PR for module '" + module_name + "'", e)
-                system.exit(1)
+                print ("[Error] Error occurred while approving dependency PR for module '" + module_name + "'", e)
+                sys.exit(1)
 
     return created_pr
 
