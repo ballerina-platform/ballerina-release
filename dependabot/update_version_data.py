@@ -1,3 +1,4 @@
+from github import Github, InputGitAuthor, GithubException
 import urllib.request
 import json
 import re
@@ -11,11 +12,11 @@ HTTP_REQUEST_DELAY_IN_SECONDS = 2
 HTTP_REQUEST_DELAY_MULTIPLIER = 2
 
 BALLERINA_ORG_NAME = "ballerina-platform"
-BALLERINA_ORG_URL = "https://github.com/ballerina-platform/"
-GITHUB_BADGE_URL = "https://img.shields.io/github/"
-CODECOV_BADGE_URL = "https://codecov.io/gh/"
+MODULE_LIST_FILE = "dependabot/resources/module_list.json"
+EXTENSIONS_FILE = "dependabot/resources/extensions.json"
 
 packagePAT = os.environ["packagePAT"]
+github = Github(packagePAT)
 
 def main():
     module_name_list = sort_module_name_list()
@@ -33,7 +34,7 @@ def main():
 # Sorts the ballerina extension module list in ascending order
 def sort_module_name_list():
     try:
-        with open('dependabot/resources/module_list.json') as f:
+        with open(MODULE_LIST_FILE) as f:
             name_list = json.load(f)
     except:
         print('Failed to read module_list.json')
@@ -42,7 +43,7 @@ def sort_module_name_list():
     name_list['modules'].sort(key=lambda x: x.split('-')[-1])
     
     try:
-        with open('dependabot/resources/module_list.json', 'w') as json_file:
+        with open(MODULE_LIST_FILE, 'w') as json_file:
             json_file.seek(0) 
             json.dump(name_list, json_file, indent=4)
             json_file.truncate()
@@ -93,10 +94,10 @@ def get_dependencies(module_name):
 # returns: current version of the module
 def get_version(module_name):
     try:
-        data = url_open_with_retry("https://raw.githubusercontent.com/ballerina-platform/" 
+        data = url_open_with_retry("https://raw.githubusercontent.com/" + BALLERINA_ORG_NAME + "/"
                                     + module_name + "/master/gradle.properties")
-    except:
-        print('Failed to read gradle.properties file of ' + module_name)
+    except Exception as e:
+        print('Failed to read gradle.properties file of ' + module_name, e)
         sys.exit()
 
     version = ''
@@ -114,11 +115,10 @@ def get_version(module_name):
 # returns: default branch name
 def get_default_branch(module_name):
     try:
-        data = url_open_with_retry("https://api.github.com/repos/ballerina-platform/" + module_name)
-        json_data = json.load(data)
-        return json_data['default_branch']
+        repo = github.get_repo(BALLERINA_ORG_NAME + "/" + module_name)
+        return repo.default_branch
     except Exception as e:
-        print('Failed to get repo details for ' + module_name + ": " + str(e))
+        print('Failed to get repo details for ' + module_name, e)
         return ""
 
 # Calculates the longest path between source and destination modules and replaces dependents that have intermediates
@@ -186,7 +186,7 @@ def calculate_levels(module_name_list, module_details_json):
 # Updates the extensions.JSON file with dependents of each standard library module
 def update_json_file(updated_json):
     try:
-        with open('dependabot/resources/extensions.json', 'w') as json_file:
+        with open(EXTENSIONS_FILE, 'w') as json_file:
             json_file.seek(0) 
             json.dump(updated_json, json_file, indent=4)
             json_file.truncate()
@@ -209,7 +209,7 @@ def initialize_module_details(module_name_list):
             'default_branch': default_branch,
             'auto_merge': True,
             'dependents': [] })
-
+# TODO: Add transitive dependencies
     return module_details_json
 
 # Gets all the dependents of each module to generate the dependency graph
