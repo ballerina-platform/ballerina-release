@@ -2,9 +2,8 @@ name: Update Dependency Graph
 
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [dependency-update]
-# TODO: Repository dispatch needs to be configured in extensions
+  schedule:
+    - cron: 0 00 17 * *
 
 jobs:
   dependency:
