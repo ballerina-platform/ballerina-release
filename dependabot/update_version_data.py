@@ -66,10 +66,10 @@ def get_dependencies(module_name):
 
     for line in data.splitlines():
         if 'ballerina-platform/module' in line:
-            module = line.split('/')[-1]
-            if module[:-2] == module_name:
+            module = line.split('/')[-1][:-1]
+            if module == module_name:
                 continue
-            dependencies.append(module[:-2])
+            dependencies.append(module)
 
     return dependencies
 
@@ -83,7 +83,7 @@ def get_version(module_name):
     version = ''
     for line in data.splitlines():
         if re.match('version=', line):
-            version = line.split('=')[-1][:-1]
+            version = line.split('=')[-1]
 
     if version == '':
         print('Version not defined for ' + module_name)
