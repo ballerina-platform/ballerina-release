@@ -278,7 +278,7 @@ def create_pull_request(module, repo, lang_version):
     shaOfLang = lang_version[-7:]
 
     for pull in pulls:
-        if (PULL_REQUEST_TITLE in pull.title) or (AUTO_MERGE_PULL_REQUEST_TITLE in pull.title) :
+        if pull.head == LANG_VERSION_UPDATE_BRANCH:
             pr_exists = True
             created_pr = pull
             pull.edit(
