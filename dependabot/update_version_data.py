@@ -1,15 +1,9 @@
 from github import Github, InputGitAuthor, GithubException
-import urllib.request
 import json
 import re
 import networkx as nx
 import sys as system
-from retry import retry
 import os
-
-HTTP_REQUEST_RETRIES = 3
-HTTP_REQUEST_DELAY_IN_SECONDS = 2
-HTTP_REQUEST_DELAY_MULTIPLIER = 2
 
 BALLERINA_ORG_NAME = "ballerina-platform"
 MODULE_LIST_FILE = "dependabot/resources/module_list.json"
@@ -61,37 +55,18 @@ def sort_module_name_list():
         
     return name_list['modules'] 
 
-# Returns the file in the given url
-# Retry decorator will retry the function 3 times, doubling the backoff delay if URLError is raised 
-@retry(
-    urllib.error.URLError, 
-    tries=HTTP_REQUEST_RETRIES, 
-    delay=HTTP_REQUEST_DELAY_IN_SECONDS, 
-    backoff=HTTP_REQUEST_DELAY_MULTIPLIER
-)
-def url_open_with_retry(url):
-    request = urllib.request.Request(url)
-    request.add_header("Accept", "application/vnd.github.v3+json")
-    request.add_header("Authorization", "Bearer " + packagePAT)
-
-    return urllib.request.urlopen(request)
-
 # Gets dependencies of ballerina extension module from build.gradle file in module repository
 # returns: list of dependencies
 def get_dependencies(module_name):
-    try:
-        data = url_open_with_retry("https://raw.githubusercontent.com/ballerina-platform/" 
-                                    + module_name + "/master/build.gradle")
-    except:
-        print('Failed to read build.gradle file of ' + module_name)
-        sys.exit()
+    repo = github.get_repo(BALLERINA_ORG_NAME + "/" + module_name)
+    gradle_file = repo.get_contents("build.gradle")
+    data = gradle_file.decoded_content.decode("utf-8")
 
     dependencies = []
 
-    for line in data:
-        processed_line = line.decode("utf-8")
-        if 'ballerina-platform/module' in processed_line:
-            module = processed_line.split('/')[-1]
+    for line in data.splitlines():
+        if 'ballerina-platform/module' in line:
+            module = line.split('/')[-1]
             if module[:-2] == module_name:
                 continue
             dependencies.append(module[:-2])
@@ -101,18 +76,14 @@ def get_dependencies(module_name):
 # Gets the version of the ballerina extension module from gradle.properties file in module repository
 # returns: current version of the module
 def get_version(module_name):
-    try:
-        data = url_open_with_retry("https://raw.githubusercontent.com/" + BALLERINA_ORG_NAME + "/"
-                                    + module_name + "/master/gradle.properties")
-    except Exception as e:
-        print('Failed to read gradle.properties file of ' + module_name, e)
-        sys.exit()
+    repo = github.get_repo(BALLERINA_ORG_NAME + "/" + module_name)
+    properties_file = repo.get_contents("gradle.properties")
+    data = properties_file.decoded_content.decode("utf-8")
 
     version = ''
-    for line in data:
-        processed_line = line.decode("utf-8")
-        if re.match('version=', processed_line):
-            version = processed_line.split('=')[-1][:-1]
+    for line in data.splitlines():
+        if re.match('version=', line):
+            version = line.split('=')[-1][:-1]
 
     if version == '':
         print('Version not defined for ' + module_name)
