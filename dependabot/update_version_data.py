@@ -2,7 +2,7 @@ from github import Github, InputGitAuthor, GithubException
 import json
 import re
 import networkx as nx
-import sys as system
+import sys
 import os
 
 BALLERINA_ORG_NAME = "ballerina-platform"
@@ -250,7 +250,7 @@ def commit_json_file():
             )
         except Exception as e:
             print ("Error occurred while creating pull request updating dependencies.", e)
-            system.exit(1)
+            sys.exit(1)
 
         r_github = Github(reviewerPackagePAT)
         repo = r_github.get_repo(BALLERINA_ORG_NAME + "/ballerina-release")
@@ -259,7 +259,7 @@ def commit_json_file():
             pr.create_review(event="APPROVE")
         except:
             print ("Error occurred while approving Update Extensions Dependencies PR", e)
-            system.exit(1)
+            sys.exit(1)
 
         try:
             created_pr.merge()
