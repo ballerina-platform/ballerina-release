@@ -126,7 +126,7 @@ def wait_for_current_level_pr_build(modules_list, level):
             if (module[MODULE_PR_CHECK_STATUS] == "pending"):
                 check_pending_pr_checks(modules_list, idx, pr_passed_modules, pr_failed_modules)
 
-        if len(modules_list) == 0:
+        if (len(pr_passed_modules) + len(pr_failed_modules)) == len(modules_list):
             all_modules_checked = True
         elif wait_cycles < MAX_WAIT_CYCLES:
             time.sleep(SLEEP_INTERVAL)
@@ -192,7 +192,6 @@ def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_mo
             modules_list[index][MODULE_PR_CHECK_STATUS] = "failure"
             modules_list[index][MODULE_FAILED_PR_CHECKS] = failed_pr_checks
             pr_failed_modules.append(modules_list[index])
-        del(modules_list[index])
 
 def update_module(module, lang_version):
     repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
