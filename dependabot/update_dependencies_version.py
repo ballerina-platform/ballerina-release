@@ -143,7 +143,7 @@ def wait_for_current_level_pr_build(modules_list, level):
             try:
                 pr.merge()
                 print("[Info] Automated version bump PR merged for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
-            except:
+            except Exception as e:
                 print ("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 all_prs_merged = False
 
@@ -157,7 +157,8 @@ def wait_for_current_level_pr_build(modules_list, level):
         if len(modules_list) > 0:
             print ("Following modules dependency PRs check validation has timed out...")
             for module in modules_list:
-                print (module[MODULE_NAME])
+                if (module[MODULE_PR_CHECK_STATUS] == "timed out"):
+                    print(module[MODULE_NAME])
         sys.exit(1)
 
     if (not all_prs_merged):
@@ -324,7 +325,7 @@ def create_pull_request(module, repo, lang_version):
             try:
                 pr.create_review(event="APPROVE")
                 print("[Info] Automated version bump PR approved for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
-            except:
+            except Exception as e:
                 print ("[Error] Error occurred while approving dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 sys.exit(1)
 
