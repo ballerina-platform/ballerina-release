@@ -40,7 +40,7 @@ MODULE_LIST_FILE = "dependabot/resources/extensions.json"
 PROPERTIES_FILE = "gradle.properties"
 
 SLEEP_INTERVAL = 30 # 30s
-MAX_WAIT_CYCLES = 80
+MAX_WAIT_CYCLES = 160
 
 overrideBallerinaVersion = sys.argv[1]
 autoMergePRs = sys.argv[2]
