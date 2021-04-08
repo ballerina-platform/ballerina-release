@@ -142,6 +142,7 @@ def wait_for_current_level_pr_build(modules_list, level):
         if (module[MODULE_AUTO_MERGE] & ("AUTO MERGE" in pr.title)):
             try:
                 pr.merge()
+                print("[Info] Automated version bump PR merged for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
             except:
                 print ("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 all_prs_merged = False
@@ -292,6 +293,8 @@ def create_pull_request(module, repo, lang_version):
                 title = pull.title.rsplit("-", 1)[0] + "-" + shaOfLang + ")",
                 body = pull.body.rsplit("-", 1)[0] + "-" + shaOfLang + "`"
                 )
+            print("[Info] Automated version bump PR found for module '" + module[MODULE_NAME] + "'. PR: " + pull.html_url)
+            break
 
     if not pr_exists:
         try:
@@ -306,6 +309,7 @@ def create_pull_request(module, repo, lang_version):
                 head=LANG_VERSION_UPDATE_BRANCH,
                 base=repo.default_branch
             )
+        print("[Info] Automated version bump PR created for module '" + module[MODULE_NAME] + "'. PR: " + created_pr.html_url)
         except Exception as e:
             print ("[Error] Error occurred while creating pull request for module '" + module[MODULE_NAME] + "'.", e)
             sys.exit(1)
@@ -319,6 +323,7 @@ def create_pull_request(module, repo, lang_version):
             pr = repo.get_pull(created_pr.number)
             try:
                 pr.create_review(event="APPROVE")
+                print("[Info] Automated version bump PR approved for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
             except:
                 print ("[Error] Error occurred while approving dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 sys.exit(1)
