@@ -32,3 +32,5 @@ jobs:
           env:
             packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
             packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
+            packageEmail: ${{ secrets.BALLERINA_BOT_EMAIL }}
+            reviewerPackagePAT: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
