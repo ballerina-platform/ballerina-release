@@ -138,14 +138,16 @@ def wait_for_current_level_pr_build(modules_list, level):
     all_prs_merged = True
     for module in pr_passed_modules:
         repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
-        pr = repo.get_pull(module[MODULE_CREATED_PR].number)
-        if (module[MODULE_AUTO_MERGE] & ("AUTO MERGE" in pr.title)):
-            try:
-                pr.merge()
-                print("[Info] Automated version bump PR merged for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
-            except Exception as e:
-                print ("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
-                all_prs_merged = False
+
+        if (module[MODULE_CREATED_PR] is not None):
+            pr = repo.get_pull(module[MODULE_CREATED_PR].number)
+            if (module[MODULE_AUTO_MERGE] & ("AUTO MERGE" in pr.title)):
+                try:
+                    pr.merge()
+                    print("[Info] Automated version bump PR merged for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
+                except Exception as e:
+                    print ("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
+                    all_prs_merged = False
 
     if (len(pr_passed_modules) != totalModules):
         if len(pr_failed_modules) > 0:
@@ -169,31 +171,37 @@ def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_mo
     passing = True
     pending = False
     repo = github.get_repo(ORGANIZATION + "/" + modules_list[index][MODULE_NAME])
-    sha = repo.get_pull(modules_list[index][MODULE_CREATED_PR].number).head.sha
 
     failed_pr_checks = []
-    for pr_check in repo.get_commit(sha=sha).get_check_runs():
-        if pr_check.conclusion == "success":
-            continue
-        elif pr_check.conclusion == "failure":
-            failed_pr_check = {
-                "name": pr_check.name,
-                "html_url": pr_check.html_url
-            }
-            failed_pr_checks.append(failed_pr_check)
-            passing = False
-        else:
-            pending = True
-            break
+    pending_pr_checks = []
+    if (modules_list[index][MODULE_CREATED_PR] is not None):
+        sha = repo.get_pull(modules_list[index][MODULE_CREATED_PR].number).head.sha
+        for pr_check in repo.get_commit(sha=sha).get_check_runs():
+            if pr_check.conclusion == "success":
+                continue
+            elif pr_check.conclusion == "failure":
+                failed_pr_check = {
+                    "name": pr_check.name,
+                    "html_url": pr_check.html_url
+                }
+                failed_pr_checks.append(failed_pr_check)
+                passing = False
+            else:
+                pending = True
+                break
 
-    if (not pending):
-        if passing:
-            modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
-            pr_passed_modules.append(modules_list[index])
-        else:
-            modules_list[index][MODULE_PR_CHECK_STATUS] = "failure"
-            modules_list[index][MODULE_FAILED_PR_CHECKS] = failed_pr_checks
-            pr_failed_modules.append(modules_list[index])
+        if (not pending):
+            if passing:
+                modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
+                pr_passed_modules.append(modules_list[index])
+            else:
+                modules_list[index][MODULE_PR_CHECK_STATUS] = "failure"
+                modules_list[index][MODULE_FAILED_PR_CHECKS] = failed_pr_checks
+                pr_failed_modules.append(modules_list[index])
+    else:
+        # Already successful and merged
+        modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
+        pr_passed_modules.append(modules_list[index])
 
 def update_module(module, lang_version):
     repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
