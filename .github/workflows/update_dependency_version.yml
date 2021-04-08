@@ -1,4 +1,4 @@
-name: Update Lang Version in Pipeline
+name: Update Dependency Version in Pipeline
 
 on:
   workflow_dispatch:
@@ -34,7 +34,7 @@ jobs:
 
       -   name: Update Ballerina Language Version
           run: |
-            python dependabot/update_lang_version.py "${{ github.event.inputs.ballerinaVersion }}" "${{ github.event.inputs.autoMergePRs }}"
+            python dependabot/update_dependencies_version.py "${{ github.event.inputs.ballerinaVersion }}" "${{ github.event.inputs.autoMergePRs }}"
           env:
             packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
             packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
