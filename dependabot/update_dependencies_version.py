@@ -102,7 +102,7 @@ def check_and_update_lang_version(module_list_json, lang_version):
         current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
 
         for module in current_level_modules:
-            print ("[Info] Update lang dependency in module '" + module[MODULE_NAME] + "'")
+            print ("[Info] Check lang dependency in module '" + module[MODULE_NAME] + "'")
             module[MODULE_CREATED_PR] = update_module(module, lang_version)
             module[MODULE_PR_CHECK_STATUS] = "pending"
 
@@ -236,6 +236,8 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
         else:
             updated_properties_file += line + "\n"
 
+    if update:
+        print ("[Info] Update lang dependency in module '" + module_name + "'")
     return update, updated_properties_file
 
 
