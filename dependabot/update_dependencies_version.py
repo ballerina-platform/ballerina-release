@@ -177,7 +177,7 @@ def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_mo
     if (modules_list[index][MODULE_CREATED_PR] is not None):
         sha = repo.get_pull(modules_list[index][MODULE_CREATED_PR].number).head.sha
         for pr_check in repo.get_commit(sha=sha).get_check_runs():
-            if pr_check.conclusion == "success":
+            if (pr_check.conclusion == "success" or pr_check.conclusion == "skipped"):
                 continue
             elif pr_check.conclusion == "failure":
                 failed_pr_check = {
