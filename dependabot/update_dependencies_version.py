@@ -92,19 +92,21 @@ def get_module_list_json():
 
 
 def check_and_update_lang_version(module_list_json, lang_version):
-    for module in module_list_json[MODULES]:
-        print ("[Info] Update lang dependency in module '" + module[MODULE_NAME] + "'")
-        module[MODULE_CREATED_PR] = update_module(module, lang_version)
-        module[MODULE_PR_CHECK_STATUS] = "pending"
 
-    if (autoMergePRs.lower() == "true"):
-        module_details_list = module_list_json[MODULES]
-        module_details_list.sort(reverse=True, key=lambda s: s['level'])
-        last_level = module_details_list[0]['level']
+    module_details_list = module_list_json[MODULES]
+    module_details_list.sort(reverse=True, key=lambda s: s['level'])
+    last_level = module_details_list[0]['level']
 
-        for i in range(last_level):
-            current_level = i + 1
-            current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
+    for i in range(last_level):
+        current_level = i + 1
+        current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
+
+        for module in current_level_modules:
+            print ("[Info] Update lang dependency in module '" + module[MODULE_NAME] + "'")
+            module[MODULE_CREATED_PR] = update_module(module, lang_version)
+            module[MODULE_PR_CHECK_STATUS] = "pending"
+
+        if (autoMergePRs.lower() == "true"):
             wait_for_current_level_pr_build(current_level_modules, current_level)
 
 def wait_for_current_level_pr_build(modules_list, level):
