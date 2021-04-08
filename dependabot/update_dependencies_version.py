@@ -40,7 +40,7 @@ MODULE_LIST_FILE = "dependabot/resources/extensions.json"
 PROPERTIES_FILE = "gradle.properties"
 
 SLEEP_INTERVAL = 30 # 30s
-MAX_WAIT_CYCLES = 80
+MAX_WAIT_CYCLES = 160
 
 overrideBallerinaVersion = sys.argv[1]
 autoMergePRs = sys.argv[2]
@@ -102,7 +102,7 @@ def check_and_update_lang_version(module_list_json, lang_version):
         current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
 
         for module in current_level_modules:
-            print ("[Info] Update lang dependency in module '" + module[MODULE_NAME] + "'")
+            print ("[Info] Check lang dependency in module '" + module[MODULE_NAME] + "'")
             module[MODULE_CREATED_PR] = update_module(module, lang_version)
             module[MODULE_PR_CHECK_STATUS] = "pending"
 
@@ -138,14 +138,16 @@ def wait_for_current_level_pr_build(modules_list, level):
     all_prs_merged = True
     for module in pr_passed_modules:
         repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
-        pr = repo.get_pull(module[MODULE_CREATED_PR].number)
-        if (module[MODULE_AUTO_MERGE] & ("AUTO MERGE" in pr.title)):
-            try:
-                pr.merge()
-                print("[Info] Automated version bump PR merged for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
-            except:
-                print ("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
-                all_prs_merged = False
+
+        if (module[MODULE_CREATED_PR] is not None):
+            pr = repo.get_pull(module[MODULE_CREATED_PR].number)
+            if (module[MODULE_AUTO_MERGE] & ("AUTO MERGE" in pr.title)):
+                try:
+                    pr.merge()
+                    print("[Info] Automated version bump PR merged for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
+                except Exception as e:
+                    print ("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
+                    all_prs_merged = False
 
     if (len(pr_passed_modules) != totalModules):
         if len(pr_failed_modules) > 0:
@@ -154,10 +156,11 @@ def wait_for_current_level_pr_build(modules_list, level):
                 print (module[MODULE_NAME])
                 for check in module[MODULE_FAILED_PR_CHECKS]:
                     print("[" + module[MODULE_NAME] + "] PR check '" + check["name"] + "' failed for " + check["html_url"])
-        if len(modules_list) > 0:
+        if (len(modules_list) - len(pr_failed_modules) - len(pr_failed_modules)) > 0:
             print ("Following modules dependency PRs check validation has timed out...")
             for module in modules_list:
-                print (module[MODULE_NAME])
+                if (module[MODULE_PR_CHECK_STATUS] == "timed out"):
+                    print(module[MODULE_NAME])
         sys.exit(1)
 
     if (not all_prs_merged):
@@ -168,31 +171,37 @@ def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_mo
     passing = True
     pending = False
     repo = github.get_repo(ORGANIZATION + "/" + modules_list[index][MODULE_NAME])
-    sha = repo.get_pull(modules_list[index][MODULE_CREATED_PR].number).head.sha
 
     failed_pr_checks = []
-    for pr_check in repo.get_commit(sha=sha).get_check_runs():
-        if pr_check.conclusion == "success":
-            continue
-        elif pr_check.conclusion == "failure":
-            failed_pr_check = {
-                "name": pr_check.name,
-                "html_url": pr_check.html_url
-            }
-            failed_pr_checks.append(failed_pr_check)
-            passing = False
-        else:
-            pending = True
-            break
+    pending_pr_checks = []
+    if (modules_list[index][MODULE_CREATED_PR] is not None):
+        sha = repo.get_pull(modules_list[index][MODULE_CREATED_PR].number).head.sha
+        for pr_check in repo.get_commit(sha=sha).get_check_runs():
+            if (pr_check.conclusion == "success" or pr_check.conclusion == "skipped"):
+                continue
+            elif pr_check.conclusion == "failure":
+                failed_pr_check = {
+                    "name": pr_check.name,
+                    "html_url": pr_check.html_url
+                }
+                failed_pr_checks.append(failed_pr_check)
+                passing = False
+            else:
+                pending = True
+                break
 
-    if (not pending):
-        if passing:
-            modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
-            pr_passed_modules.append(modules_list[index])
-        else:
-            modules_list[index][MODULE_PR_CHECK_STATUS] = "failure"
-            modules_list[index][MODULE_FAILED_PR_CHECKS] = failed_pr_checks
-            pr_failed_modules.append(modules_list[index])
+        if (not pending):
+            if passing:
+                modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
+                pr_passed_modules.append(modules_list[index])
+            else:
+                modules_list[index][MODULE_PR_CHECK_STATUS] = "failure"
+                modules_list[index][MODULE_FAILED_PR_CHECKS] = failed_pr_checks
+                pr_failed_modules.append(modules_list[index])
+    else:
+        # Already successful and merged
+        modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
+        pr_passed_modules.append(modules_list[index])
 
 def update_module(module, lang_version):
     repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
@@ -235,6 +244,8 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
         else:
             updated_properties_file += line + "\n"
 
+    if update:
+        print ("[Info] Update lang dependency in module '" + module_name + "'")
     return update, updated_properties_file
 
 
@@ -324,7 +335,7 @@ def create_pull_request(module, repo, lang_version):
             try:
                 pr.create_review(event="APPROVE")
                 print("[Info] Automated version bump PR approved for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
-            except:
+            except Exception as e:
                 print ("[Error] Error occurred while approving dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 sys.exit(1)
 
