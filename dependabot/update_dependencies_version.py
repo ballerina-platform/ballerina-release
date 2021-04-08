@@ -309,7 +309,7 @@ def create_pull_request(module, repo, lang_version):
                 head=LANG_VERSION_UPDATE_BRANCH,
                 base=repo.default_branch
             )
-        print("[Info] Automated version bump PR created for module '" + module[MODULE_NAME] + "'. PR: " + created_pr.html_url)
+            print("[Info] Automated version bump PR created for module '" + module[MODULE_NAME] + "'. PR: " + created_pr.html_url)
         except Exception as e:
             print ("[Error] Error occurred while creating pull request for module '" + module[MODULE_NAME] + "'.", e)
             sys.exit(1)
