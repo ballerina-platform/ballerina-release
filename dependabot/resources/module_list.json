@@ -8,6 +8,7 @@
         "module-ballerinax-choreo",
         "module-ballerina-crypto",
         "module-ballerinax-datamapper",
+        "ballerina-distribution",
         "module-ballerina-docker",
         "module-ballerina-email",
         "module-ballerina-file",
@@ -45,8 +46,6 @@
         "module-ballerina-websub",
         "module-ballerina-websubhub",
         "module-ballerina-xmldata",
-        "module-ballerina-xslt",
-
-        "ballerina-distribution"
+        "module-ballerina-xslt"
     ]
 }
