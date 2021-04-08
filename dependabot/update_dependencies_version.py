@@ -257,19 +257,25 @@ def commit_changes(repo, updated_file, lang_version, module_name):
                 repo.get_git_ref("heads/" + branch).delete()
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
 
-    current_file = repo.get_contents(PROPERTIES_FILE, ref=branch)
-    update = repo.update_file(
-        current_file.path,
-        COMMIT_MESSAGE_PREFIX + lang_version,
-        updated_file,
-        current_file.sha,
-        branch=branch,
-        author=author
-    )
-    if not branch == LANG_VERSION_UPDATE_BRANCH:
-        update_branch = repo.get_git_ref("heads/" + LANG_VERSION_UPDATE_BRANCH)
-        update_branch.edit(update["commit"].sha, force=True)
-        repo.get_git_ref("heads/" + branch).delete()
+    remote_file = repo.get_contents(PROPERTIES_FILE, ref=LANG_VERSION_UPDATE_BRANCH)
+    remote_file_contents = remote_file.decoded_content.decode("utf-8")
+
+    if (remote_file_contents == updated_file):
+        print("[Info] Branch with the lang version is already present.")
+    else:
+        current_file = repo.get_contents(PROPERTIES_FILE, ref=branch)
+        update = repo.update_file(
+            current_file.path,
+            COMMIT_MESSAGE_PREFIX + lang_version,
+            updated_file,
+            current_file.sha,
+            branch=branch,
+            author=author
+        )
+        if not branch == LANG_VERSION_UPDATE_BRANCH:
+            update_branch = repo.get_git_ref("heads/" + LANG_VERSION_UPDATE_BRANCH)
+            update_branch.edit(update["commit"].sha, force=True)
+            repo.get_git_ref("heads/" + branch).delete()
 
 def create_pull_request(module, repo, lang_version):
     pulls = repo.get_pulls(state=OPEN, head=LANG_VERSION_UPDATE_BRANCH)
