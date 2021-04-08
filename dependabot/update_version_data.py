@@ -229,14 +229,35 @@ def commit_json_file():
         print ("No changes to extensions.json file")
     else:
         try:
+            base = repo.get_branch(repo.default_branch)
+            branch = EXTENSIONS_UPDATE_BRANCH
+            try:
+                ref = f"refs/heads/" + branch
+                repo.create_git_ref(ref=ref, sha=base.commit.sha)
+            except :
+                print("[Info] Unmerged update branch existed in 'ballerina-release'")
+                branch = EXTENSIONS_UPDATE_BRANCH + "_update_tmp"
+                ref = f"refs/heads/" + branch
+                try:
+                    repo.create_git_ref(ref=ref, sha=base.commit.sha)
+                except GithubException as e:
+                    print("[Info] deleting update tmp branch existed in 'ballerina-release'")
+                    if e.status == 422: # already exist
+                        repo.get_git_ref("heads/" + branch).delete()
+                        repo.create_git_ref(ref=ref, sha=base.commit.sha)
             repo.update_file(
                 EXTENSIONS_FILE,
                 "[Automated] Update Extensions Dependencies",
                 updated_file,
                 remote_file.sha,
-                branch=EXTENSIONS_UPDATE_BRANCH,
+                branch=branch,
                 author=author
             )
+            if not branch == EXTENSIONS_UPDATE_BRANCH:
+                update_branch = repo.get_git_ref("heads/" + EXTENSIONS_UPDATE_BRANCH)
+                update_branch.edit(update["commit"].sha, force=True)
+                repo.get_git_ref("heads/" + branch).delete()
+
         except Exception as e:
             print ("Error while committing extensions.json", e)
 
@@ -264,6 +285,6 @@ def commit_json_file():
         try:
             created_pr.merge()
         except:
-            print ("Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
+            print ("Error occurred while merging dependency PR for module 'ballerina-release'", e)
 
 main()
