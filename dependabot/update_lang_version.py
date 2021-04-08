@@ -275,15 +275,15 @@ def create_pull_request(module, repo, lang_version):
     pr_exists = False
     created_pr = ""
 
-    shaOfLang = lang_version[-7:]
+    shaOfLang = lang_version.split("-")[-1]
 
     for pull in pulls:
-        if pull.head == LANG_VERSION_UPDATE_BRANCH:
+        if pull.head.ref == LANG_VERSION_UPDATE_BRANCH:
             pr_exists = True
             created_pr = pull
             pull.edit(
-                title = pull.title[0:-9] + shaOfLang + ")",
-                body = pull.body[0:-8] + shaOfLang + "`"
+                title = pull.title.rsplit("-", 1)[0] + "-" + shaOfLang + ")",
+                body = pull.body.rsplit("-", 1)[0] + "-" + shaOfLang + "`"
                 )
 
     if not pr_exists:
@@ -291,7 +291,7 @@ def create_pull_request(module, repo, lang_version):
             pull_request_title = PULL_REQUEST_TITLE
             if ((autoMergePRs.lower() == "true") & module[MODULE_AUTO_MERGE]):
                 pull_request_title = AUTO_MERGE_PULL_REQUEST_TITLE
-            pull_request_title = pull_request_title + shaOfLang + ")"
+            pull_request_title = pull_request_title + lang_version + ")"
 
             created_pr = repo.create_pull(
                 title=pull_request_title,
@@ -300,7 +300,7 @@ def create_pull_request(module, repo, lang_version):
                 base=repo.default_branch
             )
         except Exception as e:
-            print ("[Error] Error occurred while creating pull request for module '" + module_name + "'.", e)
+            print ("[Error] Error occurred while creating pull request for module '" + module[MODULE_NAME] + "'.", e)
             sys.exit(1)
         if ((autoMergePRs.lower() == "true") & module[MODULE_AUTO_MERGE]):
             r_github = Github(reviewerPackagePAT)
@@ -309,7 +309,7 @@ def create_pull_request(module, repo, lang_version):
             try:
                 pr.create_review(event="APPROVE")
             except:
-                print ("[Error] Error occurred while approving dependency PR for module '" + module_name + "'", e)
+                print ("[Error] Error occurred while approving dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 sys.exit(1)
 
     return created_pr
