@@ -126,7 +126,7 @@ def wait_for_current_level_pr_build(modules_list, level):
             if (module[MODULE_PR_CHECK_STATUS] == "pending"):
                 check_pending_pr_checks(modules_list, idx, pr_passed_modules, pr_failed_modules)
 
-        if len(modules_list) == 0:
+        if (len(pr_passed_modules) + len(pr_failed_modules)) == len(modules_list):
             all_modules_checked = True
         elif wait_cycles < MAX_WAIT_CYCLES:
             time.sleep(SLEEP_INTERVAL)
@@ -142,6 +142,7 @@ def wait_for_current_level_pr_build(modules_list, level):
         if (module[MODULE_AUTO_MERGE] & ("AUTO MERGE" in pr.title)):
             try:
                 pr.merge()
+                print("[Info] Automated version bump PR merged for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
             except:
                 print ("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 all_prs_merged = False
@@ -192,7 +193,6 @@ def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_mo
             modules_list[index][MODULE_PR_CHECK_STATUS] = "failure"
             modules_list[index][MODULE_FAILED_PR_CHECKS] = failed_pr_checks
             pr_failed_modules.append(modules_list[index])
-        del(modules_list[index])
 
 def update_module(module, lang_version):
     repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
@@ -258,19 +258,25 @@ def commit_changes(repo, updated_file, lang_version, module_name):
                 repo.get_git_ref("heads/" + branch).delete()
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
 
-    current_file = repo.get_contents(PROPERTIES_FILE, ref=branch)
-    update = repo.update_file(
-        current_file.path,
-        COMMIT_MESSAGE_PREFIX + lang_version,
-        updated_file,
-        current_file.sha,
-        branch=branch,
-        author=author
-    )
-    if not branch == LANG_VERSION_UPDATE_BRANCH:
-        update_branch = repo.get_git_ref("heads/" + LANG_VERSION_UPDATE_BRANCH)
-        update_branch.edit(update["commit"].sha, force=True)
-        repo.get_git_ref("heads/" + branch).delete()
+    remote_file = repo.get_contents(PROPERTIES_FILE, ref=LANG_VERSION_UPDATE_BRANCH)
+    remote_file_contents = remote_file.decoded_content.decode("utf-8")
+
+    if (remote_file_contents == updated_file):
+        print("[Info] Branch with the lang version is already present.")
+    else:
+        current_file = repo.get_contents(PROPERTIES_FILE, ref=branch)
+        update = repo.update_file(
+            current_file.path,
+            COMMIT_MESSAGE_PREFIX + lang_version,
+            updated_file,
+            current_file.sha,
+            branch=branch,
+            author=author
+        )
+        if not branch == LANG_VERSION_UPDATE_BRANCH:
+            update_branch = repo.get_git_ref("heads/" + LANG_VERSION_UPDATE_BRANCH)
+            update_branch.edit(update["commit"].sha, force=True)
+            repo.get_git_ref("heads/" + branch).delete()
 
 def create_pull_request(module, repo, lang_version):
     pulls = repo.get_pulls(state=OPEN, head=LANG_VERSION_UPDATE_BRANCH)
@@ -287,6 +293,8 @@ def create_pull_request(module, repo, lang_version):
                 title = pull.title.rsplit("-", 1)[0] + "-" + shaOfLang + ")",
                 body = pull.body.rsplit("-", 1)[0] + "-" + shaOfLang + "`"
                 )
+            print("[Info] Automated version bump PR found for module '" + module[MODULE_NAME] + "'. PR: " + pull.html_url)
+            break
 
     if not pr_exists:
         try:
@@ -301,6 +309,7 @@ def create_pull_request(module, repo, lang_version):
                 head=LANG_VERSION_UPDATE_BRANCH,
                 base=repo.default_branch
             )
+        print("[Info] Automated version bump PR created for module '" + module[MODULE_NAME] + "'. PR: " + created_pr.html_url)
         except Exception as e:
             print ("[Error] Error occurred while creating pull request for module '" + module[MODULE_NAME] + "'.", e)
             sys.exit(1)
@@ -314,6 +323,7 @@ def create_pull_request(module, repo, lang_version):
             pr = repo.get_pull(created_pr.number)
             try:
                 pr.create_review(event="APPROVE")
+                print("[Info] Automated version bump PR approved for module '" + module[MODULE_NAME] + "'. PR: " + pr.html_url)
             except:
                 print ("[Error] Error occurred while approving dependency PR for module '" + module[MODULE_NAME] + "'", e)
                 sys.exit(1)
