@@ -154,7 +154,7 @@ def wait_for_current_level_pr_build(modules_list, level):
                 print (module[MODULE_NAME])
                 for check in module[MODULE_FAILED_PR_CHECKS]:
                     print("[" + module[MODULE_NAME] + "] PR check '" + check["name"] + "' failed for " + check["html_url"])
-        if len(modules_list) > 0:
+        if (len(modules_list) - len(pr_failed_modules) - len(pr_failed_modules)) > 0:
             print ("Following modules dependency PRs check validation has timed out...")
             for module in modules_list:
                 if (module[MODULE_PR_CHECK_STATUS] == "timed out"):
