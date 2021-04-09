@@ -40,7 +40,7 @@ MODULE_LIST_FILE = "dependabot/resources/extensions.json"
 PROPERTIES_FILE = "gradle.properties"
 
 SLEEP_INTERVAL = 30 # 30s
-MAX_WAIT_CYCLES = 160
+MAX_WAIT_CYCLES = 120
 
 overrideBallerinaVersion = sys.argv[1]
 autoMergePRs = sys.argv[2]
@@ -177,18 +177,18 @@ def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_mo
     if (modules_list[index][MODULE_CREATED_PR] is not None):
         sha = repo.get_pull(modules_list[index][MODULE_CREATED_PR].number).head.sha
         for pr_check in repo.get_commit(sha=sha).get_check_runs():
-            if (pr_check.conclusion == "success" or pr_check.conclusion == "skipped"):
+            if (pr_check.status != "completed"):
+                pending = True
+                break
+            elif (pr_check.conclusion == "success"):
                 continue
-            elif pr_check.conclusion == "failure":
+            else:
                 failed_pr_check = {
                     "name": pr_check.name,
                     "html_url": pr_check.html_url
                 }
                 failed_pr_checks.append(failed_pr_check)
                 passing = False
-            else:
-                pending = True
-                break
 
         if (not pending):
             if passing:

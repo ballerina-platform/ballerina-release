@@ -4,6 +4,7 @@ import re
 import networkx as nx
 import sys
 import os
+import time
 
 BALLERINA_ORG_NAME = "ballerina-platform"
 MODULE_LIST_FILE = "dependabot/resources/module_list.json"
@@ -272,6 +273,9 @@ def commit_json_file():
         except Exception as e:
             print ("Error occurred while creating pull request updating dependencies.", e)
             sys.exit(1)
+
+        # To stop intermittent failures due to API sync
+        time.sleep(5)
 
         r_github = Github(reviewerPackagePAT)
         repo = r_github.get_repo(BALLERINA_ORG_NAME + "/ballerina-release")
