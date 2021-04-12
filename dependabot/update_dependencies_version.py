@@ -183,19 +183,20 @@ def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_mo
     if modules_list[index][MODULE_CREATED_PR] is not None:
         sha = repo.get_pull(modules_list[index][MODULE_CREATED_PR].number).head.sha
         for pr_check in repo.get_commit(sha=sha).get_check_runs():
-            if pr_check.status != "completed":
-                pending = True
-                break
-            elif pr_check.conclusion == "success":
-                continue
-            else:
-                failed_pr_check = {
-                    "name": pr_check.name,
-                    "html_url": pr_check.html_url
-                }
-                failed_pr_checks.append(failed_pr_check)
-                passing = False
-
+            # Ignore codecov checks temporarily due to bug
+            if not pr_check.name.startswith("codecov"):
+                if pr_check.status != "completed":
+                    pending = True
+                    break
+                elif pr_check.conclusion == "success":
+                    continue
+                else:
+                    failed_pr_check = {
+                        "name": pr_check.name,
+                        "html_url": pr_check.html_url
+                    }
+                    failed_pr_checks.append(failed_pr_check)
+                    passing = False
         if not pending:
             if passing:
                 modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
