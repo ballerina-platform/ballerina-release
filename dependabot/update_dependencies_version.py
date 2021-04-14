@@ -62,6 +62,7 @@ current_level_modules = []
 lang_version = ""
 status_completed_modules = 0
 
+
 def main():
     global lang_version
     lang_version = get_lang_version()
@@ -309,6 +310,7 @@ def update_module(idx):
         current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
         current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_PENDING
         current_level_modules[idx][MODULE_CREATED_PR] = None
+
 
 def get_updated_properties_file(module_name, properties_file):
     updated_properties_file = ""
