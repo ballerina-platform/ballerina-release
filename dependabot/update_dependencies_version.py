@@ -28,8 +28,20 @@ MODULES = "modules"
 MODULE_NAME = "name"
 MODULE_AUTO_MERGE = "auto_merge"
 MODULE_CREATED_PR = "created_pr"
-MODULE_PR_CHECK_STATUS = "pr_checks_status"
-MODULE_FAILED_PR_CHECKS = "failed_pr_checks"
+
+MODULE_STATUS = "status"
+MODULE_STATUS_IN_PROGRESS = "in_progress"
+MODULE_STATUS_COMPLETED = "completed"
+
+MODULE_CONCLUSION = "conclusion"
+MODULE_CONCLUSION_TIMED_OUT = "timed_out"
+MODULE_CONCLUSION_PR_PENDING = "pr_build_pending"
+MODULE_CONCLUSION_PR_CHECK_FAILURE = "pr_check_failure"
+MODULE_CONCLUSION_PR_MERGE_FAILURE = "merge_failure"
+MODULE_CONCLUSION_BUILD_PENDING = "build_pending"
+MODULE_CONCLUSION_BUILD_SUCCESS = "build_success"
+MODULE_CONCLUSION_BUILD_FAILURE = "build_failure"
+MODULE_CONCLUSION_BUILD_RELEASED = "build_released"
 
 COMMIT_MESSAGE_PREFIX = "[Automated] Update lang version to "
 PULL_REQUEST_BODY_PREFIX = "Update ballerina lang version to `"
@@ -46,12 +58,15 @@ overrideBallerinaVersion = sys.argv[1]
 autoMergePRs = sys.argv[2]
 
 github = Github(packagePAT)
-
+current_level_modules = []
+lang_version = ""
+status_completed_modules = 0
 
 def main():
+    global lang_version
     lang_version = get_lang_version()
     module_list_json = get_module_list_json()
-    check_and_update_lang_version(module_list_json, lang_version)
+    check_and_update_lang_version(module_list_json)
 
 
 def get_lang_version():
@@ -94,94 +109,77 @@ def get_module_list_json():
     return module_list
 
 
-def check_and_update_lang_version(module_list_json, lang_version):
+def check_and_update_lang_version(module_list_json):
     module_details_list = module_list_json[MODULES]
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
 
     for i in range(last_level):
         current_level = i + 1
+        global current_level_modules
         current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
 
-        for module in current_level_modules:
+        for idx, module in enumerate(current_level_modules):
             print("[Info] Check lang dependency in module '" + module[MODULE_NAME] + "'")
-            module[MODULE_CREATED_PR] = update_module(module, lang_version)
-            module[MODULE_PR_CHECK_STATUS] = "pending"
+            update_module(idx)
 
         if autoMergePRs.lower() == "true":
-            wait_for_current_level_pr_build(current_level_modules, current_level)
+            wait_for_current_level_build(current_level)
 
 
-def wait_for_current_level_pr_build(modules_list, level):
-    print("[Info] Waiting for level '" + str(level) + "' module pr checks.")
-    total_modules = len(modules_list)
+def wait_for_current_level_build(level):
+    print("[Info] Waiting for level '" + str(level) + "' module build.")
+    total_modules = len(current_level_modules)
 
-    time.sleep(SLEEP_INTERVAL)
-
-    pr_passed_modules = []
-    pr_failed_modules = []
     wait_cycles = 0
-    all_modules_checked = False
+    global status_completed_modules
+    status_completed_modules = 0
 
-    while not all_modules_checked:
-        for idx in range(len(modules_list)):
-            module = modules_list[idx]
-            if module[MODULE_PR_CHECK_STATUS] == "pending":
-                check_pending_pr_checks(modules_list, idx, pr_passed_modules, pr_failed_modules)
+    while status_completed_modules != total_modules:
+        for idx in range(len(current_level_modules)):
+            if current_level_modules[idx][MODULE_STATUS] == MODULE_STATUS_IN_PROGRESS:
+                if current_level_modules[idx][MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_PENDING:
+                    check_pending_pr_checks(idx)
+                else:
+                    # Build checks test
+                    check_pending_build_checks(idx)
 
-        if (len(pr_passed_modules) + len(pr_failed_modules)) == len(modules_list):
-            all_modules_checked = True
-        elif wait_cycles < MAX_WAIT_CYCLES:
+        if wait_cycles < MAX_WAIT_CYCLES:
             time.sleep(SLEEP_INTERVAL)
             wait_cycles = wait_cycles + 1
         else:
-            modules_list[idx][MODULE_PR_CHECK_STATUS] = "timed out"
-            break
-
-    all_prs_merged = True
-    for module in pr_passed_modules:
-        repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
-
-        if module[MODULE_CREATED_PR] is not None:
-            pr = repo.get_pull(module[MODULE_CREATED_PR].number)
-            if module[MODULE_AUTO_MERGE] & ("AUTO MERGE" in pr.title):
-                try:
-                    pr.merge()
-                    print("[Info] Automated version bump PR merged for module '" + module[
-                        MODULE_NAME] + "'. PR: " + pr.html_url)
-                except Exception as e:
-                    print("[Error] Error occurred while merging dependency PR for module '" + module[MODULE_NAME] + "'",
-                          e)
-                    all_prs_merged = False
-
-    if len(pr_passed_modules) != total_modules:
-        if len(pr_failed_modules) > 0:
-            print("Following modules dependency PRs have failed checks...")
-            for module in pr_failed_modules:
-                print(module[MODULE_NAME])
-                for check in module[MODULE_FAILED_PR_CHECKS]:
-                    print("[" + module[MODULE_NAME] + "] PR check '" + check["name"] + "' failed for " + check[
-                        "html_url"])
-        if (len(modules_list) - len(pr_failed_modules) - len(pr_failed_modules)) > 0:
-            print("Following modules dependency PRs check validation has timed out...")
-            for module in modules_list:
-                if module[MODULE_PR_CHECK_STATUS] == "timed out":
+            # Force stop script with all in progress modules printed
+            print("Dependency bump script timed out. Following modules are in pending state")
+            for module in current_level_modules:
+                if module[MODULE_STATUS] == MODULE_STATUS_IN_PROGRESS:
                     print(module[MODULE_NAME])
+            sys.exit(1)
+
+    module_release_failure = False
+    pr_checks_failed_modules = list(
+        filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
+    if len(pr_checks_failed_modules) != 0:
+        module_release_failure = True
+        print("Following modules dependency PRs have failed checks...")
+        for module in pr_checks_failed_modules:
+            print(module[MODULE_NAME])
+
+    if module_release_failure:
         sys.exit(1)
 
-    if not all_prs_merged:
-        sys.exit(1)
 
-
-def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_modules):
-    print("[Info] Checking the status of the dependency bump PR in module '" + modules_list[index][MODULE_NAME] + "'")
+def check_pending_pr_checks(index):
+    global status_completed_modules
+    print("[Info] Checking the status of the dependency bump PR in module '" + current_level_modules[index][
+        MODULE_NAME] + "'")
     passing = True
     pending = False
-    repo = github.get_repo(ORGANIZATION + "/" + modules_list[index][MODULE_NAME])
+    repo = github.get_repo(ORGANIZATION + "/" + current_level_modules[index][MODULE_NAME])
 
     failed_pr_checks = []
-    if modules_list[index][MODULE_CREATED_PR] is not None:
-        sha = repo.get_pull(modules_list[index][MODULE_CREATED_PR].number).head.sha
+    if current_level_modules[index][MODULE_CREATED_PR] is not None:
+        pull_request = repo.get_pull(current_level_modules[index][MODULE_CREATED_PR].number)
+        sha = pull_request.head.sha
         for pr_check in repo.get_commit(sha=sha).get_check_runs():
             # Ignore codecov checks temporarily due to bug
             if not pr_check.name.startswith("codecov"):
@@ -199,30 +197,104 @@ def check_pending_pr_checks(modules_list, index, pr_passed_modules, pr_failed_mo
                     passing = False
         if not pending:
             if passing:
-                modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
-                pr_passed_modules.append(modules_list[index])
+                if current_level_modules[index][MODULE_AUTO_MERGE] & ("AUTO MERGE" in pull_request.title):
+                    try:
+                        pull_request.merge()
+                        print("[Info] Automated version bump PR merged for module '" + current_level_modules[index][
+                            MODULE_NAME] + "'. PR: " + pull_request.html_url)
+                        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
+                    except Exception as e:
+                        print("[Error] Error occurred while merging dependency PR for module '" +
+                              current_level_modules[index][MODULE_NAME] + "'", e)
+                        current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
+                        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_MERGE_FAILURE
+                        status_completed_modules += 1
+                else:
+                    current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
+                    current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
+                    status_completed_modules += 1
+
             else:
-                modules_list[index][MODULE_PR_CHECK_STATUS] = "failure"
-                modules_list[index][MODULE_FAILED_PR_CHECKS] = failed_pr_checks
-                pr_failed_modules.append(modules_list[index])
+                current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
+                current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_CHECK_FAILURE
+                module_name = current_level_modules[index][MODULE_NAME]
+                print("[Error] Dependency bump PR checks have failed for '" + module_name + "'")
+                for check in failed_pr_checks:
+                    print("[" + module_name + "] PR check '" + check["name"] + "' failed for " + check[
+                        "html_url"])
+                status_completed_modules += 1
     else:
         # Already successful and merged
-        modules_list[index][MODULE_PR_CHECK_STATUS] = "success"
-        pr_passed_modules.append(modules_list[index])
+        current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
+        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
+        status_completed_modules += 1
 
 
-def update_module(module, lang_version):
-    repo = github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
+def check_pending_build_checks(index):
+    global status_completed_modules
+    print("[Info] Checking the status of the timestamped build in module '" + current_level_modules[index][
+        MODULE_NAME] + "'")
+    passing = True
+    pending = False
+    repo = github.get_repo(ORGANIZATION + "/" + current_level_modules[index][MODULE_NAME])
+
+    failed_build_checks = []
+    if current_level_modules[index][MODULE_CREATED_PR] is not None:
+        pull_request = repo.get_pull(current_level_modules[index][MODULE_CREATED_PR].number)
+        sha = pull_request.merge_commit_sha
+        for build_check in repo.get_commit(sha=sha).get_check_runs():
+            # Ignore codecov checks temporarily due to bug
+            if not build_check.name.startswith("codecov"):
+                if build_check.status != "completed":
+                    pending = True
+                    break
+                elif build_check.conclusion == "success":
+                    continue
+                else:
+                    failed_build_checks = {
+                        "name": build_check.name,
+                        "html_url": build_check.html_url
+                    }
+                    failed_build_checks.append(failed_build_checks)
+                    passing = False
+        if not pending:
+            if passing:
+                # TODO: Get the latest timestamped release
+                current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
+                current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
+                status_completed_modules += 1
+            else:
+                current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
+                current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_FAILURE
+                module_name = current_level_modules[index][MODULE_NAME]
+                print("[Error] Dependency bump PR merge build checks have failed for '" + module_name + "'")
+                for check in failed_build_checks:
+                    print("[" + module_name + "] Build check '" + check["name"] + "' failed for " + check[
+                        "html_url"])
+                status_completed_modules += 1
+    else:
+        # Already successful and merged
+        current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
+        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
+        status_completed_modules += 1
+
+
+def update_module(idx):
+    repo = github.get_repo(ORGANIZATION + "/" + current_level_modules[idx][MODULE_NAME])
     properties_file = repo.get_contents(PROPERTIES_FILE)
 
     properties_file = properties_file.decoded_content.decode(ENCODING)
-    update, updated_properties_file = get_updated_properties_file(module[MODULE_NAME], properties_file, lang_version)
+    update, updated_properties_file = get_updated_properties_file(current_level_modules[idx][MODULE_NAME],
+                                                                  properties_file)
     if update:
-        commit_changes(repo, updated_properties_file, lang_version, module[MODULE_NAME])
-        return create_pull_request(module, repo, lang_version)
+        commit_changes(repo, updated_properties_file, current_level_modules[idx][MODULE_NAME])
+        create_pull_request(idx, repo)
+    else:
+        current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
+        current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_PENDING
+        current_level_modules[idx][MODULE_CREATED_PR] = None
 
-
-def get_updated_properties_file(module_name, properties_file, lang_version):
+def get_updated_properties_file(module_name, properties_file):
     updated_properties_file = ""
     update = False
 
@@ -257,7 +329,7 @@ def get_updated_properties_file(module_name, properties_file, lang_version):
     return update, updated_properties_file
 
 
-def commit_changes(repo, updated_file, lang_version, module_name):
+def commit_changes(repo, updated_file, module_name):
     author = InputGitAuthor(packageUser, packageEmail)
     base = repo.get_branch(repo.default_branch)
     branch = LANG_VERSION_UPDATE_BRANCH
@@ -298,7 +370,7 @@ def commit_changes(repo, updated_file, lang_version, module_name):
             repo.get_git_ref("heads/" + branch).delete()
 
 
-def create_pull_request(module, repo, lang_version):
+def create_pull_request(idx, repo):
     pulls = repo.get_pulls(state=OPEN, head=LANG_VERSION_UPDATE_BRANCH)
     pr_exists = False
     created_pr = ""
@@ -313,14 +385,14 @@ def create_pull_request(module, repo, lang_version):
                 title=pull.title.rsplit("-", 1)[0] + "-" + sha_of_lang + ")",
                 body=pull.body.rsplit("-", 1)[0] + "-" + sha_of_lang + "`"
             )
-            print(
-                "[Info] Automated version bump PR found for module '" + module[MODULE_NAME] + "'. PR: " + pull.html_url)
+            print("[Info] Automated version bump PR found for module '" + current_level_modules[idx][MODULE_NAME] +
+                  "'. PR: " + pull.html_url)
             break
 
     if not pr_exists:
         try:
             pull_request_title = PULL_REQUEST_TITLE
-            if (autoMergePRs.lower() == "true") & module[MODULE_AUTO_MERGE]:
+            if (autoMergePRs.lower() == "true") & current_level_modules[idx][MODULE_AUTO_MERGE]:
                 pull_request_title = AUTO_MERGE_PULL_REQUEST_TITLE
             pull_request_title = pull_request_title + lang_version + ")"
 
@@ -330,29 +402,34 @@ def create_pull_request(module, repo, lang_version):
                 head=LANG_VERSION_UPDATE_BRANCH,
                 base=repo.default_branch
             )
-            print("[Info] Automated version bump PR created for module '" + module[
+            print("[Info] Automated version bump PR created for module '" + current_level_modules[idx][
                 MODULE_NAME] + "'. PR: " + created_pr.html_url)
         except Exception as e:
-            print("[Error] Error occurred while creating pull request for module '" + module[MODULE_NAME] + "'.", e)
+            print("[Error] Error occurred while creating pull request for module '" + current_level_modules[idx][
+                MODULE_NAME] + "'.", e)
             sys.exit(1)
-        if (autoMergePRs.lower() == "true") & module[MODULE_AUTO_MERGE]:
+
+        if (autoMergePRs.lower() == "true") & current_level_modules[idx][MODULE_AUTO_MERGE]:
 
             # To stop intermittent failures due to API sync
             time.sleep(5)
 
             r_github = Github(reviewerPackagePAT)
-            repo = r_github.get_repo(ORGANIZATION + "/" + module[MODULE_NAME])
+            repo = r_github.get_repo(ORGANIZATION + "/" + current_level_modules[idx][MODULE_NAME])
             pr = repo.get_pull(created_pr.number)
             try:
                 pr.create_review(event="APPROVE")
-                print("[Info] Automated version bump PR approved for module '" + module[
+                print("[Info] Automated version bump PR approved for module '" + current_level_modules[idx][
                     MODULE_NAME] + "'. PR: " + pr.html_url)
             except Exception as e:
-                print("[Error] Error occurred while approving dependency PR for module '" + module[MODULE_NAME] + "'",
+                print("[Error] Error occurred while approving dependency PR for module '" + current_level_modules[idx][
+                    MODULE_NAME] + "'",
                       e)
                 sys.exit(1)
 
-    return created_pr
+    current_level_modules[idx][MODULE_CREATED_PR] = created_pr
+    current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
+    current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_PENDING
 
 
 main()
