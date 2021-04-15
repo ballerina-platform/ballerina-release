@@ -45,7 +45,7 @@ MODULE_CONCLUSION_BUILD_FAILURE = "build_failure"
 MODULE_CONCLUSION_BUILD_RELEASED = "build_released"
 MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED = "version_not_identified"
 
-COMMIT_MESSAGE_PREFIX = "[Automated] Update lang version to "
+COMMIT_MESSAGE_PREFIX = "[Automated] Update dependencies"
 PULL_REQUEST_BODY_PREFIX = "Update ballerina lang version to `"
 PULL_REQUEST_TITLE = "[Automated] Update Dependencies (Ballerina Lang : "
 AUTO_MERGE_PULL_REQUEST_TITLE = "[AUTO MERGE] Update Dependencies (Ballerina Lang : "
@@ -417,7 +417,7 @@ def commit_changes(repo, updated_file, module_name):
         current_file = repo.get_contents(PROPERTIES_FILE, ref=branch)
         update = repo.update_file(
             current_file.path,
-            COMMIT_MESSAGE_PREFIX + lang_version,
+            COMMIT_MESSAGE_PREFIX,
             updated_file,
             current_file.sha,
             branch=branch,
@@ -442,7 +442,7 @@ def create_pull_request(idx: int, repo):
             created_pr = pull
             pull.edit(
                 title=pull.title.rsplit("-", 1)[0] + "-" + sha_of_lang + ")",
-                body=pull.body.rsplit("-", 1)[0] + "-" + sha_of_lang + "`"
+                body=pull.body.rsplit("-", 1)[0] + "-" + sha_of_lang + "` and relevant extensions."
             )
             print("[Info] Automated version bump PR found for module '" + current_level_modules[idx][MODULE_NAME] +
                   "'. PR: " + pull.html_url)
@@ -457,7 +457,7 @@ def create_pull_request(idx: int, repo):
 
             created_pr = repo.create_pull(
                 title=pull_request_title,
-                body=PULL_REQUEST_BODY_PREFIX + lang_version + "`",
+                body=PULL_REQUEST_BODY_PREFIX + lang_version + "` and relevant extensions.",
                 head=LANG_VERSION_UPDATE_BRANCH,
                 base=repo.default_branch
             )
