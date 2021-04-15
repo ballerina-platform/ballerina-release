@@ -6,6 +6,7 @@
             "level": 1,
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
+            "version_key": "dockerVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -18,6 +19,7 @@
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "io-ballerina",
+            "version_key": "stdlibIoVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -33,6 +35,7 @@
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "jballerina.java.arrays-ballerina",
+            "version_key": "stdlibJavaArraysVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -45,6 +48,7 @@
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "random-ballerina",
+            "version_key": "stdlibRandomVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -57,6 +61,7 @@
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "regex-ballerina",
+            "version_key": "stdlibRegexVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -70,6 +75,7 @@
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "time-ballerina",
+            "version_key": "stdlibTimeVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -84,6 +90,7 @@
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "url-ballerina",
+            "version_key": "stdlibUrlVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -98,6 +105,7 @@
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "xmldata-ballerina",
+            "version_key": "stdlibXmldataVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -110,6 +118,7 @@
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "crypto-ballerina",
+            "version_key": "stdlibCryptoVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -128,6 +137,7 @@
             "level": 2,
             "group_id": "org.ballerinax.datamapper",
             "artifact_id": "datamapper-extension",
+            "version_key": "dataMapperVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -138,6 +148,7 @@
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "log-ballerina",
+            "version_key": "stdlibLogVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -159,6 +170,7 @@
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "os-ballerina",
+            "version_key": "stdlibOsVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -171,6 +183,7 @@
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "task-ballerina",
+            "version_key": "stdlibTaskVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -185,6 +198,7 @@
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "xslt-ballerina",
+            "version_key": "stdlibXsltVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -197,6 +211,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "cache-ballerina",
+            "version_key": "stdlibCacheVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -211,6 +226,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "file-ballerina",
+            "version_key": "stdlibFileVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -224,6 +240,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "ftp-ballerina",
+            "version_key": "stdlibFtpVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -236,6 +253,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "mime-ballerina",
+            "version_key": "stdlibMimeVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -249,6 +267,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "nats-ballerina",
+            "version_key": "stdlibNatsVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -259,6 +278,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "stan-ballerina",
+            "version_key": "stdlibStanVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": []
@@ -269,6 +289,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "tcp-ballerina",
+            "version_key": "stdlibTcpVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -281,6 +302,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "udp-ballerina",
+            "version_key": "stdlibUdpVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -293,6 +315,7 @@
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "uuid-ballerina",
+            "version_key": "stdlibUuidVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -305,6 +328,7 @@
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "auth-ballerina",
+            "version_key": "stdlibAuthVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -317,6 +341,7 @@
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "email-ballerina",
+            "version_key": "stdlibEmailVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -329,6 +354,7 @@
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "jwt-ballerina",
+            "version_key": "stdlibJwtVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -341,6 +367,7 @@
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "oauth2-ballerina",
+            "version_key": "stdlibOAuth2Version",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -353,6 +380,7 @@
             "level": 5,
             "group_id": "org.ballerinalang",
             "artifact_id": "http-ballerina",
+            "version_key": "stdlibHttpVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -375,6 +403,7 @@
             "level": 6,
             "group_id": "org.ballerinax.awslambda",
             "artifact_id": "awslambda-extension-bala",
+            "version_key": "awslambdaVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -387,6 +416,7 @@
             "level": 6,
             "group_id": "org.ballerinax.azurefunctions",
             "artifact_id": "azurefunctions-extension",
+            "version_key": "azFunctionsVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -399,6 +429,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "graphql-ballerina",
+            "version_key": "stdlibGraphqlVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -411,6 +442,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "grpc-ballerina",
+            "version_key": "stdlibGrpcVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -424,6 +456,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
+            "version_key": "observeExtJaegerVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -436,6 +469,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "module-ballerina-openapi",
+            "version_key": "openapiVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -446,6 +480,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
+            "version_key": "observeExtPrometheusVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -458,6 +493,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "transaction-ballerina",
+            "version_key": "stdlibTransactionVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -472,6 +508,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websocket-ballerina",
+            "version_key": "stdlibWebsocketVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -484,6 +521,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websub-ballerina",
+            "version_key": "stdlibWebsubVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -496,6 +534,7 @@
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websubhub-ballerina",
+            "version_key": "stdlibWebsubhubVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -508,6 +547,7 @@
             "level": 7,
             "group_id": "io.ballerina",
             "artifact_id": "c2c-ballerina",
+            "version_key": "c2cVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -520,6 +560,7 @@
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "choreo-extension-ballerina",
+            "version_key": "observeExtChoreoVersion",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -532,6 +573,7 @@
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "kafka-ballerina",
+            "version_key": "stdlibKafkaVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -542,6 +584,7 @@
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "rabbitmq-ballerina",
+            "version_key": "stdlibRabbitmqVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -552,6 +595,7 @@
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "sql-ballerina",
+            "version_key": "stdlibSqlVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -566,6 +610,7 @@
             "level": 8,
             "group_id": "org.ballerinalang",
             "artifact_id": "distribution-ballerina",
+            "version_key": "stdlibDistributionVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -576,6 +621,7 @@
             "level": 8,
             "group_id": "org.ballerinalang",
             "artifact_id": "java.jdbc-ballerina",
+            "version_key": "stdlibJdbcVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -586,6 +632,7 @@
             "level": 8,
             "group_id": "org.ballerinalang",
             "artifact_id": "mysql-ballerina",
+            "version_key": "stdlibMysqlVersion",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
