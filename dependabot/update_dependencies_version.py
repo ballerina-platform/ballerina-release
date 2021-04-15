@@ -205,6 +205,9 @@ def check_pending_pr_checks(index):
                     break
                 elif pr_check.conclusion == "success":
                     continue
+                elif (current_level_modules[index][MODULE_NAME] == "module-ballerinax-jaeger" and
+                        pr_check.conclusion == "skipped"):
+                    continue
                 else:
                     failed_pr_check = {
                         "name": pr_check.name,
