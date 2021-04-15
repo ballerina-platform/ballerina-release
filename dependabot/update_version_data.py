@@ -32,8 +32,8 @@ def main():
     module_details_json['modules'].sort(key=lambda s: s['level'])
     update_json_file(module_details_json)
     print('Updated module details successfully')
-    # commit_json_file()
-    # print("Updated module details in 'ballerina-release' successfully")
+    commit_json_file()
+    print("Updated module details in 'ballerina-release' successfully")
 
 
 # Sorts the ballerina extension module list in ascending order
