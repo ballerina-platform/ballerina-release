@@ -4,6 +4,8 @@
             "name": "module-ballerina-docker",
             "version": "2.0.0-alpha8-SNAPSHOT",
             "level": 1,
+            "group_id": "org.ballerinax.docker",
+            "artifact_id": "docker-generator",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -14,6 +16,8 @@
             "name": "module-ballerina-io",
             "version": "0.6.0-alpha8-SNAPSHOT",
             "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "io-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -27,6 +31,8 @@
             "name": "module-ballerina-jballerina.java.arrays",
             "version": "0.10.0-alpha8-SNAPSHOT",
             "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "jballerina.java.arrays-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -37,6 +43,8 @@
             "name": "module-ballerina-random",
             "version": "0.10.0-alpha8-SNAPSHOT",
             "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "random-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -47,6 +55,8 @@
             "name": "module-ballerina-regex",
             "version": "0.7.0-alpha8-SNAPSHOT",
             "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "regex-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -58,6 +68,8 @@
             "name": "module-ballerina-time",
             "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "time-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -70,6 +82,8 @@
             "name": "module-ballerina-url",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "url-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -82,6 +96,8 @@
             "name": "module-ballerina-xmldata",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "xmldata-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -92,6 +108,8 @@
             "name": "module-ballerina-crypto",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 2,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "crypto-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -108,6 +126,8 @@
             "name": "module-ballerinax-datamapper",
             "version": "2.0.0-alpha8-SNAPSHOT",
             "level": 2,
+            "group_id": "org.ballerinax.datamapper",
+            "artifact_id": "datamapper-extension",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -116,6 +136,8 @@
             "name": "module-ballerina-log",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 2,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "log-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -135,6 +157,8 @@
             "name": "module-ballerina-os",
             "version": "0.8.0-alpha8-SNAPSHOT",
             "level": 2,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "os-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -145,6 +169,8 @@
             "name": "module-ballerina-task",
             "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 2,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "task-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -157,6 +183,8 @@
             "name": "module-ballerina-xslt",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 2,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "xslt-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -167,6 +195,8 @@
             "name": "module-ballerina-cache",
             "version": "2.1.0-alpha8-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "cache-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -179,6 +209,8 @@
             "name": "module-ballerina-file",
             "version": "0.7.0-alpha8-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "file-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -190,6 +222,8 @@
             "name": "module-ballerina-ftp",
             "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "ftp-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -200,6 +234,8 @@
             "name": "module-ballerina-mime",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "mime-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -211,6 +247,8 @@
             "name": "module-ballerinax-nats",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "nats-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -219,6 +257,8 @@
             "name": "module-ballerinax-stan",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "stan-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": []
@@ -227,6 +267,8 @@
             "name": "module-ballerina-tcp",
             "version": "0.8.0-alpha8-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "tcp-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -237,6 +279,8 @@
             "name": "module-ballerina-udp",
             "version": "0.9.0-alpha8-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "udp-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -247,6 +291,8 @@
             "name": "module-ballerina-uuid",
             "version": "0.10.0-alpha8-SNAPSHOT",
             "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "uuid-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -257,6 +303,8 @@
             "name": "module-ballerina-auth",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 4,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "auth-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -267,6 +315,8 @@
             "name": "module-ballerina-email",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 4,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "email-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -277,6 +327,8 @@
             "name": "module-ballerina-jwt",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 4,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "jwt-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -287,6 +339,8 @@
             "name": "module-ballerina-oauth2",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 4,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "oauth2-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -297,6 +351,8 @@
             "name": "module-ballerina-http",
             "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 5,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "http-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -317,6 +373,8 @@
             "name": "module-ballerinax-aws.lambda",
             "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinax.awslambda",
+            "artifact_id": "awslambda-extension-bala",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -327,6 +385,8 @@
             "name": "module-ballerinax-azure.functions",
             "version": "2.0.0-alpha8-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinax.azurefunctions",
+            "artifact_id": "azurefunctions-extension",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -337,6 +397,8 @@
             "name": "module-ballerina-graphql",
             "version": "0.2.0-alpha8-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "graphql-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -347,6 +409,8 @@
             "name": "module-ballerina-grpc",
             "version": "0.8.0-alpha8-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "grpc-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -358,6 +422,8 @@
             "name": "module-ballerinax-jaeger",
             "version": "0.2.2-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "jaeger-extension-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -368,6 +434,8 @@
             "name": "ballerina-openapi",
             "version": "2.0.11-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "module-ballerina-openapi",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -376,6 +444,8 @@
             "name": "module-ballerinax-prometheus",
             "version": "0.1.7-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "prometheus-extension-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -386,6 +456,8 @@
             "name": "module-ballerinai-transaction",
             "version": "1.0.12-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "transaction-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -398,6 +470,8 @@
             "name": "module-ballerina-websocket",
             "version": "1.2.0-alpha8-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "websocket-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -408,6 +482,8 @@
             "name": "module-ballerina-websub",
             "version": "1.2.0-alpha8-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "websub-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -418,6 +494,8 @@
             "name": "module-ballerina-websubhub",
             "version": "0.2.0-alpha8-SNAPSHOT",
             "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "websubhub-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -428,6 +506,8 @@
             "name": "module-ballerina-c2c",
             "version": "2.0.0-alpha8-SNAPSHOT",
             "level": 7,
+            "group_id": "io.ballerina",
+            "artifact_id": "c2c-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -438,6 +518,8 @@
             "name": "module-ballerinax-choreo",
             "version": "0.2.3-SNAPSHOT",
             "level": 7,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "choreo-extension-ballerina",
             "default_branch": "main",
             "auto_merge": true,
             "dependents": [
@@ -448,6 +530,8 @@
             "name": "module-ballerinax-kafka",
             "version": "2.1.0-alpha8-SNAPSHOT",
             "level": 7,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "kafka-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -456,6 +540,8 @@
             "name": "module-ballerinax-rabbitmq",
             "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 7,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "rabbitmq-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -464,6 +550,8 @@
             "name": "module-ballerina-sql",
             "version": "0.6.0-alpha8-SNAPSHOT",
             "level": 7,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "sql-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": [
@@ -476,6 +564,8 @@
             "name": "ballerina-distribution",
             "version": "swan-lake-alpha5-SNAPSHOT",
             "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "distribution-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -484,6 +574,8 @@
             "name": "module-ballerinax-java.jdbc",
             "version": "0.6.0-alpha8-SNAPSHOT",
             "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "java.jdbc-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
@@ -492,6 +584,8 @@
             "name": "module-ballerinax-mysql",
             "version": "0.7.0-alpha8-SNAPSHOT",
             "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "mysql-ballerina",
             "default_branch": "master",
             "auto_merge": true,
             "dependents": []
