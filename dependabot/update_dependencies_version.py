@@ -60,6 +60,7 @@ overrideBallerinaVersion = sys.argv[1]
 autoMergePRs = sys.argv[2]
 
 github = Github(packagePAT)
+all_modules = []
 current_level_modules = []
 lang_version = ""
 status_completed_modules = 0
@@ -67,9 +68,10 @@ status_completed_modules = 0
 
 def main():
     global lang_version
+    global all_modules
     lang_version = get_lang_version()
-    module_list_json = get_module_list_json()
-    check_and_update_lang_version(module_list_json)
+    all_modules = get_module_list_json()
+    check_and_update_lang_version()
 
 
 def get_lang_version():
@@ -109,22 +111,24 @@ def get_module_list_json():
         print("[Error] Error while loading modules list ", e)
         sys.exit(1)
 
-    return module_list
+    return module_list[MODULES]
 
 
-def check_and_update_lang_version(module_list_json):
-    module_details_list = module_list_json[MODULES]
+def check_and_update_lang_version():
+    global all_modules
+
+    module_details_list = all_modules
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
 
     for i in range(last_level):
         current_level = i + 1
         global current_level_modules
-        current_level_modules = list(filter(lambda s: s['level'] == current_level, module_list_json[MODULES]))
+        current_level_modules = list(filter(lambda s: s['level'] == current_level, all_modules))
 
         for idx, module in enumerate(current_level_modules):
             print("[Info] Check lang dependency in module '" + module[MODULE_NAME] + "'")
-            update_module(idx)
+            update_module(idx, current_level)
 
         if autoMergePRs.lower() == "true":
             wait_for_current_level_build(current_level)
@@ -261,9 +265,8 @@ def check_pending_pr_checks(index: int):
                 status_completed_modules += 1
     else:
         # Already successful and merged
-        current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
-        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
-        status_completed_modules += 1
+        current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
+        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
 
 
 def check_pending_build_checks(index: int):
@@ -317,8 +320,6 @@ def check_pending_build_checks(index: int):
             latest_package = json.loads(packages_list_string)[0]["name"]
             current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
             current_level_modules[index][MODULE_TIMESTAMPED_VERSION] = latest_package
-            print("[Debug] Timestamped release version for '" + current_level_modules[index][MODULE_NAME] + "' is '" +
-                  latest_package + "'.")
         except Exception as e:
             print("[Error] Failed to get latest timestamped version for module '" + current_level_modules[index][MODULE_NAME] + "'", e)
             current_level_modules[index][MODULE_STATUS] = MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED
@@ -326,7 +327,7 @@ def check_pending_build_checks(index: int):
         status_completed_modules += 1
 
 
-def update_module(idx: int):
+def update_module(idx: int, current_level):
     repo = github.get_repo(ORGANIZATION + "/" + current_level_modules[idx][MODULE_NAME])
     properties_file = repo.get_contents(PROPERTIES_FILE)
 
@@ -342,7 +343,7 @@ def update_module(idx: int):
         current_level_modules[idx][MODULE_CREATED_PR] = None
 
 
-def get_updated_properties_file(module_name, properties_file):
+def get_updated_properties_file(module_name, current_level, properties_file):
     updated_properties_file = ""
     update = False
 
@@ -370,7 +371,17 @@ def get_updated_properties_file(module_name, properties_file):
                 updated_properties_file += LANG_VERSION_KEY + "=" + lang_version + "\n"
                 update = True
         else:
-            updated_properties_file += line + "\n"
+            key_found = False
+            possible_dependency_modules = list(filter(lambda s: s['level'] < current_level, all_modules))
+
+            for possible_dependency in possible_dependency_modules:
+                if line.startswith(possible_dependency["version_key"]):
+                    updated_properties_file += possible_dependency["version_key"] + "=" + possible_dependency[MODULE_TIMESTAMPED_VERSION] + "\n"
+                    key_found = True
+                    update = True
+                    break
+            if not key_found:
+                updated_properties_file += line + "\n"
 
     if update:
         print("[Info] Update lang dependency in module '" + module_name + "'")
