@@ -28,6 +28,7 @@ MODULES = "modules"
 MODULE_NAME = "name"
 MODULE_AUTO_MERGE = "auto_merge"
 MODULE_CREATED_PR = "created_pr"
+MODULE_TIMESTAMPED_VERSION = "timestamped_version"
 
 MODULE_STATUS = "status"
 MODULE_STATUS_IN_PROGRESS = "in_progress"
@@ -42,6 +43,7 @@ MODULE_CONCLUSION_BUILD_PENDING = "build_pending"
 MODULE_CONCLUSION_BUILD_SUCCESS = "build_success"
 MODULE_CONCLUSION_BUILD_FAILURE = "build_failure"
 MODULE_CONCLUSION_BUILD_RELEASED = "build_released"
+MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED = "version_not_identified"
 
 COMMIT_MESSAGE_PREFIX = "[Automated] Update lang version to "
 PULL_REQUEST_BODY_PREFIX = "Update ballerina lang version to `"
@@ -186,11 +188,19 @@ def wait_for_current_level_build(level):
         for module in build_checks_failed_modules:
             print(module[MODULE_NAME])
 
+    build_version_failed_modules = list(
+        filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED, current_level_modules))
+    if len(build_version_failed_modules) != 0:
+        module_release_failure = True
+        print("Following modules timestamped build version cannot be identified...")
+        for module in build_version_failed_modules:
+            print(module[MODULE_NAME])
+
     if module_release_failure:
         sys.exit(1)
 
 
-def check_pending_pr_checks(index):
+def check_pending_pr_checks(index: int):
     global status_completed_modules
     print("[Info] Checking the status of the dependency bump PR in module '" + current_level_modules[index][
         MODULE_NAME] + "'")
@@ -255,7 +265,7 @@ def check_pending_pr_checks(index):
         status_completed_modules += 1
 
 
-def check_pending_build_checks(index):
+def check_pending_build_checks(index: int):
     global status_completed_modules
     print("[Info] Checking the status of the timestamped build in module '" + current_level_modules[index][
         MODULE_NAME] + "'")
@@ -284,10 +294,7 @@ def check_pending_build_checks(index):
                     passing = False
         if not pending:
             if passing:
-                # TODO: Get the latest timestamped release
-                current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
                 current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
-                status_completed_modules += 1
             else:
                 current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
                 current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_FAILURE
@@ -299,12 +306,26 @@ def check_pending_build_checks(index):
                 status_completed_modules += 1
     else:
         # Already successful and merged
+        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
+
+    if current_level_modules[index][MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_SUCCESS:
+        try:
+            packages_list_string = open_url(
+                "https://api.github.com/orgs/" + ORGANIZATION + "/packages/maven/" + current_level_modules[index]["group_id"] + "." +
+                current_level_modules[index]["artifact_id"] + "/versions").read()
+            latest_package = json.loads(packages_list_string)[0]["name"]
+            current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
+            current_level_modules[index][MODULE_TIMESTAMPED_VERSION] = latest_package
+            print("[Debug] Timestamped release version for '" + current_level_modules[index][MODULE_NAME] + "' is '" +
+                  latest_package + "'.")
+        except Exception as e:
+            print("[Error] Failed to get latest timestamped version for module '" + current_level_modules[index][MODULE_NAME] + "'", e)
+            current_level_modules[index][MODULE_STATUS] = MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED
         current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
-        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
         status_completed_modules += 1
 
 
-def update_module(idx):
+def update_module(idx: int):
     repo = github.get_repo(ORGANIZATION + "/" + current_level_modules[idx][MODULE_NAME])
     properties_file = repo.get_contents(PROPERTIES_FILE)
 
@@ -396,7 +417,7 @@ def commit_changes(repo, updated_file, module_name):
             repo.get_git_ref("heads/" + branch).delete()
 
 
-def create_pull_request(idx, repo):
+def create_pull_request(idx: int, repo):
     pulls = repo.get_pulls(state=OPEN, head=LANG_VERSION_UPDATE_BRANCH)
     pr_exists = False
     created_pr = ""
