@@ -45,7 +45,7 @@ def sort_module_name_list():
         print('Failed to read module_list.json', e)
         sys.exit()
 
-    name_list['modules'].sort(key=lambda x: x.split('-')[-1])
+    name_list['modules'].sort(key=lambda x: x["name"].split('-')[-1])
 
     try:
         with open(MODULE_LIST_FILE, 'w') as json_file:
@@ -132,7 +132,7 @@ def calculate_levels(module_name_list, module_details_json):
 
     # Module names are used to create the nodes and the level attribute of the node is initialized to 0
     for module in module_name_list:
-        G.add_node(module, level=1)
+        G.add_node(module["name"], level=1)
 
     # Edges are created considering the dependents of each module
     for module in module_details_json['modules']:
@@ -189,12 +189,15 @@ def initialize_module_details(module_name_list):
     module_details_json = {'modules': []}
 
     for module_name in module_name_list:
-        version = get_version(module_name)
-        default_branch = get_default_branch(module_name)
+        version = get_version(module_name["name"])
+        default_branch = get_default_branch(module_name["name"])
+        default_artifact_id = module_name["name"].split("-")[-1] + "-ballerina"
         module_details_json['modules'].append({
-            'name': module_name,
+            'name': module_name["name"],
             'version': version,
             'level': 0,
+            'group_id': module_name.get("group_id", 'org.ballerinalang'),
+            'artifact_id': module_name.get("artifact_id", default_artifact_id),
             'default_branch': default_branch,
             'auto_merge': True,
             'dependents': []})
@@ -206,11 +209,11 @@ def initialize_module_details(module_name_list):
 # returns: module details JSON with updated dependent details
 def get_immediate_dependents(module_name_list, module_details_json):
     for module_name in module_name_list:
-        dependencies = get_dependencies(module_name)
+        dependencies = get_dependencies(module_name["name"])
         for module in module_details_json['modules']:
             if module['name'] in dependencies:
                 module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(
-                    module_name)
+                    module_name["name"])
 
     return module_details_json
 

@@ -1,51 +1,163 @@
 {
     "modules": [
-        "module-ballerina-auth",
-        "module-ballerinax-aws.lambda",
-        "module-ballerinax-azure.functions",
-        "module-ballerina-c2c",
-        "module-ballerina-cache",
-        "module-ballerinax-choreo",
-        "module-ballerina-crypto",
-        "module-ballerinax-datamapper",
-        "ballerina-distribution",
-        "module-ballerina-docker",
-        "module-ballerina-email",
-        "module-ballerina-file",
-        "module-ballerina-ftp",
-        "module-ballerina-graphql",
-        "module-ballerina-grpc",
-        "module-ballerina-http",
-        "module-ballerina-io",
-        "module-ballerinax-jaeger",
-        "module-ballerinax-java.jdbc",
-        "module-ballerina-jballerina.java.arrays",
-        "module-ballerina-jwt",
-        "module-ballerinax-kafka",
-        "module-ballerina-log",
-        "module-ballerina-mime",
-        "module-ballerinax-mysql",
-        "module-ballerinax-nats",
-        "module-ballerina-oauth2",
-        "ballerina-openapi",
-        "module-ballerina-os",
-        "module-ballerinax-prometheus",
-        "module-ballerinax-rabbitmq",
-        "module-ballerina-random",
-        "module-ballerina-regex",
-        "module-ballerina-sql",
-        "module-ballerinax-stan",
-        "module-ballerina-task",
-        "module-ballerina-tcp",
-        "module-ballerina-time",
-        "module-ballerinai-transaction",
-        "module-ballerina-udp",
-        "module-ballerina-url",
-        "module-ballerina-uuid",
-        "module-ballerina-websocket",
-        "module-ballerina-websub",
-        "module-ballerina-websubhub",
-        "module-ballerina-xmldata",
-        "module-ballerina-xslt"
+        {
+            "name": "module-ballerina-auth"
+        },
+        {
+            "name": "module-ballerinax-aws.lambda",
+            "group_id": "org.ballerinax.awslambda",
+            "artifact_id": "awslambda-extension-bala"
+        },
+        {
+            "name": "module-ballerinax-azure.functions",
+            "group_id": "org.ballerinax.azurefunctions",
+            "artifact_id": "azurefunctions-extension"
+        },
+        {
+            "name": "module-ballerina-c2c",
+            "group_id": "io.ballerina",
+            "artifact_id": "c2c-ballerina"
+        },
+        {
+            "name": "module-ballerina-cache"
+        },
+        {
+            "name": "module-ballerinax-choreo",
+            "group_id": "org.ballerinalang",
+            "artifact_id": "choreo-extension-ballerina"
+        },
+        {
+            "name": "module-ballerina-crypto"
+        },
+        {
+            "name": "module-ballerinax-datamapper",
+            "group_id": "org.ballerinax.datamapper",
+            "artifact_id": "datamapper-extension"
+        },
+        {
+            "name": "ballerina-distribution"
+        },
+        {
+            "name": "module-ballerina-docker",
+            "group_id": "org.ballerinax.docker",
+            "artifact_id": "docker-generator"
+        },
+        {
+            "name": "module-ballerina-email"
+        },
+        {
+            "name": "module-ballerina-file"
+        },
+        {
+            "name": "module-ballerina-ftp"
+        },
+        {
+            "name": "module-ballerina-graphql"
+        },
+        {
+            "name": "module-ballerina-grpc"
+        },
+        {
+            "name": "module-ballerina-http"
+        },
+        {
+            "name": "module-ballerina-io"
+        },
+        {
+            "name": "module-ballerinax-jaeger",
+            "group_id": "org.ballerinalang",
+            "artifact_id": "jaeger-extension-ballerina"
+        },
+        {
+            "name": "module-ballerinax-java.jdbc"
+        },
+        {
+            "name": "module-ballerina-jballerina.java.arrays"
+        },
+        {
+            "name": "module-ballerina-jwt"
+        },
+        {
+            "name": "module-ballerinax-kafka"
+        },
+        {
+            "name": "module-ballerina-log"
+        },
+        {
+            "name": "module-ballerina-mime"
+        },
+        {
+            "name": "module-ballerinax-mysql"
+        },
+        {
+            "name": "module-ballerinax-nats"
+        },
+        {
+            "name": "module-ballerina-oauth2"
+        },
+        {
+            "name": "ballerina-openapi",
+            "group_id": "org.ballerinalang",
+            "artifact_id": "module-ballerina-openapi"
+        },
+        {
+            "name": "module-ballerina-os"
+        },
+        {
+            "name": "module-ballerinax-prometheus",
+            "group_id": "org.ballerinalang",
+            "artifact_id": "prometheus-extension-ballerina"
+        },
+        {
+            "name": "module-ballerinax-rabbitmq"
+        },
+        {
+            "name": "module-ballerina-random"
+        },
+        {
+            "name": "module-ballerina-regex"
+        },
+        {
+            "name": "module-ballerina-sql"
+        },
+        {
+            "name": "module-ballerinax-stan"
+        },
+        {
+            "name": "module-ballerina-task"
+        },
+        {
+            "name": "module-ballerina-tcp"
+        },
+        {
+            "name": "module-ballerina-time"
+        },
+        {
+            "name": "module-ballerinai-transaction"
+        },
+        {
+            "name": "module-ballerina-udp"
+        },
+        {
+            "name": "module-ballerina-url"
+        },
+        {
+            "name": "module-ballerina-uuid"
+        },
+        {
+            "name": "module-ballerina-websocket"
+        },
+        {
+            "name": "module-ballerina-websub"
+        },
+        {
+            "name": "module-ballerina-websubhub"
+        },
+        {
+            "name": "module-ballerina-xmldata"
+        },
+        {
+            "name": "module-ballerina-xslt"
+        }
     ]
 }
