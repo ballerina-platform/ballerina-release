@@ -19,6 +19,7 @@ reviewerPackagePAT = os.environ["reviewerPackagePAT"]
 
 github = Github(packagePAT)
 
+
 def main():
     module_name_list = sort_module_name_list()
     print('Fetched module name list')
@@ -34,27 +35,29 @@ def main():
     commit_json_file()
     print("Updated module details in 'ballerina-release' successfully")
 
+
 # Sorts the ballerina extension module list in ascending order
 def sort_module_name_list():
     try:
         with open(MODULE_LIST_FILE) as f:
             name_list = json.load(f)
-    except:
-        print('Failed to read module_list.json')
+    except Exception as e:
+        print('Failed to read module_list.json', e)
         sys.exit()
 
     name_list['modules'].sort(key=lambda x: x.split('-')[-1])
-    
+
     try:
         with open(MODULE_LIST_FILE, 'w') as json_file:
-            json_file.seek(0) 
+            json_file.seek(0)
             json.dump(name_list, json_file, indent=4)
             json_file.truncate()
-    except:
-        print('Failed to write to file module_list.json')
+    except Exception as e:
+        print('Failed to write to file module_list.json', e)
         sys.exit()
-        
-    return name_list['modules'] 
+
+    return name_list['modules']
+
 
 # Gets dependencies of ballerina extension module from build.gradle file in module repository
 # returns: list of dependencies
@@ -74,6 +77,7 @@ def get_dependencies(module_name):
 
     return dependencies
 
+
 # Gets the version of the ballerina extension module from gradle.properties file in module repository
 # returns: current version of the module
 def get_version(module_name):
@@ -89,7 +93,8 @@ def get_version(module_name):
     if version == '':
         print('Version not defined for ' + module_name)
 
-    return version 
+    return version
+
 
 # Gets the default branch of the extension repository
 # returns: default branch name
@@ -100,6 +105,7 @@ def get_default_branch(module_name):
     except Exception as e:
         print('Failed to get repo details for ' + module_name, e)
         return ""
+
 
 # Calculates the longest path between source and destination modules and replaces dependents that have intermediates
 def remove_modules_in_intermediate_paths(G, source, destination, successors, module_details_json):
@@ -113,14 +119,15 @@ def remove_modules_in_intermediate_paths(G, source, destination, successors, mod
                         module['dependents'].remove(destination)
                     break
 
+
 # Generates a directed graph using the dependencies of the modules
 # Level of each module is calculated by traversing the graph 
 # Returns a json string with updated level of each module
 def calculate_levels(module_name_list, module_details_json):
     try:
         G = nx.DiGraph()
-    except:
-        print('Error generating graph')
+    except Exception as e:
+        print('Error generating graph', e)
         sys.exit()
 
     # Module names are used to create the nodes and the level attribute of the node is initialized to 0
@@ -150,7 +157,7 @@ def calculate_levels(module_name_list, module_details_json):
             successors = []
             for i in G.successors(node):
                 successors.append(i)
-            for successor in successors:        
+            for successor in successors:
                 remove_modules_in_intermediate_paths(G, node, successor, successors, module_details_json)
                 G.nodes[successor]['level'] = level
                 if successor not in temp:
@@ -163,34 +170,37 @@ def calculate_levels(module_name_list, module_details_json):
 
     return module_details_json
 
+
 # Updates the extensions.JSON file with dependents of each standard library module
 def update_json_file(updated_json):
     try:
         with open(EXTENSIONS_FILE, 'w') as json_file:
-            json_file.seek(0) 
+            json_file.seek(0)
             json.dump(updated_json, json_file, indent=4)
             json_file.truncate()
-    except:
-        print('Failed to write to extensions.json')
+    except Exception as e:
+        print('Failed to write to extensions.json', e)
         sys.exit()
+
 
 # Creates a JSON string to store module information
 # returns: JSON with module details
 def initialize_module_details(module_name_list):
-    module_details_json = {'modules':[]}
+    module_details_json = {'modules': []}
 
     for module_name in module_name_list:
-        version = get_version(module_name)		
-        default_branch = get_default_branch(module_name)			
+        version = get_version(module_name)
+        default_branch = get_default_branch(module_name)
         module_details_json['modules'].append({
-            'name': module_name, 
-            'version':version,
+            'name': module_name,
+            'version': version,
             'level': 0,
             'default_branch': default_branch,
             'auto_merge': True,
-            'dependents': [] })
-# TODO: Add transitive dependencies
+            'dependents': []})
+    # TODO: Add transitive dependencies
     return module_details_json
+
 
 # Gets all the dependents of each module to generate the dependency graph
 # returns: module details JSON with updated dependent details
@@ -199,9 +209,11 @@ def get_immediate_dependents(module_name_list, module_details_json):
         dependencies = get_dependencies(module_name)
         for module in module_details_json['modules']:
             if module['name'] in dependencies:
-                module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(module_name)
-                    
+                module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(
+                    module_name)
+
     return module_details_json
+
 
 def commit_json_file():
     author = InputGitAuthor(packageUser, packageEmail)
@@ -211,23 +223,23 @@ def commit_json_file():
     remote_file = ""
     try:
         contents = repo.get_contents("dependabot")
-        while len(contents)>0:
-          file_content = contents.pop(0)
-          if file_content.type == 'dir':
-            contents.extend(repo.get_contents(file_content.path))
-          else :
-            if file_content.path == EXTENSIONS_FILE:
-                remote_file = file_content
-                break
+        while len(contents) > 0:
+            file_content = contents.pop(0)
+            if file_content.type == 'dir':
+                contents.extend(repo.get_contents(file_content.path))
+            else:
+                if file_content.path == EXTENSIONS_FILE:
+                    remote_file = file_content
+                    break
     except Exception as e:
-        print ("Error while accessing remote extensions.json", e)
+        print("Error while accessing remote extensions.json", e)
         sys.exit(1)
 
     updated_file = open(EXTENSIONS_FILE, 'r').read()
     remote_file_contents = remote_file.decoded_content.decode("utf-8")
 
-    if (updated_file == remote_file_contents):
-        print ("No changes to extensions.json file")
+    if updated_file == remote_file_contents:
+        print("No changes to extensions.json file")
     else:
         try:
             base = repo.get_branch(repo.default_branch)
@@ -235,7 +247,7 @@ def commit_json_file():
             try:
                 ref = f"refs/heads/" + branch
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            except :
+            except:
                 print("[Info] Unmerged update branch existed in 'ballerina-release'")
                 branch = EXTENSIONS_UPDATE_BRANCH + "_update_tmp"
                 ref = f"refs/heads/" + branch
@@ -243,7 +255,7 @@ def commit_json_file():
                     repo.create_git_ref(ref=ref, sha=base.commit.sha)
                 except GithubException as e:
                     print("[Info] deleting update tmp branch existed in 'ballerina-release'")
-                    if e.status == 422: # already exist
+                    if e.status == 422:  # already exist
                         repo.get_git_ref("heads/" + branch).delete()
                         repo.create_git_ref(ref=ref, sha=base.commit.sha)
             repo.update_file(
@@ -260,18 +272,18 @@ def commit_json_file():
                 repo.get_git_ref("heads/" + branch).delete()
 
         except Exception as e:
-            print ("Error while committing extensions.json", e)
+            print("Error while committing extensions.json", e)
 
         created_pr = ""
         try:
             created_pr = repo.create_pull(
-                title= "[Automated] Update Extensions Dependencies",
-                body= "Update dependencies in extensions.json",
-                head= EXTENSIONS_UPDATE_BRANCH,
-                base= "master"
+                title="[Automated] Update Extensions Dependencies",
+                body="Update dependencies in extensions.json",
+                head=EXTENSIONS_UPDATE_BRANCH,
+                base="master"
             )
         except Exception as e:
-            print ("Error occurred while creating pull request updating dependencies.", e)
+            print("Error occurred while creating pull request updating dependencies.", e)
             sys.exit(1)
 
         # To stop intermittent failures due to API sync
@@ -282,13 +294,14 @@ def commit_json_file():
         pr = repo.get_pull(created_pr.number)
         try:
             pr.create_review(event="APPROVE")
-        except:
-            print ("Error occurred while approving Update Extensions Dependencies PR", e)
+        except Exception as e:
+            print("Error occurred while approving Update Extensions Dependencies PR", e)
             sys.exit(1)
 
         try:
             created_pr.merge()
-        except:
-            print ("Error occurred while merging dependency PR for module 'ballerina-release'", e)
+        except Exception as e:
+            print("Error occurred while merging dependency PR for module 'ballerina-release'", e)
+
 
 main()
