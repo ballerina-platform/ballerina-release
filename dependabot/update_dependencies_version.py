@@ -332,7 +332,7 @@ def update_module(idx: int, current_level):
     properties_file = repo.get_contents(PROPERTIES_FILE)
 
     properties_file = properties_file.decoded_content.decode(ENCODING)
-    update, updated_properties_file = get_updated_properties_file(current_level_modules[idx][MODULE_NAME],
+    update, updated_properties_file = get_updated_properties_file(current_level_modules[idx][MODULE_NAME], current_level,
                                                                   properties_file)
     if update:
         commit_changes(repo, updated_properties_file, current_level_modules[idx][MODULE_NAME])
