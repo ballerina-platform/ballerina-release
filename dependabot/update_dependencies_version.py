@@ -438,17 +438,16 @@ def create_pull_request(idx: int, repo):
 
     sha_of_lang = lang_version.split("-")[-1]
 
-    for pull in pulls:
-        if pull.head.ref == LANG_VERSION_UPDATE_BRANCH:
-            pr_exists = True
-            created_pr = pull
-            pull.edit(
-                title=pull.title.rsplit("-", 1)[0] + "-" + sha_of_lang + ")",
-                body=pull.body.rsplit("-", 1)[0] + "-" + sha_of_lang + "` and relevant extensions."
-            )
-            print("[Info] Automated version bump PR found for module '" + current_level_modules[idx][MODULE_NAME] +
-                  "'. PR: " + pull.html_url)
-            break
+    if len(pulls) > 0:
+        pull = pulls[0]
+        pr_exists = True
+        created_pr = pull
+        pull.edit(
+            title=pull.title.rsplit("-", 1)[0] + "-" + sha_of_lang + ")",
+            body=pull.body.rsplit("-", 1)[0] + "-" + sha_of_lang + "` and relevant extensions."
+        )
+        print("[Info] Automated version bump PR found for module '" + current_level_modules[idx][MODULE_NAME] +
+              "'. PR: " + pull.html_url)
 
     if not pr_exists:
         try:
