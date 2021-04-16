@@ -277,7 +277,7 @@ def check_pending_build_checks(index: int):
     pending = False
     repo = github.get_repo(ORGANIZATION + "/" + current_level_modules[index][MODULE_NAME])
 
-    failed_build_checks = []
+    failed_build_name, failed_build_html = [], []
     if current_level_modules[index][MODULE_CREATED_PR] is not None:
         pull_request = repo.get_pull(current_level_modules[index][MODULE_CREATED_PR].number)
         sha = pull_request.merge_commit_sha
@@ -290,11 +290,8 @@ def check_pending_build_checks(index: int):
                 elif build_check.conclusion == "success":
                     continue
                 else:
-                    failed_build_checks = {
-                        "name": build_check.name,
-                        "html_url": build_check.html_url
-                    }
-                    failed_build_checks.append(failed_build_checks)
+                    failed_build_name.append(build_check.name)
+                    failed_build_html.append(build_check.html_url)
                     passing = False
         if not pending:
             if passing:
@@ -304,9 +301,8 @@ def check_pending_build_checks(index: int):
                 current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_FAILURE
                 module_name = current_level_modules[index][MODULE_NAME]
                 print("[Error] Dependency bump PR merge build checks have failed for '" + module_name + "'")
-                for check in failed_build_checks:
-                    print("[" + module_name + "] Build check '" + check["name"] + "' failed for " + check[
-                        "html_url"])
+                for name, html_url in failed_build_name, failed_build_html:
+                    print("[" + module_name + "] Build check '" + name + "' failed for " + html_url)
                 status_completed_modules += 1
     else:
         # Already successful and merged
