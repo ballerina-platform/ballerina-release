@@ -434,7 +434,7 @@ def create_pull_request(idx: int, repo):
 
     sha_of_lang = lang_version.split("-")[-1]
 
-    if len(pulls) > 0:
+    if pulls.totalCount > 0:
         pull = pulls[0]
         pr_exists = True
         created_pr = pull
