@@ -376,9 +376,13 @@ def get_updated_properties_file(module_name, current_level, properties_file):
 
             for possible_dependency in possible_dependency_modules:
                 if line.startswith(possible_dependency["version_key"]):
-                    updated_properties_file += possible_dependency["version_key"] + "=" + possible_dependency[MODULE_TIMESTAMPED_VERSION] + "\n"
+                    updated_line = possible_dependency["version_key"] + "=" + possible_dependency[MODULE_TIMESTAMPED_VERSION] + "\n"
+                    updated_properties_file += updated_line
                     key_found = True
-                    update = True
+                    if line != updated_line:
+                        update = True
+                    else:
+                        update = False
                     break
             if not key_found:
                 updated_properties_file += line + "\n"
