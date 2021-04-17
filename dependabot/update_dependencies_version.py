@@ -37,6 +37,7 @@ MODULE_STATUS_COMPLETED = "completed"
 MODULE_CONCLUSION = "conclusion"
 MODULE_CONCLUSION_TIMED_OUT = "timed_out"
 MODULE_CONCLUSION_PR_PENDING = "pr_build_pending"
+MODULE_CONCLUSION_PR_MERGED = "pr_build_pending"
 MODULE_CONCLUSION_PR_CHECK_FAILURE = "pr_check_failure"
 MODULE_CONCLUSION_PR_MERGE_FAILURE = "merge_failure"
 MODULE_CONCLUSION_BUILD_PENDING = "build_pending"
@@ -56,8 +57,9 @@ PROPERTIES_FILE = "gradle.properties"
 SLEEP_INTERVAL = 30  # 30s
 MAX_WAIT_CYCLES = 120
 
-overrideBallerinaVersion = sys.argv[1]
-autoMergePRs = sys.argv[2]
+retriggerDependencyBump = sys.argv[1]
+overrideBallerinaVersion = sys.argv[2]
+autoMergePRs = sys.argv[3]
 
 github = Github(packagePAT)
 all_modules = []
@@ -214,7 +216,7 @@ def check_pending_pr_checks(index: int):
     repo = github.get_repo(ORGANIZATION + "/" + current_level_modules[index][MODULE_NAME])
 
     failed_pr_checks = []
-    if current_level_modules[index][MODULE_CREATED_PR] is not None:
+    if current_level_modules[index][MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_PENDING:
         pull_request = repo.get_pull(current_level_modules[index][MODULE_CREATED_PR].number)
         sha = pull_request.head.sha
         for pr_check in repo.get_commit(sha=sha).get_check_runs():
@@ -264,7 +266,7 @@ def check_pending_pr_checks(index: int):
                         "html_url"])
                 status_completed_modules += 1
     else:
-        # Already successful and merged
+        # Already successful and merged but pr cannot be identified
         current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
         current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
 
@@ -276,11 +278,11 @@ def check_pending_build_checks(index: int):
     passing = True
     pending = False
     repo = github.get_repo(ORGANIZATION + "/" + current_level_modules[index][MODULE_NAME])
+    pull_request = repo.get_pull(current_level_modules[index][MODULE_CREATED_PR].number)
+    sha = pull_request.merge_commit_sha
 
     failed_build_name, failed_build_html = [], []
-    if current_level_modules[index][MODULE_CREATED_PR] is not None:
-        pull_request = repo.get_pull(current_level_modules[index][MODULE_CREATED_PR].number)
-        sha = pull_request.merge_commit_sha
+    if current_level_modules[index][MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_PENDING:
         for build_check in repo.get_commit(sha=sha).get_check_runs():
             # Ignore codecov checks temporarily due to bug
             if not build_check.name.startswith("codecov"):
@@ -313,7 +315,16 @@ def check_pending_build_checks(index: int):
             packages_list_string = open_url(
                 "https://api.github.com/orgs/" + ORGANIZATION + "/packages/maven/" + current_level_modules[index]["group_id"] + "." +
                 current_level_modules[index]["artifact_id"] + "/versions").read()
-            latest_package = json.loads(packages_list_string)[0]["name"]
+            packages_list = json.loads(packages_list_string)
+            latest_package = packages_list[0]["name"]
+
+            if retriggerDependencyBump.lower() == "true":
+                for package in packages_list:
+                    sha_of_released_package = package["name"].split("-")[-1]
+                    if sha_of_released_package in sha:
+                        latest_package = package["name"]
+                        break
+
             current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
             current_level_modules[index][MODULE_TIMESTAMPED_VERSION] = latest_package
         except Exception as e:
@@ -335,8 +346,16 @@ def update_module(idx: int, current_level):
         create_pull_request(idx, repo)
     else:
         current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
-        current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_PENDING
+        current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_MERGED
         current_level_modules[idx][MODULE_CREATED_PR] = None
+
+        pulls = repo.get_pulls(state=OPEN)
+        sha_of_lang = lang_version.split("-")[-1]
+
+        for pull in pulls:
+            if sha_of_lang in pull.title:
+                current_level_modules[idx] = pull
+                break
 
 
 def get_updated_properties_file(module_name, current_level, properties_file):
@@ -482,7 +501,6 @@ def create_pull_request(idx: int, repo):
                 print("[Error] Error occurred while approving dependency PR for module '" + current_level_modules[idx][
                     MODULE_NAME] + "'",
                       e)
-                sys.exit(1)
 
     current_level_modules[idx][MODULE_CREATED_PR] = created_pr
     current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
