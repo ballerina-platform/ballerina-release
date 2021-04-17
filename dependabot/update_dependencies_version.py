@@ -428,25 +428,23 @@ def commit_changes(repo, updated_file, module_name):
 
 
 def create_pull_request(idx: int, repo):
-    pulls = repo.get_pulls(
-            state=OPEN,
-            head="branch:" + LANG_VERSION_UPDATE_BRANCH
-    )
+    pulls = repo.get_pulls(state=OPEN)
     pr_exists = False
     created_pr = ""
 
     sha_of_lang = lang_version.split("-")[-1]
 
     for pull in pulls:
-        pr_exists = True
-        created_pr = pull
-        pull.edit(
-            title=pull.title.rsplit("-", 1)[0] + "-" + sha_of_lang + ")",
-            body=pull.body.rsplit("-", 1)[0] + "-" + sha_of_lang + "` and relevant extensions."
-        )
-        print("[Info] Automated version bump PR found for module '" + current_level_modules[idx][MODULE_NAME] +
-              "'. PR: " + pull.html_url)
-        break
+        if pull.head.ref == LANG_VERSION_UPDATE_BRANCH:
+            pr_exists = True
+            created_pr = pull
+            pull.edit(
+                title=pull.title.rsplit("-", 1)[0] + "-" + sha_of_lang + ")",
+                body=pull.body.rsplit("-", 1)[0] + "-" + sha_of_lang + "` and relevant extensions."
+            )
+            print("[Info] Automated version bump PR found for module '" + current_level_modules[idx][MODULE_NAME] +
+                  "'. PR: " + pull.html_url)
+            break
 
     if not pr_exists:
         try:
