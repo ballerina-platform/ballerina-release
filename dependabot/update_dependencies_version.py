@@ -392,7 +392,7 @@ def get_updated_properties_file(module_name, current_level, properties_file):
             if len(split_dependency_version) > 3:
                 processed_dependency_version = split_dependency_version[2] + split_dependency_version[3]
             else:
-                processed_dependency_version = split_dependency_version[:-1]
+                processed_dependency_version = "".join(split_dependency_version[:-1])
 
             for possible_dependency in possible_dependency_modules:
                 if line.startswith(possible_dependency["version_key"]):
