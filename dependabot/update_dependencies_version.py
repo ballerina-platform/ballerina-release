@@ -411,8 +411,8 @@ def get_updated_properties_file(module_name, current_level, properties_file):
                         updated_properties_file += updated_line + "\n"
                         if line != updated_line:
                             update = True
-                key_found = True
-                break
+                    key_found = True
+                    break
             if not key_found:
                 updated_properties_file += line + "\n"
 
