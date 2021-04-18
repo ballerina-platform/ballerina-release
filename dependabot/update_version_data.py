@@ -191,13 +191,19 @@ def initialize_module_details(module_name_list):
     for module_name in module_name_list:
         version = get_version(module_name["name"])
         default_branch = get_default_branch(module_name["name"])
-        default_artifact_id = module_name["name"].split("-")[-1] + "-ballerina"
+
+        artifact_name = module_name["name"].split("-")[-1]
+
+        default_artifact_id = artifact_name + "-ballerina"
+        default_version_key = "stdlib" + artifact_name.capitalize() + 'Version'
+
         module_details_json['modules'].append({
             'name': module_name["name"],
             'version': version,
             'level': 0,
             'group_id': module_name.get("group_id", 'org.ballerinalang'),
             'artifact_id': module_name.get("artifact_id", default_artifact_id),
+            'version_key': module_name.get("version_key", default_version_key),
             'default_branch': default_branch,
             'auto_merge': True,
             'dependents': []})

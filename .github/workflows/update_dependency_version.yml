@@ -3,6 +3,10 @@ name: Update Dependency Version in Pipeline
 on:
   workflow_dispatch:
     inputs:
+#      isRetrigger:
+#        description: 'Re-trigger a failed dependency bump workflow'
+#        required: false
+#        default: 'false'
       ballerinaVersion:
         description: 'Ballerina Version (Optional)'
         required: false
@@ -34,7 +38,7 @@ jobs:
 
       -   name: Update Ballerina Language Version
           run: |
-            python dependabot/update_dependencies_version.py "${{ github.event.inputs.ballerinaVersion }}" "${{ github.event.inputs.autoMergePRs }}"
+            python dependabot/update_dependencies_version.py "false" "${{ github.event.inputs.ballerinaVersion }}" "${{ github.event.inputs.autoMergePRs }}"
           env:
             packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
             packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
