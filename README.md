@@ -1,2 +1,2 @@
 # ballerina-release
-Ballerina release scripts
+This contains the Ballerina release scripts and release notes.
