@@ -28,7 +28,8 @@
             "name": "module-ballerinax-choreo",
             "group_id": "org.ballerinalang",
             "artifact_id": "choreo-extension-ballerina",
-            "version_key": "observeExtChoreoVersion"
+            "version_key": "observeExtChoreoVersion",
+            "auto_merge": false
         },
         {
             "name": "module-ballerina-crypto"
@@ -73,7 +74,8 @@
             "name": "module-ballerinax-jaeger",
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
-            "version_key": "observeExtJaegerVersion"
+            "version_key": "observeExtJaegerVersion",
+            "auto_merge": false
         },
         {
             "name": "module-ballerinax-java.jdbc",
@@ -118,7 +120,8 @@
             "name": "module-ballerinax-prometheus",
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
-            "version_key": "observeExtPrometheusVersion"
+            "version_key": "observeExtPrometheusVersion",
+            "auto_merge": false
         },
         {
             "name": "module-ballerinax-rabbitmq"
