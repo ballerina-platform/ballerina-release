@@ -298,7 +298,7 @@ def check_pending_build_checks(index: int):
                 current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_FAILURE
                 module_name = current_level_modules[index][MODULE_NAME]
                 print("[Error] Dependency bump PR merge build checks have failed for '" + module_name + "'")
-                for name, html_url in failed_build_name, failed_build_html:
+                for name, html_url in zip(failed_build_name, failed_build_html):
                     print("[" + module_name + "] Build check '" + name + "' failed for " + html_url)
                 status_completed_modules += 1
     else:
