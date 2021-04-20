@@ -69,7 +69,7 @@ def get_dependencies(module_name):
     dependencies = []
 
     for line in data.splitlines():
-        if 'ballerina-platform/module' in line:
+        if 'https://maven.pkg.github.com/ballerina-platform' in line:
             module = line.split('/')[-1][:-1]
             if module == module_name:
                 continue

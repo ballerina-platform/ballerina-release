@@ -140,7 +140,9 @@
             "version_key": "dataMapperVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-log",
@@ -472,7 +474,9 @@
             "version_key": "openapiVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerinax-prometheus",
