@@ -88,7 +88,7 @@ xml:Element e = xml `<elem attr="a&amp;b" />`;
 - The `lang.stream:reduce()` lang library function will only return the reduced value or an error (if the completion type includes a subtype of `error`). It no longer returns a nil `()` value. The return type of `lang.stream:reduce()` has been updated accordingly.
 - An issue where the complement of numeric literals returned incorrect values has been fixed.
 - An issue that allowed negation with numeric literals has been fixed. Negation can be used only with `boolean` values.
-- Subtyping rules have been fixed to consider the `never` type, which denotes an empty set of values, as a subtype of any type `T`.
+- Subtyping rules have been fixed to consider the `never` type, which denotes an empty set of values as a subtype of any type `T`.
 - Relational expressions with lists have been fixed to consider the relative order of lists with different sizes.
 - An issue where a non-error value did not match the wildcard match pattern at runtime when the matched expression’s static type included error has been fixed.
 - An issue with Isolation analysis where transfer out validation did not happen when `self` was used in a return statement of an isolated object method has been fixed.
