@@ -47,7 +47,191 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 
 #### New Features
 
+###### Support for configure variables with records of records, record arrays and multi dimensional array types with Config.toml.
+
+**Record of records**
+
+```ballerina
+public type Person readonly & record {
+     string name;
+     int id;
+     Address address;
+};
+
+public type Address  record {
+    string city;
+    County country;
+};
+
+public type County  record {
+    string name;
+};
+
+
+configurable Person person = ?;
+
+```
+
+In  `Config.toml`
+
+```toml
+[person]
+name = "waruna"
+id = 10
+address.city="Colombo"
+address.country.name="Sri Lanka"
+
+```
+
+**Record Arrays**
+
+```ballerina
+configurable Person[] & readonly personArray = ?;
+
+```
+In  `Config.toml`
+
+```toml
+[[personArray]]
+name = "manu"
+id = 11
+address.city="New York"
+address.country.name="USA"
+
+[[personArray]]
+name = "hinduja"
+id = 12
+address.city="London"
+address.country.name="UK"
+```
+
+**Multidimensional Arrays**
+
+```ballerina
+configurable int[][] & readonly int2DArr = ?;
+```
+In  `Config.toml`
+
+```toml
+int2DArr = [[1,2],[3,4]]
+```
+
+###### Support for optional module name specification in TOML syntax of configurable variables.
+
+When providing values for the configurable variables, the  module information can be provided in `Config.toml` according to the following specifications.
+
+
+* The org-name and module-name are optional for configurable variables defined in the root module of the program.
+* The org-name is optional only for configurable variables defined in the root package of the program.
+For example, consider a package with organization name `myOrg` and root module name `main`. 
+
+In `main.bal`
+
+```ballerina
+import main.foo;
+import importedOrg/mod;
+configurable string mainVar = ?;
+public function main() {
+// use imported modules
+}
+```
+
+In `foo.bal` from module `main.foo`
+
+
+```ballerina
+configurable string fooVar = ?;
+```
+In `mod.bal` which is from another package with organization name `importedOrg` and module name `mod`, 
+
+```ballerina
+configurable string modVar = ?;
+```
+
+The values can be provided in `Config.toml` as below.
+```toml
+mainVar = "variable from root module"
+[main.foo]
+fooVar = "variable from non-root module of the root package"
+[importedOrg.mod]
+modVar = "variable from non-root package"
+```
 #### Improvements
+###### Improved command line argument parsing
+
+The command line arguments are now parsed into:
+options
+option arguments
+operands
+
+**Options**
+
+Included record parameter as the last parameter specify options.
+
+```ballerina
+public type Person record {
+	string name;
+	float? score = 0;
+};
+
+public function main(*Person person) {
+	// Process data here
+}
+```
+
+```
+bal run file.bal -- --name riyafa --score=99.9
+```
+In the above example `name` and `score` are options. `riyafa` and `99.9` are option arguments.
+
+**Operands**
+
+Other parameters that are not included records specify operands; for these parameters, the position is significant and the name is not.
+
+```ballerina
+public type Person record {
+	string name;
+	float? score = 0;
+};
+public function main(int efficiency, string character, *Person person) {
+	// Process data here
+}
+```
+
+```
+bal run file.bal -- --name riyafa  100 --score=99.9 Good
+```
+
+This example which is the same as above includes `100` which gets mapped to `efficiency` and `Good` which gets mapped to `character` as operands. 
+
+Both operand and option parameters can be of types int, float, decimal, string, array of any of these types and union of any of these types with nil. 
+Additionally option parameters can be of types `boolean`, `boolean[]` or `boolean?`.
+
+**Operand arrays**
+
+Note that if there is an operand parameter of type O[], then it cannot be followed by parameters of type O[], O? and O x = d. Here O stands for a type that is a subtype of one of string,float or decimal. An array value is specified by repeatedly specifying the option parameter.
+
+If `scores` is an int array then,
+
+```ballerina
+bal run file.bal -- --scores=10 --scores=20 --scores=30
+```
+This produces the following int array
+```
+[10, 20, 30]
+```
+
+**Option boolean parameters**
+
+When there’s an option of `boolean`, `boolean[]` or `boolean?` type it does not take an option argument. The presence of the option is considered to be `true` and the absence of it is considered to be false. 
+In the following example suppose `results` is a boolean array.
+```
+bal run file.bal -- --results --results --results
+```
+This produces the following boolean array
+```
+[true, true, true]
+```
 
 #### Bug Fixes
 
