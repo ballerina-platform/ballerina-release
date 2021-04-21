@@ -76,7 +76,7 @@ In XML template literals, character references within XML attribute values are n
 xml:Element e = xml `<elem attr="a&amp;b" />`;
 ```
 
-##### Breaking Changes
+#### Breaking Changes
 
 - The `lang.array:lastIndexOf` and `lang.array:indexOf` lang library functions can only be used with arrays of which the element types are subtypes of the `anydata` type.
 - A compilation error occurs if the field visibility qualifiers in the including type and the included type with object type inclusion are not the same.
