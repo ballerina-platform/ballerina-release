@@ -58,6 +58,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 #### New Features
 
 #### Improvements
+`jballerina.java` Package
+
+Improved the `cast` function to determine return type based on the inferred type.
+```bal
+FileInputStream|error obj = java:cast(inputStream);
+```
 
 #### Bug Fixes
 
