@@ -414,7 +414,7 @@ def commit_changes(repo, updated_file, module_name):
         repo.create_git_ref(ref=ref, sha=base.commit.sha)
     except:
         print("[Info] Unmerged update branch existed in module: '" + module_name + "'")
-        branch = LANG_VERSION_UPDATE_BRANCH + "_update_tmp"
+        branch = LANG_VERSION_UPDATE_BRANCH + "_tmp"
         ref = f"refs/heads/" + branch
         try:
             repo.create_git_ref(ref=ref, sha=base.commit.sha)
