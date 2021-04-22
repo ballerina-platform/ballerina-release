@@ -78,7 +78,7 @@ FileInputStream|error obj2 = java:cast(inputStream); // The second argument is i
 - Added validation to check log levels in the `Config.toml` file.
 
 ##### SQL Package Updates
-If return types of the SQL time related data types are expected as records, then the type of those records are now validating and should be as follows, 
+If return types of the SQL time-related data types are expected as records, then the type of those records will be validated now and should be as follows.
 
 - DATE -> time:Date
 - TIME -> time:TimeOfDay
