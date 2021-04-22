@@ -41,8 +41,6 @@ PULL_REQUEST_BODY_PREFIX = 'Update ballerina lang version to `'
 PULL_REQUEST_TITLE = '[Automated] Update Dependencies (Ballerina Lang : '
 AUTO_MERGE_PULL_REQUEST_TITLE = '[AUTO MERGE] Update Dependencies (Ballerina Lang : '
 
-PROPERTIES_FILE = 'gradle.properties'
-
 SLEEP_INTERVAL = 30  # 30s
 MAX_WAIT_CYCLES = 120
 
@@ -347,7 +345,7 @@ def check_pending_build_checks(index: int):
 def update_module(idx: int, current_level):
     module = current_level_modules[idx]
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
-    properties_file = repo.get_contents(PROPERTIES_FILE)
+    properties_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
 
     properties_file = properties_file.decoded_content.decode(constants.ENCODING)
     update, updated_properties_file = get_updated_properties_file(module['name'], current_level, properties_file)
@@ -436,13 +434,13 @@ def commit_changes(repo, updated_file, module_name):
                 repo.get_git_ref("heads/" + branch).delete()
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
 
-    remote_file = repo.get_contents(PROPERTIES_FILE, ref=LANG_VERSION_UPDATE_BRANCH)
+    remote_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE, ref=LANG_VERSION_UPDATE_BRANCH)
     remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
 
     if remote_file_contents == updated_file:
         print('[Info] Branch with the lang version is already present.')
     else:
-        current_file = repo.get_contents(PROPERTIES_FILE, ref=branch)
+        current_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE, ref=branch)
         update = repo.update_file(
             current_file.path,
             COMMIT_MESSAGE_PREFIX,

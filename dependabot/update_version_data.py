@@ -73,7 +73,7 @@ def sort_module_name_list():
 # returns: list of dependencies
 def get_dependencies(module_name):
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module_name)
-    gradle_file = repo.get_contents('build.gradle')
+    gradle_file = repo.get_contents(constants.BUILD_GRADLE_FILE)
     data = gradle_file.decoded_content.decode(constants.ENCODING)
 
     dependencies = []
@@ -92,7 +92,7 @@ def get_dependencies(module_name):
 # returns: current version of the module
 def get_version(module_name):
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module_name)
-    properties_file = repo.get_contents('gradle.properties')
+    properties_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
     data = properties_file.decoded_content.decode(constants.ENCODING)
 
     version = ''
