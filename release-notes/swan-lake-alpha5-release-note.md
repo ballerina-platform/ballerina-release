@@ -59,6 +59,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 
 #### Improvements
 ##### `jballerina.java` Package
+- Dependently-typed `java:cast` Function
 
 The `java:cast` function is now a dependently-typed function. If the `typedesc` argument is not provided, it is inferred from the contextually-expected type.
 ```bal
