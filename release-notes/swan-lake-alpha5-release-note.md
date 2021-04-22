@@ -47,9 +47,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 
 #### New Features
 
-###### Support for configure variables with records of records, record arrays and multi dimensional array types with Config.toml.
 
-**Record of records**
+###### Support for configurable variables with records having fields of record types
 
 ```ballerina
 public type Person readonly & record {
@@ -72,7 +71,7 @@ configurable Person person = ?;
 
 ```
 
-In  `Config.toml`
+The  `Config.toml` would be as follows.
 
 ```toml
 [person]
@@ -83,13 +82,13 @@ address.country.name="Sri Lanka"
 
 ```
 
-**Record Arrays**
+###### Support for configurable variables with arrays having fields of record types
 
 ```ballerina
 configurable Person[] & readonly personArray = ?;
 
 ```
-In  `Config.toml`
+The  `Config.toml` would be as follows.
 
 ```toml
 [[personArray]]
@@ -105,27 +104,27 @@ address.city="London"
 address.country.name="UK"
 ```
 
-**Multidimensional Arrays**
+###### Support for configurable variables with multidimentional arrays
 
 ```ballerina
 configurable int[][] & readonly int2DArr = ?;
 ```
-In  `Config.toml`
+The  `Config.toml` would be as follows.
 
 ```toml
 int2DArr = [[1,2],[3,4]]
 ```
 
-###### Support for optional module name specification in TOML syntax of configurable variables.
+###### Support for optional module name in TOML syntax of configurable variables
 
-When providing values for the configurable variables, the  module information can be provided in `Config.toml` according to the following specifications.
+When providing values for the configurable variables, the module information should be provided in the `Config.toml` file according to the following specifications.
 
 
 * The org-name and module-name are optional for configurable variables defined in the root module of the program.
 * The org-name is optional only for configurable variables defined in the root package of the program.
-For example, consider a package with organization name `myOrg` and root module name `main`. 
+For example, consider a package with the organization name as `myOrg` and root module name as `main`. 
 
-In `main.bal`
+The  `main.bal` would be as follows.
 
 ```ballerina
 import main.foo;
@@ -136,19 +135,19 @@ public function main() {
 }
 ```
 
-In `foo.bal` from module `main.foo`
+The`foo.bal` file of the `main.foo` module will be as follows.
 
 
 ```ballerina
 configurable string fooVar = ?;
 ```
-In `mod.bal` which is from another package with organization name `importedOrg` and module name `mod`, 
+In the `mod.bal`, which is from another package with the organization name `importedOrg` and module name `mod`, 
 
 ```ballerina
 configurable string modVar = ?;
 ```
 
-The values can be provided in `Config.toml` as below.
+The values can be provided in `Config.toml` as follows.
 ```toml
 mainVar = "variable from root module"
 [main.foo]
@@ -157,16 +156,16 @@ fooVar = "variable from non-root module of the root package"
 modVar = "variable from non-root package"
 ```
 #### Improvements
-###### Improved command line argument parsing
+###### Improved Command-Line Argument Parsing
 
-The command line arguments are now parsed into:
-options
-option arguments
-operands
+The command-line arguments are now parsed into:
+- options
+- option arguments
+- operands
 
 **Options**
 
-Included record parameter as the last parameter specify options.
+Included record parameter as the last of the parameter specify options.
 
 ```ballerina
 public type Person record {
@@ -182,7 +181,7 @@ public function main(*Person person) {
 ```
 bal run file.bal -- --name riyafa --score=99.9
 ```
-In the above example `name` and `score` are options. `riyafa` and `99.9` are option arguments.
+In the above example, `name` and `score` are options. `riyafa` and `99.9` are arguments of the option.
 
 **Operands**
 
@@ -202,33 +201,33 @@ public function main(int efficiency, string character, *Person person) {
 bal run file.bal -- --name riyafa  100 --score=99.9 Good
 ```
 
-This example which is the same as above includes `100` which gets mapped to `efficiency` and `Good` which gets mapped to `character` as operands. 
+This example, which is the same as above includes `100`, which gets mapped to `efficiency`, and `Good`, which gets mapped to `character` as operands. 
 
 Both operand and option parameters can be of types int, float, decimal, string, array of any of these types and union of any of these types with nil. 
-Additionally option parameters can be of types `boolean`, `boolean[]` or `boolean?`.
+Additionally, option parameters can be of types `boolean`, `boolean[]`, or `boolean?`.
 
 **Operand arrays**
 
-Note that if there is an operand parameter of type O[], then it cannot be followed by parameters of type O[], O? and O x = d. Here O stands for a type that is a subtype of one of string,float or decimal. An array value is specified by repeatedly specifying the option parameter.
+>**Note:** If there is an operand parameter of type O[], then it cannot be followed by parameters of type O[], O?, and O x = d. Here O stands for a type that is a subtype of one of string, float, or decimal. An array value is specified by repeatedly specifying the `option` parameter.
 
-If `scores` is an int array then,
+If `scores` is an int array, then,
 
 ```ballerina
 bal run file.bal -- --scores=10 --scores=20 --scores=30
 ```
-This produces the following int array
+This produces the following int array.
 ```
 [10, 20, 30]
 ```
 
 **Option boolean parameters**
 
-When there’s an option of `boolean`, `boolean[]` or `boolean?` type it does not take an option argument. The presence of the option is considered to be `true` and the absence of it is considered to be false. 
-In the following example suppose `results` is a boolean array.
+When there’s an option of `boolean`, `boolean[]`, or `boolean?` type, it does not take an `option` argument. The presence of the option is considered to be `true` and the absence of it is considered to be false. 
+In the following example, suppose `results` is a boolean array.
 ```
 bal run file.bal -- --results --results --results
 ```
-This produces the following boolean array
+This produces the following boolean array.
 ```
 [true, true, true]
 ```
