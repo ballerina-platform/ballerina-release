@@ -305,7 +305,8 @@ def check_pending_build_checks(index: int):
         # Already successful and merged
         current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
 
-    if current_level_modules[index][MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_SUCCESS:
+    if (current_level_modules[index][MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_SUCCESS and
+            current_level_modules[index][MODULE_NAME] != "ballerina-distribution"):
         try:
             packages_list_string = open_url(
                 "https://api.github.com/orgs/" + ORGANIZATION + "/packages/maven/" + current_level_modules[index]["group_id"] + "." +
@@ -327,6 +328,9 @@ def check_pending_build_checks(index: int):
             current_level_modules[index][MODULE_STATUS] = MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED
         current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
         status_completed_modules += 1
+    else:
+        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
+        current_level_modules[index][MODULE_TIMESTAMPED_VERSION] = ""
 
 
 def update_module(idx: int, current_level):
