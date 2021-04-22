@@ -60,7 +60,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 #### Improvements
 ##### `jballerina.java` Package
 
-Improved the `cast` function to determine return type based on the inferred type.
+The `java:cast` function is now a dependently-typed function. If the `typedesc` argument is not provided, it is inferred from the contextually-expected type.
 ```bal
 FileInputStream|error obj1 = java:cast(inputStream, FileInputStream);
 FileInputStream|error obj2 = java:cast(inputStream); // The second argument is inferred to be `FileInputStream`.
