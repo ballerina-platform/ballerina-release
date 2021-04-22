@@ -74,7 +74,7 @@ FileInputStream|error obj2 = java:cast(inputStream); // The second argument is i
 
 ##### Log Package Updates
 
-- Changed the time format in log output to RFC3339
+- Changed the time format in the log output to RFC3339.
 - Added validation to check log levels in Config.toml file
 
 ##### Sql Package Updates
