@@ -61,6 +61,10 @@ retriggerDependencyBump = sys.argv[1]
 overrideBallerinaVersion = sys.argv[2]
 autoMergePRs = sys.argv[3]
 
+event_type = "workflow_dispatch"
+if len(sys.argv) > 3:
+    event_type = sys.argv[4]
+
 github = Github(packagePAT)
 
 extensions_file = {}
@@ -78,6 +82,9 @@ def main():
     lang_version = get_lang_version()
     print("Workflow started with Ballerina Lang version : " + lang_version)
     extensions_file = get_extensions_file()
+
+    if event_type == "schedule" and not extensions_file['auto_bump']:
+        return
 
     print("Start dependency bump to extensions packed in ballerina-distribution")
     all_modules = extensions_file[MODULES]

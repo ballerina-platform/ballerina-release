@@ -1,4 +1,5 @@
 {
+    "auto_bump": false,
     "modules": [
         {
             "name": "module-ballerina-auth"

@@ -10,7 +10,7 @@ BALLERINA_ORG_NAME = "ballerina-platform"
 MODULE_LIST_FILE = "dependabot/resources/module_list.json"
 EXTENSIONS_FILE = "dependabot/resources/extensions.json"
 
-EXTENSIONS_UPDATE_BRANCH = "extensions-update"
+EXTENSIONS_UPDATE_BRANCH = "extensions_update"
 
 packageUser = os.environ["packageUser"]
 packagePAT = os.environ["packagePAT"]
@@ -18,6 +18,8 @@ packageEmail = os.environ["packageEmail"]
 reviewerPackagePAT = os.environ["reviewerPackagePAT"]
 
 github = Github(packagePAT)
+
+auto_bump = False
 
 
 def main():
@@ -40,6 +42,8 @@ def main():
 
 # Sorts the ballerina extension module list in ascending order
 def sort_module_name_list():
+    global auto_bump
+
     try:
         with open(MODULE_LIST_FILE) as f:
             name_list = json.load(f)
@@ -61,6 +65,7 @@ def sort_module_name_list():
     name_list['modules'].append({
         "name": "ballerina-distribution"
     })
+    auto_bump = name_list['auto_bump']
 
     return name_list['modules']
 
@@ -192,7 +197,12 @@ def update_json_file(updated_json):
 # Creates a JSON string to store module information
 # returns: JSON with module details
 def initialize_module_details(module_name_list):
-    module_details_json = {'modules': []}
+    global auto_bump
+
+    module_details_json = {
+        'auto_bump': auto_bump,
+        'modules': []
+    }
 
     for module_name in module_name_list:
         version = get_version(module_name["name"])
@@ -285,7 +295,7 @@ def commit_json_file():
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
             except:
                 print("[Info] Unmerged update branch existed in 'ballerina-release'")
-                branch = EXTENSIONS_UPDATE_BRANCH + "_update_tmp"
+                branch = EXTENSIONS_UPDATE_BRANCH + "_tmp"
                 ref = f"refs/heads/" + branch
                 try:
                     repo.create_git_ref(ref=ref, sha=base.commit.sha)

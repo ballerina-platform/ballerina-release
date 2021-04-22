@@ -38,7 +38,10 @@ jobs:
 
       -   name: Update Ballerina Language Version
           run: |
-            python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" "${{ github.event.inputs.ballerinaVersion }}" "${{ github.event.inputs.autoMergePRs }}"
+            python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
+                                                              "${{ github.event.inputs.ballerinaVersion }}" \
+                                                              "${{ github.event.inputs.autoMergePRs }}" \
+                                                              "${{ env.GITHUB_EVENT_NAME }}"
           env:
             packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
             packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
