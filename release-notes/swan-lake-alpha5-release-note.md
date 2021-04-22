@@ -62,7 +62,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 
 Improved the `cast` function to determine return type based on the inferred type.
 ```bal
-FileInputStream|error obj = java:cast(inputStream);
+FileInputStream|error obj1 = java:cast(inputStream, FileInputStream);
+FileInputStream|error obj2 = java:cast(inputStream); // The second argument is inferred to be `FileInputStream`.
 ```
 
 #### Bug Fixes
