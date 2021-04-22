@@ -87,12 +87,12 @@ xml:Element e = xml `<elem attr="a&amp;b" />`;
 - `lang.value` functions cannot be called on expressions of type `object`. Function call syntax (`value:func(obj)`) can be used instead.
 - The `lang.stream:reduce()` lang library function will only return the reduced value or an error (if the completion type includes a subtype of `error`). It no longer returns a nil `()` value. The return type of `lang.stream:reduce()` has been updated accordingly.
 - An issue where the complement of numeric literals returned incorrect values has been fixed.
-- An issue that allowed negation with numeric literals has been fixed. Negation can be used only with `boolean` values.
+- Negation has been disallowed with numeric literals.
 - Subtyping rules have been fixed to consider the `never` type, which denotes an empty set of values as a subtype of any type `T`.
 - Relational expressions with lists have been fixed to consider the relative order of lists with different sizes.
-- An issue where a non-error value did not match the wildcard match pattern at runtime when the matched expression’s static type included error has been fixed.
-- An issue with Isolation analysis where transfer out validation did not happen when `self` was used in a return statement of an isolated object method has been fixed.
-- An issue where the method qualifiers were now being set for a `readonly` and `class` intersection has been fixed.
+- Any non-error value will match the wildcard match pattern at runtime even when the matched expression's static type includes a subtype of `error`.
+- An invalid attempt to transfer out a value via a return statement that uses `self` in an isolated object method results in a compilation error.
+- In a `readonly` and `class` intersection, the method qualifiers are now preserved from the class.
 
 #### Bug Fixes
 
