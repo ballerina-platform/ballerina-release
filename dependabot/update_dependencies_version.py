@@ -83,7 +83,9 @@ def main():
     print("Workflow started with Ballerina Lang version : " + lang_version)
     extensions_file = get_extensions_file()
 
+    print("Workflow invoked of type '" + event_type + "'")
     if event_type == "schedule" and not extensions_file['auto_bump']:
+        print("Schedule workflow invoked, exiting script as 'auto_bump' flag in modules_list.json is false.")
         return
 
     print("Start dependency bump to extensions packed in ballerina-distribution")
