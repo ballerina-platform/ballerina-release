@@ -48,7 +48,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 #### New Features
 
 
-###### Support for configurable variables with records having fields of record types
+###### Support for Configurable Variables with Records Having Fields of Record Types
 
 ```ballerina
 public type Person readonly & record {
@@ -82,7 +82,7 @@ address.country.name="Sri Lanka"
 
 ```
 
-###### Support for configurable variables with arrays having fields of record types
+###### Support for Configurable Variables with Arrays Having Fields of Record Types
 
 ```ballerina
 configurable Person[] & readonly personArray = ?;
@@ -104,7 +104,7 @@ address.city="London"
 address.country.name="UK"
 ```
 
-###### Support for configurable variables with multidimentional arrays
+###### Support for Configurable Variables with Multidimentional Arrays
 
 ```ballerina
 configurable int[][] & readonly int2DArr = ?;
@@ -115,7 +115,7 @@ The  `Config.toml` would be as follows.
 int2DArr = [[1,2],[3,4]]
 ```
 
-###### Support for optional module name in TOML syntax of configurable variables
+###### Support for Optional Module Name in TOML Syntax of Configurable Variables
 
 When providing values for the configurable variables, the module information should be provided in the `Config.toml` file according to the following specifications.
 
@@ -206,7 +206,7 @@ This example, which is the same as above includes `100`, which gets mapped to `e
 Both operand and option parameters can be of types int, float, decimal, string, array of any of these types and union of any of these types with nil. 
 Additionally, option parameters can be of types `boolean`, `boolean[]`, or `boolean?`.
 
-**Operand arrays**
+**Operand Arrays**
 
 >**Note:** If there is an operand parameter of type O[], then it cannot be followed by parameters of type O[], O?, and O x = d. Here O stands for a type that is a subtype of one of string, float, or decimal. An array value is specified by repeatedly specifying the `option` parameter.
 
@@ -220,7 +220,7 @@ This produces the following int array.
 [10, 20, 30]
 ```
 
-**Option boolean parameters**
+**Option Boolean Parameters**
 
 When there’s an option of `boolean`, `boolean[]`, or `boolean?` type, it does not take an `option` argument. The presence of the option is considered to be `true` and the absence of it is considered to be false. 
 In the following example, suppose `results` is a boolean array.
