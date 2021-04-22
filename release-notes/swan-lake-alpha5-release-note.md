@@ -295,6 +295,45 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 
 #### New Features
 
+##### GraphQL Package
+- Added named fragment support
+- Added enum support
+- Added map support
+- Added compiler plugin validation for GraphQL services
+
+##### Email Package
+Added compiler plugin validation for Email listener services.
+
+##### UDP Package
+Added compiler plugin validation for UDP services.
+
+##### HTTP Package
+Added compiler plugin validations for HTTP services.
+
+##### WebSocket Package
+Added compiler plugin validation for WebSocket services.
+
+##### Websub Package
+Added compiler plugin validation for WebSub subscriber services.
+
+##### WebsubHub Package
+Added compiler plugin validation for WebSubHub services.
+
+##### Kafka Package
+Added compiler plugin validations for Kafka services.
+
+##### RabbitMQ Package
+Added compiler plugin validations for RabbitMQ services.
+
+##### NATS Package
+Added compiler plugin validations for NATS services.
+
+##### STAN Package
+Added compiler plugin validations for STAN services.
+
+##### TCP Package
+Added compiler plugin validation for TCP services.
+
 #### Improvements
 ##### `jballerina.java` Package Updates
 - Dependently-typed `java:cast` Function
@@ -323,6 +362,9 @@ If return types of the SQL time-related data types are expected as records, then
 - TIME WITH TIME ZONE -> time:TimeOfDay
 - TIMESTAMP -> time:Civil
 - TIMESTAMP WITH TIME ZONE -> time:Civil
+
+##### WebsubHub Package
+Added the `websubhub:ServiceConfig` annotation.
 
 #### Bug Fixes
 ##### Log Package Bug fixes
