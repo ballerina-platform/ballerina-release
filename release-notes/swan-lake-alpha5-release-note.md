@@ -86,7 +86,7 @@ xml:Element e = xml `<elem attr="a&amp;b" />`;
 - The `lang.xml:getContent()` function no longer accepts `xml:Text` as an argument. The new `lang.xml:data()` function can be used instead.
 - `lang.value` functions cannot be called on expressions of type `object`. Function call syntax (`value:func(obj)`) can be used instead.
 - The `lang.stream:reduce()` lang library function will only return the reduced value or an error (if the completion type includes a subtype of `error`). It no longer returns a nil `()` value. The return type of `lang.stream:reduce()` has been updated accordingly.
-- An issue where the complement of numeric literals returned incorrect values has been fixed.
+- An issue causing the complement of numeric literals to return incorrect values has been fixed.
 - Negation has been disallowed with numeric literals.
 - Subtyping rules have been fixed to consider the `never` type, which denotes an empty set of values as a subtype of any type `T`.
 - Relational expressions with lists have been fixed to consider the relative order of lists with different sizes.
