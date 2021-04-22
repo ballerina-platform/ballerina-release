@@ -69,13 +69,13 @@ FileInputStream|error obj2 = java:cast(inputStream); // The second argument is i
 
 ##### File Package Updates
 
-The `path` field in the `ListenerConfig` has changed from optional to mandatory.
-Improved the compiler plugin validation for the service.
+- The `path` field in the `ListenerConfig` has changed from optional to mandatory.
+- Improved the compiler plugin validation for the service.
 
 ##### Log Package Updates
 
-Changed the time format in log output to RFC3339
-Added validation to check log levels in Config.toml file
+- Changed the time format in log output to RFC3339
+- Added validation to check log levels in Config.toml file
 
 ##### Sql Package Updates
 If return types of the SQL time related data types are expected as records, then the type of those records are now validating and should be as follows, 
