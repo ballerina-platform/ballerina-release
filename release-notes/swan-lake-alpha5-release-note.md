@@ -58,7 +58,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 #### New Features
 
 #### Improvements
-##### `jballerina.java` Package
+##### `jballerina.java` Package Updates
 - Dependently-typed `java:cast` Function
 
 The `java:cast` function is now a dependently-typed function. If the `typedesc` argument is not provided, it is inferred from the contextually-expected type.
@@ -67,7 +67,29 @@ FileInputStream|error obj1 = java:cast(inputStream, FileInputStream);
 FileInputStream|error obj2 = java:cast(inputStream); // The second argument is inferred to be `FileInputStream`.
 ```
 
+##### File Package Updates
+
+The `path` field in the `ListenerConfig` has changed from optional to mandatory.
+Improved the compiler plugin validation for the service.
+
+##### Log Package Updates
+
+Changed the time format in log output to RFC3339
+Added validation to check log levels in Config.toml file
+
+##### Sql Package Updates
+If return types of the SQL time related data types are expected as records, then the type of those records are now validating and should be as follows, 
+
+- DATE -> time:Date
+- TIME -> time:TimeOfDay
+- TIME WITH TIME ZONE -> time:TimeOfDay
+- TIMESTAMP -> time:Civil
+- TIMESTAMP WITH TIME ZONE -> time:Civil
+
 #### Bug Fixes
+##### Log Package Bug fixes
+
+Made log module escape characters properly (https://github.com/ballerina-platform/ballerina-standard-library/issues/1192).
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+Alpha5%22+label%3AType%2FBug).
 
