@@ -12,12 +12,12 @@ EXTENSIONS_FILE = "dependabot/resources/extensions.json"
 
 EXTENSIONS_UPDATE_BRANCH = "extensions_update"
 
-packageUser = os.environ["packageUser"]
-packagePAT = os.environ["packagePAT"]
-packageEmail = os.environ["packageEmail"]
-reviewerPackagePAT = os.environ["reviewerPackagePAT"]
+ballerina_bot_username = os.environ["BALLERINA_BOT_USERNAME"]
+ballerina_bot_token = os.environ["BALLERINA_BOT_TOKEN"]
+ballerina_bot_email = os.environ["BALLERINA_BOT_EMAIL"]
+ballerina_reviewer_bot_token = os.environ["BALLERINA_REVIEWER_BOT_TOKEN"]
 
-github = Github(packagePAT)
+github = Github(ballerina_bot_token)
 
 auto_bump = False
 
@@ -36,7 +36,7 @@ def main():
     print('Removed central only modules and updated the list')
     update_json_file(module_details_json)
     print('Updated module details successfully')
-    commit_json_file()
+    #commit_json_file()
     print("Updated module details in 'ballerina-release' successfully")
 
 
@@ -262,7 +262,7 @@ def remove_modules_not_included_in_distribution(module_details_json):
 
 
 def commit_json_file():
-    author = InputGitAuthor(packageUser, packageEmail)
+    author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
 
     repo = github.get_repo(BALLERINA_ORG_NAME + "/ballerina-release")
 
@@ -320,7 +320,6 @@ def commit_json_file():
         except Exception as e:
             print("Error while committing extensions.json", e)
 
-        created_pr = ""
         try:
             created_pr = repo.create_pull(
                 title="[Automated] Update Extensions Dependencies",
@@ -335,7 +334,7 @@ def commit_json_file():
         # To stop intermittent failures due to API sync
         time.sleep(5)
 
-        r_github = Github(reviewerPackagePAT)
+        r_github = Github(ballerina_reviewer_bot_token)
         repo = r_github.get_repo(BALLERINA_ORG_NAME + "/ballerina-release")
         pr = repo.get_pull(created_pr.number)
         try:

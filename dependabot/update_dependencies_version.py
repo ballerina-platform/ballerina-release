@@ -15,10 +15,10 @@ LANG_VERSION_KEY = "ballerinaLangVersion"
 
 LANG_VERSION_UPDATE_BRANCH = 'automated/dependency_version_update'
 
-packageUser = os.environ["packageUser"]
-packagePAT = os.environ["packagePAT"]
-packageEmail = os.environ["packageEmail"]
-reviewerPackagePAT = os.environ["reviewerPackagePAT"]
+ballerina_bot_username = os.environ["BALLERINA_BOT_USERNAME"]
+ballerina_bot_token = os.environ["BALLERINA_BOT_TOKEN"]
+ballerina_bot_email = os.environ["BALLERINA_BOT_EMAIL"]
+ballerina_reviewer_bot_token = os.environ["BALLERINA_REVIEWER_BOT_TOKEN"]
 
 ENCODING = "utf-8"
 
@@ -65,7 +65,7 @@ event_type = "workflow_dispatch"
 if len(sys.argv) > 3:
     event_type = sys.argv[4]
 
-github = Github(packagePAT)
+github = Github(ballerina_bot_token)
 
 extensions_file = {}
 all_modules = []
@@ -122,7 +122,7 @@ def get_lang_version():
 def open_url(url):
     request = urllib.request.Request(url)
     request.add_header("Accept", "application/vnd.github.v3+json")
-    request.add_header("Authorization", "Bearer " + packagePAT)
+    request.add_header("Authorization", "Bearer " + ballerina_bot_token)
 
     return urllib.request.urlopen(request)
 
@@ -428,7 +428,7 @@ def get_updated_properties_file(module_name, current_level, properties_file):
 
 
 def commit_changes(repo, updated_file, module_name):
-    author = InputGitAuthor(packageUser, packageEmail)
+    author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
     base = repo.get_branch(repo.default_branch)
     branch = LANG_VERSION_UPDATE_BRANCH
 
@@ -512,7 +512,7 @@ def create_pull_request(idx: int, repo):
             # To stop intermittent failures due to API sync
             time.sleep(5)
 
-            r_github = Github(reviewerPackagePAT)
+            r_github = Github(ballerina_reviewer_bot_token)
             repo = r_github.get_repo(ORGANIZATION + "/" + current_level_modules[idx][MODULE_NAME])
             pr = repo.get_pull(created_pr.number)
             try:

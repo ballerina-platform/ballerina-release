@@ -43,7 +43,7 @@ jobs:
                                                               "${{ github.event.inputs.autoMergePRs }}" \
                                                               "${{ env.GITHUB_EVENT_NAME }}"
           env:
-            packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
-            packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
-            packageEmail: ${{ secrets.BALLERINA_BOT_EMAIL }}
-            reviewerPackagePAT: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
