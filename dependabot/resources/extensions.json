@@ -461,9 +461,7 @@
             "version_key": "observeExtJaegerVersion",
             "default_branch": "main",
             "auto_merge": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
+            "dependents": []
         },
         {
             "name": "ballerina-openapi",
@@ -487,9 +485,7 @@
             "version_key": "observeExtPrometheusVersion",
             "default_branch": "main",
             "auto_merge": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
+            "dependents": []
         },
         {
             "name": "module-ballerinai-transaction",
@@ -567,9 +563,7 @@
             "version_key": "observeExtChoreoVersion",
             "default_branch": "main",
             "auto_merge": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
+            "dependents": []
         },
         {
             "name": "module-ballerinax-kafka",
