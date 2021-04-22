@@ -77,7 +77,7 @@ FileInputStream|error obj2 = java:cast(inputStream); // The second argument is i
 - Changed the time format in the log output to RFC3339.
 - Added validation to check log levels in the `Config.toml` file.
 
-##### Sql Package Updates
+##### SQL Package Updates
 If return types of the SQL time related data types are expected as records, then the type of those records are now validating and should be as follows, 
 
 - DATE -> time:Date
