@@ -388,39 +388,13 @@ def get_updated_properties_file(module_name, current_level, properties_file):
             key_found = False
             possible_dependency_modules = list(filter(lambda s: s['level'] < current_level, all_modules))
 
-            if len(line.split('=')) == 2:
-                dependency_version = line.split('=')[1]
-            else:
-                dependency_version = line
-            split_dependency_version = dependency_version.split("-")
-            if len(split_dependency_version) > 4:
-                processed_dependency_version = split_dependency_version[2] + split_dependency_version[3]
-            elif len(split_dependency_version) == 4:
-                processed_dependency_version = split_dependency_version[1] + split_dependency_version[2]
-            else:
-                processed_dependency_version = "".join(split_dependency_version[:-1])
-
             for possible_dependency in possible_dependency_modules:
                 if line.startswith(possible_dependency["version_key"]):
                     updated_line = possible_dependency["version_key"] + "=" + possible_dependency[MODULE_TIMESTAMPED_VERSION]
-
-                    split_possible_dependency_version = possible_dependency[MODULE_TIMESTAMPED_VERSION].split("-")
-                    if len(split_possible_dependency_version) >= 4:
-                        if len(split_possible_dependency_version) > 4:
-                            processed_possible_dependency_version = split_possible_dependency_version[2] + split_possible_dependency_version[3]
-                        else:
-                            processed_possible_dependency_version = split_possible_dependency_version[1] + split_possible_dependency_version[2]
-
-                        if processed_dependency_version < processed_possible_dependency_version:
-                            updated_properties_file += updated_line + "\n"
-                            update = True
-                        else:
-                            updated_properties_file += line + "\n"
-                    else:
-                        updated_properties_file += updated_line + "\n"
-                        if line != updated_line:
-                            update = True
+                    updated_properties_file += updated_line + "\n"
                     key_found = True
+                    if line != updated_line:
+                        update = True
                     break
             if not key_found:
                 updated_properties_file += line + "\n"
