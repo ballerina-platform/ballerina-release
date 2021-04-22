@@ -69,7 +69,7 @@ FileInputStream|error obj2 = java:cast(inputStream); // The second argument is i
 
 ##### File Package Updates
 
-- The `path` field in the `ListenerConfig` has changed from optional to mandatory.
+- Changed the `path` field in the `ListenerConfig` from optional to mandatory.
 - Improved the compiler plugin validation for the service.
 
 ##### Log Package Updates
