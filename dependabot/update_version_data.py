@@ -321,7 +321,7 @@ def commit_json_file():
 
         try:
             created_pr = repo.create_pull(
-                title='Automated] Update Extensions Dependencies',
+                title='[Automated] Update Extensions Dependencies',
                 body='Update dependencies in extensions.json',
                 head=EXTENSIONS_UPDATE_BRANCH,
                 base='master'
@@ -346,6 +346,7 @@ def commit_json_file():
             created_pr.merge()
         except Exception as e:
             print("Error occurred while merging dependency PR for module 'ballerina-release'", e)
+            sys.exit(1)
 
 
 main()
