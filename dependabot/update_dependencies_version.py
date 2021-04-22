@@ -62,6 +62,8 @@ overrideBallerinaVersion = sys.argv[2]
 autoMergePRs = sys.argv[3]
 
 github = Github(packagePAT)
+
+extensions_file = {}
 all_modules = []
 current_level_modules = []
 lang_version = ""
@@ -70,10 +72,22 @@ status_completed_modules = 0
 
 def main():
     global lang_version
+    global extensions_file
     global all_modules
+
     lang_version = get_lang_version()
-    all_modules = get_module_list_json()
+    print("Workflow started with Ballerina Lang version : " + lang_version)
+    extensions_file = get_extensions_file()
+
+    print("Start dependency bump to extensions packed in ballerina-distribution")
+    all_modules = extensions_file[MODULES]
     check_and_update_lang_version()
+    print("Successfully bumped dependencies in extensions packed in ballerina-distribution")
+
+    print("Start dependency bump to extensions available only in central")
+    all_modules = extensions_file['central_modules']
+    check_and_update_lang_version()
+    print("Successfully bumped dependencies in extensions available in central")
 
 
 def get_lang_version():
@@ -104,7 +118,7 @@ def open_url(url):
     return urllib.request.urlopen(request)
 
 
-def get_module_list_json():
+def get_extensions_file():
     try:
         with open(MODULE_LIST_FILE) as f:
             module_list = json.load(f)
@@ -113,7 +127,7 @@ def get_module_list_json():
         print("[Error] Error while loading modules list ", e)
         sys.exit(1)
 
-    return module_list[MODULES]
+    return module_list
 
 
 def check_and_update_lang_version():

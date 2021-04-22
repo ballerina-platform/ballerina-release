@@ -30,6 +30,8 @@ def main():
     module_details_json = calculate_levels(module_name_list, module_details_json)
     print('Generated module dependency graph and updated module levels')
     module_details_json['modules'].sort(key=lambda s: s['level'])
+    module_details_json = remove_modules_not_included_in_distribution(module_details_json)
+    print('Removed central only modules and updated the list')
     update_json_file(module_details_json)
     print('Updated module details successfully')
     commit_json_file()
@@ -55,6 +57,10 @@ def sort_module_name_list():
     except Exception as e:
         print('Failed to write to file module_list.json', e)
         sys.exit()
+
+    name_list['modules'].append({
+        "name": "ballerina-distribution"
+    })
 
     return name_list['modules']
 
@@ -205,7 +211,8 @@ def initialize_module_details(module_name_list):
             'artifact_id': module_name.get("artifact_id", default_artifact_id),
             'version_key': module_name.get("version_key", default_version_key),
             'default_branch': default_branch,
-            'auto_merge': True,
+            'auto_merge': module_name.get("auto_merge", True),
+            'central_only_module': module_name.get("central_only_module", True),
             'dependents': []})
     # TODO: Add transitive dependencies
     return module_details_json
@@ -220,6 +227,26 @@ def get_immediate_dependents(module_name_list, module_details_json):
             if module['name'] in dependencies:
                 module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(
                     module_name["name"])
+
+    return module_details_json
+
+
+def remove_modules_not_included_in_distribution(module_details_json):
+    removed_modules = []
+
+    for module in module_details_json['modules']:
+        if (module['name'] != "ballerina-distribution" and not module['dependents'] and
+                module['central_only_module']):
+            removed_modules.append(module)
+
+    for removed_module in removed_modules:
+        module_details_json['modules'].remove(removed_module)
+        removed_module['level'] = 1
+
+    for module in module_details_json['modules']:
+        module['central_only_module'] = False
+
+    module_details_json["central_modules"] = removed_modules
 
     return module_details_json
 

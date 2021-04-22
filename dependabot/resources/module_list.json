@@ -41,9 +41,6 @@
             "version_key": "dataMapperVersion"
         },
         {
-            "name": "ballerina-distribution"
-        },
-        {
             "name": "module-ballerina-docker",
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
@@ -79,7 +76,8 @@
         },
         {
             "name": "module-ballerinax-java.jdbc",
-            "version_key": "stdlibJdbcVersion"
+            "version_key": "stdlibJdbcVersion",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
@@ -89,7 +87,8 @@
             "name": "module-ballerina-jwt"
         },
         {
-            "name": "module-ballerinax-kafka"
+            "name": "module-ballerinax-kafka",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-log"
@@ -98,10 +97,12 @@
             "name": "module-ballerina-mime"
         },
         {
-            "name": "module-ballerinax-mysql"
+            "name": "module-ballerinax-mysql",
+            "central_only_module": false
         },
         {
-            "name": "module-ballerinax-nats"
+            "name": "module-ballerinax-nats",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-oauth2",
@@ -124,7 +125,8 @@
             "auto_merge": false
         },
         {
-            "name": "module-ballerinax-rabbitmq"
+            "name": "module-ballerinax-rabbitmq",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-random"
@@ -136,7 +138,8 @@
             "name": "module-ballerina-sql"
         },
         {
-            "name": "module-ballerinax-stan"
+            "name": "module-ballerinax-stan",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-task"

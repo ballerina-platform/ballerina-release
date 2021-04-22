@@ -9,6 +9,7 @@
             "version_key": "dockerVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-c2c"
             ]
@@ -22,6 +23,7 @@
             "version_key": "stdlibIoVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerinax-datamapper",
                 "module-ballerina-log",
@@ -38,6 +40,7 @@
             "version_key": "stdlibJavaArraysVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -51,6 +54,7 @@
             "version_key": "stdlibRandomVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-websub"
             ]
@@ -64,6 +68,7 @@
             "version_key": "stdlibRegexVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-log",
                 "module-ballerina-uuid"
@@ -78,6 +83,7 @@
             "version_key": "stdlibTimeVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-crypto",
                 "module-ballerina-file",
@@ -93,6 +99,7 @@
             "version_key": "stdlibUrlVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-graphql",
                 "module-ballerina-websub",
@@ -108,6 +115,7 @@
             "version_key": "stdlibXmldataVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -121,6 +129,7 @@
             "version_key": "stdlibCryptoVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
@@ -140,6 +149,7 @@
             "version_key": "dataMapperVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -153,6 +163,7 @@
             "version_key": "stdlibLogVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-file",
@@ -175,6 +186,7 @@
             "version_key": "stdlibOsVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-file"
             ]
@@ -188,6 +200,7 @@
             "version_key": "stdlibTaskVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-cache",
                 "module-ballerina-email",
@@ -203,6 +216,7 @@
             "version_key": "stdlibXsltVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -216,6 +230,7 @@
             "version_key": "stdlibCacheVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
@@ -231,6 +246,7 @@
             "version_key": "stdlibFileVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
@@ -245,6 +261,7 @@
             "version_key": "stdlibFtpVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -258,6 +275,7 @@
             "version_key": "stdlibMimeVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
@@ -272,6 +290,7 @@
             "version_key": "stdlibNatsVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
@@ -283,6 +302,7 @@
             "version_key": "stdlibStanVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
@@ -294,6 +314,7 @@
             "version_key": "stdlibTcpVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -307,6 +328,7 @@
             "version_key": "stdlibUdpVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -320,6 +342,7 @@
             "version_key": "stdlibUuidVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -333,6 +356,7 @@
             "version_key": "stdlibAuthVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -346,6 +370,7 @@
             "version_key": "stdlibEmailVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -359,6 +384,7 @@
             "version_key": "stdlibJwtVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -372,6 +398,7 @@
             "version_key": "stdlibOAuth2Version",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -385,6 +412,7 @@
             "version_key": "stdlibHttpVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
@@ -408,6 +436,7 @@
             "version_key": "awslambdaVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -421,6 +450,7 @@
             "version_key": "azFunctionsVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -434,6 +464,7 @@
             "version_key": "stdlibGraphqlVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -447,21 +478,11 @@
             "version_key": "stdlibGrpcVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-c2c",
                 "module-ballerinax-choreo"
             ]
-        },
-        {
-            "name": "module-ballerinax-jaeger",
-            "version": "0.2.2-SNAPSHOT",
-            "level": 6,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "jaeger-extension-ballerina",
-            "version_key": "observeExtJaegerVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "dependents": []
         },
         {
             "name": "ballerina-openapi",
@@ -472,20 +493,10 @@
             "version_key": "openapiVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
-        },
-        {
-            "name": "module-ballerinax-prometheus",
-            "version": "0.1.7-SNAPSHOT",
-            "level": 6,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "prometheus-extension-ballerina",
-            "version_key": "observeExtPrometheusVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "dependents": []
         },
         {
             "name": "module-ballerinai-transaction",
@@ -496,6 +507,7 @@
             "version_key": "stdlibTransactionVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerinax-kafka",
                 "module-ballerinax-rabbitmq",
@@ -511,6 +523,7 @@
             "version_key": "stdlibWebsocketVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -524,6 +537,7 @@
             "version_key": "stdlibWebsubVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -537,6 +551,7 @@
             "version_key": "stdlibWebsubhubVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -550,20 +565,10 @@
             "version_key": "c2cVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
-        },
-        {
-            "name": "module-ballerinax-choreo",
-            "version": "0.2.3-SNAPSHOT",
-            "level": 7,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "choreo-extension-ballerina",
-            "version_key": "observeExtChoreoVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "dependents": []
         },
         {
             "name": "module-ballerinax-kafka",
@@ -574,6 +579,7 @@
             "version_key": "stdlibKafkaVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
@@ -585,6 +591,7 @@
             "version_key": "stdlibRabbitmqVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
@@ -596,22 +603,12 @@
             "version_key": "stdlibSqlVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
-                "ballerina-distribution",
                 "module-ballerinax-java.jdbc",
-                "module-ballerinax-mysql"
+                "module-ballerinax-mysql",
+                "ballerina-distribution"
             ]
-        },
-        {
-            "name": "ballerina-distribution",
-            "version": "swan-lake-alpha5-SNAPSHOT",
-            "level": 8,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "distribution-ballerina",
-            "version_key": "stdlibDistributionVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "dependents": []
         },
         {
             "name": "module-ballerinax-java.jdbc",
@@ -622,6 +619,7 @@
             "version_key": "stdlibJdbcVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
@@ -633,6 +631,57 @@
             "version_key": "stdlibMysqlVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
+            "dependents": []
+        },
+        {
+            "name": "ballerina-distribution",
+            "version": "swan-lake-alpha5-SNAPSHOT",
+            "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "distribution-ballerina",
+            "version_key": "stdlibDistributionVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "central_only_module": false,
+            "dependents": []
+        }
+    ],
+    "central_modules": [
+        {
+            "name": "module-ballerinax-jaeger",
+            "version": "0.2.2-SNAPSHOT",
+            "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "jaeger-extension-ballerina",
+            "version_key": "observeExtJaegerVersion",
+            "default_branch": "main",
+            "auto_merge": false,
+            "central_only_module": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-prometheus",
+            "version": "0.1.7-SNAPSHOT",
+            "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "prometheus-extension-ballerina",
+            "version_key": "observeExtPrometheusVersion",
+            "default_branch": "main",
+            "auto_merge": false,
+            "central_only_module": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-choreo",
+            "version": "0.2.3-SNAPSHOT",
+            "level": 1,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "choreo-extension-ballerina",
+            "version_key": "observeExtChoreoVersion",
+            "default_branch": "main",
+            "auto_merge": false,
+            "central_only_module": true,
             "dependents": []
         }
     ]
