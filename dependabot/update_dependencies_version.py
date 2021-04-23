@@ -49,7 +49,7 @@ override_ballerina_version = sys.argv[2]
 auto_merge_pull_requests = sys.argv[3]
 
 event_type = 'workflow_dispatch'
-if len(sys.argv) > 3:
+if len(sys.argv) > 4:
     event_type = sys.argv[4]
 
 github = Github(ballerina_bot_token)
@@ -67,6 +67,9 @@ def main():
     global all_modules
 
     lang_version = get_lang_version()
+    update_workflow_lang_version()
+    commit_json_file()
+
     print('Workflow started with Ballerina Lang version : ' + lang_version)
     extensions_file = get_extensions_file()
 
@@ -513,5 +516,107 @@ def create_pull_request(idx: int, repo):
     current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
     current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_PENDING
 
+
+def update_workflow_lang_version():
+    bal_version = {
+        'version': lang_version
+    }
+    try:
+        with open(constants.LANG_VERSION_FILE, 'w') as json_file:
+            json_file.seek(0)
+            json.dump(bal_version, json_file, indent=4)
+            json_file.truncate()
+    except Exception as e:
+        print('Failed to write to file latest_ballerina_lang_version.json', e)
+        sys.exit()
+
+
+def commit_json_file():
+    author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
+
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-release')
+
+    remote_file = ''
+    try:
+        contents = repo.get_contents('dependabot')
+        while len(contents) > 0:
+            file_content = contents.pop(0)
+            if file_content.type == 'dir':
+                contents.extend(repo.get_contents(file_content.path))
+            else:
+                if file_content.path == constants.LANG_VERSION_FILE:
+                    remote_file = file_content
+                    break
+    except Exception as e:
+        print('Error while accessing remote lang-version.json', e)
+        sys.exit(1)
+
+    updated_file = open(constants.LANG_VERSION_FILE, 'r').read()
+    remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
+
+    if updated_file == remote_file_contents:
+        print('No changes to latest-ballerina-lang-version.json file')
+    else:
+        try:
+            base = repo.get_branch(repo.default_branch)
+            branch = constants.EXTENSIONS_UPDATE_BRANCH
+            try:
+                ref = f"refs/heads/" + branch
+                repo.create_git_ref(ref=ref, sha=base.commit.sha)
+            except:
+                print("[Info] Unmerged update branch existed in 'ballerina-release'")
+                branch = constants.EXTENSIONS_UPDATE_BRANCH + '_tmp'
+                ref = f"refs/heads/" + branch
+                try:
+                    repo.create_git_ref(ref=ref, sha=base.commit.sha)
+                except GithubException as e:
+                    print("[Info] deleting update tmp branch existed in 'ballerina-release'")
+                    if e.status == 422:  # already exist
+                        repo.get_git_ref("heads/" + branch).delete()
+                        repo.create_git_ref(ref=ref, sha=base.commit.sha)
+            repo.update_file(
+                constants.EXTENSIONS_FILE,
+                '[Automated] Update Extensions Dependencies',
+                updated_file,
+                remote_file.sha,
+                branch=branch,
+                author=author
+            )
+            if not branch == constants.EXTENSIONS_UPDATE_BRANCH:
+                update_branch = repo.get_git_ref("heads/" + constants.EXTENSIONS_UPDATE_BRANCH)
+                update_branch.edit(update["commit"].sha, force=True)
+                repo.get_git_ref("heads/" + branch).delete()
+
+        except Exception as e:
+            print('Error while committing extensions.json', e)
+
+        try:
+            created_pr = repo.create_pull(
+                title='[Automated] Update Dependency Bump Workflow Triggered Version',
+                body='Update bumped ballerina lang version',
+                head=constants.EXTENSIONS_UPDATE_BRANCH,
+                base='master'
+            )
+        except Exception as e:
+            print('Error occurred while creating pull request updating dependencies.', e)
+            sys.exit(1)
+
+        # To stop intermittent failures due to API sync
+        time.sleep(5)
+
+        r_github = Github(ballerina_reviewer_bot_token)
+        repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-release')
+        pr = repo.get_pull(created_pr.number)
+        try:
+            pr.create_review(event='APPROVE')
+        except Exception as e:
+            print('Error occurred while approving Update Dependency Bump Workflow Triggered Version PR', e)
+            sys.exit(1)
+
+        try:
+            created_pr.merge()
+        except Exception as e:
+            print("Error occurred while merging Update Dependency Bump Workflow Triggered Version", e)
+            sys.exit(1)
 
 main()

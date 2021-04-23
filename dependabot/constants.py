@@ -11,7 +11,10 @@ HTTP_REQUEST_DELAY_MULTIPLIER = 2
 BALLERINA_ORG_NAME = 'ballerina-platform'
 MODULE_LIST_FILE = 'dependabot/resources/module_list.json'
 EXTENSIONS_FILE = 'dependabot/resources/extensions.json'
+LANG_VERSION_FILE = 'dependabot/resources/latest_ballerina_lang_version.json'
 BUILD_GRADLE_FILE = 'build.gradle'
 GRADLE_PROPERTIES_FILE = 'gradle.properties'
 
 ENCODING = 'utf-8'
+
+EXTENSIONS_UPDATE_BRANCH = 'extensions_update'

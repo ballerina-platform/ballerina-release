@@ -9,8 +9,6 @@ from github import Github, InputGitAuthor, GithubException
 
 import constants
 
-EXTENSIONS_UPDATE_BRANCH = 'extensions_update'
-
 ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 ballerina_bot_email = os.environ[constants.ENV_BALLERINA_BOT_EMAIL]
@@ -288,13 +286,13 @@ def commit_json_file():
     else:
         try:
             base = repo.get_branch(repo.default_branch)
-            branch = EXTENSIONS_UPDATE_BRANCH
+            branch = constants.EXTENSIONS_UPDATE_BRANCH
             try:
                 ref = f"refs/heads/" + branch
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
             except:
                 print("[Info] Unmerged update branch existed in 'ballerina-release'")
-                branch = EXTENSIONS_UPDATE_BRANCH + '_tmp'
+                branch = constants.EXTENSIONS_UPDATE_BRANCH + '_tmp'
                 ref = f"refs/heads/" + branch
                 try:
                     repo.create_git_ref(ref=ref, sha=base.commit.sha)
@@ -311,8 +309,8 @@ def commit_json_file():
                 branch=branch,
                 author=author
             )
-            if not branch == EXTENSIONS_UPDATE_BRANCH:
-                update_branch = repo.get_git_ref("heads/" + EXTENSIONS_UPDATE_BRANCH)
+            if not branch == constants.EXTENSIONS_UPDATE_BRANCH:
+                update_branch = repo.get_git_ref("heads/" + constants.EXTENSIONS_UPDATE_BRANCH)
                 update_branch.edit(update["commit"].sha, force=True)
                 repo.get_git_ref("heads/" + branch).delete()
 
@@ -323,7 +321,7 @@ def commit_json_file():
             created_pr = repo.create_pull(
                 title='[Automated] Update Extensions Dependencies',
                 body='Update dependencies in extensions.json',
-                head=EXTENSIONS_UPDATE_BRANCH,
+                head=constants.EXTENSIONS_UPDATE_BRANCH,
                 base='master'
             )
         except Exception as e:
