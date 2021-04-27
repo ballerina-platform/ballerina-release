@@ -284,6 +284,7 @@ def check_pending_build_checks(index: int):
     print("[Info] Checking the status of the timestamped build in module '" + module['name'] + "'")
     passing = True
     pending = False
+    build_check_found = False  # This is to stop intermittent failures
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
     pull_request = repo.get_pull(module[MODULE_CREATED_PR].number)
     sha = pull_request.merge_commit_sha
@@ -291,6 +292,7 @@ def check_pending_build_checks(index: int):
     failed_build_name, failed_build_html = [], []
     if module[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_PENDING:
         for build_check in repo.get_commit(sha=sha).get_check_runs():
+            build_check_found = True
             # Ignore codecov checks temporarily due to bug
             if not build_check.name.startswith('codecov'):
                 if build_check.status != 'completed':
@@ -302,7 +304,7 @@ def check_pending_build_checks(index: int):
                     failed_build_name.append(build_check.name)
                     failed_build_html.append(build_check.html_url)
                     passing = False
-        if not pending:
+        if build_check_found and not pending:
             if passing:
                 current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
             else:
