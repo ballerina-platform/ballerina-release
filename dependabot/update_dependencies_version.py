@@ -27,8 +27,8 @@ MODULE_STATUS_COMPLETED = 'completed'
 MODULE_CONCLUSION = 'conclusion'
 MODULE_CONCLUSION_TIMED_OUT = 'timed_out'
 MODULE_CONCLUSION_PR_PENDING = 'pr_build_pending'
-MODULE_CONCLUSION_PR_MERGED = 'pr_merged'
 MODULE_CONCLUSION_PR_CHECK_FAILURE = 'pr_check_failure'
+MODULE_CONCLUSION_PR_NOT_MERGED = 'pr_not_merged'
 MODULE_CONCLUSION_PR_MERGE_FAILURE = 'merge_failure'
 MODULE_CONCLUSION_BUILD_PENDING = 'build_pending'
 MODULE_CONCLUSION_BUILD_SUCCESS = 'build_success'
@@ -265,7 +265,7 @@ def check_pending_pr_checks(index: int):
                     status_completed_modules += 1
             else:
                 current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
-                current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
+                current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_NOT_MERGED
                 status_completed_modules += 1
 
         else:
@@ -357,7 +357,7 @@ def update_module(idx: int, current_level):
         create_pull_request(idx, repo)
     else:
         current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
-        current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_MERGED
+        current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
         current_level_modules[idx][MODULE_CREATED_PR] = None
 
         pulls = repo.get_pulls(state='closed')
@@ -618,5 +618,6 @@ def commit_json_file():
         except Exception as e:
             print("Error occurred while merging Update Dependency Bump Workflow Triggered Version", e)
             sys.exit(1)
+
 
 main()
