@@ -16,7 +16,7 @@ on:
         required: false
         default: 'true'
   schedule:
-    - cron:  '0 30 17 * *'
+    - cron:  '30 17 * * *'
 
 jobs:
   update-lang-version:
