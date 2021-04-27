@@ -15,8 +15,8 @@ on:
         description: 'Auto Merge PRs'
         required: false
         default: 'true'
-    schedule:
-      - cron: 0 30 17 * *
+  schedule:
+    - cron:  '30 17 * * *'
 
 jobs:
   update-lang-version:
@@ -39,7 +39,7 @@ jobs:
             pip install PyGithub
 
       -   name: "[Scheduled] Update Ballerina Language Version"
-          if: ${{ env.GITHUB_EVENT_NAME == 'schedule' }}
+          if: github.event_name == 'schedule'
           run: |
             python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
                                                               "${{ github.event.inputs.ballerinaVersion }}" \
@@ -52,7 +52,7 @@ jobs:
             BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
 
       -   name: "[Manual] Update Ballerina Language Version"
-          if: ${{ env.GITHUB_EVENT_NAME != 'schedule' }}
+          if: github.event_name == 'workflow_dispatch'
           run: |
             python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
                                                               "${{ github.event.inputs.ballerinaVersion }}" \
