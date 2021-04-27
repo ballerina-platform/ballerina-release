@@ -103,7 +103,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Alpha5](https://githu
 #### New Features
 
 
-###### Support for Configurable Variables with Records Having Fields of Record Types
+##### Support for Configurable Variables with Records Having Fields of Record Types
 
 ```ballerina
 public type Person readonly & record {
@@ -137,7 +137,7 @@ address.country.name="Sri Lanka"
 
 ```
 
-###### Support for Configurable Variables with Arrays Having Fields of Record Types
+##### Support for Configurable Variables with Arrays Having Fields of Record Types
 
 ```ballerina
 configurable Person[] & readonly personArray = ?;
@@ -159,7 +159,7 @@ address.city="London"
 address.country.name="UK"
 ```
 
-###### Support for Configurable Variables with Multidimentional Arrays
+##### Support for Configurable Variables with Multidimentional Arrays
 
 ```ballerina
 configurable int[][] & readonly int2DArr = ?;
@@ -170,7 +170,7 @@ The  `Config.toml` would be as follows.
 int2DArr = [[1,2],[3,4]]
 ```
 
-###### Support for Optional Module Name in TOML Syntax of Configurable Variables
+##### Support for Optional Module Name in TOML Syntax of Configurable Variables
 
 When providing values for the configurable variables, the module information should be provided in the `Config.toml` file according to the following specifications.
 
@@ -211,14 +211,14 @@ fooVar = "variable from non-root module of the root package"
 modVar = "variable from non-root package"
 ```
 #### Improvements
-###### Improved Command-Line Argument Parsing
+##### Improved Command-Line Argument Parsing
 
 The command-line arguments are now parsed into:
 - options
 - option arguments
 - operands
 
-**Options**
+###### Options
 
 Included record parameter as the last of the parameter specify options.
 
@@ -238,7 +238,7 @@ bal run file.bal -- --name riyafa --score=99.9
 ```
 In the above example, `name` and `score` are options. `riyafa` and `99.9` are arguments of the option.
 
-**Operands**
+###### Operands
 
 Other parameters that are not included records specify operands; for these parameters, the position is significant and the name is not.
 
@@ -261,7 +261,7 @@ This example, which is the same as above includes `100`, which gets mapped to `e
 Both operand and option parameters can be of types int, float, decimal, string, array of any of these types and union of any of these types with nil. 
 Additionally, option parameters can be of types `boolean`, `boolean[]`, or `boolean?`.
 
-**Operand Arrays**
+###### Operand Arrays
 
 >**Note:** If there is an operand parameter of type O[], then it cannot be followed by parameters of type O[], O?, and O x = d. Here O stands for a type that is a subtype of one of string, float, or decimal. An array value is specified by repeatedly specifying the `option` parameter.
 
