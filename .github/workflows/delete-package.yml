@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.1.0
       - name: Read access list
-        run: "cat ./.github/workflows/package_delete_usernames.json | jq -r '.usernames[]|select(.username==\"${{github.actor}}\").username' > /tmp/auth-user.json"
+        run: "cat ./delete-packages-scripts/usernames_with_package_delete_access.json | jq -r '.usernames[]|select(.username==\"${{github.actor}}\").username' > /tmp/auth-user.json"
       - name: Set authorized username
         id: setUname
         run: printf "::set-output name=foundUname::%s" $(cat /tmp/auth-user.json)
