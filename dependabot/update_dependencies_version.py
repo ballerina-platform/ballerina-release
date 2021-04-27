@@ -587,7 +587,7 @@ def commit_json_file():
                 repo.get_git_ref("heads/" + branch).delete()
 
         except Exception as e:
-            print('Error while committing extensions.json', e)
+            print('Error while committing workflow lang version', e)
 
         try:
             created_pr = repo.create_pull(
@@ -597,7 +597,7 @@ def commit_json_file():
                 base='master'
             )
         except Exception as e:
-            print('Error occurred while creating pull request updating dependencies.', e)
+            print('Error occurred while creating pull request updating workflow lang version.', e)
             sys.exit(1)
 
         # To stop intermittent failures due to API sync
