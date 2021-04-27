@@ -143,7 +143,7 @@
         },
         {
             "name": "module-ballerinax-datamapper",
-            "version": "2.0.0-alpha8-SNAPSHOT",
+            "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinax.datamapper",
             "artifact_id": "datamapper-extension",
@@ -501,7 +501,7 @@
         },
         {
             "name": "module-ballerinai-transaction",
-            "version": "1.0.12-SNAPSHOT",
+            "version": "1.0.13-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "transaction-ballerina",
