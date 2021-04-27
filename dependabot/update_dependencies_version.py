@@ -119,7 +119,7 @@ def open_url(url):
 
 def get_extensions_file():
     try:
-        with open(constants.MODULE_LIST_FILE) as f:
+        with open(constants.EXTENSIONS_FILE) as f:
             module_list = json.load(f)
 
     except Exception as e:
