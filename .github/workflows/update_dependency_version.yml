@@ -43,7 +43,7 @@ jobs:
             python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
                                                               "${{ github.event.inputs.ballerinaVersion }}" \
                                                               "${{ github.event.inputs.autoMergePRs }}" \
-                                                              "${{ env.GITHUB_EVENT_NAME }}"
+                                                              "${GITHUB_EVENT_NAME}"
           env:
             BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
             BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
