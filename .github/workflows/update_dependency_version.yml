@@ -38,12 +38,25 @@ jobs:
             pip install retry
             pip install PyGithub
 
-      -   name: Update Ballerina Language Version
+      -   name: "[Scheduled] Update Ballerina Language Version"
+          if: ${{ env.GITHUB_EVENT_NAME == 'schedule' }}
           run: |
             python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
                                                               "${{ github.event.inputs.ballerinaVersion }}" \
                                                               "${{ github.event.inputs.autoMergePRs }}" \
-                                                              "${GITHUB_EVENT_NAME}"
+                                                              "schedule"
+          env:
+            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+
+      -   name: "[Manual] Update Ballerina Language Version"
+          if: ${{ env.GITHUB_EVENT_NAME != 'schedule' }}
+          run: |
+            python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
+                                                              "${{ github.event.inputs.ballerinaVersion }}" \
+                                                              "${{ github.event.inputs.autoMergePRs }}"
           env:
             BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
             BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
