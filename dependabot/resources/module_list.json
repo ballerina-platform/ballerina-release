@@ -1,4 +1,5 @@
 {
+    "auto_bump": false,
     "modules": [
         {
             "name": "module-ballerina-auth"
@@ -28,7 +29,8 @@
             "name": "module-ballerinax-choreo",
             "group_id": "org.ballerinalang",
             "artifact_id": "choreo-extension-ballerina",
-            "version_key": "observeExtChoreoVersion"
+            "version_key": "observeExtChoreoVersion",
+            "auto_merge": false
         },
         {
             "name": "module-ballerina-crypto"
@@ -38,9 +40,6 @@
             "group_id": "org.ballerinax.datamapper",
             "artifact_id": "datamapper-extension",
             "version_key": "dataMapperVersion"
-        },
-        {
-            "name": "ballerina-distribution"
         },
         {
             "name": "module-ballerina-docker",
@@ -73,11 +72,13 @@
             "name": "module-ballerinax-jaeger",
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
-            "version_key": "observeExtJaegerVersion"
+            "version_key": "observeExtJaegerVersion",
+            "auto_merge": false
         },
         {
             "name": "module-ballerinax-java.jdbc",
-            "version_key": "stdlibJdbcVersion"
+            "version_key": "stdlibJdbcVersion",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
@@ -87,7 +88,8 @@
             "name": "module-ballerina-jwt"
         },
         {
-            "name": "module-ballerinax-kafka"
+            "name": "module-ballerinax-kafka",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-log"
@@ -96,10 +98,12 @@
             "name": "module-ballerina-mime"
         },
         {
-            "name": "module-ballerinax-mysql"
+            "name": "module-ballerinax-mysql",
+            "central_only_module": false
         },
         {
-            "name": "module-ballerinax-nats"
+            "name": "module-ballerinax-nats",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-oauth2",
@@ -118,10 +122,12 @@
             "name": "module-ballerinax-prometheus",
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
-            "version_key": "observeExtPrometheusVersion"
+            "version_key": "observeExtPrometheusVersion",
+            "auto_merge": false
         },
         {
-            "name": "module-ballerinax-rabbitmq"
+            "name": "module-ballerinax-rabbitmq",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-random"
@@ -133,7 +139,8 @@
             "name": "module-ballerina-sql"
         },
         {
-            "name": "module-ballerinax-stan"
+            "name": "module-ballerinax-stan",
+            "central_only_module": false
         },
         {
             "name": "module-ballerina-task"
