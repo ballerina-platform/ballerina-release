@@ -41,10 +41,7 @@ jobs:
       -   name: "[Scheduled] Update Ballerina Language Version"
           if: github.event_name == 'schedule'
           run: |
-            python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
-                                                              "${{ github.event.inputs.ballerinaVersion }}" \
-                                                              "${{ github.event.inputs.autoMergePRs }}" \
-                                                              "schedule"
+            python dependabot/update_dependencies_version.py "false" "" "true" "schedule"
           env:
             BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
             BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
