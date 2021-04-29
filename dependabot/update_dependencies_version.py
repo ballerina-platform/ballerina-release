@@ -319,27 +319,29 @@ def check_pending_build_checks(index: int):
         # Already successful and merged
         current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
 
-    if (current_level_modules[index][MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_SUCCESS and
-            current_level_modules[index]['name'] != 'ballerina-distribution'):
-        try:
-            packages_list_string = open_url(
-                'https://api.github.com/orgs/' + constants.BALLERINA_ORG_NAME + '/packages/maven/' + module[
-                    'group_id'] + '.' + module['artifact_id'] + '/versions').read()
-            packages_list = json.loads(packages_list_string)
-            latest_package = packages_list[0]['name']
-
-            if retrigger_dependency_bump.lower() == 'true':
-                for package in packages_list:
-                    sha_of_released_package = package['name'].split('-')[-1]
-                    if sha_of_released_package in sha:
-                        latest_package = package['name']
-                        break
-
+    if current_level_modules[index][MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_SUCCESS:
+        if current_level_modules[index]['name'] == 'ballerina-distribution':
             current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
-            current_level_modules[index][MODULE_TIMESTAMPED_VERSION] = latest_package
-        except Exception as e:
-            print("[Error] Failed to get latest timestamped version for module '" + module['name'] + "'", e)
-            current_level_modules[index][MODULE_STATUS] = MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED
+        else:
+            try:
+                packages_list_string = open_url(
+                    'https://api.github.com/orgs/' + constants.BALLERINA_ORG_NAME + '/packages/maven/' + module[
+                        'group_id'] + '.' + module['artifact_id'] + '/versions').read()
+                packages_list = json.loads(packages_list_string)
+                latest_package = packages_list[0]['name']
+
+                if retrigger_dependency_bump.lower() == 'true':
+                    for package in packages_list:
+                        sha_of_released_package = package['name'].split('-')[-1]
+                        if sha_of_released_package in sha:
+                            latest_package = package['name']
+                            break
+
+                current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
+                current_level_modules[index][MODULE_TIMESTAMPED_VERSION] = latest_package
+            except Exception as e:
+                print("[Error] Failed to get latest timestamped version for module '" + module['name'] + "'", e)
+                current_level_modules[index][MODULE_STATUS] = MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED
         current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
         status_completed_modules += 1
 
