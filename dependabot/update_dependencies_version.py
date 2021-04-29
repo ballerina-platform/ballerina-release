@@ -132,9 +132,7 @@ def get_extensions_file():
 def check_and_update_lang_version():
     global all_modules
 
-    module_details_list = all_modules
-    module_details_list.sort(reverse=True, key=lambda s: s['level'])
-    last_level = module_details_list[0]['level']
+    last_level = all_modules[-1]['level']
 
     for i in range(last_level):
         current_level = i + 1

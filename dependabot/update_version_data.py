@@ -282,7 +282,7 @@ def commit_json_file():
                     if e.status == 422:  # already exist
                         repo.get_git_ref("heads/" + branch).delete()
                         repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            repo.update_file(
+            update = repo.update_file(
                 constants.EXTENSIONS_FILE,
                 '[Automated] Update Extensions Dependencies',
                 updated_file,
