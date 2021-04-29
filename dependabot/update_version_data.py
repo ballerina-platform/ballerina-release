@@ -1,6 +1,5 @@
 import json
 import os
-import re
 import sys
 import time
 
@@ -23,7 +22,7 @@ def main():
     module_name_list = sort_module_name_list()
     print('Fetched module name list')
     module_details_json = initialize_module_details(module_name_list)
-    print('Initialized module details and fetched latest module versions')
+    print('Initialized module details')
     module_details_json = get_immediate_dependents(module_name_list, module_details_json)
     print('Fetched immediate dependents of each module')
     module_details_json = calculate_levels(module_name_list, module_details_json)
@@ -84,24 +83,6 @@ def get_dependencies(module_name):
             dependencies.append(module)
 
     return dependencies
-
-
-# Gets the version of the ballerina extension module from gradle.properties file in module repository
-# returns: current version of the module
-def get_version(module_name):
-    repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module_name)
-    properties_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
-    data = properties_file.decoded_content.decode(constants.ENCODING)
-
-    version = ''
-    for line in data.splitlines():
-        if re.match('version=', line):
-            version = line.split('=')[-1]
-
-    if version == '':
-        print('Version not defined for ' + module_name)
-
-    return version
 
 
 # Gets the default branch of the extension repository
@@ -202,7 +183,6 @@ def initialize_module_details(modules_list):
     }
 
     for module in modules_list:
-        version = get_version(module['name'])
         default_branch = get_default_branch(module['name'])
 
         artifact_name = module['name'].split('-')[-1]
@@ -212,7 +192,6 @@ def initialize_module_details(modules_list):
 
         module_details_json['modules'].append({
             'name': module['name'],
-            'version': version,
             'level': 0,
             'group_id': module.get('group_id', 'org.ballerinalang'),
             'artifact_id': module.get('artifact_id', default_artifact_id),
@@ -241,6 +220,8 @@ def get_immediate_dependents(module_name_list, module_details_json):
 def remove_modules_not_included_in_distribution(module_details_json):
     removed_modules = []
 
+    last_level = module_details_json['modules'][-1]['level']
+
     for module in module_details_json['modules']:
         if (module['name'] != 'ballerina-distribution' and not module['dependents'] and
                 module['central_only_module']):
@@ -248,7 +229,7 @@ def remove_modules_not_included_in_distribution(module_details_json):
 
     for removed_module in removed_modules:
         module_details_json['modules'].remove(removed_module)
-        removed_module['level'] = 1
+        removed_module['level'] = last_level + 1
 
     for module in module_details_json['modules']:
         module['central_only_module'] = False
@@ -301,7 +282,7 @@ def commit_json_file():
                     if e.status == 422:  # already exist
                         repo.get_git_ref("heads/" + branch).delete()
                         repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            repo.update_file(
+            update = repo.update_file(
                 constants.EXTENSIONS_FILE,
                 '[Automated] Update Extensions Dependencies',
                 updated_file,
