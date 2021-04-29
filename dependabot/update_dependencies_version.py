@@ -78,15 +78,7 @@ def main():
         print("Schedule workflow invoked, exiting script as 'auto_bump' flag in modules_list.json is false.")
         return
 
-    print('Start dependency bump to extensions packed in ballerina-distribution')
-    all_modules = extensions_file['modules']
     check_and_update_lang_version()
-    print('Successfully bumped dependencies in extensions packed in ballerina-distribution')
-
-    print('Start dependency bump to extensions available only in central')
-    all_modules = extensions_file['central_modules']
-    check_and_update_lang_version()
-    print('Successfully bumped dependencies in extensions available in central')
 
 
 def get_lang_version():
@@ -131,12 +123,16 @@ def get_extensions_file():
 
 def check_and_update_lang_version():
     global all_modules
+    global extensions_file
+    global current_level_modules
+
+    all_modules = extensions_file['modules']
 
     last_level = all_modules[-1]['level']
 
+    print('Start dependency bump to extensions packed in ballerina-distribution')
     for i in range(last_level):
         current_level = i + 1
-        global current_level_modules
         current_level_modules = list(filter(lambda s: s['level'] == current_level, all_modules))
 
         for idx, module in enumerate(current_level_modules):
@@ -145,6 +141,22 @@ def check_and_update_lang_version():
 
         if auto_merge_pull_requests.lower() == 'true':
             wait_for_current_level_build(current_level)
+    print('Successfully bumped dependencies in extensions packed in ballerina-distribution')
+
+    central_module_level = extensions_file['central_modules'][-1]['level']
+
+    print('Start dependency bump to extensions available only in central')
+    for j in range(last_level, central_module_level):
+        current_level = j + 1
+        current_level_modules = list(filter(lambda s: s['level'] == current_level, extensions_file['central_modules']))
+
+        for idx, module in enumerate(current_level_modules):
+            print("[Info] Check lang dependency in module '" + module['name'] + "'")
+            update_module(idx, current_level)
+
+        if auto_merge_pull_requests.lower() == 'true':
+            wait_for_current_level_build(current_level)
+    print('Successfully bumped dependencies in extensions available in central')
 
 
 def wait_for_current_level_build(level):
