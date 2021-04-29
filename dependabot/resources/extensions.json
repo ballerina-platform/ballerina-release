@@ -3,7 +3,6 @@
     "modules": [
         {
             "name": "module-ballerina-docker",
-            "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
@@ -17,7 +16,6 @@
         },
         {
             "name": "module-ballerina-io",
-            "version": "0.6.0-alpha9-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "io-ballerina",
@@ -34,7 +32,6 @@
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
-            "version": "0.10.0-alpha9-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "jballerina.java.arrays-ballerina",
@@ -48,7 +45,6 @@
         },
         {
             "name": "module-ballerina-random",
-            "version": "0.10.0-alpha9-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "random-ballerina",
@@ -62,7 +58,6 @@
         },
         {
             "name": "module-ballerina-regex",
-            "version": "0.7.0-alpha9-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "regex-ballerina",
@@ -77,7 +72,6 @@
         },
         {
             "name": "module-ballerina-time",
-            "version": "2.0.0-alpha10-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "time-ballerina",
@@ -93,7 +87,6 @@
         },
         {
             "name": "module-ballerina-url",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "url-ballerina",
@@ -109,7 +102,6 @@
         },
         {
             "name": "module-ballerina-xmldata",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "xmldata-ballerina",
@@ -123,7 +115,6 @@
         },
         {
             "name": "module-ballerina-crypto",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "crypto-ballerina",
@@ -143,7 +134,6 @@
         },
         {
             "name": "module-ballerinax-datamapper",
-            "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinax.datamapper",
             "artifact_id": "datamapper-extension",
@@ -157,7 +147,6 @@
         },
         {
             "name": "module-ballerina-log",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "log-ballerina",
@@ -180,7 +169,6 @@
         },
         {
             "name": "module-ballerina-os",
-            "version": "0.8.0-alpha9-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "os-ballerina",
@@ -194,7 +182,6 @@
         },
         {
             "name": "module-ballerina-task",
-            "version": "2.0.0-alpha10-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "task-ballerina",
@@ -210,7 +197,6 @@
         },
         {
             "name": "module-ballerina-xslt",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "xslt-ballerina",
@@ -224,7 +210,6 @@
         },
         {
             "name": "module-ballerina-cache",
-            "version": "2.1.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "cache-ballerina",
@@ -240,7 +225,6 @@
         },
         {
             "name": "module-ballerina-file",
-            "version": "0.7.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "file-ballerina",
@@ -255,7 +239,6 @@
         },
         {
             "name": "module-ballerina-ftp",
-            "version": "1.1.0-alpha10-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "ftp-ballerina",
@@ -269,7 +252,6 @@
         },
         {
             "name": "module-ballerina-mime",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "mime-ballerina",
@@ -284,7 +266,6 @@
         },
         {
             "name": "module-ballerinax-nats",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "nats-ballerina",
@@ -296,7 +277,6 @@
         },
         {
             "name": "module-ballerinax-stan",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "stan-ballerina",
@@ -308,7 +288,6 @@
         },
         {
             "name": "module-ballerina-tcp",
-            "version": "0.8.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "tcp-ballerina",
@@ -322,7 +301,6 @@
         },
         {
             "name": "module-ballerina-udp",
-            "version": "0.9.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "udp-ballerina",
@@ -336,7 +314,6 @@
         },
         {
             "name": "module-ballerina-uuid",
-            "version": "0.10.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "uuid-ballerina",
@@ -350,7 +327,6 @@
         },
         {
             "name": "module-ballerina-auth",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "auth-ballerina",
@@ -364,7 +340,6 @@
         },
         {
             "name": "module-ballerina-email",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "email-ballerina",
@@ -378,7 +353,6 @@
         },
         {
             "name": "module-ballerina-jwt",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "jwt-ballerina",
@@ -392,7 +366,6 @@
         },
         {
             "name": "module-ballerina-oauth2",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "oauth2-ballerina",
@@ -406,7 +379,6 @@
         },
         {
             "name": "module-ballerina-http",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 5,
             "group_id": "org.ballerinalang",
             "artifact_id": "http-ballerina",
@@ -430,7 +402,6 @@
         },
         {
             "name": "module-ballerinax-aws.lambda",
-            "version": "2.0.0-alpha10-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinax.awslambda",
             "artifact_id": "awslambda-extension-bala",
@@ -444,7 +415,6 @@
         },
         {
             "name": "module-ballerinax-azure.functions",
-            "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinax.azurefunctions",
             "artifact_id": "azurefunctions-extension",
@@ -458,7 +428,6 @@
         },
         {
             "name": "module-ballerina-graphql",
-            "version": "0.2.0-alpha9-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "graphql-ballerina",
@@ -472,7 +441,6 @@
         },
         {
             "name": "module-ballerina-grpc",
-            "version": "0.8.0-alpha9-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "grpc-ballerina",
@@ -487,7 +455,6 @@
         },
         {
             "name": "ballerina-openapi",
-            "version": "2.0.12-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "module-ballerina-openapi",
@@ -501,7 +468,6 @@
         },
         {
             "name": "module-ballerinai-transaction",
-            "version": "1.0.13-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "transaction-ballerina",
@@ -517,7 +483,6 @@
         },
         {
             "name": "module-ballerina-websocket",
-            "version": "1.2.0-alpha9-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websocket-ballerina",
@@ -531,7 +496,6 @@
         },
         {
             "name": "module-ballerina-websub",
-            "version": "1.2.0-alpha9-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websub-ballerina",
@@ -545,7 +509,6 @@
         },
         {
             "name": "module-ballerina-websubhub",
-            "version": "0.2.0-alpha9-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websubhub-ballerina",
@@ -559,7 +522,6 @@
         },
         {
             "name": "module-ballerina-c2c",
-            "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 7,
             "group_id": "io.ballerina",
             "artifact_id": "c2c-ballerina",
@@ -573,7 +535,6 @@
         },
         {
             "name": "module-ballerinax-kafka",
-            "version": "2.1.0-alpha10-SNAPSHOT",
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "kafka-ballerina",
@@ -585,7 +546,6 @@
         },
         {
             "name": "module-ballerinax-rabbitmq",
-            "version": "1.1.0-alpha11-SNAPSHOT",
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "rabbitmq-ballerina",
@@ -597,7 +557,6 @@
         },
         {
             "name": "module-ballerina-sql",
-            "version": "0.6.0-alpha10-SNAPSHOT",
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "sql-ballerina",
@@ -613,7 +572,6 @@
         },
         {
             "name": "module-ballerinax-java.jdbc",
-            "version": "0.6.0-alpha10-SNAPSHOT",
             "level": 8,
             "group_id": "org.ballerinalang",
             "artifact_id": "java.jdbc-ballerina",
@@ -625,7 +583,6 @@
         },
         {
             "name": "module-ballerinax-mysql",
-            "version": "0.7.0-alpha10-SNAPSHOT",
             "level": 8,
             "group_id": "org.ballerinalang",
             "artifact_id": "mysql-ballerina",
@@ -637,7 +594,6 @@
         },
         {
             "name": "ballerina-distribution",
-            "version": "swan-lake-alpha6-SNAPSHOT",
             "level": 8,
             "group_id": "org.ballerinalang",
             "artifact_id": "distribution-ballerina",
@@ -651,7 +607,6 @@
     "central_modules": [
         {
             "name": "module-ballerinax-jaeger",
-            "version": "0.2.3-SNAPSHOT",
             "level": 9,
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
@@ -663,7 +618,6 @@
         },
         {
             "name": "module-ballerinax-prometheus",
-            "version": "0.1.8-SNAPSHOT",
             "level": 9,
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
@@ -675,7 +629,6 @@
         },
         {
             "name": "module-ballerinax-choreo",
-            "version": "0.2.4-SNAPSHOT",
             "level": 9,
             "group_id": "org.ballerinalang",
             "artifact_id": "choreo-extension-ballerina",
