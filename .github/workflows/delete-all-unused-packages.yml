@@ -1,0 +1,26 @@
+name: DeleteAllUnusedPackages
+
+on: workflow_dispatch
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - name: Read access list
+        run: "cat ./delete-packages-scripts/usernames_with_package_delete_access.json | jq -r '.usernames[]|select(.username==\"${{github.actor}}\").username' > /tmp/auth-user.json"
+      - name: Set authorized username
+        id: setUname
+        run: printf "::set-output name=foundUname::%s" $(cat /tmp/auth-user.json)
+      - name: Read all repos
+        if: steps.setUname.outputs.foundUname != ''
+        run: |
+          jq -r .modules[].name ./dependabot/resources/extensions.json > /tmp/repos.json
+      - name: Collect & delete unused packages
+        if: steps.setUname.outputs.foundUname != ''
+        run: |
+          chmod +x "./delete-packages-scripts/delete-all-unused-packages.sh"
+          "./delete-packages-scripts/delete-all-unused-packages.sh"
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PACKAGE_DELETE_PAT: ${{secrets.PACKAGE_DELETE_PAT}}
