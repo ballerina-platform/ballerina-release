@@ -241,6 +241,8 @@ def get_immediate_dependents(module_name_list, module_details_json):
 def remove_modules_not_included_in_distribution(module_details_json):
     removed_modules = []
 
+    last_level = module_details_json['modules'][-1]['level']
+
     for module in module_details_json['modules']:
         if (module['name'] != 'ballerina-distribution' and not module['dependents'] and
                 module['central_only_module']):
@@ -248,7 +250,7 @@ def remove_modules_not_included_in_distribution(module_details_json):
 
     for removed_module in removed_modules:
         module_details_json['modules'].remove(removed_module)
-        removed_module['level'] = 1
+        removed_module['level'] = last_level + 1
 
     for module in module_details_json['modules']:
         module['central_only_module'] = False

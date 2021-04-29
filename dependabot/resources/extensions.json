@@ -652,7 +652,7 @@
         {
             "name": "module-ballerinax-jaeger",
             "version": "0.2.3-SNAPSHOT",
-            "level": 1,
+            "level": 9,
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
             "version_key": "observeExtJaegerVersion",
@@ -664,7 +664,7 @@
         {
             "name": "module-ballerinax-prometheus",
             "version": "0.1.8-SNAPSHOT",
-            "level": 1,
+            "level": 9,
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
             "version_key": "observeExtPrometheusVersion",
@@ -676,7 +676,7 @@
         {
             "name": "module-ballerinax-choreo",
             "version": "0.2.4-SNAPSHOT",
-            "level": 1,
+            "level": 9,
             "group_id": "org.ballerinalang",
             "artifact_id": "choreo-extension-ballerina",
             "version_key": "observeExtChoreoVersion",
