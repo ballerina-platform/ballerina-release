@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron:  '0 6 * * *'
+  push:
+    paths:
+      - 'dependabot/resources/module_list.json'
 
 jobs:
   dependency:
