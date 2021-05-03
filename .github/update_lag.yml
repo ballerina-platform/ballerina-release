@@ -1,0 +1,41 @@
+name: Update Lag Status
+
+on: 
+  workflow_dispatch:
+    inputs:
+#      isRetrigger:
+#        description: 'Re-trigger a failed dependency bump workflow'
+#        required: false
+#        default: 'false'
+      ballerinaVersion:
+        description: 'Ballerina Version (Optional)'
+        required: false
+        default: ''
+
+
+jobs:
+  update-lag-status:
+    runs-on: ubuntu-latest
+    steps:
+      -   name: Checkout Repository
+          uses: actions/checkout@v2
+
+      -   name: Setup Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: '3.x'
+
+      -   name: Install Python Packages
+          run: |
+            pip install requests
+            pip install retry
+            pip install PyGithub
+            pip install matplotlib
+      -   name: Update Lag Status
+          run: |
+            python dependabot/update_lag_status.py "false" "${{ github.event.inputs.ballerinaVersion }}"
+          env:
+            packageUser: ${{ secrets.BALLERINA_RELEASE_USERNAME }}
+            packagePAT: ${{ secrets.BALLERINA_RELEASE_TOKEN }}
+            packageEmail: ${{ secrets.BALLERINA_RELEASE_EMAIL }}
+  
