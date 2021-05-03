@@ -6,6 +6,7 @@ import os
 from datetime import datetime
 import urllib.request
 import base64
+import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 packageUser = os.environ["packageUser"]
@@ -19,6 +20,7 @@ BALLERINA_LANG_VERSION_FILE = "dependabot/resources/latest_ballerina_lang_versio
 PROPERTIES_FILE = "gradle.properties"
 README_FILE = "README.md"
 LANG_VERSION_KEY = "ballerinaLangVersion"
+BALLERINA_DISTRIBUTION = "ballerina-distribution "
 github = Github(packagePAT)
 
 all_modules = []
@@ -33,27 +35,16 @@ def main():
     readme_file = get_readme_file()
     updated_readme = readme_file
 
-    get_lang_version()
-    module_list = get_module_list()
+    update_lang_version()
 
-    updated_readme = return_updated_readme(readme_file)
-
-    import matplotlib.pyplot as plt
+    updated_readme = get_updated_readme(readme_file)
 
     img = mpimg.imread("repo_status_graph.png")
 
-    commit_changes(readMe_repo,updated_readme, img)
+    commit_changes(readMe_repo, updated_readme, img)
 
 
-def open_url(url):
-    request = urllib.request.Request(url)
-    request.add_header("Accept", "application/vnd.github.v3+json")
-    request.add_header("Authorization", "Bearer " + packagePAT)
-
-    return urllib.request.urlopen(request)
-
-
-def get_lang_version():
+def update_lang_version():
     global ballerina_lang_version
     repo = github.get_repo(ORGANIZATION + "/ballerina-release")
     lang_version_file = repo.get_contents(BALLERINA_LANG_VERSION_FILE)
@@ -182,17 +173,22 @@ def make_pie(val):
     plt.savefig('repo_status_graph.png')
 
 
-def return_updated_readme(readme):
+def get_updated_readme(readme):
     updated_readme = ""
     global all_modules
 
     all_modules = get_module_list()
 
     module_details_list = all_modules["modules"]
+    distribution_lag = get_lag_info[BALLERINA_DISTRIBUTION][0]
 
     updated_readme += "# Ballerina repositories update status" + "\n"
-    declaration  = "ballerina-lang repository version **" +ballerina_lang_version + "** has updates as follows."
-    updated_readme += "| <img src=\"foo.png\" width=\"625\" title=\"Repositories updated\"/> | " + declaration + " |"+"\n"
+    distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
+    distribution_pr_link = "https://github.com/ballerina-platform/"+BALLERINA_DISTRIBUTION+"/pull/" + str(distribution_pr_number)
+
+    distribution_lag_statement = "ballerina-distribution repository lags by " + distribution_lag + "and pending PR [#" + str(distribution_pr_number) + "](" + distribution_pr_link + ")<br>"
+    lang_version_statement  = "ballerina-lang repository version **" +ballerina_lang_version + "** has updates as follows."
+    updated_readme += "| <img src=\"repo_status_graph.png\" width=\"625\" title=\"Repositories updated\"/> | " + distribution_lag_statement + lang_version_statement + " |"+"\n"
     updated_readme += "|:---:|:---|" +"\n"
     updated_readme += "## Modules and Extensions packed in distribution" + "\n"
     updated_readme += "| Level | Modules | Lag Status | Pending PR | Pending PRs CI Status |" + "\n"
