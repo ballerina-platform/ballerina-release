@@ -3,6 +3,10 @@ name: Update Dependency Version in Pipeline
 on:
   workflow_dispatch:
     inputs:
+      isRetrigger:
+        description: 'Re-trigger a failed dependency bump workflow'
+        required: false
+        default: 'false'
       ballerinaVersion:
         description: 'Ballerina Version (Optional)'
         required: false
@@ -11,6 +15,8 @@ on:
         description: 'Auto Merge PRs'
         required: false
         default: 'true'
+  schedule:
+    - cron:  '30 6 * * *'
 
 jobs:
   update-lang-version:
@@ -32,11 +38,24 @@ jobs:
             pip install retry
             pip install PyGithub
 
-      -   name: Update Ballerina Language Version
+      -   name: "[Scheduled] Update Ballerina Language Version"
+          if: github.event_name == 'schedule'
           run: |
-            python dependabot/update_dependencies_version.py "${{ github.event.inputs.ballerinaVersion }}" "${{ github.event.inputs.autoMergePRs }}"
+            python dependabot/update_dependencies_version.py "false" "" "true" "schedule"
           env:
-            packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
-            packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
-            packageEmail: ${{ secrets.BALLERINA_BOT_EMAIL }}
-            reviewerPackagePAT: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+
+      -   name: "[Manual] Update Ballerina Language Version"
+          if: github.event_name == 'workflow_dispatch'
+          run: |
+            python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
+                                                              "${{ github.event.inputs.ballerinaVersion }}" \
+                                                              "${{ github.event.inputs.autoMergePRs }}"
+          env:
+            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}

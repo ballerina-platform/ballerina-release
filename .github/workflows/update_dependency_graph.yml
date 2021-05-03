@@ -3,7 +3,10 @@ name: Update Dependency Graph
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 00 17 * *
+    - cron:  '0 6 * * *'
+  push:
+    paths:
+      - 'dependabot/resources/module_list.json'
 
 jobs:
   dependency:
@@ -30,7 +33,7 @@ jobs:
           run: |
             python dependabot/update_version_data.py
           env:
-            packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
-            packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
-            packageEmail: ${{ secrets.BALLERINA_BOT_EMAIL }}
-            reviewerPackagePAT: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}

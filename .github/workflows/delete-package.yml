@@ -1,0 +1,49 @@
+# Users with delete access can run this workflow to delete packages
+
+name: DeletePackages
+
+on: 
+  workflow_dispatch:
+      inputs:
+        owner:
+          description: 'Repo Owner'     
+          required: true
+          default: 'ballerina-platform'
+        repo:
+          description: 'Repository'     
+          required: true
+          default: 'ballerina-lang'
+        package:
+          description: 'Specific package'
+          required: true
+        version:
+          description: 'Package version'
+          required: true
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - name: Read access list
+        run: "cat ./delete-packages-scripts/usernames_with_package_delete_access.json | jq -r '.usernames[]|select(.username==\"${{github.actor}}\").username' > /tmp/auth-user.json"
+      - name: Set authorized username
+        id: setUname
+        run: printf "::set-output name=foundUname::%s" $(cat /tmp/auth-user.json)
+      - name: Get package version ids
+        if: steps.setUname.outputs.foundUname != ''
+        run: |
+          curl -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" -X POST -d '{"query":"query{organization(login:\"${{ github.event.inputs.owner }}\"){repository(name:\"${{ github.event.inputs.repo }}\"){packages(names:\"${{ github.event.inputs.package }}\",first:1){edges{node{version(version:\"${{ github.event.inputs.version }}\"){id}}}}}}}"}' --url https://api.github.com/graphql -o /tmp/version-id.json
+      - name: Filter packages
+        if: steps.setUname.outputs.foundUname != ''
+        run: "cat /tmp/version-id.json | jq -r '.data.organization.repository.packages.edges[0].node.version.id' > /tmp/filtered-id.json"
+      - name: Set version ID
+        id: setid
+        if: steps.setUname.outputs.foundUname != ''
+        run: printf "::set-output name=versionId::%s" $(cat /tmp/filtered-id.json)
+      - name: Delete selected package
+        uses: actions/delete-package-versions@v1.0.3
+        if: steps.setUname.outputs.foundUname != '' && steps.setid.outputs.versionId != ''
+        with:
+          package-version-ids: ${{ steps.setid.outputs.versionId }}
+          token: ${{ secrets.PACKAGE_DELETE_PAT }}

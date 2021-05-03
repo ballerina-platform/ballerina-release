@@ -1,25 +1,28 @@
 {
+    "auto_bump": true,
     "modules": [
         {
             "name": "module-ballerina-docker",
-            "version": "2.0.0-alpha8-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
+            "version_key": "dockerVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-c2c"
             ]
         },
         {
             "name": "module-ballerina-io",
-            "version": "0.6.0-alpha8-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "io-ballerina",
+            "version_key": "stdlibIoVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerinax-datamapper",
                 "module-ballerina-log",
@@ -29,36 +32,39 @@
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
-            "version": "0.10.0-alpha8-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "jballerina.java.arrays-ballerina",
+            "version_key": "stdlibJavaArraysVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-random",
-            "version": "0.10.0-alpha8-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "random-ballerina",
+            "version_key": "stdlibRandomVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-websub"
             ]
         },
         {
             "name": "module-ballerina-regex",
-            "version": "0.7.0-alpha8-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "regex-ballerina",
+            "version_key": "stdlibRegexVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-log",
                 "module-ballerina-uuid"
@@ -66,12 +72,13 @@
         },
         {
             "name": "module-ballerina-time",
-            "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "time-ballerina",
+            "version_key": "stdlibTimeVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-crypto",
                 "module-ballerina-file",
@@ -80,12 +87,13 @@
         },
         {
             "name": "module-ballerina-url",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "url-ballerina",
+            "version_key": "stdlibUrlVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-graphql",
                 "module-ballerina-websub",
@@ -94,24 +102,26 @@
         },
         {
             "name": "module-ballerina-xmldata",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 1,
             "group_id": "org.ballerinalang",
             "artifact_id": "xmldata-ballerina",
+            "version_key": "stdlibXmldataVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-crypto",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "crypto-ballerina",
+            "version_key": "stdlibCryptoVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
@@ -124,22 +134,26 @@
         },
         {
             "name": "module-ballerinax-datamapper",
-            "version": "2.0.0-alpha8-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinax.datamapper",
             "artifact_id": "datamapper-extension",
+            "version_key": "dataMapperVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "dependents": []
+            "central_only_module": false,
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-log",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "log-ballerina",
+            "version_key": "stdlibLogVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-file",
@@ -155,24 +169,26 @@
         },
         {
             "name": "module-ballerina-os",
-            "version": "0.8.0-alpha8-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "os-ballerina",
+            "version_key": "stdlibOsVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-file"
             ]
         },
         {
             "name": "module-ballerina-task",
-            "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "task-ballerina",
+            "version_key": "stdlibTaskVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-cache",
                 "module-ballerina-email",
@@ -181,24 +197,26 @@
         },
         {
             "name": "module-ballerina-xslt",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 2,
             "group_id": "org.ballerinalang",
             "artifact_id": "xslt-ballerina",
+            "version_key": "stdlibXsltVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-cache",
-            "version": "2.1.0-alpha8-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "cache-ballerina",
+            "version_key": "stdlibCacheVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
@@ -207,12 +225,13 @@
         },
         {
             "name": "module-ballerina-file",
-            "version": "0.7.0-alpha8-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "file-ballerina",
+            "version_key": "stdlibFileVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
@@ -220,24 +239,26 @@
         },
         {
             "name": "module-ballerina-ftp",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "ftp-ballerina",
+            "version_key": "stdlibFtpVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-mime",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "mime-ballerina",
+            "version_key": "stdlibMimeVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
@@ -245,116 +266,126 @@
         },
         {
             "name": "module-ballerinax-nats",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "nats-ballerina",
+            "version_key": "stdlibNatsVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
             "name": "module-ballerinax-stan",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "stan-ballerina",
+            "version_key": "stdlibStanVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
             "name": "module-ballerina-tcp",
-            "version": "0.8.0-alpha8-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "tcp-ballerina",
+            "version_key": "stdlibTcpVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-udp",
-            "version": "0.9.0-alpha8-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "udp-ballerina",
+            "version_key": "stdlibUdpVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-uuid",
-            "version": "0.10.0-alpha8-SNAPSHOT",
             "level": 3,
             "group_id": "org.ballerinalang",
             "artifact_id": "uuid-ballerina",
+            "version_key": "stdlibUuidVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-http"
             ]
         },
         {
             "name": "module-ballerina-auth",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "auth-ballerina",
+            "version_key": "stdlibAuthVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-http"
             ]
         },
         {
             "name": "module-ballerina-email",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "email-ballerina",
+            "version_key": "stdlibEmailVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-jwt",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "jwt-ballerina",
+            "version_key": "stdlibJwtVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-http"
             ]
         },
         {
             "name": "module-ballerina-oauth2",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 4,
             "group_id": "org.ballerinalang",
             "artifact_id": "oauth2-ballerina",
+            "version_key": "stdlibOAuth2Version",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-http"
             ]
         },
         {
             "name": "module-ballerina-http",
-            "version": "1.1.0-alpha8-SNAPSHOT",
             "level": 5,
             "group_id": "org.ballerinalang",
             "artifact_id": "http-ballerina",
+            "version_key": "stdlibHttpVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
@@ -371,95 +402,79 @@
         },
         {
             "name": "module-ballerinax-aws.lambda",
-            "version": "2.0.0-alpha9-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinax.awslambda",
             "artifact_id": "awslambda-extension-bala",
+            "version_key": "awslambdaVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerinax-azure.functions",
-            "version": "2.0.0-alpha8-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinax.azurefunctions",
             "artifact_id": "azurefunctions-extension",
+            "version_key": "azFunctionsVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-graphql",
-            "version": "0.2.0-alpha8-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "graphql-ballerina",
+            "version_key": "stdlibGraphqlVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-grpc",
-            "version": "0.8.0-alpha8-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "grpc-ballerina",
+            "version_key": "stdlibGrpcVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerina-c2c",
                 "module-ballerinax-choreo"
             ]
         },
         {
-            "name": "module-ballerinax-jaeger",
-            "version": "0.2.2-SNAPSHOT",
-            "level": 6,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "jaeger-extension-ballerina",
-            "default_branch": "main",
-            "auto_merge": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
             "name": "ballerina-openapi",
-            "version": "2.0.11-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "module-ballerina-openapi",
+            "version_key": "openapiVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-prometheus",
-            "version": "0.1.7-SNAPSHOT",
-            "level": 6,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "prometheus-extension-ballerina",
-            "default_branch": "main",
-            "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerinai-transaction",
-            "version": "1.0.12-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "transaction-ballerina",
+            "version_key": "stdlibTransactionVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "module-ballerinax-kafka",
                 "module-ballerinax-rabbitmq",
@@ -468,126 +483,159 @@
         },
         {
             "name": "module-ballerina-websocket",
-            "version": "1.2.0-alpha8-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websocket-ballerina",
+            "version_key": "stdlibWebsocketVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-websub",
-            "version": "1.2.0-alpha8-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websub-ballerina",
+            "version_key": "stdlibWebsubVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-websubhub",
-            "version": "0.2.0-alpha8-SNAPSHOT",
             "level": 6,
             "group_id": "org.ballerinalang",
             "artifact_id": "websubhub-ballerina",
+            "version_key": "stdlibWebsubhubVersion",
             "default_branch": "main",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerina-c2c",
-            "version": "2.0.0-alpha8-SNAPSHOT",
             "level": 7,
             "group_id": "io.ballerina",
             "artifact_id": "c2c-ballerina",
+            "version_key": "c2cVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "module-ballerinax-choreo",
-            "version": "0.2.3-SNAPSHOT",
-            "level": 7,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "choreo-extension-ballerina",
-            "default_branch": "main",
-            "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
             "name": "module-ballerinax-kafka",
-            "version": "2.1.0-alpha8-SNAPSHOT",
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "kafka-ballerina",
+            "version_key": "stdlibKafkaVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
             "name": "module-ballerinax-rabbitmq",
-            "version": "1.1.0-alpha9-SNAPSHOT",
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "rabbitmq-ballerina",
+            "version_key": "stdlibRabbitmqVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
             "name": "module-ballerina-sql",
-            "version": "0.6.0-alpha8-SNAPSHOT",
             "level": 7,
             "group_id": "org.ballerinalang",
             "artifact_id": "sql-ballerina",
+            "version_key": "stdlibSqlVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": [
-                "ballerina-distribution",
                 "module-ballerinax-java.jdbc",
-                "module-ballerinax-mysql"
+                "module-ballerinax-mysql",
+                "ballerina-distribution"
             ]
         },
         {
-            "name": "ballerina-distribution",
-            "version": "swan-lake-alpha5-SNAPSHOT",
-            "level": 8,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "distribution-ballerina",
-            "default_branch": "master",
-            "auto_merge": true,
-            "dependents": []
-        },
-        {
             "name": "module-ballerinax-java.jdbc",
-            "version": "0.6.0-alpha8-SNAPSHOT",
             "level": 8,
             "group_id": "org.ballerinalang",
             "artifact_id": "java.jdbc-ballerina",
+            "version_key": "stdlibJdbcVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
             "dependents": []
         },
         {
             "name": "module-ballerinax-mysql",
-            "version": "0.7.0-alpha8-SNAPSHOT",
             "level": 8,
             "group_id": "org.ballerinalang",
             "artifact_id": "mysql-ballerina",
+            "version_key": "stdlibMysqlVersion",
             "default_branch": "master",
             "auto_merge": true,
+            "central_only_module": false,
+            "dependents": []
+        },
+        {
+            "name": "ballerina-distribution",
+            "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "distribution-ballerina",
+            "version_key": "stdlibDistributionVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "central_only_module": false,
+            "dependents": []
+        }
+    ],
+    "central_modules": [
+        {
+            "name": "module-ballerinax-jaeger",
+            "level": 9,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "jaeger-extension-ballerina",
+            "version_key": "observeExtJaegerVersion",
+            "default_branch": "main",
+            "auto_merge": false,
+            "central_only_module": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-prometheus",
+            "level": 9,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "prometheus-extension-ballerina",
+            "version_key": "observeExtPrometheusVersion",
+            "default_branch": "main",
+            "auto_merge": false,
+            "central_only_module": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-choreo",
+            "level": 9,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "choreo-extension-ballerina",
+            "version_key": "observeExtChoreoVersion",
+            "default_branch": "main",
+            "auto_merge": false,
+            "central_only_module": true,
             "dependents": []
         }
     ]
