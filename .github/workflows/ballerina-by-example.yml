@@ -1,6 +1,6 @@
 name: Generate ballerina by examples
 
-on: push
+on: workflow_dispatch
 
 jobs:
   bbe-gen:
