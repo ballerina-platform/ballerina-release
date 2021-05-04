@@ -368,7 +368,7 @@ def update_module(idx: int, current_level):
         create_pull_request(idx, repo)
     else:
         current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
-        current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
+        current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
         current_level_modules[idx][MODULE_CREATED_PR] = None
 
         pulls = repo.get_pulls(state='closed')
