@@ -96,6 +96,7 @@
             "central_only_module": false,
             "dependents": [
                 "module-ballerina-graphql",
+                "ballerina-openapi",
                 "module-ballerina-websub",
                 "module-ballerina-websubhub"
             ]
@@ -110,7 +111,7 @@
             "auto_merge": true,
             "central_only_module": false,
             "dependents": [
-                "ballerina-distribution"
+                "ballerina-openapi"
             ]
         },
         {
