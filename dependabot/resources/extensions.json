@@ -456,7 +456,7 @@
         {
             "name": "ballerina-openapi",
             "level": 6,
-            "group_id": "org.ballerinalang",
+            "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-openapi",
             "version_key": "openapiVersion",
             "default_branch": "master",
