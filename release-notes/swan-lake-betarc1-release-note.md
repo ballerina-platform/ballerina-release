@@ -55,11 +55,28 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta RC1](https://git
 
 ### Standard Library Updates
 
-#### New Features
-
 #### Improvements
 
+##### GraphQL Package
+
+ - Allow enum as an input parameter.
+
 #### Bug Fixes
+
+##### GraphQL Package
+
+ - Fix service crashing issue when types have recursive reference.
+ - Fix service hanging issue when a GraphQL field is of a union type including service type.
+ - Fix service hanging issue when a GraphQL field returns a service array.
+
+##### WebSocket Package
+
+ - Fix the issue of WebSocket services not working when Observability is enabled.
+ - Fix the listener initialization failure when configurations are given as included record params.
+
+##### Email Package
+
+ - Fix the issue of getting error while sending and receiving complex MIME typed attachments.
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta RC1](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+BetaRC1%22+label%3AType%2FBug).
 
