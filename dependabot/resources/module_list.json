@@ -111,7 +111,7 @@
         },
         {
             "name": "ballerina-openapi",
-            "group_id": "org.ballerinalang",
+            "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-openapi",
             "version_key": "openapiVersion"
         },
