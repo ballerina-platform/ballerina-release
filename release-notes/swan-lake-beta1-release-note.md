@@ -61,9 +61,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 
 ### Standard Library Updates
 
-#### New Features
-
 #### Improvements
+
+##### `graphql` Package
+
+ - Allow enum as an input parameter.
 
 #### Bug Fixes
 
