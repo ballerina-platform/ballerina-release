@@ -15,14 +15,9 @@ ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 ballerina_bot_email = os.environ[constants.ENV_BALLERINA_BOT_EMAIL]
 ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
 
-ENCODING = "utf-8"
-ORGANIZATION = "ballerina-platform"
-EXTENSIONS_LIST_FILE = "dependabot/resources/extensions.json"
-BALLERINA_LANG_VERSION_FILE = "dependabot/resources/latest_ballerina_lang_version.json"
-PROPERTIES_FILE = "gradle.properties"
 README_FILE = "README.md"
 LANG_VERSION_KEY = "ballerinaLangVersion"
-BALLERINA_DISTRIBUTION = "ballerina-distribution "
+
 github = Github(ballerina_bot_token)
 
 all_modules = []
@@ -32,7 +27,7 @@ ballerina_timestamp = ""
 ballerina_lang_version = ""
 
 def main():
-    readMe_repo = github.get_repo(ORGANIZATION + "/ballerina-release")
+    readMe_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
 
     readme_file = get_readme_file()
     updated_readme = readme_file
@@ -82,9 +77,9 @@ def open_url(url):
 
 def update_lang_version():
     global ballerina_lang_version
-    repo = github.get_repo(ORGANIZATION + "/ballerina-release")
-    lang_version_file = repo.get_contents(BALLERINA_LANG_VERSION_FILE)
-    lang_version_json = lang_version_file .decoded_content.decode(ENCODING)
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
+    lang_version_file = repo.get_contents(constants.LANG_VERSION_FILE)
+    lang_version_json = lang_version_file .decoded_content.decode(constants.ENCODING)
 
     data = json.loads(lang_version_json)
     ballerina_lang_version = data["version"]
@@ -115,9 +110,9 @@ def format_lag(delta):
 
 def get_lag_info(module_name):
     global ballerina_timestamp
-    repo = github.get_repo(ORGANIZATION + "/" + module_name)
-    properties_file = repo.get_contents(PROPERTIES_FILE)
-    properties_file = properties_file.decoded_content.decode(ENCODING)
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
+    properties_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
+    properties_file = properties_file.decoded_content.decode(constants.ENCODING)
 
     for line in properties_file.splitlines():
         if line.startswith(LANG_VERSION_KEY):
@@ -189,6 +184,7 @@ def update_modules(updated_readme, module_details_list):
 
 
 def get_updated_readme(readme):
+    BALLERINA_DISTRIBUTION = "ballerina-distribution"
     updated_readme = ""
     global all_modules
 
@@ -232,7 +228,7 @@ def commit_changes(repo, updated_file):
     branch = constants.DASHBOARD_UPDATE_BRANCH
     
     remote_file = repo.get_contents(README_FILE)
-    remote_file_contents = remote_file.decoded_content.decode(ENCODING)
+    remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
 
     if remote_file_contents == updated_file:
         print("[Info] No changes in the README.")
@@ -301,30 +297,32 @@ def commit_changes(repo, updated_file):
 
 
 def get_readme_file():
-    readMe_repo = github.get_repo(ORGANIZATION + "/ballerina-release")
+    readMe_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
     readme_file = readMe_repo.get_contents(README_FILE)
-    readme_file = readme_file.decoded_content.decode(ENCODING)
+    readme_file = readme_file.decoded_content.decode(constants.ENCODING)
 
     return readme_file
 
 
 def get_module_list():
-    readMe_repo = github.get_repo(ORGANIZATION + "/ballerina-release")
+    readMe_repo = github.get_repo(constants.BALLERINA_ORG_NAME+ "/ballerina-release")
 
-    module_list_json = readMe_repo.get_contents(EXTENSIONS_LIST_FILE)
-    module_list_json = module_list_json.decoded_content.decode(ENCODING)
+    module_list_json = readMe_repo.get_contents(constants.EXTENSIONS_FILE)
+    module_list_json = module_list_json.decoded_content.decode(constants.ENCODING)
 
     data = json.loads(module_list_json)
 
     return data
 
 
-def check_pending_pr_checks(module_name): 
-    repo = github.get_repo(ORGANIZATION + "/" + module_name)
+def check_pending_pr_checks(module_name):
+    DEPENDANCY_UPDATING_BRANCH = "automated/dependency_version_update"
+    
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
     pulls = repo.get_pulls(state="open")
 
     for pull in pulls:
-        if("Update Dependencies" in pull.title):
+        if pull.head.ref == DEPENDANCY_UPDATING_BRANCH:
             sha = pull.head.sha
             status = repo.get_commit(sha=sha).get_statuses()
             print(status)
