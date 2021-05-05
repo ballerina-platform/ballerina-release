@@ -127,7 +127,7 @@ def get_lag_info(module_name):
     days = str(delta)
 
     if(delta==0):
-        color = "green"
+        color = "brightgreen"
     elif(delta<2):
         color = "yellow"
     else:
@@ -195,21 +195,34 @@ def get_updated_readme(readme):
 
     ballerina_lang_lag = get_lang_version_lag()
 
-    updated_readme += "# Ballerina repositories update status" + "\n"
+    updated_readme += "# Ballerina Repositories Update Status" + "\n"
     distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
     distribution_pr_link = "https://github.com/ballerina-platform/"+BALLERINA_DISTRIBUTION+"/pull/" + str(distribution_pr_number)
 
-    distribution_lag_statement = "ballerina-distribution repository lags by " + distribution_lag + " and pending PR [#" + str(distribution_pr_number) + "](" + distribution_pr_link + ") is available"
-    lang_version_statement  = "ballerina-lang repository version **" + ballerina_lang_version + "** ("+ballerina_lang_lag+") has been updated as follows"
+    if(distribution_lag.startswith("0")):
+        distribution_lag_statement = "`ballerina-distribution` repository is up to date."
+    else:
+        if(str(distribution_pr_number)=="None"):
+            distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag
+        else:
+            distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag + " and pending PR [#" + str(distribution_pr_number) + "](" + distribution_pr_link + ") is available"
+
+    if(ballerina_lang_lag.startswith("0")):
+        lang_version_statement  = "`ballerina-lang` repository version **" + ballerina_lang_version + "** has been updated as follows"
+    else:
+        lang_version_statement  = "`ballerina-lang` repository version **" + ballerina_lang_version + "** ("+ballerina_lang_lag+") has been updated as follows"
+
     updated_readme += distribution_lag_statement + "<br>"
+    updated_readme += "\n" + "<br>"
     updated_readme += lang_version_statement + "\n"
-    updated_readme += "## Modules and Extensions packed in distribution" + "\n"
+
+    updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
     updated_readme += "| Level | Modules | Lag Status | Pending PR | Pending PRs CI Status |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
     updated_readme, updated_modules_number = update_modules(updated_readme, module_details_list)
     
-    updated_readme += "## Modules released to Central" + "\n"
+    updated_readme += "## Modules Released to Central" + "\n"
 
     updated_readme += "| Level | Modules | Lag Status | Pending PR | Pending PRs CI Status |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
