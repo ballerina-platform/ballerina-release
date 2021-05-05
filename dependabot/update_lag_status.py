@@ -44,6 +44,42 @@ def main():
     commit_changes(readMe_repo, updated_readme)
 
 
+
+def get_latest_lang_version():
+    try:
+        version_string = open_url(
+            "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions").read()
+    except Exception as e:
+        print('[Error] Failed to get ballerina packages version', e)
+        sys.exit(1)
+    latest_version = json.loads(version_string)[0]
+    return latest_version["name"]
+
+
+def get_lang_version_lag():
+    global ballerina_timestamp
+    lag_string=""
+    version_string = get_latest_lang_version()
+    lang_version = (version_string).split("-")
+    timestamp = create_timestamp(lang_version[2], lang_version[3])
+    ballerina_lag = timestamp-ballerina_timestamp
+    days, hrs = days_hours_minutes(ballerina_lag)
+    if(days>0):
+        lag_string = format_lag(ballerina_lag)
+    else:
+        lag_string = str(hrs)+" h"
+
+    return lag_string
+
+
+def open_url(url):
+    request = urllib.request.Request(url)
+    request.add_header("Accept", "application/vnd.github.v3+json")
+    request.add_header("Authorization", "Bearer " + ballerina_bot_token)
+
+    return urllib.request.urlopen(request)
+
+
 def update_lang_version():
     global ballerina_lang_version
     repo = github.get_repo(ORGANIZATION + "/ballerina-release")
@@ -93,7 +129,7 @@ def get_lag_info(module_name):
     ballerina_timestamp = create_timestamp(lang_version[2], lang_version[3])
     update_timestamp = ballerina_timestamp-timestamp
     delta = format_lag(update_timestamp)
-    days = str(delta) + "%20days"
+    days = str(delta)
 
     if(delta==0):
         color = "green"
@@ -130,6 +166,7 @@ def update_modules(updated_readme, module_details_list):
     
 
             lag_status, color = get_lag_info(module[MODULE_NAME])
+            lag_status  += "%20days"
             if(color!="red"):
                 updated_modules +=1
             lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + ")]()"
@@ -158,15 +195,17 @@ def get_updated_readme(readme):
     all_modules = get_module_list()
 
     module_details_list = all_modules["modules"]
-    distribution_lag = get_lag_info(BALLERINA_DISTRIBUTION)[0]
+    distribution_lag = get_lag_info(BALLERINA_DISTRIBUTION)[0] + " days"
+
+    ballerina_lang_lag = get_lang_version_lag()
 
     updated_readme += "# Ballerina repositories update status" + "\n"
     distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
     distribution_pr_link = "https://github.com/ballerina-platform/"+BALLERINA_DISTRIBUTION+"/pull/" + str(distribution_pr_number)
 
-    distribution_lag_statement = "ballerina-distribution repository lags by " + distribution_lag + "and pending PR [#" + str(distribution_pr_number) + "](" + distribution_pr_link + ") is available"
-    lang_version_statement  = "ballerina-lang repository version **" + ballerina_lang_version + "** has been updated as follows"
-    updated_readme += distribution_lag_statement + "\n"
+    distribution_lag_statement = "ballerina-distribution repository lags by " + distribution_lag + " and pending PR [#" + str(distribution_pr_number) + "](" + distribution_pr_link + ") is available"
+    lang_version_statement  = "ballerina-lang repository version **" + ballerina_lang_version + "** ("+ballerina_lang_lag+") has been updated as follows"
+    updated_readme += distribution_lag_statement + "<br>"
     updated_readme += lang_version_statement + "\n"
     updated_readme += "## Modules and Extensions packed in distribution" + "\n"
     updated_readme += "| Level | Modules | Lag Status | Pending PR | Pending PRs CI Status |" + "\n"
@@ -239,7 +278,7 @@ def commit_changes(repo, updated_file):
                 base='master'
             )
         except Exception as e:
-            print('Error occurred while creating pull request updating dependencies.', e)
+            print('Error occurred while creating pull request updating readme.', e)
             sys.exit(1)
 
         # To stop intermittent failures due to API sync
