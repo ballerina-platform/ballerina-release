@@ -1,17 +1,19 @@
-import github
-from github import Github, InputGitAuthor, GithubException
 import json
 import sys
 import os
+import time
+
+import github
+from github import Github, InputGitAuthor, GithubException
 from datetime import datetime
 import urllib.request
-import base64
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 
-packageUser = os.environ["packageUser"]
-packagePAT = os.environ["packagePAT"]
-packageEmail = os.environ["packageEmail"]
+import constants
+
+ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
+ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
+ballerina_bot_email = os.environ[constants.ENV_BALLERINA_BOT_EMAIL]
+ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
 
 ENCODING = "utf-8"
 ORGANIZATION = "ballerina-platform"
@@ -21,7 +23,7 @@ PROPERTIES_FILE = "gradle.properties"
 README_FILE = "README.md"
 LANG_VERSION_KEY = "ballerinaLangVersion"
 BALLERINA_DISTRIBUTION = "ballerina-distribution "
-github = Github(packagePAT)
+github = Github(ballerina_bot_token)
 
 all_modules = []
 
@@ -39,9 +41,7 @@ def main():
 
     updated_readme = get_updated_readme(readme_file)
 
-    img = mpimg.imread("repo_status_graph.png")
-
-    commit_changes(readMe_repo, updated_readme, img)
+    commit_changes(readMe_repo, updated_readme)
 
 
 def update_lang_version():
@@ -151,28 +151,6 @@ def update_modules(updated_readme, module_details_list):
     return updated_readme, updated_modules
 
 
-def make_pie(val):
-    import matplotlib.pyplot as plt
-    import numpy as np
-
-    colors = [(60,121,189), (212, 241, 249)]
-    sizes = [val,100-val]
-    text = str(val) + "%"
-
-    col = [[i/255. for i in c] for c in colors]
-
-    fig, ax = plt.subplots()
-    ax.axis('equal')
-    width = 0.35
-    kwargs = dict(colors=col, startangle=180)
-    outside, _ = ax.pie(sizes, radius=1, pctdistance=1-width/2,**kwargs)
-    plt.setp( outside, width=width, edgecolor='white')
-
-    kwargs = dict(size=20, fontweight='bold', va='center')
-    ax.text(0, 0, text, ha='center', **kwargs)
-    plt.savefig('repo_status_graph.png')
-
-
 def get_updated_readme(readme):
     updated_readme = ""
     global all_modules
@@ -180,16 +158,16 @@ def get_updated_readme(readme):
     all_modules = get_module_list()
 
     module_details_list = all_modules["modules"]
-    distribution_lag = get_lag_info[BALLERINA_DISTRIBUTION][0]
+    distribution_lag = get_lag_info(BALLERINA_DISTRIBUTION)[0]
 
     updated_readme += "# Ballerina repositories update status" + "\n"
     distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
     distribution_pr_link = "https://github.com/ballerina-platform/"+BALLERINA_DISTRIBUTION+"/pull/" + str(distribution_pr_number)
 
-    distribution_lag_statement = "ballerina-distribution repository lags by " + distribution_lag + "and pending PR [#" + str(distribution_pr_number) + "](" + distribution_pr_link + ")<br>"
-    lang_version_statement  = "ballerina-lang repository version **" +ballerina_lang_version + "** has updates as follows."
-    updated_readme += "| <img src=\"repo_status_graph.png\" width=\"625\" title=\"Repositories updated\"/> | " + distribution_lag_statement + lang_version_statement + " |"+"\n"
-    updated_readme += "|:---:|:---|" +"\n"
+    distribution_lag_statement = "ballerina-distribution repository lags by " + distribution_lag + "and pending PR [#" + str(distribution_pr_number) + "](" + distribution_pr_link + ") is available"
+    lang_version_statement  = "ballerina-lang repository version **" + ballerina_lang_version + "** has been updated as follows"
+    updated_readme += distribution_lag_statement + "\n"
+    updated_readme += lang_version_statement + "\n"
     updated_readme += "## Modules and Extensions packed in distribution" + "\n"
     updated_readme += "| Level | Modules | Lag Status | Pending PR | Pending PRs CI Status |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
@@ -206,50 +184,82 @@ def get_updated_readme(readme):
     updated_readme, updated_modules_number_central = update_modules(updated_readme, central_modules)
     updated_modules_number += updated_modules_number_central
     repositories_updated = round((updated_modules_number/(len(module_details_list)+len(central_modules)))*100)
-    make_pie(repositories_updated)
 
     return updated_readme
 
 
-def commit_changes(repo, updated_file, graph_image):
-    author = InputGitAuthor(packageUser, packageEmail)
-    DASHBOARD_UPDATE_BRANCH = "master"
-    branch = DASHBOARD_UPDATE_BRANCH
+def commit_changes(repo, updated_file):
+    author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
+    branch = constants.DASHBOARD_UPDATE_BRANCH
     
-    remote_file = repo.get_contents(README_FILE, ref=DASHBOARD_UPDATE_BRANCH)
+    remote_file = repo.get_contents(README_FILE)
     remote_file_contents = remote_file.decoded_content.decode(ENCODING)
 
-    image = base64.b64encode(graph_image)
-
     if remote_file_contents == updated_file:
-        print("[Info] No diff in the README.")
+        print("[Info] No changes in the README.")
     else:
-        current_file = repo.get_contents(README_FILE, ref=branch)
-        
-        update = repo.update_file(
-            current_file.path,
-            "update readme commit message",
-            updated_file,
-            current_file.sha,
-            branch=branch,
-            author=author
-        )
+        try:
+            base = repo.get_branch(repo.default_branch)
+            branch = constants.DASHBOARD_UPDATE_BRANCH
+            try:
+                ref = f"refs/heads/" + branch
+                repo.create_git_ref(ref=ref, sha=base.commit.sha)
+            except:
+                print("[Info] Unmerged update branch existed in 'ballerina-release'")
+                branch = constants.DASHBOARD_UPDATE_BRANCH + '_tmp'
+                ref = f"refs/heads/" + branch
+                try:
+                    repo.create_git_ref(ref=ref, sha=base.commit.sha)
+                except GithubException as e:
+                    print("[Info] deleting update tmp branch existed in 'ballerina-release'")
+                    if e.status == 422:  # already exist
+                        repo.get_git_ref("heads/" + branch).delete()
+                        repo.create_git_ref(ref=ref, sha=base.commit.sha)
+            update = repo.update_file(
+                remote_file.path,
+                "Update repo status dashboard",
+                updated_file,
+                remote_file.sha,
+                branch=branch,
+                author=author
+            )
+            if not branch == constants.DASHBOARD_UPDATE_BRANCH:
+                update_branch = repo.get_git_ref("heads/" + constants.DASHBOARD_UPDATE_BRANCH)
+                update_branch.edit(update["commit"].sha, force=True)
+                repo.get_git_ref("heads/" + branch).delete()
 
-        update_branch = repo.get_git_ref("heads/" + branch)
-        update_branch.edit(update["commit"].sha, force=True)
+        except Exception as e:
+            print('Error while committing README.md', e)
 
-        img_file = repo.get_contents("repo_status_graph.png", ref=branch)
+        try:
+            created_pr = repo.create_pull(
+                title='[Automated] Update README',
+                body='Update repository statuses in README.md',
+                head=constants.DASHBOARD_UPDATE_BRANCH,
+                base='master'
+            )
+        except Exception as e:
+            print('Error occurred while creating pull request updating dependencies.', e)
+            sys.exit(1)
 
-        img_update = repo.update_file(
-            img_file.path,
-            "update image commit message",
-            image,
-            img_file.sha,
-            branch=branch,
-            author=author
-        )
-        update_branch = repo.get_git_ref("heads/" + branch)
-        update_branch.edit(img_update["commit"].sha, force=True)
+        # To stop intermittent failures due to API sync
+        time.sleep(5)
+
+        r_github = Github(ballerina_reviewer_bot_token)
+        repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-release')
+        pr = repo.get_pull(created_pr.number)
+        try:
+            pr.create_review(event='APPROVE')
+        except Exception as e:
+            print('Error occurred while approving Update Extensions Dependencies PR', e)
+            sys.exit(1)
+
+        try:
+            created_pr.merge()
+        except Exception as e:
+            print("Error occurred while merging dependency PR for module 'ballerina-release'", e)
+            sys.exit(1)
+
 
 def get_readme_file():
     readMe_repo = github.get_repo(ORGANIZATION + "/ballerina-release")
@@ -275,7 +285,7 @@ def check_pending_pr_checks(module_name):
     pulls = repo.get_pulls(state="open")
 
     for pull in pulls:
-        if("AUTO MERGE" in pull.title):
+        if("Update Dependencies" in pull.title):
             sha = pull.head.sha
             status = repo.get_commit(sha=sha).get_statuses()
             print(status)

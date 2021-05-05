@@ -25,7 +25,8 @@ jobs:
           run: |
             python dependabot/update_lag_status.py
           env:
-            packageUser: ${{ secrets.BALLERINA_RELEASE_USERNAME }}
-            packagePAT: ${{ secrets.BALLERINA_RELEASE_TOKEN }}
-            packageEmail: ${{ secrets.BALLERINA_RELEASE_EMAIL }}
+            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
   
