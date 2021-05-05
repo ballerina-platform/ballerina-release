@@ -1,6 +1,12 @@
 ---
-layout: ballerina-blank-page
-title: Release Note
+layout: ballerina-left-nav-release-notes
+title: Swan Lake <VERSION>
+permalink: /downloads/swan-lake-release-notes/swan-lake-<VERSION>/
+active: swan-lake-alpha5
+redirect_from: 
+    - /downloads/swan-lake-release-notes/swan-lake-<VERSION>
+    - /downloads/swan-lake-release-notes/
+    - /downloads/swan-lake-release-notes
 ---
 ### Overview of Ballerina Swan Lake <VERSION>
 

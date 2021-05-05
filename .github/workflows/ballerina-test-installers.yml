@@ -1,6 +1,11 @@
 name: Installer Tests
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - "extension_update"
+      - "extension_update_tmp"
 
 jobs:
   installer-ubuntu-build:
