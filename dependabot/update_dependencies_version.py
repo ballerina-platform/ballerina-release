@@ -66,6 +66,8 @@ def main():
     global extensions_file
     global all_modules
 
+    extensions_file = get_extensions_file()
+
     print("Workflow invoked of type '" + event_type + "'")
     if event_type == 'schedule' and not extensions_file['auto_bump']:
         print("Schedule workflow invoked, exiting script as 'auto_bump' flag in modules_list.json is false.")
@@ -76,7 +78,6 @@ def main():
     commit_json_file()
 
     print('Workflow started with Ballerina Lang version : ' + lang_version)
-    extensions_file = get_extensions_file()
 
     check_and_update_lang_version()
 
