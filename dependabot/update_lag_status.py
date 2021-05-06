@@ -170,15 +170,13 @@ def update_modules(updated_readme, module_details_list):
             if(pr_number!=None):
                 pr_id = "#" + str(pr_number)
                 pending_pr_link = "https://github.com/ballerina-platform/"+module[MODULE_NAME]+"/pull/" + str(pr_number)
-                ci_status_link = "https://github.com/ballerina-platform/"+module[MODULE_NAME]+"/pulls"
-                ci_status = "[![CI status](https://img.shields.io/github/status/contexts/pulls/ballerina-platform/" + module[MODULE_NAME] + "/" + str(pr_number) + ")](" + ci_status_link + ")"
             pending_pr = "[" + pr_id + "](" + pending_pr_link + ")"
             
             level = ""
             if(idx==0):
                 level = str(current_level)
    
-            table_row = "| " + level + " | [" + name + "](https://github.com/ballerina-platform/"+module[MODULE_NAME]+") | " + lag_button + " | " + pending_pr + " | " + ci_status + " |"
+            table_row = "| " + level + " | [" + name + "](https://github.com/ballerina-platform/"+module[MODULE_NAME]+") | " + lag_button + " | " + pending_pr + " | "
             updated_readme += table_row + "\n"
     return updated_readme, updated_modules
 
@@ -217,15 +215,15 @@ def get_updated_readme(readme):
     updated_readme += lang_version_statement + "\n"
 
     updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
-    updated_readme += "| Level | Modules | Lag Status | Pending PR | Pending PRs CI Status |" + "\n"
-    updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
+    updated_readme += "| Level | Modules | Lag Status | Pending PR |" + "\n"
+    updated_readme += "|:---:|:---:|:---:|:---:|" + "\n"
 
     updated_readme, updated_modules_number = update_modules(updated_readme, module_details_list)
     
     updated_readme += "## Modules Released to Central" + "\n"
 
-    updated_readme += "| Level | Modules | Lag Status | Pending PR | Pending PRs CI Status |" + "\n"
-    updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
+    updated_readme += "| Level | Modules | Lag Status | Pending PR |" + "\n"
+    updated_readme += "|:---:|:---:|:---:|:---:|" + "\n"
 
     central_modules = all_modules["central_modules"]
 
