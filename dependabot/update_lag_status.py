@@ -148,11 +148,9 @@ def update_modules(updated_readme, module_details_list):
         for idx, module in enumerate(current_level_modules):
             name = ""
             pending_pr = ""
-            ci_status = ""
             pr_id = ""
 
             pending_pr_link = ""
-            ci_status_link = ""
 
             if(module[MODULE_NAME].startswith("module")):
                 name = module[MODULE_NAME].split("-")[2]
