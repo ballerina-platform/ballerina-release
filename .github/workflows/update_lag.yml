@@ -1,0 +1,32 @@
+name: Update Status Dashboard
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  update-lag-status:
+    runs-on: ubuntu-latest
+    steps:
+      -   name: Checkout Repository
+          uses: actions/checkout@v2
+
+      -   name: Setup Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: '3.x'
+
+      -   name: Install Python Packages
+          run: |
+            pip install requests
+            pip install retry
+            pip install PyGithub
+            pip install matplotlib
+      -   name: Update Status Dashboard
+          run: |
+            python dependabot/update_lag_status.py
+          env:
+            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+  
