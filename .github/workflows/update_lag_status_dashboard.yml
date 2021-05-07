@@ -1,6 +1,9 @@
 name: Update Status Dashboard
 
-on: 
+on:
+  workflow_run:
+    workflows: [ "Update Dependency Version in Pipeline" ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
