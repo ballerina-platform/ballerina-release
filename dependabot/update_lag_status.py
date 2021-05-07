@@ -249,7 +249,7 @@ def commit_changes(repo, updated_file):
                         repo.create_git_ref(ref=ref, sha=base.commit.sha)
             update = repo.update_file(
                 remote_file.path,
-                "Update repo status dashboard",
+                "[Automated] Update extension dependency dashboard",
                 updated_file,
                 remote_file.sha,
                 branch=branch,
@@ -265,8 +265,8 @@ def commit_changes(repo, updated_file):
 
         try:
             created_pr = repo.create_pull(
-                title='[Automated] Update README',
-                body='Update repository statuses in README.md',
+                title='[Automated] Update Extension Dependency Dashboard',
+                body='Update extension dependency dashboard',
                 head=constants.DASHBOARD_UPDATE_BRANCH,
                 base='master'
             )
