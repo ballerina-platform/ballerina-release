@@ -3,7 +3,7 @@ name: Update Dependency Graph
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 6 * * *'
+    - cron: '0 6 * * *'
   push:
     branches:
       - master
@@ -15,27 +15,27 @@ jobs:
     name: Derive module dependencies
     runs-on: ubuntu-latest
     steps:
-      -   name: Checkout Repository
-          uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      -   name: Setup Python
-          uses: actions/setup-python@v2
-          with:
-            python-version: '3.x'
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-      -   name: Install Python packages
-          run: |
-            pip install requests
-            pip install networkx
-            pip install retry
-            pip install PyGithub
-            pip install semver
+      - name: Install Python packages
+        run: |
+          pip install requests
+          pip install networkx
+          pip install retry
+          pip install PyGithub
+          pip install semver
 
-      -   name: Get Dependencies and update files
-          run: |
-            python dependabot/update_version_data.py
-          env:
-            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
-            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
-            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
-            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+      - name: Get Dependencies and update files
+        run: |
+          python dependabot/update_version_data.py
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}

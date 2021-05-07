@@ -235,8 +235,9 @@ def check_pending_pr_checks(index: int):
             if module['auto_merge'] & ('AUTO MERGE' in pull_request.title):
                 try:
                     pull_request.merge()
-                    print("[Info] Automated version bump PR merged for module '" + module[
-                        'name'] + "'. PR: " + pull_request.html_url)
+                    log_message = "[Info] Automated version bump PR merged for module '" + module['name'] \
+                                  + "'. PR: " + pull_request.html_url
+                    print(log_message)
                     current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
                 except Exception as e:
                     print("[Error] Error occurred while merging dependency PR for module '" +
@@ -305,9 +306,9 @@ def check_pending_build_checks(index: int):
             current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
         else:
             try:
-                packages_list_string = utils.open_url(
-                    'https://api.github.com/orgs/' + constants.BALLERINA_ORG_NAME + '/packages/maven/' + module[
-                        'group_id'] + '.' + module['artifact_id'] + '/versions', ballerina_bot_token).read()
+                packages_url = 'https://api.github.com/orgs/' + constants.BALLERINA_ORG_NAME + '/packages/maven/' \
+                               + module['group_id'] + '.' + module['artifact_id'] + '/versions'
+                packages_list_string = utils.open_url(packages_url, ballerina_bot_token).read()
                 packages_list = json.loads(packages_list_string)
                 latest_package = packages_list[0]['name']
 
@@ -384,8 +385,8 @@ def get_updated_properties_file(module_name, current_level, properties_file):
 
             for possible_dependency in possible_dependency_modules:
                 if line.startswith(possible_dependency['version_key']):
-                    updated_line = possible_dependency['version_key'] + '=' + possible_dependency[
-                        MODULE_TIMESTAMPED_VERSION]
+                    updated_line = possible_dependency['version_key'] + '=' \
+                                   + possible_dependency[MODULE_TIMESTAMPED_VERSION]
                     updated_properties_file += updated_line + '\n'
                     key_found = True
                     if line != updated_line:
@@ -407,7 +408,7 @@ def commit_changes(repo, updated_file, module_name):
     try:
         ref = f"refs/heads/" + branch
         repo.create_git_ref(ref=ref, sha=base.commit.sha)
-    except:
+    except GithubException:
         print("[Info] Unmerged update branch existed in module: '" + module_name + "'")
         branch = LANG_VERSION_UPDATE_BRANCH + '_tmp'
         ref = f"refs/heads/" + branch
@@ -472,8 +473,9 @@ def create_pull_request(idx: int, repo):
                 head=LANG_VERSION_UPDATE_BRANCH,
                 base=repo.default_branch
             )
-            print("[Info] Automated version bump PR created for module '" + module[
-                'name'] + "'. PR: " + created_pr.html_url)
+            log_message = "[Info] Automated version bump PR created for module '" + module['name'] \
+                          + "'. PR: " + created_pr.html_url
+            print(log_message)
         except Exception as e:
             print("[Error] Error occurred while creating pull request for module '" + module['name'] + "'.", e)
             sys.exit(1)
@@ -545,8 +547,8 @@ def commit_json_file():
             try:
                 ref = f"refs/heads/" + branch
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            except:
-                print("[Info] Unmerged update branch existed in 'ballerina-release'")
+            except GithubException as e:
+                print("[Info] Unmerged update branch existed in 'ballerina-release'", e)
                 branch = constants.EXTENSIONS_UPDATE_BRANCH + '_tmp'
                 ref = f"refs/heads/" + branch
                 try:
