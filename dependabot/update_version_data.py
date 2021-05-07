@@ -16,6 +16,7 @@ ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_T
 github = Github(ballerina_bot_token)
 
 auto_bump = False
+ballerina_version_regex = ""
 
 
 def main():
@@ -39,6 +40,7 @@ def main():
 # Sorts the ballerina extension module list in ascending order
 def sort_module_name_list():
     global auto_bump
+    global ballerina_version_regex
 
     try:
         with open(constants.MODULE_LIST_FILE) as f:
@@ -62,6 +64,7 @@ def sort_module_name_list():
         'name': 'ballerina-distribution'
     })
     auto_bump = name_list['auto_bump']
+    ballerina_version_regex = name_list['lang_version_regex']
 
     return name_list['modules']
 
@@ -176,9 +179,11 @@ def update_json_file(updated_json):
 # returns: JSON with module details
 def initialize_module_details(modules_list):
     global auto_bump
+    global ballerina_version_regex
 
     module_details_json = {
         'auto_bump': auto_bump,
+        'lang_version_regex': ballerina_version_regex,
         'modules': []
     }
 
