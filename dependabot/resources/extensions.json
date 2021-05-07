@@ -438,7 +438,7 @@
             "auto_merge": true,
             "central_only_module": false,
             "dependents": [
-                "ballerina-distribution"
+                "module-ballerina-c2c"
             ]
         },
         {
