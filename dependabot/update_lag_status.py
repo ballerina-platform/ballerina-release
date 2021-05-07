@@ -60,7 +60,7 @@ def get_lang_version_lag():
     ballerina_lag = timestamp-ballerina_timestamp
     days, hrs = days_hours_minutes(ballerina_lag)
     if(days>0):
-        lag_string = format_lag(ballerina_lag)
+        lag_string = str(format_lag(ballerina_lag))
     else:
         lag_string = str(hrs)+" h"
 
