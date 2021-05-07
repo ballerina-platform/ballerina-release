@@ -1,5 +1,6 @@
 {
-    "auto_bump": false,
+    "auto_bump": true,
+    "lang_version_regex": "alpha",
     "modules": [
         {
             "name": "module-ballerina-docker",
