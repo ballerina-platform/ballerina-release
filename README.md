@@ -51,6 +51,6 @@
 ## Modules Released to Central
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
-| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Lag](https://img.shields.io/badge/lag-7.5%20days-red)](#) | []() | 
-|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Lag](https://img.shields.io/badge/lag-7.5%20days-red)](#) | []() | 
+| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
+|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
 |  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
