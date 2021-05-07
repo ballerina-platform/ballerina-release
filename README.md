@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository is up to date.<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210507-124800-327add6f** has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210507-124800-327add6f** (9 h) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
@@ -20,7 +20,7 @@
 |  | [xslt](https://github.com/ballerina-platform/module-ballerina-xslt) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
 | 3 | [cache](https://github.com/ballerina-platform/module-ballerina-cache) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
 |  | [file](https://github.com/ballerina-platform/module-ballerina-file) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
-|  | [ftp](https://github.com/ballerina-platform/module-ballerina-ftp) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [ftp](https://github.com/ballerina-platform/module-ballerina-ftp) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | [#242](https://github.com/ballerina-platform/module-ballerina-ftp/pull/242) | 
 |  | [mime](https://github.com/ballerina-platform/module-ballerina-mime) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
 |  | [nats](https://github.com/ballerina-platform/module-ballerinax-nats) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
 |  | [stan](https://github.com/ballerina-platform/module-ballerinax-stan) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
