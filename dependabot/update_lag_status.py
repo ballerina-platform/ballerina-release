@@ -6,9 +6,9 @@ import time
 import github
 from github import Github, InputGitAuthor, GithubException
 from datetime import datetime
-import urllib.request
 
 import constants
+import utils
 
 ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
@@ -40,21 +40,14 @@ def main():
 
 
 
-def get_latest_lang_version():
-    try:
-        version_string = open_url(
-            "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions").read()
-    except Exception as e:
-        print('[Error] Failed to get ballerina packages version', e)
-        sys.exit(1)
-    latest_version = json.loads(version_string)[0]
-    return latest_version["name"]
-
-
 def get_lang_version_lag():
     global ballerina_timestamp
     lag_string=""
-    version_string = get_latest_lang_version()
+    try:
+        version_string = utils.get_latest_lang_version(ballerina_bot_token)
+    except Exception as e:
+        print('[Error] Failed to get ballerina packages version', e)
+        sys.exit(1)
     lang_version = (version_string).split("-")
     timestamp = create_timestamp(lang_version[2], lang_version[3])
     ballerina_lag = timestamp-ballerina_timestamp
@@ -65,14 +58,6 @@ def get_lang_version_lag():
         lag_string = str(hrs)+" h"
 
     return lag_string
-
-
-def open_url(url):
-    request = urllib.request.Request(url)
-    request.add_header("Accept", "application/vnd.github.v3+json")
-    request.add_header("Authorization", "Bearer " + ballerina_bot_token)
-
-    return urllib.request.urlopen(request)
 
 
 def update_lang_version():
