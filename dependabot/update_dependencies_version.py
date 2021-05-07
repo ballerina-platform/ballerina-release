@@ -92,8 +92,16 @@ def get_lang_version():
         except Exception as e:
             print('[Error] Failed to get ballerina packages version', e)
             sys.exit(1)
-        latest_version = json.loads(version_string)[0]
-        return latest_version['name']
+
+        versions_list = json.loads(version_string)
+        latest_version = versions_list[0]['name']
+        if extensions_file['lang_version_regex'] != "":
+            for version in versions_list:
+                version_name = version['name']
+                if extensions_file['lang_version_regex'] in version_name:
+                    latest_version = version_name
+                    break
+        return latest_version
 
 
 @retry(

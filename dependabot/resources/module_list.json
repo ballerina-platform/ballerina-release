@@ -1,5 +1,6 @@
 {
-    "auto_bump": false,
+    "auto_bump": true,
+    "lang_version_regex": "beta.1",
     "modules": [
         {
             "name": "module-ballerina-auth"
