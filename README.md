@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
-`ballerina-distribution` repository lags by 1.5 days<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210507-124800-327add6f** has been updated as follows
+`ballerina-distribution` repository is up to date.<br>
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210507-124800-327add6f** (6 h) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
@@ -32,25 +32,25 @@
 |  | [jwt](https://github.com/ballerina-platform/module-ballerina-jwt) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
 |  | [oauth2](https://github.com/ballerina-platform/module-ballerina-oauth2) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
 | 5 | [http](https://github.com/ballerina-platform/module-ballerina-http) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
-| 6 | [aws.lambda](https://github.com/ballerina-platform/module-ballerinax-aws.lambda) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [azure.functions](https://github.com/ballerina-platform/module-ballerinax-azure.functions) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [graphql](https://github.com/ballerina-platform/module-ballerina-graphql) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [grpc](https://github.com/ballerina-platform/module-ballerina-grpc) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [ballerina-openapi](https://github.com/ballerina-platform/ballerina-openapi) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [transaction](https://github.com/ballerina-platform/module-ballerinai-transaction) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [websocket](https://github.com/ballerina-platform/module-ballerina-websocket) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [websub](https://github.com/ballerina-platform/module-ballerina-websub) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [websubhub](https://github.com/ballerina-platform/module-ballerina-websubhub) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-| 7 | [c2c](https://github.com/ballerina-platform/module-ballerina-c2c) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [kafka](https://github.com/ballerina-platform/module-ballerinax-kafka) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [rabbitmq](https://github.com/ballerina-platform/module-ballerinax-rabbitmq) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-| 8 | [java.jdbc](https://github.com/ballerina-platform/module-ballerinax-java.jdbc) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [mysql](https://github.com/ballerina-platform/module-ballerinax-mysql) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
+| 6 | [aws.lambda](https://github.com/ballerina-platform/module-ballerinax-aws.lambda) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [azure.functions](https://github.com/ballerina-platform/module-ballerinax-azure.functions) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [graphql](https://github.com/ballerina-platform/module-ballerina-graphql) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [grpc](https://github.com/ballerina-platform/module-ballerina-grpc) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [ballerina-openapi](https://github.com/ballerina-platform/ballerina-openapi) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [transaction](https://github.com/ballerina-platform/module-ballerinai-transaction) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [websocket](https://github.com/ballerina-platform/module-ballerina-websocket) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [websub](https://github.com/ballerina-platform/module-ballerina-websub) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [websubhub](https://github.com/ballerina-platform/module-ballerina-websubhub) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+| 7 | [c2c](https://github.com/ballerina-platform/module-ballerina-c2c) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [kafka](https://github.com/ballerina-platform/module-ballerinax-kafka) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [rabbitmq](https://github.com/ballerina-platform/module-ballerinax-rabbitmq) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+| 8 | [java.jdbc](https://github.com/ballerina-platform/module-ballerinax-java.jdbc) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [mysql](https://github.com/ballerina-platform/module-ballerinax-mysql) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
+|  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](#) | []() | 
 ## Modules Released to Central
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
-| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
-|  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | []() | 
+| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | [#75](https://github.com/ballerina-platform/module-ballerinax-jaeger/pull/75) | 
+|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | [#75](https://github.com/ballerina-platform/module-ballerinax-prometheus/pull/75) | 
+|  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](#) | [#74](https://github.com/ballerina-platform/module-ballerinax-choreo/pull/74) | 
