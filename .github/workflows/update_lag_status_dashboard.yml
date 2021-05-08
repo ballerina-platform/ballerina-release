@@ -1,18 +1,13 @@
-name: Update Dependency Graph
+name: Update Status Dashboard
 
 on:
+  workflow_run:
+    workflows: [ "Update Dependency Version in Pipeline" ]
+    branches: [ master ]
   workflow_dispatch:
-  schedule:
-    - cron: '0 6 * * *'
-  push:
-    branches:
-      - master
-    paths:
-      - 'dependabot/resources/module_list.json'
 
 jobs:
-  dependency:
-    name: Derive module dependencies
+  update-lag-status:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -23,17 +18,15 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Python packages
+      - name: Install Python Packages
         run: |
           pip install requests
-          pip install networkx
           pip install retry
           pip install PyGithub
-          pip install semver
-
-      - name: Get Dependencies and update files
+          pip install matplotlib
+      - name: Update Status Dashboard
         run: |
-          python dependabot/update_version_data.py
+          python dependabot/update_lag_status.py
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}

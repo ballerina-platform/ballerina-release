@@ -2,12 +2,11 @@ import json
 import os
 import sys
 import time
-import urllib.request
 
 from github import Github, InputGitAuthor, GithubException
-from retry import retry
 
 import constants
+import utils
 
 LANG_VERSION_KEY = 'ballerinaLangVersion'
 LANG_VERSION_UPDATE_BRANCH = 'automated/dependency_version_update'
@@ -66,7 +65,11 @@ def main():
     global extensions_file
     global all_modules
 
-    extensions_file = get_extensions_file()
+    try:
+        extensions_file = utils.get_extensions_file()
+    except Exception as e:
+        print('[Error] Error while loading modules list ', e)
+        sys.exit(1)
 
     print("Workflow invoked of type '" + event_type + "'")
     if event_type == 'schedule' and not extensions_file['auto_bump']:
@@ -86,48 +89,7 @@ def get_lang_version():
     if override_ballerina_version != '':
         return override_ballerina_version
     else:
-        try:
-            version_string = open_url(
-                'https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions').read()
-        except Exception as e:
-            print('[Error] Failed to get ballerina packages version', e)
-            sys.exit(1)
-
-        versions_list = json.loads(version_string)
-        latest_version = versions_list[0]['name']
-        if extensions_file['lang_version_regex'] != "":
-            for version in versions_list:
-                version_name = version['name']
-                if extensions_file['lang_version_regex'] in version_name:
-                    latest_version = version_name
-                    break
-        return latest_version
-
-
-@retry(
-    urllib.error.URLError,
-    tries=constants.HTTP_REQUEST_RETRIES,
-    delay=constants.HTTP_REQUEST_DELAY_IN_SECONDS,
-    backoff=constants.HTTP_REQUEST_DELAY_MULTIPLIER
-)
-def open_url(url):
-    request = urllib.request.Request(url)
-    request.add_header('Accept', 'application/vnd.github.v3+json')
-    request.add_header('Authorization', 'Bearer ' + ballerina_bot_token)
-
-    return urllib.request.urlopen(request)
-
-
-def get_extensions_file():
-    try:
-        with open(constants.EXTENSIONS_FILE) as f:
-            module_list = json.load(f)
-
-    except Exception as e:
-        print('[Error] Error while loading modules list ', e)
-        sys.exit(1)
-
-    return module_list
+        return utils.get_latest_lang_version(ballerina_bot_token)
 
 
 def check_and_update_lang_version():
@@ -273,8 +235,9 @@ def check_pending_pr_checks(index: int):
             if module['auto_merge'] & ('AUTO MERGE' in pull_request.title):
                 try:
                     pull_request.merge()
-                    print("[Info] Automated version bump PR merged for module '" + module[
-                        'name'] + "'. PR: " + pull_request.html_url)
+                    log_message = "[Info] Automated version bump PR merged for module '" + module['name'] \
+                                  + "'. PR: " + pull_request.html_url
+                    print(log_message)
                     current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
                 except Exception as e:
                     print("[Error] Error occurred while merging dependency PR for module '" +
@@ -343,9 +306,9 @@ def check_pending_build_checks(index: int):
             current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
         else:
             try:
-                packages_list_string = open_url(
-                    'https://api.github.com/orgs/' + constants.BALLERINA_ORG_NAME + '/packages/maven/' + module[
-                        'group_id'] + '.' + module['artifact_id'] + '/versions').read()
+                packages_url = 'https://api.github.com/orgs/' + constants.BALLERINA_ORG_NAME + '/packages/maven/' \
+                               + module['group_id'] + '.' + module['artifact_id'] + '/versions'
+                packages_list_string = utils.open_url(packages_url, ballerina_bot_token).read()
                 packages_list = json.loads(packages_list_string)
                 latest_package = packages_list[0]['name']
 
@@ -422,8 +385,8 @@ def get_updated_properties_file(module_name, current_level, properties_file):
 
             for possible_dependency in possible_dependency_modules:
                 if line.startswith(possible_dependency['version_key']):
-                    updated_line = possible_dependency['version_key'] + '=' + possible_dependency[
-                        MODULE_TIMESTAMPED_VERSION]
+                    updated_line = possible_dependency['version_key'] + '=' \
+                                   + possible_dependency[MODULE_TIMESTAMPED_VERSION]
                     updated_properties_file += updated_line + '\n'
                     key_found = True
                     if line != updated_line:
@@ -445,7 +408,7 @@ def commit_changes(repo, updated_file, module_name):
     try:
         ref = f"refs/heads/" + branch
         repo.create_git_ref(ref=ref, sha=base.commit.sha)
-    except:
+    except GithubException:
         print("[Info] Unmerged update branch existed in module: '" + module_name + "'")
         branch = LANG_VERSION_UPDATE_BRANCH + '_tmp'
         ref = f"refs/heads/" + branch
@@ -510,8 +473,9 @@ def create_pull_request(idx: int, repo):
                 head=LANG_VERSION_UPDATE_BRANCH,
                 base=repo.default_branch
             )
-            print("[Info] Automated version bump PR created for module '" + module[
-                'name'] + "'. PR: " + created_pr.html_url)
+            log_message = "[Info] Automated version bump PR created for module '" + module['name'] \
+                          + "'. PR: " + created_pr.html_url
+            print(log_message)
         except Exception as e:
             print("[Error] Error occurred while creating pull request for module '" + module['name'] + "'.", e)
             sys.exit(1)
@@ -583,8 +547,8 @@ def commit_json_file():
             try:
                 ref = f"refs/heads/" + branch
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            except:
-                print("[Info] Unmerged update branch existed in 'ballerina-release'")
+            except GithubException as e:
+                print("[Info] Unmerged update branch existed in 'ballerina-release'", e)
                 branch = constants.EXTENSIONS_UPDATE_BRANCH + '_tmp'
                 ref = f"refs/heads/" + branch
                 try:

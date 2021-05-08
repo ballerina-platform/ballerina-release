@@ -100,8 +100,8 @@ def get_default_branch(module_name):
 
 
 # Calculates the longest path between source and destination modules and replaces dependents that have intermediates
-def remove_modules_in_intermediate_paths(G, source, destination, successors, module_details_json):
-    longest_path = max(nx.all_simple_paths(G, source, destination), key=lambda x: len(x))
+def remove_modules_in_intermediate_paths(g, source, destination, successors, module_details_json):
+    longest_path = max(nx.all_simple_paths(g, source, destination), key=lambda x: len(x))
 
     for n in longest_path[1:-1]:
         if n in successors:
@@ -117,24 +117,24 @@ def remove_modules_in_intermediate_paths(G, source, destination, successors, mod
 # Returns a json string with updated level of each module
 def calculate_levels(module_name_list, module_details_json):
     try:
-        G = nx.DiGraph()
+        g = nx.DiGraph()
     except Exception as e:
         print('Error generating graph', e)
         sys.exit()
 
     # Module names are used to create the nodes and the level attribute of the node is initialized to 0
     for module in module_name_list:
-        G.add_node(module['name'], level=1)
+        g.add_node(module['name'], level=1)
 
     # Edges are created considering the dependents of each module
     for module in module_details_json['modules']:
         for dependent in module['dependents']:
-            G.add_edge(module['name'], dependent)
+            g.add_edge(module['name'], dependent)
 
     processing_list = []
 
     # Nodes with in degrees=0 and out degrees!=0 are marked as level 1 and the node is appended to the processing list
-    for root in [node for node in G if G.in_degree(node) == 0 and G.out_degree(node) != 0]:
+    for root in [node for node in g if g.in_degree(node) == 0 and g.out_degree(node) != 0]:
         processing_list.append(root)
 
     # While the processing list is not empty, successors of each node in the current level are determined
@@ -147,18 +147,18 @@ def calculate_levels(module_name_list, module_details_json):
         temp = []
         for node in processing_list:
             successors = []
-            for i in G.successors(node):
+            for i in g.successors(node):
                 successors.append(i)
             for successor in successors:
-                remove_modules_in_intermediate_paths(G, node, successor, successors, module_details_json)
-                G.nodes[successor]['level'] = level
+                remove_modules_in_intermediate_paths(g, node, successor, successors, module_details_json)
+                g.nodes[successor]['level'] = level
                 if successor not in temp:
                     temp.append(successor)
         processing_list = temp
         level = level + 1
 
     for module in module_details_json['modules']:
-        module['level'] = G.nodes[module['name']]['level']
+        module['level'] = g.nodes[module['name']]['level']
 
     return module_details_json
 
@@ -276,8 +276,8 @@ def commit_json_file():
             try:
                 ref = f"refs/heads/" + branch
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            except:
-                print("[Info] Unmerged update branch existed in 'ballerina-release'")
+            except GithubException as e:
+                print("[Info] Unmerged update branch existed in 'ballerina-release'", e)
                 branch = constants.EXTENSIONS_UPDATE_BRANCH + '_tmp'
                 ref = f"refs/heads/" + branch
                 try:

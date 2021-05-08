@@ -16,7 +16,7 @@ on:
         required: false
         default: 'true'
   schedule:
-    - cron:  '30 6 * * *'
+    - cron: '30 6 * * *'
 
 jobs:
   update-lang-version:
@@ -24,38 +24,38 @@ jobs:
     if: github.repository_owner == 'ballerina-platform'
     runs-on: ubuntu-latest
     steps:
-      -   name: Checkout Repository
-          uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      -   name: Setup Python
-          uses: actions/setup-python@v2
-          with:
-            python-version: '3.x'
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-      -   name: Install Python Packages
-          run: |
-            pip install requests
-            pip install retry
-            pip install PyGithub
+      - name: Install Python Packages
+        run: |
+          pip install requests
+          pip install retry
+          pip install PyGithub
 
-      -   name: "[Scheduled] Update Ballerina Language Version"
-          if: github.event_name == 'schedule'
-          run: |
-            python dependabot/update_dependencies_version.py "false" "" "true" "schedule"
-          env:
-            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
-            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
-            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
-            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+      - name: "[Scheduled] Update Ballerina Language Version"
+        if: github.event_name == 'schedule'
+        run: |
+          python dependabot/update_dependencies_version.py "false" "" "true" "schedule"
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
 
-      -   name: "[Manual] Update Ballerina Language Version"
-          if: github.event_name == 'workflow_dispatch'
-          run: |
-            python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
-                                                              "${{ github.event.inputs.ballerinaVersion }}" \
-                                                              "${{ github.event.inputs.autoMergePRs }}"
-          env:
-            BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
-            BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
-            BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
-            BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+      - name: "[Manual] Update Ballerina Language Version"
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          python dependabot/update_dependencies_version.py "${{ github.event.inputs.isRetrigger }}" \
+                                                            "${{ github.event.inputs.ballerinaVersion }}" \
+                                                            "${{ github.event.inputs.autoMergePRs }}"
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
