@@ -42,9 +42,9 @@ def main():
 
 def get_lang_version_lag():
     global ballerina_timestamp
-    lag_string=""
+    lag_string = ""
     try:
-        version_string = utils.get_latest_lang_version(ballerina_bot_token)
+        version_string = utils.get_latest_lang_version()
     except Exception as e:
         print('[Error] Failed to get ballerina packages version', e)
         sys.exit(1)

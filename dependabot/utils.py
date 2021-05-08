@@ -1,9 +1,12 @@
 import json
 import urllib.request
+import os
 
 from retry import retry
 
 import constants
+
+ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 
 
 def get_extensions_file():
@@ -22,19 +25,19 @@ def get_extensions_file():
     delay=constants.HTTP_REQUEST_DELAY_IN_SECONDS,
     backoff=constants.HTTP_REQUEST_DELAY_MULTIPLIER
 )
-def open_url(url, auth_token):
+def open_url(url):
     request = urllib.request.Request(url)
     request.add_header("Accept", "application/vnd.github.v3+json")
-    request.add_header("Authorization", "Bearer " + auth_token)
+    request.add_header("Authorization", "Bearer " + ballerina_bot_token)
 
     return urllib.request.urlopen(request)
 
 
-def get_latest_lang_version(auth_token):
+def get_latest_lang_version():
     try:
         version_string = open_url(
-            "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions",
-            auth_token).read()
+            "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions"
+        ).read()
     except Exception as e:
         raise e
 

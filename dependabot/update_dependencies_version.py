@@ -89,7 +89,7 @@ def get_lang_version():
     if override_ballerina_version != '':
         return override_ballerina_version
     else:
-        return utils.get_latest_lang_version(ballerina_bot_token)
+        return utils.get_latest_lang_version()
 
 
 def check_and_update_lang_version():
