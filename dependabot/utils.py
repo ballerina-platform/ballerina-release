@@ -46,10 +46,10 @@ def get_latest_lang_version():
 
     extensions_file = get_extensions_file()
 
-    if extensions_file['lang_version_regex'] != "":
+    if extensions_file['lang_version_substring'] != "":
         for version in versions_list:
             version_name = version['name']
-            if extensions_file['lang_version_regex'] in version_name:
+            if extensions_file['lang_version_substring'] in version_name:
                 latest_version = version_name
                 break
     return latest_version

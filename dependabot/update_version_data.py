@@ -64,7 +64,7 @@ def sort_module_name_list():
         'name': 'ballerina-distribution'
     })
     auto_bump = name_list['auto_bump']
-    ballerina_version_regex = name_list['lang_version_regex']
+    ballerina_version_regex = name_list['lang_version_substring']
 
     return name_list['modules']
 
@@ -183,7 +183,7 @@ def initialize_module_details(modules_list):
 
     module_details_json = {
         'auto_bump': auto_bump,
-        'lang_version_regex': ballerina_version_regex,
+        'lang_version_substring': ballerina_version_regex,
         'modules': []
     }
 
