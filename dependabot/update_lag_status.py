@@ -238,9 +238,6 @@ def check_pending_pr_checks(module_name):
 
     for pull in pulls:
         if pull.head.ref == constants.DEPENDENCY_UPDATE_BRANCH:
-            sha = pull.head.sha
-            status = repo.get_commit(sha=sha).get_statuses()
-            print(status)
             return pull.number
     return None
 
