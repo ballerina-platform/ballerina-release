@@ -232,13 +232,12 @@ def get_module_list():
 
 
 def check_pending_pr_checks(module_name):
-    DEPENDANCY_UPDATING_BRANCH = "automated/dependency_version_update"
 
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
     pulls = repo.get_pulls(state="open")
 
     for pull in pulls:
-        if pull.head.ref == DEPENDANCY_UPDATING_BRANCH:
+        if pull.head.ref == constants.DEPENDENCY_UPDATE_BRANCH:
             sha = pull.head.sha
             status = repo.get_commit(sha=sha).get_statuses()
             print(status)

@@ -18,5 +18,5 @@ GRADLE_PROPERTIES_FILE = 'gradle.properties'
 ENCODING = 'utf-8'
 
 EXTENSIONS_UPDATE_BRANCH = 'extensions_update'
-
+DEPENDENCY_UPDATE_BRANCH = "automated/dependency_version_update"
 DASHBOARD_UPDATE_BRANCH = 'dashboard_update'

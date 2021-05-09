@@ -9,7 +9,6 @@ import constants
 import utils
 
 LANG_VERSION_KEY = 'ballerinaLangVersion'
-LANG_VERSION_UPDATE_BRANCH = 'automated/dependency_version_update'
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
@@ -349,7 +348,7 @@ def update_module(idx: int, current_level):
     updated_properties_file = get_updated_properties_file(module['name'], current_level, properties_file)
 
     update = utils.commit_file(module['name'], constants.GRADLE_PROPERTIES_FILE, updated_properties_file,
-                               LANG_VERSION_UPDATE_BRANCH, COMMIT_MESSAGE)
+                               constants.DEPENDENCY_UPDATE_BRANCH, COMMIT_MESSAGE)
 
     if update:
         create_pull_request(idx, repo)
@@ -424,7 +423,7 @@ def create_pull_request(idx: int, repo):
     sha_of_lang = lang_version.split('-')[-1]
 
     for pull in pulls:
-        if pull.head.ref == LANG_VERSION_UPDATE_BRANCH:
+        if pull.head.ref == constants.DEPENDENCY_UPDATE_BRANCH:
             pr_exists = True
             created_pr = pull
             pull.edit(
@@ -444,7 +443,7 @@ def create_pull_request(idx: int, repo):
             created_pr = repo.create_pull(
                 title=pull_request_title,
                 body=PULL_REQUEST_BODY_PREFIX + lang_version + '` and relevant extensions.',
-                head=LANG_VERSION_UPDATE_BRANCH,
+                head=constants.DEPENDENCY_UPDATE_BRANCH,
                 base=repo.default_branch
             )
             log_message = "[Info] Automated version bump PR created for module '" + module['name'] \
