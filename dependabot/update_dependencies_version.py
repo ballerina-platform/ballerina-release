@@ -147,8 +147,8 @@ def wait_for_current_level_build(level):
     print("[Info] Waiting for level '" + str(level) + "' module build.")
     total_modules = len(current_level_modules)
 
-    if level == 6:
-        # Level 6 & Level 7 modules take about 40 minutes each for PR build and build
+    if level == 5:
+        # In level 5 and above, some modules take about 40 minutes each for PR build and build
         MAX_WAIT_CYCLES = 2 * MAX_WAIT_CYCLES
 
     wait_cycles = 0
