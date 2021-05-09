@@ -18,6 +18,6 @@ LANG_VERSION_KEY = 'ballerinaLangVersion'
 
 ENCODING = 'utf-8'
 
-EXTENSIONS_UPDATE_BRANCH = 'extensions_update'
+EXTENSIONS_UPDATE_BRANCH = 'automated/extensions_update'
 DEPENDENCY_UPDATE_BRANCH = 'automated/dependency_version_update'
-DASHBOARD_UPDATE_BRANCH = 'dashboard_update'
+DASHBOARD_UPDATE_BRANCH = 'automated/dashboard_update'
