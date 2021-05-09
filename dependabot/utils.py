@@ -72,7 +72,6 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
         remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
 
         if updated_file_content == remote_file_contents:
-            print('No changes to ' + file_path + ' file')
             return False
         else:
             base = repo.get_branch(repo.default_branch)

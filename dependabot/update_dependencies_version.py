@@ -85,6 +85,8 @@ def main():
                                     '[Automated] Update Dependency Bump Workflow Triggered Version',
                                     'Update bumped ballerina lang version',
                                     constants.EXTENSIONS_UPDATE_BRANCH)
+        else:
+            print('No changes to ' + constants.LANG_VERSION_FILE + ' file')
     except GithubException as e:
         print('Error occurred while committing latest_ballerinalang_version.md', e)
         sys.exit(1)

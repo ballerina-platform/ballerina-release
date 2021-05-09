@@ -42,6 +42,8 @@ def main():
                                     '[Automated] Update Extensions Dependencies',
                                     'Update dependencies in extensions.json',
                                     constants.EXTENSIONS_UPDATE_BRANCH)
+        else:
+            print('No changes to ' + constants.EXTENSIONS_FILE + ' file')
     except GithubException as e:
         print('Error occurred while committing extensions.json', e)
         sys.exit(1)

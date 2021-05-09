@@ -36,6 +36,8 @@ def main():
                                     '[Automated] Update Extension Dependency Dashboard',
                                     'Update extension dependency dashboard',
                                     constants.DASHBOARD_UPDATE_BRANCH)
+        else:
+            print('No changes to ' + README_FILE + ' file')
     except GithubException as e:
         print('Error occurred while committing README.md', e)
         sys.exit(1)
