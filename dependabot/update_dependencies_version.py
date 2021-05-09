@@ -349,6 +349,7 @@ def update_module(idx: int, current_level):
                                constants.DEPENDENCY_UPDATE_BRANCH, COMMIT_MESSAGE)
 
     if update:
+        print("[Info] Update lang dependency in module '" + module['name'] + "'")
         create_pull_request(idx, repo)
     else:
         current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
@@ -366,7 +367,6 @@ def update_module(idx: int, current_level):
 
 def get_updated_properties_file(module_name, current_level, properties_file):
     updated_properties_file = ''
-    update = False
 
     split_lang_version = lang_version.split('-')
     processed_lang_version = split_lang_version[2] + split_lang_version[3]
@@ -383,14 +383,12 @@ def get_updated_properties_file(module_name, current_level, properties_file):
                 if processed_current_version < processed_lang_version:
                     print("[Info] Updating the lang version in module: '" + module_name + "'")
                     updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
-                    update = True
                 else:
                     updated_properties_file += line + '\n'
             else:
                 # Stable dependency & SNAPSHOT
                 print("[Info] Updating the lang version in module: '" + module_name + "'")
                 updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
-                update = True
         else:
             key_found = False
             possible_dependency_modules = list(filter(lambda s: s['level'] < current_level, all_modules))
@@ -401,14 +399,10 @@ def get_updated_properties_file(module_name, current_level, properties_file):
                                    + possible_dependency[MODULE_TIMESTAMPED_VERSION]
                     updated_properties_file += updated_line + '\n'
                     key_found = True
-                    if line != updated_line:
-                        update = True
                     break
             if not key_found:
                 updated_properties_file += line + '\n'
 
-    if update:
-        print("[Info] Update lang dependency in module '" + module_name + "'")
     return updated_properties_file
 
 
