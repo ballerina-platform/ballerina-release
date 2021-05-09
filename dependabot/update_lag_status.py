@@ -22,7 +22,6 @@ ballerina_lang_version = ""
 
 
 def main():
-
     update_lang_version()
 
     updated_readme = get_updated_readme()
@@ -231,7 +230,6 @@ def get_module_list():
 
 
 def check_pending_pr_checks(module_name):
-
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
     pulls = repo.get_pulls(state="open")
 

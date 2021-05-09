@@ -1,4 +1,3 @@
-
 ENV_BALLERINA_BOT_USERNAME = 'BALLERINA_BOT_USERNAME'
 ENV_BALLERINA_BOT_TOKEN = 'BALLERINA_BOT_TOKEN'
 ENV_BALLERINA_BOT_EMAIL = 'BALLERINA_BOT_EMAIL'
@@ -20,5 +19,5 @@ LANG_VERSION_KEY = 'ballerinaLangVersion'
 ENCODING = 'utf-8'
 
 EXTENSIONS_UPDATE_BRANCH = 'extensions_update'
-DEPENDENCY_UPDATE_BRANCH = "automated/dependency_version_update"
+DEPENDENCY_UPDATE_BRANCH = 'automated/dependency_version_update'
 DASHBOARD_UPDATE_BRANCH = 'dashboard_update'
