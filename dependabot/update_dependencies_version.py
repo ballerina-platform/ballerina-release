@@ -8,8 +8,6 @@ from github import Github, GithubException
 import constants
 import utils
 
-LANG_VERSION_KEY = 'ballerinaLangVersion'
-
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
 
@@ -374,7 +372,7 @@ def get_updated_properties_file(module_name, current_level, properties_file):
     processed_lang_version = split_lang_version[2] + split_lang_version[3]
 
     for line in properties_file.splitlines():
-        if line.startswith(LANG_VERSION_KEY):
+        if line.startswith(constants.LANG_VERSION_KEY):
             current_version = line.split('=')[-1]
 
             split_current_version = current_version.split('-')
@@ -384,14 +382,14 @@ def get_updated_properties_file(module_name, current_level, properties_file):
 
                 if processed_current_version < processed_lang_version:
                     print("[Info] Updating the lang version in module: '" + module_name + "'")
-                    updated_properties_file += LANG_VERSION_KEY + '=' + lang_version + '\n'
+                    updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
                     update = True
                 else:
                     updated_properties_file += line + '\n'
             else:
                 # Stable dependency & SNAPSHOT
                 print("[Info] Updating the lang version in module: '" + module_name + "'")
-                updated_properties_file += LANG_VERSION_KEY + '=' + lang_version + '\n'
+                updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
                 update = True
         else:
             key_found = False

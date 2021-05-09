@@ -11,7 +11,6 @@ import utils
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 
 README_FILE = "README.md"
-LANG_VERSION_KEY = "ballerinaLangVersion"
 
 github = Github(ballerina_bot_token)
 
@@ -102,7 +101,7 @@ def get_lag_info(module_name):
     properties_file = properties_file.decoded_content.decode(constants.ENCODING)
 
     for line in properties_file.splitlines():
-        if line.startswith(LANG_VERSION_KEY):
+        if line.startswith(constants.LANG_VERSION_KEY):
             current_version = line.split("=")[-1]
             timestamp_string = current_version.split("-")[2:4]
             timestamp = create_timestamp(timestamp_string[0], timestamp_string[1])
