@@ -142,10 +142,12 @@ def update_modules(updated_readme, module_details_list):
 
             lag_status, color = get_lag_info(module[MODULE_NAME])
             lag_status += "%20days"
-            lag_status_link = "https://github.com/ballerina-platform/"+module[MODULE_NAME]+"/blob/"+module["default_branch"]+"/gradle.properties"
+            lag_status_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] \
+                              + "/blob/" + module["default_branch"] + "/gradle.properties"
             if color != "red":
                 updated_modules += 1
-            lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + ")]("+lag_status_link+")"
+            lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + ")](" \
+                         + lag_status_link + ")"
             pr_number = check_pending_pr_checks(module[MODULE_NAME])
 
             if pr_number is not None:
