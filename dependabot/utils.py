@@ -1,12 +1,19 @@
 import json
-import urllib.request
 import os
+import time
+import urllib.request
 
+from github import Github, InputGitAuthor, GithubException
 from retry import retry
 
 import constants
 
+ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
+ballerina_bot_email = os.environ[constants.ENV_BALLERINA_BOT_EMAIL]
+ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
+
+github = Github(ballerina_bot_token)
 
 
 def get_extensions_file():
@@ -53,3 +60,73 @@ def get_latest_lang_version():
                 latest_version = version_name
                 break
     return latest_version
+
+
+def commit_file(repository_name, file_path, updated_file_content, commit_branch, commit_message):
+    try:
+        author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
+
+        repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + repository_name)
+
+        remote_file = repo.get_contents(file_path)
+        remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
+
+        if updated_file_content == remote_file_contents:
+            print('No changes to ' + file_path + ' file')
+            return False
+        else:
+            base = repo.get_branch(repo.default_branch)
+            branch = commit_branch
+            try:
+                ref = f"refs/heads/" + branch
+                repo.create_git_ref(ref=ref, sha=base.commit.sha)
+            except GithubException as e:
+                print("[Info] Unmerged '" + commit_branch + "' branch existed in '" + repository_name + "'")
+                branch = commit_branch + '_tmp'
+                ref = f"refs/heads/" + branch
+                try:
+                    repo.create_git_ref(ref=ref, sha=base.commit.sha)
+                except GithubException as e:
+                    print("[Info] Deleting '" + commit_branch + "' tmp branch existed in '" + repository_name + "'")
+                    if e.status == 422:  # already exist
+                        repo.get_git_ref("heads/" + branch).delete()
+                        repo.create_git_ref(ref=ref, sha=base.commit.sha)
+            update = repo.update_file(
+                file_path,
+                commit_message,
+                updated_file_content,
+                remote_file.sha,
+                branch=branch,
+                author=author
+            )
+            if not branch == commit_branch:
+                update_branch = repo.get_git_ref("heads/" + commit_branch)
+                update_branch.edit(update["commit"].sha, force=True)
+                repo.get_git_ref("heads/" + branch).delete()
+            return True
+    except GithubException as e:
+        raise e
+
+
+def open_pr_and_merge(repository_name, title, body, head_branch):
+    try:
+        repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + repository_name)
+
+        created_pr = repo.create_pull(
+            title=title,
+            body=body,
+            head=head_branch,
+            base='master'
+        )
+
+        # To stop intermittent failures due to API sync
+        time.sleep(5)
+
+        r_github = Github(ballerina_reviewer_bot_token)
+        repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/' + repository_name)
+        pr = repo.get_pull(created_pr.number)
+        pr.create_review(event='APPROVE')
+
+        created_pr.merge()
+    except Exception as e:
+        raise e

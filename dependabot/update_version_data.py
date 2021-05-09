@@ -1,17 +1,14 @@
 import json
 import os
 import sys
-import time
 
 import networkx as nx
-from github import Github, InputGitAuthor, GithubException
+from github import Github, GithubException
 
 import constants
+import utils
 
-ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
-ballerina_bot_email = os.environ[constants.ENV_BALLERINA_BOT_EMAIL]
-ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
 
 github = Github(ballerina_bot_token)
 
@@ -33,7 +30,21 @@ def main():
     print('Removed central only modules and updated the list')
     update_json_file(module_details_json)
     print('Updated module details successfully')
-    commit_json_file()
+
+    try:
+        updated_file_content = open(constants.EXTENSIONS_FILE, 'r').read()
+        update = utils.commit_file('ballerina-release',
+                                   constants.EXTENSIONS_FILE, updated_file_content,
+                                   constants.EXTENSIONS_UPDATE_BRANCH,
+                                   '[Automated] Update Extensions Dependencies')
+        if update:
+            utils.open_pr_and_merge('ballerina-release',
+                                    '[Automated] Update Extensions Dependencies',
+                                    'Update dependencies in extensions.json',
+                                    constants.EXTENSIONS_UPDATE_BRANCH)
+    except GithubException as e:
+        print('Error occurred while committing extensions.json', e)
+        sys.exit(1)
     print("Updated module details in 'ballerina-release' successfully")
 
 
@@ -242,95 +253,6 @@ def remove_modules_not_included_in_distribution(module_details_json):
     module_details_json['central_modules'] = removed_modules
 
     return module_details_json
-
-
-def commit_json_file():
-    author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
-
-    repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-release')
-
-    remote_file = ''
-    try:
-        contents = repo.get_contents('dependabot')
-        while len(contents) > 0:
-            file_content = contents.pop(0)
-            if file_content.type == 'dir':
-                contents.extend(repo.get_contents(file_content.path))
-            else:
-                if file_content.path == constants.EXTENSIONS_FILE:
-                    remote_file = file_content
-                    break
-    except Exception as e:
-        print('Error while accessing remote extensions.json', e)
-        sys.exit(1)
-
-    updated_file = open(constants.EXTENSIONS_FILE, 'r').read()
-    remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
-
-    if updated_file == remote_file_contents:
-        print('No changes to extensions.json file')
-    else:
-        try:
-            base = repo.get_branch(repo.default_branch)
-            branch = constants.EXTENSIONS_UPDATE_BRANCH
-            try:
-                ref = f"refs/heads/" + branch
-                repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            except GithubException as e:
-                print("[Info] Unmerged update branch existed in 'ballerina-release'", e)
-                branch = constants.EXTENSIONS_UPDATE_BRANCH + '_tmp'
-                ref = f"refs/heads/" + branch
-                try:
-                    repo.create_git_ref(ref=ref, sha=base.commit.sha)
-                except GithubException as e:
-                    print("[Info] deleting update tmp branch existed in 'ballerina-release'")
-                    if e.status == 422:  # already exist
-                        repo.get_git_ref("heads/" + branch).delete()
-                        repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            update = repo.update_file(
-                constants.EXTENSIONS_FILE,
-                '[Automated] Update Extensions Dependencies',
-                updated_file,
-                remote_file.sha,
-                branch=branch,
-                author=author
-            )
-            if not branch == constants.EXTENSIONS_UPDATE_BRANCH:
-                update_branch = repo.get_git_ref("heads/" + constants.EXTENSIONS_UPDATE_BRANCH)
-                update_branch.edit(update["commit"].sha, force=True)
-                repo.get_git_ref("heads/" + branch).delete()
-
-        except Exception as e:
-            print('Error while committing extensions.json', e)
-
-        try:
-            created_pr = repo.create_pull(
-                title='[Automated] Update Extensions Dependencies',
-                body='Update dependencies in extensions.json',
-                head=constants.EXTENSIONS_UPDATE_BRANCH,
-                base='master'
-            )
-        except Exception as e:
-            print('Error occurred while creating pull request updating dependencies.', e)
-            sys.exit(1)
-
-        # To stop intermittent failures due to API sync
-        time.sleep(5)
-
-        r_github = Github(ballerina_reviewer_bot_token)
-        repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-release')
-        pr = repo.get_pull(created_pr.number)
-        try:
-            pr.create_review(event='APPROVE')
-        except Exception as e:
-            print('Error occurred while approving Update Extensions Dependencies PR', e)
-            sys.exit(1)
-
-        try:
-            created_pr.merge()
-        except Exception as e:
-            print("Error occurred while merging dependency PR for module 'ballerina-release'", e)
-            sys.exit(1)
 
 
 main()
