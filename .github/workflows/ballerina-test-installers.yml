@@ -6,6 +6,8 @@ on:
     branches-ignore:
       - "extension_update"
       - "extension_update_tmp"
+    paths-ignore:
+      - 'dependabot/**'
 
 jobs:
   installer-ubuntu-build:
