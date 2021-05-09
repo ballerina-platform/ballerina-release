@@ -3,7 +3,6 @@ import os
 import sys
 from datetime import datetime
 
-import github
 from github import Github, GithubException
 
 import constants
@@ -25,11 +24,9 @@ ballerina_lang_version = ""
 
 def main():
 
-    readme_file = get_readme_file()
-
     update_lang_version()
 
-    updated_readme = get_updated_readme(readme_file)
+    updated_readme = get_updated_readme()
 
     try:
         update = utils.commit_file('ballerina-release',
@@ -48,7 +45,6 @@ def main():
 
 def get_lang_version_lag():
     global ballerina_timestamp
-    lag_string = ""
     try:
         version_string = utils.get_latest_lang_version()
     except Exception as e:
@@ -137,8 +133,6 @@ def update_modules(updated_readme, module_details_list):
         current_level_modules = list(filter(lambda s: s['level'] == current_level, module_details_list))
 
         for idx, module in enumerate(current_level_modules):
-            name = ""
-            pending_pr = ""
             pr_id = ""
 
             pending_pr_link = ""
@@ -171,7 +165,7 @@ def update_modules(updated_readme, module_details_list):
     return updated_readme, updated_modules
 
 
-def get_updated_readme(readme):
+def get_updated_readme():
     BALLERINA_DISTRIBUTION = "ballerina-distribution"
     updated_readme = ""
     global all_modules
@@ -224,14 +218,6 @@ def get_updated_readme(readme):
     repositories_updated = round((updated_modules_number / (len(module_details_list) + len(central_modules))) * 100)
 
     return updated_readme
-
-
-def get_readme_file():
-    readme_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
-    readme_file = readme_repo.get_contents(README_FILE)
-    readme_file = readme_file.decoded_content.decode(constants.ENCODING)
-
-    return readme_file
 
 
 def get_module_list():
