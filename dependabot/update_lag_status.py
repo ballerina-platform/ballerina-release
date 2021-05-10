@@ -15,6 +15,7 @@ README_FILE = "README.md"
 github = Github(ballerina_bot_token)
 
 all_modules = []
+updated_modules = 0
 
 MODULE_NAME = "name"
 ballerina_timestamp = ""
@@ -84,11 +85,13 @@ def create_timestamp(date, time):
 
 def format_lag(delta):
     days, hours = days_hours_minutes(delta)
-    hrs = round((hours / 24) * 2) / 2
-    days = days + hrs
-    if days.is_integer():
-        days = int(days)
-    return days
+    if days > 0:
+        hrs = round((hours / 24) * 2) / 2
+        days = days + hrs
+        if days.is_integer():
+            days = int(days)
+
+    return days, hours
 
 
 def get_lag_color(lag):
@@ -117,48 +120,63 @@ def get_lag_info(module_name):
     lang_version = ballerina_lang_version.split("-")
     ballerina_timestamp = create_timestamp(lang_version[2], lang_version[3])
     update_timestamp = ballerina_timestamp - timestamp
-    delta = format_lag(update_timestamp)
-    days = str(delta)
+    days, hrs = format_lag(update_timestamp)
 
-    color = get_lag_color(delta)
+    color = get_lag_color(days)
 
-    return days, color
+    return days, hrs, color
+
+
+def get_lag_button(module):
+    global updated_modules
+    days, hrs, color = get_lag_info(module[MODULE_NAME])
+    if days > 0:
+        lag_status = str(days) + "%20days"
+    elif hrs > 0:
+        lag_status = str(hrs) + "%20h"
+    else:
+        lag_status = "no%20lag"
+
+    lag_status_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] \
+                      + "/blob/" + module["default_branch"] + "/" + constants.GRADLE_PROPERTIES_FILE
+    if color != "red":
+        updated_modules += 1
+    lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + ")](" \
+                 + lag_status_link + ")"
+
+    return lag_button
+
+
+def get_pending_pr(module):
+    pr_id = ""
+    pending_pr_link = ""
+    pr_number = check_pending_pr_checks(module[MODULE_NAME])
+
+    if pr_number is not None:
+        pr_id = "#" + str(pr_number)
+        pending_pr_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] + "/pull/" + str(
+            pr_number)
+    pending_pr = "[" + pr_id + "](" + pending_pr_link + ")"
+
+    return pending_pr
 
 
 def update_modules(updated_readme, module_details_list):
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
-    updated_modules = 0
 
     for i in range(last_level):
         current_level = i + 1
         current_level_modules = list(filter(lambda s: s['level'] == current_level, module_details_list))
 
         for idx, module in enumerate(current_level_modules):
-            pr_id = ""
-
-            pending_pr_link = ""
-
             if module[MODULE_NAME].startswith("module"):
                 name = module[MODULE_NAME].split("-")[2]
             else:
                 name = module[MODULE_NAME]
 
-            lag_status, color = get_lag_info(module[MODULE_NAME])
-            lag_status += "%20days"
-            lag_status_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] \
-                              + "/blob/" + module["default_branch"] + "/gradle.properties"
-            if color != "red":
-                updated_modules += 1
-            lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + ")](" \
-                         + lag_status_link + ")"
-            pr_number = check_pending_pr_checks(module[MODULE_NAME])
-
-            if pr_number is not None:
-                pr_id = "#" + str(pr_number)
-                pending_pr_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] + "/pull/" + str(
-                    pr_number)
-            pending_pr = "[" + pr_id + "](" + pending_pr_link + ")"
+            lag_button = get_lag_button(module[MODULE_NAME])
+            pending_pr = get_pending_pr(module[MODULE_NAME])
 
             level = ""
             if idx == 0:
@@ -172,11 +190,11 @@ def update_modules(updated_readme, module_details_list):
 
 def get_lang_version_statement():
     ballerina_lag = get_lang_version_lag()
-    days, hrs = days_hours_minutes(ballerina_lag)
+    days, hrs = format_lag(ballerina_lag)
     ballerina_lang_lag = ""
 
     if days > 0:
-        ballerina_lang_lag = str(format_lag(ballerina_lag)) + " days"
+        ballerina_lang_lag = str(days) + " days"
     elif hrs > 0:
         ballerina_lang_lag = str(hrs) + " h"
 
@@ -188,24 +206,21 @@ def get_lang_version_statement():
     return lang_version_statement
 
 
-def get_updated_readme():
+def get_distribution_statement():
     BALLERINA_DISTRIBUTION = "ballerina-distribution"
-    updated_readme = ""
-    global all_modules
+    days, hrs = get_lag_info(BALLERINA_DISTRIBUTION)[0:2]
+    distribution_lag = ""
 
-    all_modules = get_module_list()
-
-    lang_version_statement = get_lang_version_statement()
-
-    module_details_list = all_modules["modules"]
-    distribution_lag = get_lag_info(BALLERINA_DISTRIBUTION)[0] + " days"
-
-    updated_readme += "# Ballerina Repositories Update Status" + "\n"
     distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
     distribution_pr_link = "https://github.com/ballerina-platform/" + BALLERINA_DISTRIBUTION + "/pull/" + str(
         distribution_pr_number)
 
-    if distribution_lag.startswith("0"):
+    if days > 0:
+        distribution_lag = str(days) + " days"
+    elif hrs > 0:
+        distribution_lag = str(hrs) + "h"
+
+    if distribution_lag:
         distribution_lag_statement = "`ballerina-distribution` repository is up to date."
     else:
         if str(distribution_pr_number) == "None":
@@ -214,7 +229,24 @@ def get_updated_readme():
             distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag + " and pending PR [#" + str(
                 distribution_pr_number) + "](" + distribution_pr_link + ") is available"
 
-    updated_readme += distribution_lag_statement + "<br>"
+    return distribution_lag_statement
+
+
+
+
+def get_updated_readme():
+    updated_readme = ""
+    global all_modules
+
+    all_modules = get_module_list()
+    module_details_list = all_modules["modules"]
+
+    lang_version_statement = get_lang_version_statement()
+    distribution_statement = get_distribution_statement()
+
+    updated_readme += "# Ballerina Repositories Update Status" + "\n"
+
+    updated_readme += distribution_statement + "<br>"
     updated_readme += "\n" + "<br>"
     updated_readme += lang_version_statement + "\n"
 
