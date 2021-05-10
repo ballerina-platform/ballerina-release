@@ -51,6 +51,6 @@
 ## Modules Released to Central
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
-| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Lag](https://img.shields.io/badge/lag-3%20days-red)](https://github.com/ballerina-platform/module-ballerinax-jaeger/blob/main/gradle.properties) | []() | 
-|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Lag](https://img.shields.io/badge/lag-3%20days-red)](https://github.com/ballerina-platform/module-ballerinax-prometheus/blob/main/gradle.properties) | []() | 
-|  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Lag](https://img.shields.io/badge/lag-3%20days-red)](https://github.com/ballerina-platform/module-ballerinax-choreo/blob/main/gradle.properties) | []() | 
+| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Lag](https://img.shields.io/badge/lag-3%20days-red)](https://github.com/ballerina-platform/module-ballerinax-jaeger/blob/main/gradle.properties) | [#77](https://github.com/ballerina-platform/module-ballerinax-jaeger/pull/77) | 
+|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Lag](https://img.shields.io/badge/lag-3%20days-red)](https://github.com/ballerina-platform/module-ballerinax-prometheus/blob/main/gradle.properties) | [#77](https://github.com/ballerina-platform/module-ballerinax-prometheus/pull/77) | 
+|  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Lag](https://img.shields.io/badge/lag-3%20days-red)](https://github.com/ballerina-platform/module-ballerinax-choreo/blob/main/gradle.properties) | [#76](https://github.com/ballerina-platform/module-ballerinax-choreo/pull/76) | 
