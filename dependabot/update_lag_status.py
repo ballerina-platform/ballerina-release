@@ -1,23 +1,16 @@
 import json
 import os
 import sys
-import time
 from datetime import datetime
 
-import github
-from github import Github, InputGitAuthor, GithubException
+from github import Github, GithubException
 
 import constants
 import utils
 
-ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
-ballerina_bot_email = os.environ[constants.ENV_BALLERINA_BOT_EMAIL]
-ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
 
 README_FILE = "README.md"
-LANG_VERSION_KEY = "ballerinaLangVersion"
-DEPENDENCY_UPDATING_BRANCH = "automated/dependency_version_update"
 
 github = Github(ballerina_bot_token)
 
@@ -26,44 +19,57 @@ all_modules = []
 MODULE_NAME = "name"
 ballerina_timestamp = ""
 ballerina_lang_version = ""
-release_repo = None
 
 
 def main():
-    global release_repo
-    release_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
-
-    readme_file = get_readme_file()
-
     update_lang_version()
 
-    updated_readme = get_updated_readme(readme_file)
+    updated_readme = get_updated_readme()
 
-    commit_changes(release_repo, updated_readme)
+    try:
+        update = utils.commit_file('ballerina-release',
+                                   README_FILE, updated_readme,
+                                   constants.DASHBOARD_UPDATE_BRANCH,
+                                   '[Automated] Update extension dependency dashboard')
+        if update:
+            utils.open_pr_and_merge('ballerina-release',
+                                    '[Automated] Update Extension Dependency Dashboard',
+                                    'Update extension dependency dashboard',
+                                    constants.DASHBOARD_UPDATE_BRANCH)
+        else:
+            print('No changes to ' + README_FILE + ' file')
+    except GithubException as e:
+        print('Error occurred while committing README.md', e)
+        sys.exit(1)
 
 
 def get_lang_version_lag():
     global ballerina_timestamp
-
     try:
-        version_string = utils.get_latest_lang_version(ballerina_bot_token)
+        version_string = utils.get_latest_lang_version()
     except Exception as e:
         print('[Error] Failed to get ballerina packages version', e)
         sys.exit(1)
     lang_version = version_string.split("-")
     timestamp = create_timestamp(lang_version[2], lang_version[3])
     ballerina_lag = timestamp - ballerina_timestamp
+    days, hrs = days_hours_minutes(ballerina_lag)
+    if days > 0:
+        lag_string = str(format_lag(ballerina_lag)) + " days"
+    else:
+        lag_string = str(hrs) + " h"
 
-    return ballerina_lag
+    return lag_string
 
 
 def update_lang_version():
     global ballerina_lang_version
-    global release_repo
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
+    lang_version_file = repo.get_contents(constants.LANG_VERSION_FILE)
+    lang_version_json = lang_version_file.decoded_content.decode(constants.ENCODING)
 
-    lang_version_file = release_repo.get_contents(constants.LANG_VERSION_FILE)
-    lang_version_content = lang_version_file.decoded_content.decode(constants.ENCODING)
-    ballerina_lang_version = json.loads(lang_version_content)["version"]
+    data = json.loads(lang_version_json)
+    ballerina_lang_version = data["version"]
 
 
 def days_hours_minutes(td):
@@ -89,17 +95,6 @@ def format_lag(delta):
     return days
 
 
-def get_lag_color(lag):
-    if lag == 0:
-        color = "brightgreen"
-    elif lag < 2:
-        color = "yellow"
-    else:
-        color = "red"
-
-    return color
-
-
 def get_lag_info(module_name):
     global ballerina_timestamp
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
@@ -107,7 +102,7 @@ def get_lag_info(module_name):
     properties_file = properties_file.decoded_content.decode(constants.ENCODING)
 
     for line in properties_file.splitlines():
-        if line.startswith(LANG_VERSION_KEY):
+        if line.startswith(constants.LANG_VERSION_KEY):
             current_version = line.split("=")[-1]
             timestamp_string = current_version.split("-")[2:4]
             timestamp = create_timestamp(timestamp_string[0], timestamp_string[1])
@@ -118,7 +113,13 @@ def get_lag_info(module_name):
     delta = format_lag(update_timestamp)
     days = str(delta)
 
-    color = get_lag_color(delta)
+    if delta == 0:
+        color = "brightgreen"
+    elif delta < 2:
+        color = "yellow"
+    else:
+        color = "red"
+
     return days, color
 
 
@@ -145,10 +146,12 @@ def update_modules(updated_readme, module_details_list):
 
             lag_status, color = get_lag_info(module[MODULE_NAME])
             lag_status += "%20days"
-            lag_status_link = "https://github.com/ballerina-platform/"+module[MODULE_NAME]+"/blob/"+module["default_branch"]+"/gradle.properties"
+            lag_status_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] \
+                              + "/blob/" + module["default_branch"] + "/gradle.properties"
             if color != "red":
                 updated_modules += 1
-            lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + ")]("+lag_status_link+")"
+            lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + ")](" \
+                         + lag_status_link + ")"
             pr_number = check_pending_pr_checks(module[MODULE_NAME])
 
             if pr_number is not None:
@@ -167,25 +170,7 @@ def update_modules(updated_readme, module_details_list):
     return updated_readme, updated_modules
 
 
-def get_lang_version_statement():
-    ballerina_lag = get_lang_version_lag()
-    days, hrs = days_hours_minutes(ballerina_lag)
-    ballerina_lang_lag = ""
-
-    if days > 0:
-        ballerina_lang_lag = str(format_lag(ballerina_lag)) + " days"
-    elif hrs > 0:
-        ballerina_lang_lag = str(hrs) + " h"
-
-    if not ballerina_lang_lag:
-        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** has been updated as follows"
-    else:
-        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** (" + ballerina_lang_lag + ") has been updated as follows"
-
-    return lang_version_statement
-
-
-def get_updated_readme(readme):
+def get_updated_readme():
     BALLERINA_DISTRIBUTION = "ballerina-distribution"
     updated_readme = ""
     global all_modules
@@ -195,7 +180,7 @@ def get_updated_readme(readme):
     module_details_list = all_modules["modules"]
     distribution_lag = get_lag_info(BALLERINA_DISTRIBUTION)[0] + " days"
 
-    lang_version_statement = get_lang_version_statement()
+    ballerina_lang_lag = get_lang_version_lag()
 
     updated_readme += "# Ballerina Repositories Update Status" + "\n"
     distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
@@ -210,6 +195,11 @@ def get_updated_readme(readme):
         else:
             distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag + " and pending PR [#" + str(
                 distribution_pr_number) + "](" + distribution_pr_link + ") is available"
+
+    if ballerina_lang_lag.startswith("0"):
+        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** has been updated as follows"
+    else:
+        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** (" + ballerina_lang_lag + ") has been updated as follows"
 
     updated_readme += distribution_lag_statement + "<br>"
     updated_readme += "\n" + "<br>"
@@ -235,91 +225,10 @@ def get_updated_readme(readme):
     return updated_readme
 
 
-def commit_changes(repo, updated_file):
-    author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
-    branch = constants.DASHBOARD_UPDATE_BRANCH
-
-    remote_file = repo.get_contents(README_FILE)
-    remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
-
-    if remote_file_contents == updated_file:
-        print("[Info] No changes in the README.")
-    else:
-        try:
-            base = repo.get_branch(repo.default_branch)
-            branch = constants.DASHBOARD_UPDATE_BRANCH
-            try:
-                ref = f"refs/heads/" + branch
-                repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            except:
-                print("[Info] Unmerged update branch existed in 'ballerina-release'")
-                branch = constants.DASHBOARD_UPDATE_BRANCH + '_tmp'
-                ref = f"refs/heads/" + branch
-                try:
-                    repo.create_git_ref(ref=ref, sha=base.commit.sha)
-                except GithubException as e:
-                    print("[Info] deleting update tmp branch existed in 'ballerina-release'")
-                    if e.status == 422:  # already exist
-                        repo.get_git_ref("heads/" + branch).delete()
-                        repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            update = repo.update_file(
-                remote_file.path,
-                "[Automated] Update extension dependency dashboard",
-                updated_file,
-                remote_file.sha,
-                branch=branch,
-                author=author
-            )
-            if not branch == constants.DASHBOARD_UPDATE_BRANCH:
-                update_branch = repo.get_git_ref("heads/" + constants.DASHBOARD_UPDATE_BRANCH)
-                update_branch.edit(update["commit"].sha, force=True)
-                repo.get_git_ref("heads/" + branch).delete()
-
-        except Exception as e:
-            print('Error while committing README.md', e)
-
-        try:
-            created_pr = repo.create_pull(
-                title='[Automated] Update Extension Dependency Dashboard',
-                body='Update extension dependency dashboard',
-                head=constants.DASHBOARD_UPDATE_BRANCH,
-                base='master'
-            )
-        except Exception as e:
-            print('Error occurred while creating pull request updating readme.', e)
-            sys.exit(1)
-
-        # To stop intermittent failures due to API sync
-        time.sleep(5)
-
-        r_github = Github(ballerina_reviewer_bot_token)
-        repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-release')
-        pr = repo.get_pull(created_pr.number)
-        try:
-            pr.create_review(event='APPROVE')
-        except Exception as e:
-            print('Error occurred while approving Update Extensions Dependencies PR', e)
-            sys.exit(1)
-
-        try:
-            created_pr.merge()
-        except Exception as e:
-            print("Error occurred while merging dependency PR for module 'ballerina-release'", e)
-            sys.exit(1)
-
-
-def get_readme_file():
-    global release_repo
-    readme_file = release_repo.get_contents(README_FILE)
-    readme_file = readme_file.decoded_content.decode(constants.ENCODING)
-
-    return readme_file
-
-
 def get_module_list():
-    global release_repo
+    readme_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
 
-    module_list_json = release_repo.get_contents(constants.EXTENSIONS_FILE)
+    module_list_json = readme_repo.get_contents(constants.EXTENSIONS_FILE)
     module_list_json = module_list_json.decoded_content.decode(constants.ENCODING)
 
     data = json.loads(module_list_json)
@@ -328,14 +237,11 @@ def get_module_list():
 
 
 def check_pending_pr_checks(module_name):
-    module_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
-    pulls = module_repo.get_pulls(state="open")
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
+    pulls = repo.get_pulls(state="open")
 
     for pull in pulls:
-        if pull.head.ref == DEPENDENCY_UPDATING_BRANCH:
-            sha = pull.head.sha
-            status = module_repo.get_commit(sha=sha).get_statuses()
-            print(status)
+        if pull.head.ref == constants.DEPENDENCY_UPDATE_BRANCH:
             return pull.number
     return None
 
