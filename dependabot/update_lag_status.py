@@ -17,6 +17,7 @@ ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_T
 
 README_FILE = "README.md"
 LANG_VERSION_KEY = "ballerinaLangVersion"
+DEPENDENCY_UPDATING_BRANCH = "automated/dependency_version_update"
 
 github = Github(ballerina_bot_token)
 
@@ -25,24 +26,25 @@ all_modules = []
 MODULE_NAME = "name"
 ballerina_timestamp = ""
 ballerina_lang_version = ""
+release_repo = None
 
 
 def main():
-    readme_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
+    global release_repo
+    release_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
 
     readme_file = get_readme_file()
-    updated_readme = readme_file
 
     update_lang_version()
 
     updated_readme = get_updated_readme(readme_file)
 
-    commit_changes(readme_repo, updated_readme)
+    commit_changes(release_repo, updated_readme)
 
 
 def get_lang_version_lag():
     global ballerina_timestamp
-    lag_string=""
+
     try:
         version_string = utils.get_latest_lang_version(ballerina_bot_token)
     except Exception as e:
@@ -51,23 +53,17 @@ def get_lang_version_lag():
     lang_version = version_string.split("-")
     timestamp = create_timestamp(lang_version[2], lang_version[3])
     ballerina_lag = timestamp - ballerina_timestamp
-    days, hrs = days_hours_minutes(ballerina_lag)
-    if days > 0:
-        lag_string = str(format_lag(ballerina_lag)) + " days"
-    else:
-        lag_string = str(hrs) + " h"
 
-    return lag_string
+    return ballerina_lag
 
 
 def update_lang_version():
     global ballerina_lang_version
-    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
-    lang_version_file = repo.get_contents(constants.LANG_VERSION_FILE)
-    lang_version_json = lang_version_file.decoded_content.decode(constants.ENCODING)
+    global release_repo
 
-    data = json.loads(lang_version_json)
-    ballerina_lang_version = data["version"]
+    lang_version_file = release_repo.get_contents(constants.LANG_VERSION_FILE)
+    lang_version_content = lang_version_file.decoded_content.decode(constants.ENCODING)
+    ballerina_lang_version = json.loads(lang_version_content)["version"]
 
 
 def days_hours_minutes(td):
@@ -93,6 +89,17 @@ def format_lag(delta):
     return days
 
 
+def get_lag_color(lag):
+    if lag == 0:
+        color = "brightgreen"
+    elif lag < 2:
+        color = "yellow"
+    else:
+        color = "red"
+
+    return color
+
+
 def get_lag_info(module_name):
     global ballerina_timestamp
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
@@ -111,13 +118,7 @@ def get_lag_info(module_name):
     delta = format_lag(update_timestamp)
     days = str(delta)
 
-    if delta == 0:
-        color = "brightgreen"
-    elif delta < 2:
-        color = "yellow"
-    else:
-        color = "red"
-
+    color = get_lag_color(delta)
     return days, color
 
 
@@ -166,6 +167,24 @@ def update_modules(updated_readme, module_details_list):
     return updated_readme, updated_modules
 
 
+def get_lang_version_statement():
+    ballerina_lag = get_lang_version_lag()
+    days, hrs = days_hours_minutes(ballerina_lag)
+    ballerina_lang_lag = ""
+
+    if days > 0:
+        ballerina_lang_lag = str(format_lag(ballerina_lag)) + " days"
+    elif hrs > 0:
+        ballerina_lang_lag = str(hrs) + " h"
+
+    if not ballerina_lang_lag:
+        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** has been updated as follows"
+    else:
+        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** (" + ballerina_lang_lag + ") has been updated as follows"
+
+    return lang_version_statement
+
+
 def get_updated_readme(readme):
     BALLERINA_DISTRIBUTION = "ballerina-distribution"
     updated_readme = ""
@@ -176,7 +195,7 @@ def get_updated_readme(readme):
     module_details_list = all_modules["modules"]
     distribution_lag = get_lag_info(BALLERINA_DISTRIBUTION)[0] + " days"
 
-    ballerina_lang_lag = get_lang_version_lag()
+    lang_version_statement = get_lang_version_statement()
 
     updated_readme += "# Ballerina Repositories Update Status" + "\n"
     distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
@@ -191,11 +210,6 @@ def get_updated_readme(readme):
         else:
             distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag + " and pending PR [#" + str(
                 distribution_pr_number) + "](" + distribution_pr_link + ") is available"
-
-    if ballerina_lang_lag.startswith("0"):
-        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** has been updated as follows"
-    else:
-        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** (" + ballerina_lang_lag + ") has been updated as follows"
 
     updated_readme += distribution_lag_statement + "<br>"
     updated_readme += "\n" + "<br>"
@@ -295,17 +309,17 @@ def commit_changes(repo, updated_file):
 
 
 def get_readme_file():
-    readme_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
-    readme_file = readme_repo.get_contents(README_FILE)
+    global release_repo
+    readme_file = release_repo.get_contents(README_FILE)
     readme_file = readme_file.decoded_content.decode(constants.ENCODING)
 
     return readme_file
 
 
 def get_module_list():
-    readme_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
+    global release_repo
 
-    module_list_json = readme_repo.get_contents(constants.EXTENSIONS_FILE)
+    module_list_json = release_repo.get_contents(constants.EXTENSIONS_FILE)
     module_list_json = module_list_json.decoded_content.decode(constants.ENCODING)
 
     data = json.loads(module_list_json)
@@ -314,15 +328,13 @@ def get_module_list():
 
 
 def check_pending_pr_checks(module_name):
-    DEPENDANCY_UPDATING_BRANCH = "automated/dependency_version_update"
-
-    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
-    pulls = repo.get_pulls(state="open")
+    module_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
+    pulls = module_repo.get_pulls(state="open")
 
     for pull in pulls:
-        if pull.head.ref == DEPENDANCY_UPDATING_BRANCH:
+        if pull.head.ref == DEPENDENCY_UPDATING_BRANCH:
             sha = pull.head.sha
-            status = repo.get_commit(sha=sha).get_statuses()
+            status = module_repo.get_commit(sha=sha).get_statuses()
             print(status)
             return pull.number
     return None
