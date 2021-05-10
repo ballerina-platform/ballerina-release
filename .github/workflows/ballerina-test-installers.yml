@@ -6,8 +6,10 @@ on:
       - 'dependabot/**'
   push:
     branches-ignore:
-      - 'extension_update'
-      - 'extension_update_tmp'
+      - 'automated/extension_update'
+      - 'automated/extension_update_tmp'
+      - 'automated/dashboard_update'
+      - 'automated/dashboard_update_tmp'
     paths-ignore:
       - 'dependabot/**'
 
