@@ -2,10 +2,12 @@ name: Installer Tests
 
 on:
   pull_request:
+    paths-ignore:
+      - 'dependabot/**'
   push:
     branches-ignore:
-      - "extension_update"
-      - "extension_update_tmp"
+      - 'extension_update'
+      - 'extension_update_tmp'
     paths-ignore:
       - 'dependabot/**'
 
