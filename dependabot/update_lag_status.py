@@ -20,7 +20,6 @@ updated_modules = 0
 MODULE_NAME = "name"
 ballerina_timestamp = ""
 ballerina_lang_version = ""
-release_repo = None
 
 
 def main():
