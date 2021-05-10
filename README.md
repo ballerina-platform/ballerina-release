@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository lags by 2 days<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210509-230300-ae4217e1** has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210509-230300-ae4217e1** (15 h) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
@@ -28,7 +28,7 @@
 |  | [udp](https://github.com/ballerina-platform/module-ballerina-udp) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](https://github.com/ballerina-platform/module-ballerina-udp/blob/main/gradle.properties) | []() | 
 |  | [uuid](https://github.com/ballerina-platform/module-ballerina-uuid) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](https://github.com/ballerina-platform/module-ballerina-uuid/blob/main/gradle.properties) | []() | 
 | 4 | [auth](https://github.com/ballerina-platform/module-ballerina-auth) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](https://github.com/ballerina-platform/module-ballerina-auth/blob/master/gradle.properties) | []() | 
-|  | [email](https://github.com/ballerina-platform/module-ballerina-email) | [![Lag](https://img.shields.io/badge/lag-2%20days-red)](https://github.com/ballerina-platform/module-ballerina-email/blob/master/gradle.properties) | [#168](https://github.com/ballerina-platform/module-ballerina-email/pull/168) | 
+|  | [email](https://github.com/ballerina-platform/module-ballerina-email) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](https://github.com/ballerina-platform/module-ballerina-email/blob/master/gradle.properties) | []() | 
 |  | [jwt](https://github.com/ballerina-platform/module-ballerina-jwt) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](https://github.com/ballerina-platform/module-ballerina-jwt/blob/master/gradle.properties) | []() | 
 |  | [oauth2](https://github.com/ballerina-platform/module-ballerina-oauth2) | [![Lag](https://img.shields.io/badge/lag-0%20days-brightgreen)](https://github.com/ballerina-platform/module-ballerina-oauth2/blob/master/gradle.properties) | []() | 
 | 5 | [http](https://github.com/ballerina-platform/module-ballerina-http) | [![Lag](https://img.shields.io/badge/lag-2%20days-red)](https://github.com/ballerina-platform/module-ballerina-http/blob/master/gradle.properties) | []() | 
@@ -51,6 +51,6 @@
 ## Modules Released to Central
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
-| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Lag](https://img.shields.io/badge/lag-4%20days-red)](https://github.com/ballerina-platform/module-ballerinax-jaeger/blob/main/gradle.properties) | [#75](https://github.com/ballerina-platform/module-ballerinax-jaeger/pull/75) | 
-|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Lag](https://img.shields.io/badge/lag-4%20days-red)](https://github.com/ballerina-platform/module-ballerinax-prometheus/blob/main/gradle.properties) | [#75](https://github.com/ballerina-platform/module-ballerinax-prometheus/pull/75) | 
-|  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Lag](https://img.shields.io/badge/lag-4%20days-red)](https://github.com/ballerina-platform/module-ballerinax-choreo/blob/main/gradle.properties) | [#74](https://github.com/ballerina-platform/module-ballerinax-choreo/pull/74) | 
+| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Lag](https://img.shields.io/badge/lag-2.5%20days-red)](https://github.com/ballerina-platform/module-ballerinax-jaeger/blob/main/gradle.properties) | []() | 
+|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Lag](https://img.shields.io/badge/lag-2.5%20days-red)](https://github.com/ballerina-platform/module-ballerinax-prometheus/blob/main/gradle.properties) | []() | 
+|  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Lag](https://img.shields.io/badge/lag-2.5%20days-red)](https://github.com/ballerina-platform/module-ballerinax-choreo/blob/main/gradle.properties) | []() | 
