@@ -56,6 +56,8 @@ def main():
         print("Schedule workflow invoked, exiting script as 'auto_bump' flag connector_list.json is false.")
         return
 
+    print('Workflow started with Ballerina Lang version : ' + ballerina_version)
+
     for index, connector in enumerate(connectors):
         print("[Info] Check lang dependency in connector '" + connector['name'] + "'")
         update_connector(index)
