@@ -10,7 +10,8 @@ on:
         description: 'Auto Merge PRs'
         required: false
         default: 'true'
-
+  repository_dispatch:
+    types: [ connector-update ]
 
 jobs:
   update-lang-version:
@@ -32,7 +33,19 @@ jobs:
           pip install retry
           pip install PyGithub
 
-      - name: "Update Ballerina Language Version"
+      - name: "[Automatic] Update Ballerina Language Version"
+        if: github.event_name != 'workflow_dispatch'
+        run: |
+          python dependabot/update_dependencies_in_pipeline.py "${{ github.event.client_payload.ballerinaVersion }}" \
+                                                              "true"
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+
+      - name: "[Manual] Update Ballerina Language Version"
+        if: github.event_name == 'workflow_dispatch'
         run: |
           python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.ballerinaVersion }}" \
                                                             "${{ github.event.inputs.autoMergePRs }}"
