@@ -58,6 +58,7 @@ def main():
     global lang_version
     global extensions_file
     global all_modules
+    global current_level_modules
 
     try:
         extensions_file = utils.get_json_file(constants.EXTENSIONS_FILE)
@@ -70,8 +71,12 @@ def main():
         print("Schedule workflow invoked, exiting script as 'auto_bump' flag in modules_list.json is false.")
         return
 
-    lang_version = get_lang_version()
-    update_workflow_lang_version()
+    if override_ballerina_version != '':
+        lang_version = override_ballerina_version
+    else:
+        lang_version = utils.get_latest_lang_version()
+
+    update_workflow_lang_version_file()
 
     try:
         updated_file_content = open(constants.LANG_VERSION_FILE, 'r').read()
@@ -91,21 +96,6 @@ def main():
         sys.exit(1)
 
     print('Workflow started with Ballerina Lang version : ' + lang_version)
-
-    check_and_update_lang_version()
-
-
-def get_lang_version():
-    if override_ballerina_version != '':
-        return override_ballerina_version
-    else:
-        return utils.get_latest_lang_version()
-
-
-def check_and_update_lang_version():
-    global all_modules
-    global extensions_file
-    global current_level_modules
 
     all_modules = extensions_file['modules']
 
@@ -462,7 +452,7 @@ def create_pull_request(idx: int, repo):
     current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_PENDING
 
 
-def update_workflow_lang_version():
+def update_workflow_lang_version_file():
     bal_version = {
         'version': lang_version
     }
