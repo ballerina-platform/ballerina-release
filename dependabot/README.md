@@ -2,7 +2,7 @@
 
 ## Generate Dependency Graph
 
-`update_version_data.py` script will generate the dependency graph within the extensions and assign them to levels based on the shortest dependency paths.
+`update_dependency_graph.py` script will generate the dependency graph within the extensions and assign them to levels based on the shortest dependency paths.
 
 For this will process the 'build.gradle' file in the root folder. This will look for the repository url added for the dependency resolution,
     
@@ -16,7 +16,7 @@ For this will process the 'build.gradle' file in the root folder. This will look
 
 ## Update Dependencies in the extension
 
-`update_dependencies_version.py` script will bump dependencies in the extensions.
+`update_dependencies_in_pipeline.py` script will bump dependencies in the extensions.
 
 Parameters:
 1. Retrigger a failed dependency bump workflow (true/false) - This flag is so that intermediate dependencies will not be bumped to latest, if this set to true
