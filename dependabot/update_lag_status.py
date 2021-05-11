@@ -232,8 +232,6 @@ def get_distribution_statement():
     return distribution_lag_statement
 
 
-
-
 def get_updated_readme():
     updated_readme = ""
     global all_modules

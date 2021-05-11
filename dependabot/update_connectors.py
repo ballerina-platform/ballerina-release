@@ -154,7 +154,8 @@ def create_pull_request(idx: int, repo):
                 title=pull.title.rsplit('-', 1)[0] + '-' + sha_of_lang + ')',
                 body=pull.body.rsplit('-', 1)[0] + '-' + sha_of_lang + '`.'
             )
-            print("[Info] Automated version bump PR found for connector '" + connector['name'] + "'. PR: " + pull.html_url)
+            print("[Info] Automated version bump PR found for connector '" + connector[
+                'name'] + "'. PR: " + pull.html_url)
             break
 
     if not pr_exists:
