@@ -24,7 +24,7 @@ PULL_REQUEST_TITLE = '[Automated] Update Ballerina Lang Version ('
 AUTO_MERGE_PULL_REQUEST_TITLE = '[AUTO MERGE] Ballerina Lang Version ('
 
 SLEEP_INTERVAL = 30  # 30s
-MAX_WAIT_CYCLES = 120  # Initial timeout is 1h, changed to 80 & 100 m in level 5 & 6 respectively
+MAX_WAIT_CYCLES = 120  # Script timeout is 1h
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 
@@ -53,7 +53,7 @@ def main():
 
     print("Workflow invoked of type '" + event_type + "'")
     if event_type == 'repository_dispatch' and not connector_file['auto_bump']:
-        print("Schedule workflow invoked, exiting script as 'auto_bump' flag connector_list.json is false.")
+        print(" Workflow invoked with 'repository dispatch', exiting script as 'auto_bump' flag connector_list.json is false.")
         return
 
     print('Workflow started with Ballerina Lang version : ' + ballerina_version)
