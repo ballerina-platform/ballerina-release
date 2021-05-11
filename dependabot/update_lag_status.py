@@ -61,11 +61,8 @@ def get_lang_version_lag():
 def update_lang_version():
     global ballerina_lang_version
     global ballerina_timestamp
-    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
-    lang_version_file = repo.get_contents(constants.LANG_VERSION_FILE)
-    lang_version_json = lang_version_file.decoded_content.decode(constants.ENCODING)
 
-    data = json.loads(lang_version_json)
+    data = utils.read_json_file(constants.LANG_VERSION_FILE)
     ballerina_lang_version = data["version"]
     lang_version = ballerina_lang_version.split("-")
     ballerina_timestamp = create_timestamp(lang_version[2], lang_version[3])

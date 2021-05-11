@@ -1,4 +1,3 @@
-import json
 import os
 import sys
 
@@ -28,7 +27,13 @@ def main():
     module_details_json['modules'].sort(key=lambda s: s['level'])
     module_details_json = remove_modules_not_included_in_distribution(module_details_json)
     print('Removed central only modules and updated the list')
-    update_json_file(module_details_json)
+
+    try:
+        utils.write_json_file(constants.EXTENSIONS_FILE, module_details_json)
+    except Exception as e:
+        print('Failed to write to extensions.json', e)
+        sys.exit()
+
     print('Updated module details successfully')
 
     try:
@@ -56,8 +61,7 @@ def sort_module_name_list():
     global ballerina_version_regex
 
     try:
-        with open(constants.MODULE_LIST_FILE) as f:
-            name_list = json.load(f)
+        name_list = utils.read_json_file(constants.MODULE_LIST_FILE)
     except Exception as e:
         print('Failed to read module_list.json', e)
         sys.exit()
@@ -65,10 +69,7 @@ def sort_module_name_list():
     name_list['modules'].sort(key=lambda x: x['name'].split('-')[-1])
 
     try:
-        with open(constants.MODULE_LIST_FILE, 'w') as json_file:
-            json_file.seek(0)
-            json.dump(name_list, json_file, indent=4)
-            json_file.truncate()
+        utils.write_json_file(constants.MODULE_LIST_FILE, name_list)
     except Exception as e:
         print('Failed to write to file module_list.json', e)
         sys.exit()
@@ -174,18 +175,6 @@ def calculate_levels(module_name_list, module_details_json):
         module['level'] = g.nodes[module['name']]['level']
 
     return module_details_json
-
-
-# Updates the extensions.JSON file with dependents of each standard library module
-def update_json_file(updated_json):
-    try:
-        with open(constants.EXTENSIONS_FILE, 'w') as json_file:
-            json_file.seek(0)
-            json.dump(updated_json, json_file, indent=4)
-            json_file.truncate()
-    except Exception as e:
-        print('Failed to write to extensions.json', e)
-        sys.exit()
 
 
 # Creates a JSON string to store module information

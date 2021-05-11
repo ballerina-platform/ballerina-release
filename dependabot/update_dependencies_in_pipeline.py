@@ -61,7 +61,7 @@ def main():
     global current_level_modules
 
     try:
-        extensions_file = utils.get_json_file(constants.EXTENSIONS_FILE)
+        extensions_file = utils.read_json_file(constants.EXTENSIONS_FILE)
     except Exception as e:
         print('[Error] Error while loading modules list ', e)
         sys.exit(1)
@@ -76,7 +76,14 @@ def main():
     else:
         lang_version = utils.get_latest_lang_version()
 
-    update_workflow_lang_version_file()
+    bal_version = {
+        'version': lang_version
+    }
+    try:
+        utils.write_json_file(constants.LANG_VERSION_FILE, bal_version)
+    except Exception as e:
+        print('Failed to write to file latest_ballerina_lang_version.json', e)
+        sys.exit()
 
     try:
         updated_file_content = open(constants.LANG_VERSION_FILE, 'r').read()
@@ -450,20 +457,6 @@ def create_pull_request(idx: int, repo):
     current_level_modules[idx][MODULE_CREATED_PR] = created_pr
     current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
     current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_PENDING
-
-
-def update_workflow_lang_version_file():
-    bal_version = {
-        'version': lang_version
-    }
-    try:
-        with open(constants.LANG_VERSION_FILE, 'w') as json_file:
-            json_file.seek(0)
-            json.dump(bal_version, json_file, indent=4)
-            json_file.truncate()
-    except Exception as e:
-        print('Failed to write to file latest_ballerina_lang_version.json', e)
-        sys.exit()
 
 
 main()

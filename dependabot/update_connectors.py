@@ -44,8 +44,10 @@ def main():
     global connectors
     global auto_merge_pull_requests
 
+    print('Workflow started with Ballerina Lang version : ' + ballerina_version)
+
     try:
-        connector_file = utils.get_json_file(constants.CONNECTORS_FILE)
+        connector_file = utils.read_json_file(constants.CONNECTORS_FILE)
         connectors = connector_file['modules']
     except Exception as e:
         print('[Error] Error while loading connectors list ', e)
@@ -53,10 +55,8 @@ def main():
 
     print("Workflow invoked of type '" + event_type + "'")
     if event_type == 'repository_dispatch' and not connector_file['auto_bump']:
-        print(" Workflow invoked with 'repository dispatch', exiting script as 'auto_bump' flag connector_list.json is false.")
+        print("Workflow invoked with 'repository dispatch' type, exiting script as 'auto_bump' flag connector_list.json is false.")
         return
-
-    print('Workflow started with Ballerina Lang version : ' + ballerina_version)
 
     for index, connector in enumerate(connectors):
         print("[Info] Check lang dependency in connector '" + connector['name'] + "'")

@@ -16,7 +16,7 @@ ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_T
 github = Github(ballerina_bot_token)
 
 
-def get_json_file(file_path):
+def read_json_file(file_path):
     try:
         with open(file_path) as f:
             module_list = json.load(f)
@@ -24,6 +24,16 @@ def get_json_file(file_path):
         raise e
 
     return module_list
+
+
+def write_json_file(file_path, file_content):
+    try:
+        with open(file_path, 'w') as json_file:
+            json_file.seek(0)
+            json.dump(file_content, json_file, indent=4)
+            json_file.truncate()
+    except Exception as e:
+        raise e
 
 
 @retry(
@@ -51,7 +61,7 @@ def get_latest_lang_version():
     versions_list = json.loads(version_string)
     latest_version = versions_list[0]['name']
 
-    extensions_file = get_json_file(constants.EXTENSIONS_FILE)
+    extensions_file = read_json_file(constants.EXTENSIONS_FILE)
 
     if extensions_file['lang_version_substring'] != "":
         for version in versions_list:
