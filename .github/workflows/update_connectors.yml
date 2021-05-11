@@ -1,0 +1,43 @@
+name: "[Connectors] Update Ballerina Version"
+
+on:
+  workflow_dispatch:
+    inputs:
+      ballerinaVersion:
+        description: 'Ballerina Version'
+        required: true
+      autoMergePRs:
+        description: 'Auto Merge PRs'
+        required: false
+        default: 'true'
+
+
+jobs:
+  update-lang-version:
+    name: Update Ballerina Lang Version
+    if: github.repository_owner == 'ballerina-platform'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Python Packages
+        run: |
+          pip install requests
+          pip install retry
+          pip install PyGithub
+
+      - name: "Update Ballerina Language Version"
+        run: |
+          python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.ballerinaVersion }}" \
+                                                            "${{ github.event.inputs.autoMergePRs }}"
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
