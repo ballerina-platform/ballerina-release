@@ -8,9 +8,12 @@ HTTP_REQUEST_DELAY_IN_SECONDS = 2
 HTTP_REQUEST_DELAY_MULTIPLIER = 2
 
 BALLERINA_ORG_NAME = 'ballerina-platform'
+
 MODULE_LIST_FILE = 'dependabot/resources/module_list.json'
 EXTENSIONS_FILE = 'dependabot/resources/extensions.json'
 LANG_VERSION_FILE = 'dependabot/resources/latest_ballerina_lang_version.json'
+CONNECTORS_FILE = 'dependabot/resources/connector_list.json'
+
 BUILD_GRADLE_FILE = 'build.gradle'
 GRADLE_PROPERTIES_FILE = 'gradle.properties'
 

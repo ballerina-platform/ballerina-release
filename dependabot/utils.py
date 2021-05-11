@@ -16,9 +16,9 @@ ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_T
 github = Github(ballerina_bot_token)
 
 
-def get_extensions_file():
+def get_json_file(file_path):
     try:
-        with open(constants.EXTENSIONS_FILE) as f:
+        with open(file_path) as f:
             module_list = json.load(f)
     except Exception as e:
         raise e
@@ -51,7 +51,7 @@ def get_latest_lang_version():
     versions_list = json.loads(version_string)
     latest_version = versions_list[0]['name']
 
-    extensions_file = get_extensions_file()
+    extensions_file = get_json_file(constants.EXTENSIONS_FILE)
 
     if extensions_file['lang_version_substring'] != "":
         for version in versions_list:
@@ -129,3 +129,20 @@ def open_pr_and_merge(repository_name, title, body, head_branch):
         created_pr.merge()
     except Exception as e:
         raise e
+
+
+def approve_pr(module, auto_merge_pull_requests, pr_number):
+    if (auto_merge_pull_requests.lower() == 'true') & module['auto_merge']:
+
+        # To stop intermittent failures due to API sync
+        time.sleep(5)
+
+        r_github = Github(ballerina_reviewer_bot_token)
+        repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
+        pr = repo.get_pull(pr_number)
+        try:
+            pr.create_review(event='APPROVE')
+            print(
+                "[Info] Automated version bump PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
+        except Exception as e:
+            raise e

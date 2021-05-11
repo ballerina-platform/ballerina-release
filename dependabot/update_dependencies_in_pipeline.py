@@ -9,7 +9,6 @@ import constants
 import utils
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
-ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
 
 MODULE_CREATED_PR = 'created_pr'
 MODULE_TIMESTAMPED_VERSION = 'timestamped_version'
@@ -61,7 +60,7 @@ def main():
     global all_modules
 
     try:
-        extensions_file = utils.get_extensions_file()
+        extensions_file = utils.get_json_file(constants.EXTENSIONS_FILE)
     except Exception as e:
         print('[Error] Error while loading modules list ', e)
         sys.exit(1)
@@ -453,21 +452,10 @@ def create_pull_request(idx: int, repo):
             print("[Error] Error occurred while creating pull request for module '" + module['name'] + "'.", e)
             sys.exit(1)
 
-        if (auto_merge_pull_requests.lower() == 'true') & module['auto_merge']:
-
-            # To stop intermittent failures due to API sync
-            time.sleep(5)
-
-            r_github = Github(ballerina_reviewer_bot_token)
-            repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
-            pr = repo.get_pull(created_pr.number)
-            try:
-                pr.create_review(event='APPROVE')
-                print(
-                    "[Info] Automated version bump PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
-            except Exception as e:
-                print("[Error] Error occurred while approving dependency PR for module '" + module['name'] + "'",
-                      e)
+        try:
+            utils.approve_pr(module, auto_merge_pull_requests, created_pr.number)
+        except Exception as e:
+            print("[Error] Error occurred while approving dependency PR for module '" + module['name'] + "'", e)
 
     current_level_modules[idx][MODULE_CREATED_PR] = created_pr
     current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
