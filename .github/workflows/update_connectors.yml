@@ -37,7 +37,7 @@ jobs:
         if: github.event_name != 'workflow_dispatch'
         run: |
           python dependabot/update_dependencies_in_pipeline.py "${{ github.event.client_payload.ballerinaVersion }}" \
-                                                              "true"
+                                                              "true" "repository_dispatch"
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}

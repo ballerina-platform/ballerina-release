@@ -52,7 +52,7 @@ def main():
         sys.exit(1)
 
     print("Workflow invoked of type '" + event_type + "'")
-    if event_type == 'schedule' and not connector_file['auto_bump']:
+    if event_type == 'repository_dispatch' and not connector_file['auto_bump']:
         print("Schedule workflow invoked, exiting script as 'auto_bump' flag connector_list.json is false.")
         return
 
