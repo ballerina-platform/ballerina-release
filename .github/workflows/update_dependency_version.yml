@@ -1,4 +1,4 @@
-name: Update Dependency Version in Pipeline
+name: "[Extensions] Update Ballerina Version"
 
 on:
   workflow_dispatch:
