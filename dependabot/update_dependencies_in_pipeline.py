@@ -9,7 +9,6 @@ import constants
 import utils
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
-ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
 
 MODULE_CREATED_PR = 'created_pr'
 MODULE_TIMESTAMPED_VERSION = 'timestamped_version'
@@ -59,9 +58,10 @@ def main():
     global lang_version
     global extensions_file
     global all_modules
+    global current_level_modules
 
     try:
-        extensions_file = utils.get_extensions_file()
+        extensions_file = utils.read_json_file(constants.EXTENSIONS_FILE)
     except Exception as e:
         print('[Error] Error while loading modules list ', e)
         sys.exit(1)
@@ -71,8 +71,19 @@ def main():
         print("Schedule workflow invoked, exiting script as 'auto_bump' flag in modules_list.json is false.")
         return
 
-    lang_version = get_lang_version()
-    update_workflow_lang_version()
+    if override_ballerina_version != '':
+        lang_version = override_ballerina_version
+    else:
+        lang_version = utils.get_latest_lang_version()
+
+    bal_version = {
+        'version': lang_version
+    }
+    try:
+        utils.write_json_file(constants.LANG_VERSION_FILE, bal_version)
+    except Exception as e:
+        print('Failed to write to file latest_ballerina_lang_version.json', e)
+        sys.exit()
 
     try:
         updated_file_content = open(constants.LANG_VERSION_FILE, 'r').read()
@@ -92,21 +103,6 @@ def main():
         sys.exit(1)
 
     print('Workflow started with Ballerina Lang version : ' + lang_version)
-
-    check_and_update_lang_version()
-
-
-def get_lang_version():
-    if override_ballerina_version != '':
-        return override_ballerina_version
-    else:
-        return utils.get_latest_lang_version()
-
-
-def check_and_update_lang_version():
-    global all_modules
-    global extensions_file
-    global current_level_modules
 
     all_modules = extensions_file['modules']
 
@@ -453,39 +449,14 @@ def create_pull_request(idx: int, repo):
             print("[Error] Error occurred while creating pull request for module '" + module['name'] + "'.", e)
             sys.exit(1)
 
-        if (auto_merge_pull_requests.lower() == 'true') & module['auto_merge']:
-
-            # To stop intermittent failures due to API sync
-            time.sleep(5)
-
-            r_github = Github(ballerina_reviewer_bot_token)
-            repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
-            pr = repo.get_pull(created_pr.number)
-            try:
-                pr.create_review(event='APPROVE')
-                print(
-                    "[Info] Automated version bump PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
-            except Exception as e:
-                print("[Error] Error occurred while approving dependency PR for module '" + module['name'] + "'",
-                      e)
+        try:
+            utils.approve_pr(module, auto_merge_pull_requests, created_pr.number)
+        except Exception as e:
+            print("[Error] Error occurred while approving dependency PR for module '" + module['name'] + "'", e)
 
     current_level_modules[idx][MODULE_CREATED_PR] = created_pr
     current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
     current_level_modules[idx][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_PENDING
-
-
-def update_workflow_lang_version():
-    bal_version = {
-        'version': lang_version
-    }
-    try:
-        with open(constants.LANG_VERSION_FILE, 'w') as json_file:
-            json_file.seek(0)
-            json.dump(bal_version, json_file, indent=4)
-            json_file.truncate()
-    except Exception as e:
-        print('Failed to write to file latest_ballerina_lang_version.json', e)
-        sys.exit()
 
 
 main()

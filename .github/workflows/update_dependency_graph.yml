@@ -33,7 +33,7 @@ jobs:
 
       - name: Get Dependencies and update files
         run: |
-          python dependabot/update_version_data.py
+          python dependabot/update_dependency_graph.py
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}

@@ -1,22 +1,17 @@
-name: "[Extensions] Update Ballerina Version"
+name: "[Connectors] Update Ballerina Version"
 
 on:
   workflow_dispatch:
     inputs:
-      isRetrigger:
-        description: 'Re-trigger a failed dependency bump workflow'
-        required: false
-        default: 'false'
       ballerinaVersion:
-        description: 'Ballerina Version (Optional)'
-        required: false
-        default: ''
+        description: 'Ballerina Version'
+        required: true
       autoMergePRs:
         description: 'Auto Merge PRs'
         required: false
         default: 'true'
-  schedule:
-    - cron: '30 6 * * *'
+  repository_dispatch:
+    types: [ connector-update ]
 
 jobs:
   update-lang-version:
@@ -38,10 +33,11 @@ jobs:
           pip install retry
           pip install PyGithub
 
-      - name: "[Scheduled] Update Ballerina Language Version"
-        if: github.event_name == 'schedule'
+      - name: "[Automatic] Update Ballerina Language Version"
+        if: github.event_name != 'workflow_dispatch'
         run: |
-          python dependabot/update_dependencies_in_pipeline.py "false" "" "true" "schedule"
+          python dependabot/update_dependencies_in_pipeline.py "${{ github.event.client_payload.ballerinaVersion }}" \
+                                                              "true" "repository_dispatch"
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -51,8 +47,7 @@ jobs:
       - name: "[Manual] Update Ballerina Language Version"
         if: github.event_name == 'workflow_dispatch'
         run: |
-          python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.isRetrigger }}" \
-                                                            "${{ github.event.inputs.ballerinaVersion }}" \
+          python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.ballerinaVersion }}" \
                                                             "${{ github.event.inputs.autoMergePRs }}"
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}

@@ -1,0 +1,9 @@
+{
+    "auto_bump": false,
+    "modules": [
+        {
+            "name": "module-ballerinax-slack",
+            "auto_merge": false
+        }
+    ]
+}
