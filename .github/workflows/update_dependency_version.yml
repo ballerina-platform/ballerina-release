@@ -1,4 +1,4 @@
-name: "[Extensions] Update Ballerina Version"
+name: Extensions - Update Ballerina Version
 
 on:
   workflow_dispatch:
