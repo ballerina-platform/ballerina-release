@@ -81,8 +81,16 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
         remote_file = repo.get_contents(file_path)
         remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
 
+        try:
+            remote_file_in_pr_branch = repo.get_contents(file_path, commit_branch)
+            remote_file_in_pr_branch = remote_file_in_pr_branch.decoded_content.decode(constants.ENCODING)
+        except GithubException as e:
+            remote_file_in_pr_branch = ""
+
         if updated_file_content == remote_file_contents:
             return False
+        elif updated_file_content == remote_file_in_pr_branch:
+            return True
         else:
             base = repo.get_branch(repo.default_branch)
             branch = commit_branch
