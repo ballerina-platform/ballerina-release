@@ -53,7 +53,7 @@ def open_url(url):
 def get_latest_lang_version():
     try:
         version_string = open_url(
-            "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions"
+            "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-debugger-integration-test/versions"
         ).read()
     except Exception as e:
         raise e
