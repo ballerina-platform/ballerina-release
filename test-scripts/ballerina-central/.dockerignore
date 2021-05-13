@@ -1,0 +1,5 @@
+java/project-api/.gradle
+java/project-api/build
+java/project-api/out
+
+target/
