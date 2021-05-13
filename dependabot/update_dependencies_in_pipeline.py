@@ -6,6 +6,7 @@ import time
 from github import Github, GithubException
 
 import constants
+import notify_chat
 import utils
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
@@ -182,6 +183,7 @@ def wait_for_current_level_build(level):
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
+        notify_chat.notify_failing_pr(pr_checks_failed_modules)
         print('Following modules dependency PRs have failed checks...')
         for module in pr_checks_failed_modules:
             print(module['name'])
