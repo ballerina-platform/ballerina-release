@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository lags by 1.5 days<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210513-103400-160d5ff1** (1 h) has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210513-103400-160d5ff1** (6 h) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
@@ -31,7 +31,7 @@
 |  | [email](https://github.com/ballerina-platform/module-ballerina-email) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-email/blob/master/gradle.properties) | []() | 
 |  | [jwt](https://github.com/ballerina-platform/module-ballerina-jwt) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-jwt/blob/master/gradle.properties) | []() | 
 |  | [oauth2](https://github.com/ballerina-platform/module-ballerina-oauth2) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-oauth2/blob/master/gradle.properties) | []() | 
-| 5 | [http](https://github.com/ballerina-platform/module-ballerina-http) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerina-http/blob/master/gradle.properties) | [#384](https://github.com/ballerina-platform/module-ballerina-http/pull/384) | 
+| 5 | [http](https://github.com/ballerina-platform/module-ballerina-http) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-http/blob/master/gradle.properties) | []() | 
 | 6 | [aws.lambda](https://github.com/ballerina-platform/module-ballerinax-aws.lambda) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerinax-aws.lambda/blob/master/gradle.properties) | []() | 
 |  | [azure.functions](https://github.com/ballerina-platform/module-ballerinax-azure.functions) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerinax-azure.functions/blob/master/gradle.properties) | []() | 
 |  | [graphql](https://github.com/ballerina-platform/module-ballerina-graphql) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerina-graphql/blob/master/gradle.properties) | []() | 
