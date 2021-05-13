@@ -1,4 +1,4 @@
-name: "[Connectors] Update Ballerina Version"
+name: Connectors - Update Ballerina Version
 
 on:
   workflow_dispatch:

@@ -53,7 +53,7 @@ def open_url(url):
 def get_latest_lang_version():
     try:
         version_string = open_url(
-            "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-tools/versions"
+            "https://api.github.com/orgs/ballerina-platform/packages/maven/org.ballerinalang.jballerina-debugger-integration-test/versions"
         ).read()
     except Exception as e:
         raise e
@@ -81,15 +81,23 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
         remote_file = repo.get_contents(file_path)
         remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
 
+        try:
+            remote_file_in_pr_branch = repo.get_contents(file_path, commit_branch)
+            remote_file_in_pr_branch = remote_file_in_pr_branch.decoded_content.decode(constants.ENCODING)
+        except GithubException:
+            remote_file_in_pr_branch = ""
+
         if updated_file_content == remote_file_contents:
             return False
+        elif updated_file_content == remote_file_in_pr_branch:
+            return True
         else:
             base = repo.get_branch(repo.default_branch)
             branch = commit_branch
             try:
                 ref = f"refs/heads/" + branch
                 repo.create_git_ref(ref=ref, sha=base.commit.sha)
-            except GithubException as e:
+            except GithubException:
                 print("[Info] Unmerged '" + commit_branch + "' branch existed in '" + repository_name + "'")
                 branch = commit_branch + '_tmp'
                 ref = f"refs/heads/" + branch

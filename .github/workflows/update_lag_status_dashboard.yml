@@ -2,7 +2,7 @@ name: Update Status Dashboard
 
 on:
   workflow_run:
-    workflows: [ "[Extensions] Update Ballerina Version" ]
+    workflows: [ "Extensions - Update Ballerina Version" ]
     branches: [ master ]
   workflow_dispatch:
 
