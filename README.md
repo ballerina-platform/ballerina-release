@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository lags by 1.5 days<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210513-103400-160d5ff1** (8 h) has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210513-103400-160d5ff1** (9 h) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
@@ -41,10 +41,10 @@
 |  | [websocket](https://github.com/ballerina-platform/module-ballerina-websocket) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-websocket/blob/main/gradle.properties) | []() | 
 |  | [websub](https://github.com/ballerina-platform/module-ballerina-websub) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-websub/blob/master/gradle.properties) | []() | 
 |  | [websubhub](https://github.com/ballerina-platform/module-ballerina-websubhub) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-websubhub/blob/main/gradle.properties) | []() | 
-| 7 | [c2c](https://github.com/ballerina-platform/module-ballerina-c2c) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerina-c2c/blob/master/gradle.properties) | []() | 
-|  | [kafka](https://github.com/ballerina-platform/module-ballerinax-kafka) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerinax-kafka/blob/master/gradle.properties) | []() | 
-|  | [rabbitmq](https://github.com/ballerina-platform/module-ballerinax-rabbitmq) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerinax-rabbitmq/blob/master/gradle.properties) | []() | 
-|  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerina-sql/blob/master/gradle.properties) | []() | 
+| 7 | [c2c](https://github.com/ballerina-platform/module-ballerina-c2c) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-c2c/blob/master/gradle.properties) | []() | 
+|  | [kafka](https://github.com/ballerina-platform/module-ballerinax-kafka) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerinax-kafka/blob/master/gradle.properties) | [#188](https://github.com/ballerina-platform/module-ballerinax-kafka/pull/188) | 
+|  | [rabbitmq](https://github.com/ballerina-platform/module-ballerinax-rabbitmq) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerinax-rabbitmq/blob/master/gradle.properties) | [#169](https://github.com/ballerina-platform/module-ballerinax-rabbitmq/pull/169) | 
+|  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-sql/blob/master/gradle.properties) | []() | 
 | 8 | [java.jdbc](https://github.com/ballerina-platform/module-ballerinax-java.jdbc) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/blob/master/gradle.properties) | []() | 
 |  | [mysql](https://github.com/ballerina-platform/module-ballerinax-mysql) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/module-ballerinax-mysql/blob/master/gradle.properties) | []() | 
 |  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Lag](https://img.shields.io/badge/lag-1.5%20days-yellow)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | []() | 
