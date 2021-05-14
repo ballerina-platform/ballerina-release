@@ -74,10 +74,9 @@ def notify_failing_pr(failed_modules):
     chat_message = "Following modules dependency PRs have failed checks..." + "\n"
     for module in failed_modules:
         pr_number = check_pending_pr_checks(module["name"])
-        if pr_number is not None:
-            pending_pr_link = "https://github.com/ballerina-platform/" + module["name"] + "/pull/" + str(
-                pr_number)
-            chat_message += pending_pr_link + "\n"
+        pending_pr_link = "https://github.com/ballerina-platform/" + module["name"] + "/pull/" + str(
+            pr_number)
+        chat_message += pending_pr_link + "\n"
 
     send_message(chat_message)
 
