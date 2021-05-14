@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository lags by 23 h<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210514-101400-07e80cc8** has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210514-101400-07e80cc8** (3 h) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
