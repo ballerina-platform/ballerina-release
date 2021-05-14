@@ -2,13 +2,18 @@ name: Installer Tests
 
 on:
   pull_request:
+    branches-ignore:
+      - 'automated/extensions_update'
+      - 'automated/extensions_update_tmp'
+      - 'automated/dashboard_update'
+      - 'automated/dashboard_update_tmp'
     paths-ignore:
       - 'dependabot/**'
       - 'README.md'
   push:
     branches-ignore:
-      - 'automated/extension_update'
-      - 'automated/extension_update_tmp'
+      - 'automated/extensions_update'
+      - 'automated/extensions_update_tmp'
       - 'automated/dashboard_update'
       - 'automated/dashboard_update_tmp'
     paths-ignore:
