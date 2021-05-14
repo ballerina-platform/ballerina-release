@@ -8,7 +8,7 @@ on:
         required: false
         default: 'false'
       ballerinaVersion:
-        description: 'Ballerina Version (Optional)'
+        description: 'Ballerina Version (Mandatory only when retriggering failed workflow)'
         required: false
         default: ''
       autoMergePRs:
