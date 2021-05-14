@@ -13,4 +13,4 @@ jobs:
 
     - name: Run Script
       working-directory: ./test-scripts/ballerina-central/
-      run: docker build --build-arg BALLERINA_CENTRAL_ACCESS_TOKEN=${{ secrets.BALLERINA_CENTRAL_DEV_USER_ACCESS_TOKEN }} .
+      run: docker build --build-arg BALLERINA_CENTRAL_ACCESS_TOKEN=${{ secrets.BALLERINA_CENTRAL_DEV_USER_ACCESS_TOKE }} .
