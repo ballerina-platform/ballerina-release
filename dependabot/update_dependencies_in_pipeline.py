@@ -194,36 +194,29 @@ def wait_for_current_level_build(level):
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_MERGE_FAILURE, current_level_modules))
     if len(pr_merged_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules dependency PRs could not be merged...')
         chat_message += 'Following modules dependency PRs could not be merged...' + "\n"
         for module in pr_merged_failed_modules:
-            print(module['name'])
             chat_message += module['name'] + "\n"
 
     build_checks_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_FAILURE, current_level_modules))
     if len(build_checks_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules timestamped build checks failed...')
         chat_message += 'Following modules timestamped build checks failed...' + "\n"
         for module in build_checks_failed_modules:
-            print(module['name'])
             chat_message += module['name'] + "\n"
 
     build_version_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED, current_level_modules))
     if len(build_version_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules timestamped build version cannot be identified...')
         chat_message += 'Following modules timestamped build version cannot be identified...' + "\n"
         for module in build_version_failed_modules:
-            print(module['name'])
             chat_message += module['name'] + "\n"
 
-    if not chat_message:
-        notify_chat.send_message(chat_message)
-
     if module_release_failure:
+        print(chat_message)
+        notify_chat.send_message(chat_message)
         sys.exit(1)
 
 
