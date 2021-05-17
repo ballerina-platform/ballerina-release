@@ -8,12 +8,9 @@ from httplib2 import Http
 import constants
 import utils
 
-ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 build_chat_id = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_ID]
 build_chat_key = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_KEY]
 build_chat_token = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_TOKEN]
-
-github = Github(ballerina_bot_token)
 
 older_version = []
 updated_version = []
