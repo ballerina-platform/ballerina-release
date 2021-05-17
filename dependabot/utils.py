@@ -88,7 +88,7 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
             remote_file_in_pr_branch = ""
 
         if updated_file_content == remote_file_contents:
-            return False
+            return ""
         elif updated_file_content == remote_file_in_pr_branch:
             return True
         else:
@@ -120,7 +120,7 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
                 update_branch = repo.get_git_ref("heads/" + commit_branch)
                 update_branch.edit(update["commit"].sha, force=True)
                 repo.get_git_ref("heads/" + branch).delete()
-            return True
+            return update["commit"].sha
     except GithubException as e:
         raise e
 

@@ -20,8 +20,7 @@ updated_version = []
 
 
 def send_message(message):
-    """Hangouts Chat incoming webhook quickstart."""
-    url = 'https://chat.googleapis.com/v1/spaces/'+build_chat_id+'/messages?key='+build_chat_key+'&token='+build_chat_token
+    url = 'https://chat.googleapis.com/v1/spaces/' + build_chat_id + '/messages?key=' + build_chat_key + '&token=' + build_chat_token
     bot_message = {
         'text': message}
 
@@ -50,7 +49,7 @@ def create_message():
     global older_version
     global updated_version
 
-    color_order = {"brightgreen":0, "yellow":1, "red":2}
+    color_order = {"brightgreen": 0, "yellow": 1, "red": 2}
     chat_message = ""
 
     for i in range(len(older_version)):
@@ -60,7 +59,7 @@ def create_message():
         if old_row[2] != updated_row[2]:
             old_color = old_row[2].split("-")[2].split(")")[0]
             updated_color = updated_row[2].split("-")[2].split(")")[0]
-            if(color_order[updated_color]>color_order[old_color]):
+            if color_order[updated_color] > color_order[old_color]:
                 if not chat_message:
                     chat_message = "Reminder on the following modules dependency update..." + "\n"
                 chat_message += old_row[2].split("(")[2][:-2] + "\n"
@@ -70,31 +69,9 @@ def create_message():
         send_message(chat_message)
 
 
-def notify_failing_pr(failed_modules):
-    chat_message = "Following modules dependency PRs have failed checks..." + "\n"
-    for module in failed_modules:
-        pr_number = check_pending_pr_checks(module["name"])
-        pending_pr_link = "https://github.com/ballerina-platform/" + module["name"] + "/pull/" + str(
-            pr_number)
-        chat_message += pending_pr_link + "\n"
-
-    send_message(chat_message)
-
-
-def check_pending_pr_checks(module_name):
-    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
-    pulls = repo.get_pulls(state="open")
-
-    for pull in pulls:
-        if pull.head.ref == constants.DEPENDENCY_UPDATE_BRANCH:
-            return pull.number
-    return None
-
-
-def send_chat(commit):
+def notify_lag_update(commit):
     global older_version
     global updated_version
-    repo = github.get_repo("ballerina-platform" + '/' + "ballerina-release")
 
     diff_string = utils.open_url(
         "https://github.com/ballerina-platform/ballerina-release/commit/" + commit + ".diff").read().decode("utf-8")

@@ -6,6 +6,7 @@ from datetime import datetime
 from github import Github, GithubException
 
 import constants
+import notify_chat
 import utils
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
@@ -37,6 +38,7 @@ def main():
                                     '[Automated] Update Extension Dependency Dashboard',
                                     'Update extension dependency dashboard',
                                     constants.DASHBOARD_UPDATE_BRANCH)
+            notify_chat.notify_lag_update(update)
         else:
             print('No changes to ' + README_FILE + ' file')
     except GithubException as e:
