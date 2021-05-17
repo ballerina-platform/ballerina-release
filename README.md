@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository is up to date.<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210515-162400-f586ef78** has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210515-162400-f586ef78** (1.5 days) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
