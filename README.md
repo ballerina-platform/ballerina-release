@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository lags by 1.5 days and pending PR [#1701](https://github.com/ballerina-platform/ballerina-distribution/pull/1701) is available<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210517-074800-9921e9b8** (5 h) has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210517-074800-9921e9b8** (1 days) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending PR |
 |:---:|:---:|:---:|:---:|
