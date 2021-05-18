@@ -41,7 +41,7 @@ def main():
         update = utils.commit_file('ballerina-release',
                                    constants.EXTENSIONS_FILE, updated_file_content,
                                    constants.EXTENSIONS_UPDATE_BRANCH,
-                                   '[Automated] Update Extensions Dependencies')
+                                   '[Automated] Update Extensions Dependencies')[0]
         if update:
             utils.open_pr_and_merge('ballerina-release',
                                     '[Automated] Update Extensions Dependencies',

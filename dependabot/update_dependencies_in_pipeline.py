@@ -91,7 +91,7 @@ def main():
         update = utils.commit_file('ballerina-release',
                                    constants.LANG_VERSION_FILE, updated_file_content,
                                    constants.EXTENSIONS_UPDATE_BRANCH,
-                                   '[Automated] Update Workflow Lang Version')
+                                   '[Automated] Update Workflow Lang Version')[0]
         if update:
             utils.open_pr_and_merge('ballerina-release',
                                     '[Automated] Update Dependency Bump Workflow Triggered Version',
@@ -356,7 +356,7 @@ def update_module(idx: int, current_level):
     updated_properties_file = get_updated_properties_file(module['name'], current_level, properties_file)
 
     update = utils.commit_file(module['name'], constants.GRADLE_PROPERTIES_FILE, updated_properties_file,
-                               constants.DEPENDENCY_UPDATE_BRANCH, COMMIT_MESSAGE)
+                               constants.DEPENDENCY_UPDATE_BRANCH, COMMIT_MESSAGE)[0]
 
     if update:
         print("[Info] Update lang dependency in module '" + module['name'] + "'")

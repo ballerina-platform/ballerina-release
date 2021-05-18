@@ -29,7 +29,7 @@ def main():
     updated_readme = get_updated_readme()
 
     try:
-        update = utils.commit_file('ballerina-release',
+        update, commit = utils.commit_file('ballerina-release',
                                    README_FILE, updated_readme,
                                    constants.DASHBOARD_UPDATE_BRANCH,
                                    '[Automated] Update extension dependency dashboard')
@@ -38,7 +38,7 @@ def main():
                                     '[Automated] Update Extension Dependency Dashboard',
                                     'Update extension dependency dashboard',
                                     constants.DASHBOARD_UPDATE_BRANCH)
-            notify_chat.notify_lag_update(update)
+            notify_chat.notify_lag_update(commit)
         else:
             print('No changes to ' + README_FILE + ' file')
     except GithubException as e:
