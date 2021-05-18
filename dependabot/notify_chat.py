@@ -56,10 +56,11 @@ def create_message():
         if old_row[2] != updated_row[2]:
             old_color = old_row[2].split("-")[2].split(")")[0]
             updated_color = updated_row[2].split("-")[2].split(")")[0]
-            if color_order[updated_color] > color_order[old_color]:
-                if not chat_message:
-                    chat_message = "Reminder on the following modules dependency update..." + "\n"
+            pending_pr = updated_row[3].split("[")[1].split("]")[0]
+            if color_order[updated_color] > color_order[old_color] and pending_pr:
+                chat_message = "Reminder on the following modules dependency update..." + "\n"
                 chat_message += old_row[2].split("(")[2][:-2] + "\n"
+                break
 
     if chat_message:
         print(chat_message)
