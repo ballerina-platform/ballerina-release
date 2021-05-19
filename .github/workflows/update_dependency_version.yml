@@ -37,6 +37,7 @@ jobs:
           pip install requests
           pip install retry
           pip install PyGithub
+          pip install httplib2
 
       - name: "[Scheduled] Update Ballerina Language Version"
         if: github.event_name == 'schedule'
