@@ -1,5 +1,5 @@
 # Ballerina Repositories Update Status
-`ballerina-distribution` repository lags by 4 days<br>
+`ballerina-distribution` repository lags by 4 days and pending PR [#1712](https://github.com/ballerina-platform/ballerina-distribution/pull/1712) is available<br>
 <br>`ballerina-lang` repository version **2.0.0-beta.1-20210519-102900-e91ff627** (4 h) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending Automated PR |
@@ -47,7 +47,7 @@
 |  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-sql/blob/master/gradle.properties) | []() | 
 | 8 | [java.jdbc](https://github.com/ballerina-platform/module-ballerinax-java.jdbc) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/blob/master/gradle.properties) | []() | 
 |  | [mysql](https://github.com/ballerina-platform/module-ballerinax-mysql) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerinax-mysql/blob/master/gradle.properties) | []() | 
-|  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Lag](https://img.shields.io/badge/lag-4%20days-red)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | []() | 
+|  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Lag](https://img.shields.io/badge/lag-4%20days-red)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | [#1712](https://github.com/ballerina-platform/ballerina-distribution/pull/1712) | 
 ## Modules Released to Central
 | Level | Modules | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|
