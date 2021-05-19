@@ -6,6 +6,7 @@ import time
 from github import Github, GithubException
 
 import constants
+import notify_chat
 import utils
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
@@ -90,7 +91,7 @@ def main():
         update = utils.commit_file('ballerina-release',
                                    constants.LANG_VERSION_FILE, updated_file_content,
                                    constants.EXTENSIONS_UPDATE_BRANCH,
-                                   '[Automated] Update Workflow Lang Version')
+                                   '[Automated] Update Workflow Lang Version')[0]
         if update:
             utils.open_pr_and_merge('ballerina-release',
                                     '[Automated] Update Dependency Bump Workflow Triggered Version',
@@ -178,39 +179,44 @@ def wait_for_current_level_build(level):
             sys.exit(1)
 
     module_release_failure = False
+    chat_message = ""
     pr_checks_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
         print('Following modules dependency PRs have failed checks...')
+        chat_message += 'Following modules dependency PRs have failed checks...' + "\n"
         for module in pr_checks_failed_modules:
             print(module['name'])
+            chat_message += module['name'] + "\n"
 
     pr_merged_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_MERGE_FAILURE, current_level_modules))
     if len(pr_merged_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules dependency PRs could not be merged...')
+        chat_message += 'Following modules dependency PRs could not be merged...' + "\n"
         for module in pr_merged_failed_modules:
-            print(module['name'])
+            chat_message += module['name'] + "\n"
 
     build_checks_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_FAILURE, current_level_modules))
     if len(build_checks_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules timestamped build checks failed...')
+        chat_message += 'Following modules timestamped build checks failed...' + "\n"
         for module in build_checks_failed_modules:
-            print(module['name'])
+            chat_message += module['name'] + "\n"
 
     build_version_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED, current_level_modules))
     if len(build_version_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules timestamped build version cannot be identified...')
+        chat_message += 'Following modules timestamped build version cannot be identified...' + "\n"
         for module in build_version_failed_modules:
-            print(module['name'])
+            chat_message += module['name'] + "\n"
 
     if module_release_failure:
+        print(chat_message)
+        notify_chat.send_message(chat_message)
         sys.exit(1)
 
 
@@ -350,7 +356,7 @@ def update_module(idx: int, current_level):
     updated_properties_file = get_updated_properties_file(module['name'], current_level, properties_file)
 
     update = utils.commit_file(module['name'], constants.GRADLE_PROPERTIES_FILE, updated_properties_file,
-                               constants.DEPENDENCY_UPDATE_BRANCH, COMMIT_MESSAGE)
+                               constants.DEPENDENCY_UPDATE_BRANCH, COMMIT_MESSAGE)[0]
 
     if update:
         print("[Info] Update lang dependency in module '" + module['name'] + "'")

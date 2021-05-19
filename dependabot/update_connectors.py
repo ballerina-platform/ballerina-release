@@ -127,7 +127,7 @@ def update_connector(index: int):
 
     update = utils.commit_file(connector['name'], constants.GRADLE_PROPERTIES_FILE, updated_properties_file,
                                constants.DEPENDENCY_UPDATE_BRANCH,
-                               COMMIT_MESSAGE_PREFIX + ballerina_version)
+                               COMMIT_MESSAGE_PREFIX + ballerina_version)[0]
 
     if update:
         print("[Info] Update lang dependency in connector '" + connector['name'] + "'")

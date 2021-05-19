@@ -6,6 +6,7 @@ from datetime import datetime
 from github import Github, GithubException
 
 import constants
+import notify_chat
 import utils
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
@@ -28,7 +29,7 @@ def main():
     updated_readme = get_updated_readme()
 
     try:
-        update = utils.commit_file('ballerina-release',
+        update, commit = utils.commit_file('ballerina-release',
                                    README_FILE, updated_readme,
                                    constants.DASHBOARD_UPDATE_BRANCH,
                                    '[Automated] Update extension dependency dashboard')
@@ -37,6 +38,7 @@ def main():
                                     '[Automated] Update Extension Dependency Dashboard',
                                     'Update extension dependency dashboard',
                                     constants.DASHBOARD_UPDATE_BRANCH)
+            notify_chat.notify_lag_update(commit)
         else:
             print('No changes to ' + README_FILE + ' file')
     except GithubException as e:
@@ -93,10 +95,10 @@ def format_lag(delta):
     return days, hours
 
 
-def get_lag_color(lag):
-    if lag == 0:
+def get_lag_color(lag_days, lag_hrs):
+    if lag_days == 0 and lag_hrs == 0:
         color = "brightgreen"
-    elif lag < 2:
+    elif lag_days < 2:
         color = "yellow"
     else:
         color = "red"
@@ -119,7 +121,7 @@ def get_lag_info(module_name):
     update_timestamp = ballerina_timestamp - timestamp
     days, hrs = format_lag(update_timestamp)
 
-    color = get_lag_color(days)
+    color = get_lag_color(days, hrs)
 
     return days, hrs, color
 
@@ -246,14 +248,14 @@ def get_updated_readme():
     updated_readme += lang_version_statement + "\n"
 
     updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
-    updated_readme += "| Level | Modules | Lag Status | Pending PR |" + "\n"
+    updated_readme += "| Level | Modules | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|" + "\n"
 
     updated_readme, updated_modules_number = update_modules(updated_readme, module_details_list)
 
     updated_readme += "## Modules Released to Central" + "\n"
 
-    updated_readme += "| Level | Modules | Lag Status | Pending PR |" + "\n"
+    updated_readme += "| Level | Modules | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|" + "\n"
 
     central_modules = all_modules["central_modules"]
