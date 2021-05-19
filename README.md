@@ -1,6 +1,6 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository lags by 4 days and pending PR [#1701](https://github.com/ballerina-platform/ballerina-distribution/pull/1701) is available<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210519-102900-e91ff627** (3 h) has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210519-102900-e91ff627** (4 h) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|
@@ -37,10 +37,10 @@
 |  | [graphql](https://github.com/ballerina-platform/module-ballerina-graphql) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-graphql/blob/master/gradle.properties) | []() | 
 |  | [grpc](https://github.com/ballerina-platform/module-ballerina-grpc) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-grpc/blob/master/gradle.properties) | []() | 
 |  | [ballerina-openapi](https://github.com/ballerina-platform/ballerina-openapi) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/ballerina-openapi/blob/master/gradle.properties) | []() | 
-|  | [transaction](https://github.com/ballerina-platform/module-ballerinai-transaction) | [![Lag](https://img.shields.io/badge/lag-2%20days-red)](https://github.com/ballerina-platform/module-ballerinai-transaction/blob/master/gradle.properties) | [#185](https://github.com/ballerina-platform/module-ballerinai-transaction/pull/185) | 
+|  | [transaction](https://github.com/ballerina-platform/module-ballerinai-transaction) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerinai-transaction/blob/master/gradle.properties) | []() | 
 |  | [websocket](https://github.com/ballerina-platform/module-ballerina-websocket) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-websocket/blob/main/gradle.properties) | []() | 
 |  | [websub](https://github.com/ballerina-platform/module-ballerina-websub) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-websub/blob/master/gradle.properties) | []() | 
-|  | [websubhub](https://github.com/ballerina-platform/module-ballerina-websubhub) | [![Lag](https://img.shields.io/badge/lag-10%20h-yellow)](https://github.com/ballerina-platform/module-ballerina-websubhub/blob/main/gradle.properties) | [#152](https://github.com/ballerina-platform/module-ballerina-websubhub/pull/152) | 
+|  | [websubhub](https://github.com/ballerina-platform/module-ballerina-websubhub) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-websubhub/blob/main/gradle.properties) | []() | 
 | 7 | [c2c](https://github.com/ballerina-platform/module-ballerina-c2c) | [![Lag](https://img.shields.io/badge/lag-2%20days-red)](https://github.com/ballerina-platform/module-ballerina-c2c/blob/master/gradle.properties) | []() | 
 |  | [kafka](https://github.com/ballerina-platform/module-ballerinax-kafka) | [![Lag](https://img.shields.io/badge/lag-2%20days-red)](https://github.com/ballerina-platform/module-ballerinax-kafka/blob/master/gradle.properties) | []() | 
 |  | [rabbitmq](https://github.com/ballerina-platform/module-ballerinax-rabbitmq) | [![Lag](https://img.shields.io/badge/lag-2%20days-red)](https://github.com/ballerina-platform/module-ballerinax-rabbitmq/blob/master/gradle.properties) | []() | 
