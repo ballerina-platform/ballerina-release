@@ -226,12 +226,14 @@ def check_pending_pr_checks(index: int):
     print("[Info] Checking the status of the dependency bump PR in module '" + module['name'] + "'")
     passing = True
     pending = False
+    count = 0
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
 
     failed_pr_checks = []
     pull_request = repo.get_pull(module[MODULE_CREATED_PR].number)
     sha = pull_request.head.sha
     for pr_check in repo.get_commit(sha=sha).get_check_runs():
+        count += 1
         # Ignore codecov checks temporarily due to bug
         if not pr_check.name.startswith('codecov'):
             if pr_check.status != 'completed':
@@ -249,6 +251,9 @@ def check_pending_pr_checks(index: int):
                 }
                 failed_pr_checks.append(failed_pr_check)
                 passing = False
+    if count <= 1:
+        # Here the checks have not been triggered yet.
+        return
     if not pending:
         if passing:
             if module['auto_merge'] & ('AUTO MERGE' in pull_request.title):
