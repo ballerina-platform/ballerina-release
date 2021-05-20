@@ -22,6 +22,7 @@ RUN git clone https://github.com/sstephenson/bats /libs/bats && \
     git clone https://github.com/ztombol/bats-support /libs/bats-support && \
     git clone https://github.com/ztombol/bats-assert /libs/bats-assert
 
+# Get Ballerina releases
 FROM ballerina/ballerina:1.2.11 AS b12x-pack
 FROM ballerina/ballerina:swan-lake-preview8 AS slp8-pack
 FROM ballerina/ballerina:swan-lake-alpha1 AS alpha1-pack
@@ -35,6 +36,7 @@ FROM adoptopenjdk/openjdk11:alpine
 RUN apk -q update && \
     apk --no-cache -q add bash curl openjdk8
 
+# Copy Ballerina runtimes
 COPY --from=b12x-pack /ballerina/runtime /ballerina/b12x
 COPY --from=slp8-pack /ballerina/runtime /ballerina/slp8
 COPY --from=alpha1-pack /ballerina/runtime /ballerina/alpha1
@@ -46,9 +48,10 @@ COPY --from=alpha5-pack /ballerina/runtime /ballerina/alpha5
 ARG BALLERINA_CENTRAL_ACCESS_TOKEN=""
 ARG TEST_ORGANIZATION="bc2testorg"
 
-ENV BALLERINA_CENTRAL_ACCESS_TOKEN=$BC_ACCESS_TOKEN
+ENV BALLERINA_CENTRAL_ACCESS_TOKEN=$BALLERINA_CENTRAL_ACCESS_TOKEN
 ENV TEST_ORGANIZATION=$TEST_ORGANIZATION
 
+# Set environment variables
 ENV B12X=/ballerina/b12x
 ENV SLP8=/ballerina/slp8
 ENV ALPHA1=/ballerina/alpha1
