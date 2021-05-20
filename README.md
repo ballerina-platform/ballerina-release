@@ -47,7 +47,7 @@
 |  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-sql/blob/master/gradle.properties) | []() | 
 | 8 | [java.jdbc](https://github.com/ballerina-platform/module-ballerinax-java.jdbc) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/blob/master/gradle.properties) | []() | 
 |  | [mysql](https://github.com/ballerina-platform/module-ballerinax-mysql) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerinax-mysql/blob/master/gradle.properties) | []() | 
-|  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | []() | 
+|  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | [#1721](https://github.com/ballerina-platform/ballerina-distribution/pull/1721) | 
 ## Modules Released to Central
 | Level | Modules | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|
