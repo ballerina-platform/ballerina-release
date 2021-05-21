@@ -1,3 +1,5 @@
+name: Ballerina Central Tests
+
 on: workflow_dispatch
 
 jobs:
