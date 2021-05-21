@@ -251,7 +251,7 @@ def check_pending_pr_checks(index: int):
                 }
                 failed_pr_checks.append(failed_pr_check)
                 passing = False
-    if count <= 1:
+    if count < 1:
         # Here the checks have not been triggered yet.
         return
     if not pending:
