@@ -5,7 +5,7 @@
 | Level | Modules | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|
 | 1 | [docker](https://github.com/ballerina-platform/module-ballerina-docker) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-docker/blob/master/gradle.properties) | []() | 
-|  | [io](https://github.com/ballerina-platform/module-ballerina-io) | [![Lag](https://img.shields.io/badge/lag-9%20h-yellow)](https://github.com/ballerina-platform/module-ballerina-io/blob/master/gradle.properties) | [#198](https://github.com/ballerina-platform/module-ballerina-io/pull/198) | 
+|  | [io](https://github.com/ballerina-platform/module-ballerina-io) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-io/blob/master/gradle.properties) | []() | 
 |  | [jballerina.java.arrays](https://github.com/ballerina-platform/module-ballerina-jballerina.java.arrays) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-jballerina.java.arrays/blob/master/gradle.properties) | []() | 
 |  | [random](https://github.com/ballerina-platform/module-ballerina-random) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-random/blob/main/gradle.properties) | []() | 
 |  | [regex](https://github.com/ballerina-platform/module-ballerina-regex) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-regex/blob/main/gradle.properties) | []() | 
