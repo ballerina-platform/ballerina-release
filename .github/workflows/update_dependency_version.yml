@@ -48,6 +48,9 @@ jobs:
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
           BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+          BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
+          BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
+          BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
 
       - name: "[Manual] Update Ballerina Language Version"
         if: github.event_name == 'workflow_dispatch'
