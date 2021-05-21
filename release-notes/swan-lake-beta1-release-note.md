@@ -95,6 +95,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 #### New Features
 
 #### Improvements
+##### OpenAPI
+- Added improvements for handling the Ballerina remote method response type in the OpenAPI to Ballerina Client code
+ generation.
 
 #### Bug Fixes
 
@@ -102,7 +105,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake Beta1 of the repositor
 
 - [Language](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta1%22+label%3AType%2FBug+label%3ATeam%2FDevTools)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
-- [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Beta%22) 
+- [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/milestone/5?closed=1) 
 
 #### Ballerina Packages Updates
 
