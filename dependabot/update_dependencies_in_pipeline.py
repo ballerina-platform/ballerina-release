@@ -188,7 +188,8 @@ def wait_for_current_level_build(level):
         chat_message += 'Following modules dependency PRs have failed checks...' + "\n"
         for module in pr_checks_failed_modules:
             print(module['name'])
-            chat_message += "<" + module[MODULE_CREATED_PR] + "|" + module['name'] + ">" + "\n"
+            build_actions_page = "https://github.com/ballerina-platform/" + module['name'] + "/actions/workflows/build-timestamped-master.yml"
+            chat_message += "<" + build_actions_page + "|" + module['name'] + ">" + "\n"
 
     pr_merged_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_MERGE_FAILURE, current_level_modules))
@@ -206,7 +207,8 @@ def wait_for_current_level_build(level):
         chat_message += 'Following modules timestamped build checks failed...' + "\n"
         for module in build_checks_failed_modules:
             print(module['name'])
-            chat_message += "<" + module[MODULE_CREATED_PR] + "|" + module['name'] + ">" + "\n"
+            build_actions_page = "https://github.com/ballerina-platform/" + module['name'] + "/actions/workflows/build-timestamped-master.yml"
+            chat_message += "<" + build_actions_page + "|" + module['name'] + ">" + "\n"
 
     build_version_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED, current_level_modules))
