@@ -82,14 +82,14 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
         if decode:
             remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
         else:
-            remote_file_contents = remote_file
+            remote_file_contents = remote_file.decoded_content
 
         try:
             remote_file_in_pr_branch = repo.get_contents(file_path, commit_branch)
             if decode:
                 remote_file_in_pr_branch = remote_file_in_pr_branch.decoded_content.decode(constants.ENCODING)
             else:
-                remote_file_in_pr_branch = remote_file_in_pr_branch
+                remote_file_in_pr_branch = remote_file_in_pr_branch.decoded_content
         except GithubException:
             remote_file_in_pr_branch = ""
 
