@@ -55,6 +55,76 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 
 #### Improvements
 
+##### Improved configurable variables to support for enum types
+
+Configurable variables with enum types are supported to provide values through command line arguments and toml file.
+As an example refer configurable variable with enum type.
+
+```ballerina
+public enum HttpVersion {
+    HTTP_1_1,
+    HTTP_2
+}
+
+configurable configLib:HttpVersion & readonly httpVersion = ?;
+```
+
+Value for above 'httpVersion' can be provided via 'Config.toml' or as a command line argument as below.
+
+TOML
+
+```toml
+[configUnionTypes]
+httpVersion = "HTTP_1_1"
+```
+
+Command line argument
+
+```
+-ChttpVersion=HTTP_1_1
+```
+
+##### Improved configurable variables to support for map types
+
+The `configurable` feature is improved to support variables with map types through the TOML syntax. 
+For example, if the map typed configurable variables are defined in the following way, 
+
+``` ballerina
+configurable map<string> admin = ?;
+
+type HttpResponse record {|
+    string method;
+    string httpVersion = "HTTP_1_0";
+    map<string> headers;
+|};
+
+configurable HttpResponse response = ?;
+configurable map<string>[] users = ?;
+```
+The values can be provided in `Config.toml` as follows.
+
+
+```toml
+[admin]
+username = "John Doe"
+mail = "John@hotmail.com"
+location = "LK"
+
+[response]
+method = "POST"
+httpVersion = "HTTP_2_0"
+headers.Status = "200 OK"
+headers.Content-Type = "text/html"
+
+[[users]]
+username = "Jack"
+location = "UK"
+
+[[users]]
+username = "Jane"
+location = "US"
+```
+
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta1%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
