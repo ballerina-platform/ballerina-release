@@ -141,9 +141,9 @@ def commit_image_file(repository_name, file_path, updated_file_content, commit_b
             remote_file_in_pr_branch = ""
 
         if updated_file_content == remote_file_contents:
-            return False, ""
+            return False
         elif updated_file_content == remote_file_in_pr_branch:
-            return True, ""
+            return True
         else:
             update = repo.update_file(
                 file_path,
@@ -153,7 +153,7 @@ def commit_image_file(repository_name, file_path, updated_file_content, commit_b
                 branch=commit_branch,
                 author=author
             )
-            return True, update["commit"].sha
+            return True
     except GithubException as e:
         raise e
 
