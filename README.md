@@ -1,7 +1,13 @@
 # Ballerina Repositories Update Status
 
-|![image alt](dependabot/resources/repo_status_graph.jpeg)|<div style='font-weight:normal'>`ballerina-distribution` repository is up to date.<br><br>`ballerina-lang` repository version **2.0.0-beta.1-20210521-201200-d4dd5282** (3 days) has been updated as follows</div>| 
- |---|---| 
+<table><tbody><tr>
+<td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
+<td align='center'>
+<code>ballerina-distribution</code> repository is up to date.<br><br>
+<code>ballerina-lang</code> repository version <b>2.0.0-beta.1-20210521-201200-d4dd5282</b> (3 days) has been updated as follows
+</td>
+</tr></tbody></table> 
+
  ## Modules and Extensions Packed in Distribution
 | Level | Modules | Build | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|:---:|

@@ -223,11 +223,11 @@ def get_lang_version_statement():
         ballerina_lang_lag = str(hrs) + " h"
 
     if not ballerina_lang_lag:
-        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + \
-                                 "** has been updated as follows"
+        lang_version_statement = "<code>ballerina-lang</code> repository version <b>" + ballerina_lang_version + \
+                                 "</b> has been updated as follows"
     else:
-        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + \
-                                 "** (" + ballerina_lang_lag + ") has been updated as follows"
+        lang_version_statement = "<code>ballerina-lang</code> repository version <b>" + ballerina_lang_version + \
+                                 "</b> (" + ballerina_lang_lag + ") has been updated as follows"
 
     return lang_version_statement
 
@@ -247,12 +247,12 @@ def get_distribution_statement():
         distribution_lag = str(hrs) + " h"
 
     if not distribution_lag:
-        distribution_lag_statement = "`ballerina-distribution` repository is up to date."
+        distribution_lag_statement = "<code>ballerina-distribution</code> repository is up to date."
     else:
         if str(distribution_pr_number) == "None":
-            distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag
+            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag
         else:
-            distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag + \
+            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + \
                                          " and pending PR [#" + str(distribution_pr_number) + "](" + \
                                          distribution_pr_link + ") is available"
 
@@ -270,10 +270,12 @@ def get_updated_readme():
     distribution_statement = get_distribution_statement()
 
     updated_readme += "# Ballerina Repositories Update Status\n\n" + \
-                      "|![image alt](dependabot/resources/repo_status_graph.jpeg)|<div style='font-weight:normal'>"
+                      "<table><tbody><tr>\n" + \
+                      "<td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>\n" + \
+                      "<td align='center'>\n"
 
-    updated_readme += distribution_statement + "<br><br>"
-    updated_readme += lang_version_statement + "</div>| \n |---|---| \n "
+    updated_readme += distribution_statement + "<br><br>\n"
+    updated_readme += lang_version_statement + "\n</td>\n</tr></tbody></table> \n\n "
 
     updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
