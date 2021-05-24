@@ -37,10 +37,10 @@ def main():
     f.close()
 
     try:
-        update, commit = utils.commit_file('ballerina-release',
-                                           README_FILE, updated_readme,
-                                           constants.DASHBOARD_UPDATE_BRANCH,
-                                           '[Automated] Update extension dependency dashboard')
+        update_readme, commit = utils.commit_file('ballerina-release',
+                                                  README_FILE, updated_readme,
+                                                  constants.DASHBOARD_UPDATE_BRANCH,
+                                                  '[Automated] Update extension dependency dashboard')
     except GithubException as e:
         print('Error occurred while committing README.md', e)
         sys.exit(1)
@@ -50,15 +50,15 @@ def main():
         img_byte_arr = io.BytesIO()
         image.save(img_byte_arr, format='JPEG')
 
-        update, _ = utils.commit_file('ballerina-release',
-                                      constants.PIE_CHART_IMAGE, img_byte_arr.getvalue(),
-                                      constants.DASHBOARD_UPDATE_BRANCH,
-                                      '[Automated] Update status pie chart', False)
+        update_image, _ = utils.commit_file('ballerina-release',
+                                            constants.PIE_CHART_IMAGE, img_byte_arr.getvalue(),
+                                            constants.DASHBOARD_UPDATE_BRANCH,
+                                            '[Automated] Update status pie chart', False)
     except GithubException as e:
         print('Error occurred while committing status pie chart', e)
         sys.exit(1)
 
-    if update:
+    if update_readme or update_image:
         utils.open_pr_and_merge('ballerina-release',
                                 '[Automated] Update Extension Dependency Dashboard',
                                 'Update extension dependency dashboard',
