@@ -1,23 +1,22 @@
-from json import dumps
 import os
-
-from github import Github, GithubException
+from json import dumps
 
 from httplib2 import Http
 
 import constants
 import utils
 
-build_chat_id = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_ID]
-build_chat_key = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_KEY]
-build_chat_token = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_TOKEN]
-
 older_version = []
 updated_version = []
 
 
 def send_message(message):
-    url = 'https://chat.googleapis.com/v1/spaces/' + build_chat_id + '/messages?key=' + build_chat_key + '&token=' + build_chat_token
+    build_chat_id = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_ID]
+    build_chat_key = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_KEY]
+    build_chat_token = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_TOKEN]
+
+    url = 'https://chat.googleapis.com/v1/spaces/' + build_chat_id + \
+          '/messages?key=' + build_chat_key + '&token=' + build_chat_token
     bot_message = {
         'text': message}
 
@@ -25,7 +24,7 @@ def send_message(message):
 
     http_obj = Http()
 
-    response = http_obj.request(
+    http_obj.request(
         uri=url,
         method='POST',
         headers=message_headers,
@@ -50,8 +49,8 @@ def create_message():
     chat_message = ""
 
     for i in range(len(older_version)):
-        old_row = older_version[i].split("|")[1:-1]
-        updated_row = updated_version[i].split("|")[1:-1]
+        old_row = older_version[i].split("|")[2:-1]
+        updated_row = updated_version[i].split("|")[2:-1]
 
         if old_row[2] != updated_row[2]:
             old_color = old_row[2].split("-")[2].split(")")[0]
@@ -62,9 +61,7 @@ def create_message():
                 chat_message += old_row[2].split("(")[2][:-2] + "\n"
                 break
 
-    if chat_message:
-        print(chat_message)
-        send_message(chat_message)
+    return chat_message
 
 
 def notify_lag_update(commit):
@@ -85,4 +82,8 @@ def notify_lag_update(commit):
 
     remove_statement_changes()
 
-    create_message()
+    chat_message = create_message()
+
+    if chat_message:
+        print(chat_message)
+        send_message(chat_message)

@@ -72,18 +72,24 @@ def get_latest_lang_version():
     return latest_version
 
 
-def commit_file(repository_name, file_path, updated_file_content, commit_branch, commit_message):
+def commit_file(repository_name, file_path, updated_file_content, commit_branch, commit_message, decode=True):
     try:
         author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
 
         repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + repository_name)
 
-        remote_file = repo.get_contents(file_path)
-        remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
+        remote_file = repo.get_contents(file_path, commit_branch)
+        if decode:
+            remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
+        else:
+            remote_file_contents = remote_file
 
         try:
             remote_file_in_pr_branch = repo.get_contents(file_path, commit_branch)
-            remote_file_in_pr_branch = remote_file_in_pr_branch.decoded_content.decode(constants.ENCODING)
+            if decode:
+                remote_file_in_pr_branch = remote_file_in_pr_branch.decoded_content.decode(constants.ENCODING)
+            else:
+                remote_file_in_pr_branch = remote_file_in_pr_branch
         except GithubException:
             remote_file_in_pr_branch = ""
 
