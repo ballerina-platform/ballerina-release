@@ -61,9 +61,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 
 ### Standard Library Updates
 
-#### New features
+#### New Features
 
-##### GraphQL Package
+##### `graphql` Package
 - Add declarative auth configurations
 - Support optional types as inputs
 - Support returning distinct service object unions
@@ -72,20 +72,20 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 
 #### Improvements
 
-##### GraphQL Package
+##### `graphql` Package
 - Improved introspection validation and execution
-- Added missing fields in GraphQL types
+- Added missing fields in the GraphQL types
 - Compiler plugin improvements to validate inputs and return types
-- Use included record parameters instead of record type in listener initialization
+- Use included record parameters instead of the record type in the listener initialization
 
-##### HTTP Package
-- Improve `http:Client` remote methods to support contextually expected type inference.
-- Change configuration parameters of listeners and clients to included record parameters.
+##### `http` Package
+- Improve the `http:Client` remote methods to support the contextually-expected type inference.
+- Change the configuration parameters of the listeners and clients to include the record parameters.
 
-##### WebSubHub Package
-- Include Auth Configuration to WebSubHub PublisherClient configuration
+##### `websubhub` Package
+- Include the auth configuration to the WebSubHub publisher client configuration
 
-#### Bug fixes
+#### Bug Fixes
 
 ##### GraphQL Package
 - Allow enums as input parameters in resource functions
