@@ -139,13 +139,13 @@ def get_lag_button(module):
     elif hrs > 0:
         lag_status = str(hrs) + "%20h"
     else:
-        lag_status = "N/A"
+        lag_status = "no%20lag"
 
     lag_status_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] \
                       + "/blob/" + module["default_branch"] + "/" + constants.GRADLE_PROPERTIES_FILE
     if color != "red":
         updated_modules += 1
-    lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + ")](" \
+    lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + "?label=)](" \
                  + lag_status_link + ")"
 
     return lag_button
