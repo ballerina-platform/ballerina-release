@@ -53,8 +53,8 @@ def create_message():
         updated_row = updated_version[i].split("|")[2:-1]
 
         if old_row[2] != updated_row[2]:
-            old_color = old_row[2].split("-")[2].split(")")[0]
-            updated_color = updated_row[2].split("-")[2].split(")")[0]
+            old_color = old_row[2].split("-")[2].split(")")[0].split("?")[0]
+            updated_color = updated_row[2].split("-")[2].split(")")[0].split("?")[0]
             pending_pr = updated_row[3].split("[")[1].split("]")[0]
             if color_order[updated_color] > color_order[old_color] and pending_pr:
                 chat_message = "Reminder on the following modules dependency update..." + "\n"
