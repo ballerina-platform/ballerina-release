@@ -1,10 +1,10 @@
 # Ballerina Repositories Update Status
 `ballerina-distribution` repository is up to date.<br>
-<br>`ballerina-lang` repository version **2.0.0-beta.1-20210521-201200-d4dd5282** has been updated as follows
+<br>`ballerina-lang` repository version **2.0.0-beta.1-20210521-201200-d4dd5282** (3 days) has been updated as follows
 ## Modules and Extensions Packed in Distribution
 | Level | Modules | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|
-| 1 | [docker](https://github.com/ballerina-platform/module-ballerina-docker) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-docker/blob/master/gradle.properties) | []() | 
+| 1 | [docker](https://github.com/ballerina-platform/module-ballerina-docker) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-docker/blob/master/gradle.properties) | [#640](https://github.com/ballerina-platform/module-ballerina-docker/pull/640) | 
 |  | [io](https://github.com/ballerina-platform/module-ballerina-io) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-io/blob/master/gradle.properties) | []() | 
 |  | [jballerina.java.arrays](https://github.com/ballerina-platform/module-ballerina-jballerina.java.arrays) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-jballerina.java.arrays/blob/master/gradle.properties) | []() | 
 |  | [random](https://github.com/ballerina-platform/module-ballerina-random) | [![Lag](https://img.shields.io/badge/lag-N/A-brightgreen)](https://github.com/ballerina-platform/module-ballerina-random/blob/main/gradle.properties) | []() | 
