@@ -36,7 +36,7 @@ def remove_statement_changes():
     global older_version
     global updated_version
     for i in range(min(2, len(older_version))):
-        if any(x in older_version[0] for x in ["`ballerina-distribution`", "`ballerina-lang`"]):
+        if any(x in older_version[0] for x in ["<code>ballerina-distribution</code>", "<code>ballerina-lang</code>"]):
             del older_version[0]
             del updated_version[0]
 
@@ -87,3 +87,6 @@ def notify_lag_update(commit):
     if chat_message:
         print(chat_message)
         send_message(chat_message)
+
+
+create_message()
