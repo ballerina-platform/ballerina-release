@@ -87,31 +87,6 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 
 #### Bug Fixes
 
-##### GraphQL Package
-- Allow enums as input parameters in resource functions
-- Fix service hanging when service type array is returned
-- Fix stack overflow when types have recursive references
-- Fix incorrect values returning from `enumValues` field
-- Fix validating non-existing fields in service types
-- Fix invalidation of queries when a defaultable parameter is not provided
-- Fix `LIST` of `NON_NULL` types not showing correctly in introspection
-- Fix incorrect location value in fragments when returning an error
-- Fix query depth validation ignoring the fragment depth
-- Fix service crashing when unnamed union type is returned
-- Fix hanging of the service when an enum array is returned
-
-##### HTTP Package
-- Prepend resource path argument of client method with a forward slash if not added.
-
-##### WebSub Package
-- Fix the listener initialization with inline configs compiler plugin error
-
-##### WebSubHub Package
-- Fix the listener initialization with inline configs compiler plugin error
-
-##### TCP Package
-- Fix the secure listener initialization failure when ciphers are not configured.
-
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+Beta1%22+label%3AType%2FBug).
 
 ### Code to Cloud Updates
