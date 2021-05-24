@@ -6,7 +6,6 @@ from datetime import datetime
 from github import Github, GithubException
 
 import constants
-import notify_chat
 import utils
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
@@ -29,7 +28,7 @@ def main():
     updated_readme = get_updated_readme()
 
     try:
-        update, commit = utils.commit_file('ballerina-release',
+        update = utils.commit_file('ballerina-release',
                                    README_FILE, updated_readme,
                                    constants.DASHBOARD_UPDATE_BRANCH,
                                    '[Automated] Update extension dependency dashboard')
@@ -38,7 +37,7 @@ def main():
                                     '[Automated] Update Extension Dependency Dashboard',
                                     'Update extension dependency dashboard',
                                     constants.DASHBOARD_UPDATE_BRANCH)
-            notify_chat.notify_lag_update(commit)
+            
         else:
             print('No changes to ' + README_FILE + ' file')
     except GithubException as e:
@@ -263,7 +262,7 @@ def get_updated_readme():
     updated_readme, updated_modules_number_central = update_modules(updated_readme, central_modules)
     updated_modules_number += updated_modules_number_central
     repositories_updated = round((updated_modules_number / (len(module_details_list) + len(central_modules))) * 100)
-
+    make_pie(repositories_updated)
     return updated_readme
 
 
@@ -286,6 +285,28 @@ def check_pending_pr_checks(module_name):
         if pull.head.ref == constants.DEPENDENCY_UPDATE_BRANCH:
             return pull.number
     return None
+
+
+def make_pie(val):
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    colors = [(60,121,189), (212, 241, 249)]
+    sizes = [val,100-val]
+    text = str(val) + "%"
+
+    col = [[i/255. for i in c] for c in colors]
+
+    fig, ax = plt.subplots()
+    ax.axis('equal')
+    width = 0.35
+    kwargs = dict(colors=col, startangle=180)
+    outside, _ = ax.pie(sizes, radius=1, pctdistance=1-width/2,**kwargs)
+    plt.setp( outside, width=width, edgecolor='white')
+
+    kwargs = dict(size=20, fontweight='bold', va='center')
+    ax.text(0, 0, text, ha='center', **kwargs)
+    plt.savefig('repo_status_graph.png')
 
 
 main()
