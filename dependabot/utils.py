@@ -78,7 +78,7 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
 
         repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + repository_name)
 
-        remote_file = repo.get_contents(file_path, commit_branch)
+        remote_file = repo.get_contents(file_path)
         if decode:
             remote_file_contents = remote_file.decoded_content.decode(constants.ENCODING)
         else:
