@@ -79,8 +79,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 - Use included record parameters instead of the record type in the listener initialization
 
 ##### `http` Package
-- Improve the `http:Client` remote methods to support the contextually-expected type inference.
-- Change the configuration parameters of the listeners and clients to include the record parameters.
+- Improve the `http:Client` remote methods to support the contextually-expected type inference
+- Change the configuration parameters of the listeners and clients to include the record parameters
 
 ##### `websubhub` Package
 - Include the auth configuration to the WebSubHub publisher client configuration
