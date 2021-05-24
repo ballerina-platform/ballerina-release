@@ -270,10 +270,10 @@ def get_updated_readme():
     distribution_statement = get_distribution_statement()
 
     updated_readme += "# Ballerina Repositories Update Status\n\n" + \
-                      "|![image alt](dependabot/resources/repo_status_graph.jpeg)|"
+                      "|![image alt](dependabot/resources/repo_status_graph.jpeg)|<div style='font-weight:normal'>"
 
     updated_readme += distribution_statement + "<br><br>"
-    updated_readme += lang_version_statement + "| \n |---|---| \n "
+    updated_readme += lang_version_statement + "</div>| \n |---|---| \n "
 
     updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
