@@ -50,10 +50,10 @@ def main():
         img_byte_arr = io.BytesIO()
         image.save(img_byte_arr, format='JPEG')
 
-        update_image, _ = utils.commit_file('ballerina-release',
-                                            constants.PIE_CHART_IMAGE, img_byte_arr.getvalue(),
-                                            constants.DASHBOARD_UPDATE_BRANCH,
-                                            '[Automated] Update status pie chart', False)
+        update_image, _ = utils.commit_image_file('ballerina-release',
+                                                  constants.PIE_CHART_IMAGE, img_byte_arr.getvalue(),
+                                                  constants.DASHBOARD_UPDATE_BRANCH,
+                                                  '[Automated] Update status pie chart')
     except GithubException as e:
         print('Error occurred while committing status pie chart', e)
         sys.exit(1)
