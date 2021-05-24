@@ -1,7 +1,5 @@
-from json import dumps
 import os
-
-from github import Github, GithubException
+from json import dumps
 
 from httplib2 import Http
 
@@ -17,7 +15,8 @@ updated_version = []
 
 
 def send_message(message):
-    url = 'https://chat.googleapis.com/v1/spaces/' + build_chat_id + '/messages?key=' + build_chat_key + '&token=' + build_chat_token
+    url = 'https://chat.googleapis.com/v1/spaces/' + build_chat_id + \
+          '/messages?key=' + build_chat_key + '&token=' + build_chat_token
     bot_message = {
         'text': message}
 
@@ -25,7 +24,7 @@ def send_message(message):
 
     http_obj = Http()
 
-    response = http_obj.request(
+    http_obj.request(
         uri=url,
         method='POST',
         headers=message_headers,
@@ -62,9 +61,7 @@ def create_message():
                 chat_message += old_row[2].split("(")[2][:-2] + "\n"
                 break
 
-    if chat_message:
-        print(chat_message)
-        send_message(chat_message)
+    return chat_message
 
 
 def notify_lag_update(commit):
@@ -85,4 +82,8 @@ def notify_lag_update(commit):
 
     remove_statement_changes()
 
-    create_message()
+    chat_message = create_message()
+
+    if chat_message:
+        print(chat_message)
+        send_message(chat_message)

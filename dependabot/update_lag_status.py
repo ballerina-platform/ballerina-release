@@ -1,4 +1,3 @@
-import json
 import os
 import sys
 from datetime import datetime
@@ -36,9 +35,9 @@ def main():
 
     try:
         update, commit = utils.commit_file('ballerina-release',
-                                   README_FILE, updated_readme,
-                                   constants.DASHBOARD_UPDATE_BRANCH,
-                                   '[Automated] Update extension dependency dashboard')
+                                           README_FILE, updated_readme,
+                                           constants.DASHBOARD_UPDATE_BRANCH,
+                                           '[Automated] Update extension dependency dashboard')
         if update:
             utils.open_pr_and_merge('ballerina-release',
                                     '[Automated] Update Extension Dependency Dashboard',
@@ -208,9 +207,11 @@ def get_lang_version_statement():
         ballerina_lang_lag = str(hrs) + " h"
 
     if not ballerina_lang_lag:
-        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** has been updated as follows"
+        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + \
+                                 "** has been updated as follows"
     else:
-        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + "** (" + ballerina_lang_lag + ") has been updated as follows"
+        lang_version_statement = "`ballerina-lang` repository version **" + ballerina_lang_version + \
+                                 "** (" + ballerina_lang_lag + ") has been updated as follows"
 
     return lang_version_statement
 
@@ -221,8 +222,8 @@ def get_distribution_statement():
     distribution_lag = ""
 
     distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
-    distribution_pr_link = "https://github.com/ballerina-platform/" + BALLERINA_DISTRIBUTION + "/pull/" + str(
-        distribution_pr_number)
+    distribution_pr_link = "https://github.com/ballerina-platform/" + BALLERINA_DISTRIBUTION + "/pull/" + \
+                           str(distribution_pr_number)
 
     if days > 0:
         distribution_lag = str(days) + " days"
@@ -235,8 +236,9 @@ def get_distribution_statement():
         if str(distribution_pr_number) == "None":
             distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag
         else:
-            distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag + " and pending PR [#" + str(
-                distribution_pr_number) + "](" + distribution_pr_link + ") is available"
+            distribution_lag_statement = "`ballerina-distribution` repository lags by " + distribution_lag + \
+                                         " and pending PR [#" + str(distribution_pr_number) + "](" + \
+                                         distribution_pr_link + ") is available"
 
     return distribution_lag_statement
 
