@@ -25,6 +25,7 @@ jobs:
           pip install PyGithub
           pip install matplotlib
           pip install httplib2
+          pip install Image
       - name: Update Status Dashboard
         run: |
           python dependabot/update_lag_status.py

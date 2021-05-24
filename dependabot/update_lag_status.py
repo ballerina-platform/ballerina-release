@@ -1,7 +1,10 @@
+import io
 import os
 import sys
 from datetime import datetime
 
+import matplotlib.pyplot as plt
+from PIL import Image
 from github import Github, GithubException
 
 import constants
@@ -15,7 +18,7 @@ README_FILE = "README.md"
 github = Github(ballerina_bot_token)
 
 all_modules = []
-updated_modules = 0
+modules_with_no_lag = 0
 
 MODULE_NAME = "name"
 MODULE_BUILD_ACTION_FILE = "build_action_file"
@@ -38,17 +41,31 @@ def main():
                                            README_FILE, updated_readme,
                                            constants.DASHBOARD_UPDATE_BRANCH,
                                            '[Automated] Update extension dependency dashboard')
-        if update:
-            utils.open_pr_and_merge('ballerina-release',
-                                    '[Automated] Update Extension Dependency Dashboard',
-                                    'Update extension dependency dashboard',
-                                    constants.DASHBOARD_UPDATE_BRANCH)
-            notify_chat.notify_lag_update(commit)
-        else:
-            print('No changes to ' + README_FILE + ' file')
     except GithubException as e:
         print('Error occurred while committing README.md', e)
         sys.exit(1)
+
+    try:
+        image = Image.open('dependabot/resources/repo_status_graph.jpeg', mode='r')
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='JPEG')
+
+        update, _ = utils.commit_file('ballerina-release',
+                                      constants.PIE_CHART_IMAGE, img_byte_arr.getvalue(),
+                                      constants.DASHBOARD_UPDATE_BRANCH,
+                                      '[Automated] Update status pie chart', False)
+    except GithubException as e:
+        print('Error occurred while committing status pie chart', e)
+        sys.exit(1)
+
+    if update:
+        utils.open_pr_and_merge('ballerina-release',
+                                '[Automated] Update Extension Dependency Dashboard',
+                                'Update extension dependency dashboard',
+                                constants.DASHBOARD_UPDATE_BRANCH)
+        notify_chat.notify_lag_update(commit)
+    else:
+        print('No changes to ' + README_FILE + ' file')
 
 
 def get_lang_version_lag():
@@ -132,7 +149,7 @@ def get_lag_info(module_name):
 
 
 def get_lag_button(module):
-    global updated_modules
+    global modules_with_no_lag
     days, hrs, color = get_lag_info(module[MODULE_NAME])
     if days > 0:
         lag_status = str(days) + "%20days"
@@ -140,11 +157,10 @@ def get_lag_button(module):
         lag_status = str(hrs) + "%20h"
     else:
         lag_status = "no%20lag"
+        modules_with_no_lag += 1
 
     lag_status_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] \
                       + "/blob/" + module["default_branch"] + "/" + constants.GRADLE_PROPERTIES_FILE
-    if color != "red":
-        updated_modules += 1
     lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + "?label=)](" \
                  + lag_status_link + ")"
 
@@ -193,7 +209,7 @@ def update_modules(updated_readme, module_details_list):
             table_row = "| " + level + " | [" + name + "](" + constants.BALLERINA_ORG_URL + module[
                 MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr + " | "
             updated_readme += table_row + "\n"
-    return updated_readme, updated_modules
+    return updated_readme
 
 
 def get_lang_version_statement():
@@ -253,17 +269,17 @@ def get_updated_readme():
     lang_version_statement = get_lang_version_statement()
     distribution_statement = get_distribution_statement()
 
-    updated_readme += "# Ballerina Repositories Update Status" + "\n"
+    updated_readme += "# Ballerina Repositories Update Status\n\n" + \
+                      "|![image alt](dependabot/resources/repo_status_graph.jpeg)|"
 
-    updated_readme += distribution_statement + "<br>"
-    updated_readme += "\n" + "<br>"
-    updated_readme += lang_version_statement + "\n"
+    updated_readme += distribution_statement + "<br><br>"
+    updated_readme += lang_version_statement + "| \n |---|---| \n "
 
     updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
-    updated_readme, updated_modules_number = update_modules(updated_readme, module_details_list)
+    updated_readme = update_modules(updated_readme, module_details_list)
 
     updated_readme += "## Modules Released to Central" + "\n"
 
@@ -272,11 +288,32 @@ def get_updated_readme():
 
     central_modules = all_modules["central_modules"]
 
-    updated_readme, updated_modules_number_central = update_modules(updated_readme, central_modules)
-    updated_modules_number += updated_modules_number_central
-    repositories_updated = round((updated_modules_number / (len(module_details_list) + len(central_modules))) * 100)
+    updated_readme = update_modules(updated_readme, central_modules)
+
+    repositories_updated = round((modules_with_no_lag / (len(module_details_list) + len(central_modules))) * 100)
+    make_pie(repositories_updated)
 
     return updated_readme
+
+
+def make_pie(val):
+    sizes = [val, 100 - val]
+    text = str(val) + "%"
+
+    if val == 100:
+        edge_color = 'forestgreen'
+    else:
+        edge_color = 'ivory'
+
+    fig, ax = plt.subplots()
+    ax.axis('equal')
+    kwargs = dict(colors=['forestgreen', 'red'], startangle=180)
+    outside, _ = ax.pie(sizes, radius=1, pctdistance=0.325, **kwargs)
+    plt.setp(outside, width=0.35, edgecolor=edge_color)
+    kwargs = dict(size=20, fontweight='bold', va='center')
+    ax.text(0, 0, text, ha='center', **kwargs)
+
+    plt.savefig(constants.PIE_CHART_IMAGE)
 
 
 def check_pending_pr_checks(module_name):
