@@ -87,6 +87,3 @@ def notify_lag_update(commit):
     if chat_message:
         print(chat_message)
         send_message(chat_message)
-
-
-create_message()
