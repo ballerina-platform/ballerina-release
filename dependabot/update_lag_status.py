@@ -46,7 +46,7 @@ def main():
         sys.exit(1)
 
     try:
-        image = Image.open('dependabot/resources/repo_status_graph.jpeg', mode='r')
+        image = Image.open(constants.PIE_CHART_IMAGE, mode='r')
         img_byte_arr = io.BytesIO()
         image.save(img_byte_arr, format='JPEG')
 
@@ -271,7 +271,7 @@ def get_updated_readme():
 
     updated_readme += "# Ballerina Repositories Update Status\n\n" + \
                       "<table><tbody><tr>\n" + \
-                      "<td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>\n" + \
+                      "<td align='center'><img src='" + constants.PIE_CHART_IMAGE + "'/></td>\n" + \
                       "<td align='center'>\n"
 
     updated_readme += distribution_statement + "<br><br>\n"
@@ -309,12 +309,11 @@ def make_pie(val):
 
     fig, ax = plt.subplots()
     ax.axis('equal')
-    kwargs = dict(colors=['forestgreen', 'red'], startangle=180)
+    kwargs = dict(colors=['forestgreen', 'firebrick'], startangle=180)
     outside, _ = ax.pie(sizes, radius=1, pctdistance=0.325, **kwargs)
     plt.setp(outside, width=0.35, edgecolor=edge_color)
     kwargs = dict(size=20, fontweight='bold', va='center')
     ax.text(0, 0, text, ha='center', **kwargs)
-
     plt.savefig(constants.PIE_CHART_IMAGE)
 
 
