@@ -12,6 +12,7 @@ HTTP_REQUEST_DELAY_IN_SECONDS = 2
 HTTP_REQUEST_DELAY_MULTIPLIER = 2
 
 BALLERINA_ORG_NAME = 'ballerina-platform'
+BALLERINA_ORG_URL = 'https://github.com/ballerina-platform/'
 
 MODULE_LIST_FILE = 'dependabot/resources/module_list.json'
 EXTENSIONS_FILE = 'dependabot/resources/extensions.json'

@@ -19,6 +19,7 @@ all_modules = []
 updated_modules = 0
 
 MODULE_NAME = "name"
+MODULE_BUILD_ACTION_FILE = "build_action_file"
 ballerina_timestamp = ""
 ballerina_lang_version = ""
 
@@ -27,6 +28,11 @@ def main():
     update_lang_version()
 
     updated_readme = get_updated_readme()
+
+    # Write to local README file
+    f = open(README_FILE, 'w')
+    f.write(updated_readme)
+    f.close()
 
     try:
         update, commit = utils.commit_file('ballerina-release',
@@ -174,6 +180,10 @@ def update_modules(updated_readme, module_details_list):
             else:
                 name = module[MODULE_NAME]
 
+            build_button = "[![Build](" + constants.BALLERINA_ORG_URL + module['name'] + \
+                           "/actions/workflows/" + module[MODULE_BUILD_ACTION_FILE] + ".yml/badge.svg)]" + \
+                           "(" + constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
+                           module[MODULE_BUILD_ACTION_FILE] + ".yml)"
             lag_button = get_lag_button(module)
             pending_pr = get_pending_pr(module)
 
@@ -181,8 +191,8 @@ def update_modules(updated_readme, module_details_list):
             if idx == 0:
                 level = str(current_level)
 
-            table_row = "| " + level + " | [" + name + "](https://github.com/ballerina-platform/" + module[
-                MODULE_NAME] + ") | " + lag_button + " | " + pending_pr + " | "
+            table_row = "| " + level + " | [" + name + "](" + constants.BALLERINA_ORG_URL + module[
+                MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr + " | "
             updated_readme += table_row + "\n"
     return updated_readme, updated_modules
 
@@ -235,7 +245,7 @@ def get_updated_readme():
     updated_readme = ""
     global all_modules
 
-    all_modules = get_module_list()
+    all_modules = utils.read_json_file(constants.EXTENSIONS_FILE)
     module_details_list = all_modules["modules"]
 
     lang_version_statement = get_lang_version_statement()
@@ -248,15 +258,15 @@ def get_updated_readme():
     updated_readme += lang_version_statement + "\n"
 
     updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
-    updated_readme += "| Level | Modules | Lag Status | Pending Automated PR |" + "\n"
-    updated_readme += "|:---:|:---:|:---:|:---:|" + "\n"
+    updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
+    updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
     updated_readme, updated_modules_number = update_modules(updated_readme, module_details_list)
 
     updated_readme += "## Modules Released to Central" + "\n"
 
-    updated_readme += "| Level | Modules | Lag Status | Pending Automated PR |" + "\n"
-    updated_readme += "|:---:|:---:|:---:|:---:|" + "\n"
+    updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
+    updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
     central_modules = all_modules["central_modules"]
 
@@ -265,17 +275,6 @@ def get_updated_readme():
     repositories_updated = round((updated_modules_number / (len(module_details_list) + len(central_modules))) * 100)
 
     return updated_readme
-
-
-def get_module_list():
-    readme_repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/ballerina-release")
-
-    module_list_json = readme_repo.get_contents(constants.EXTENSIONS_FILE)
-    module_list_json = module_list_json.decoded_content.decode(constants.ENCODING)
-
-    data = json.loads(module_list_json)
-
-    return data
 
 
 def check_pending_pr_checks(module_name):

@@ -50,8 +50,8 @@ def create_message():
     chat_message = ""
 
     for i in range(len(older_version)):
-        old_row = older_version[i].split("|")[1:-1]
-        updated_row = updated_version[i].split("|")[1:-1]
+        old_row = older_version[i].split("|")[2:-1]
+        updated_row = updated_version[i].split("|")[2:-1]
 
         if old_row[2] != updated_row[2]:
             old_color = old_row[2].split("-")[2].split(")")[0]

@@ -9,13 +9,15 @@
             "name": "module-ballerinax-aws.lambda",
             "group_id": "org.ballerinax.awslambda",
             "artifact_id": "awslambda-extension-bala",
-            "version_key": "awslambdaVersion"
+            "version_key": "awslambdaVersion",
+            "build_action_file": "build-master"
         },
         {
             "name": "module-ballerinax-azure.functions",
             "group_id": "org.ballerinax.azurefunctions",
             "artifact_id": "azurefunctions-extension",
-            "version_key": "azFunctionsVersion"
+            "version_key": "azFunctionsVersion",
+            "build_action_file": "build-master"
         },
         {
             "name": "module-ballerina-c2c",
@@ -31,7 +33,8 @@
             "group_id": "org.ballerinalang",
             "artifact_id": "choreo-extension-ballerina",
             "version_key": "observeExtChoreoVersion",
-            "auto_merge": false
+            "auto_merge": false,
+            "build_action_file": "build-main"
         },
         {
             "name": "module-ballerina-crypto"
@@ -40,7 +43,8 @@
             "name": "module-ballerinax-datamapper",
             "group_id": "org.ballerinax.datamapper",
             "artifact_id": "datamapper-extension",
-            "version_key": "dataMapperVersion"
+            "version_key": "dataMapperVersion",
+            "build_action_file": "build-master"
         },
         {
             "name": "module-ballerina-docker",
@@ -74,7 +78,8 @@
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
             "version_key": "observeExtJaegerVersion",
-            "auto_merge": false
+            "auto_merge": false,
+            "build_action_file": "build-main"
         },
         {
             "name": "module-ballerinax-java.jdbc",
@@ -124,7 +129,8 @@
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
             "version_key": "observeExtPrometheusVersion",
-            "auto_merge": false
+            "auto_merge": false,
+            "build_action_file": "build-main"
         },
         {
             "name": "module-ballerinax-rabbitmq",
