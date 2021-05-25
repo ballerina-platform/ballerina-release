@@ -4,14 +4,14 @@
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
 <code>ballerina-distribution</code> repository is up to date.<br><br>
-<code>ballerina-lang</code> repository version <b>2.0.0-beta.1-20210524-204800-1f204a13</b> (14 h) has been updated as follows
+<code>ballerina-lang</code> repository version <b>2.0.0-beta.1-20210524-204800-1f204a13</b> (1 days) has been updated as follows
 </td>
 </tr></tbody></table> 
 
  ## Modules and Extensions Packed in Distribution
 | Level | Modules | Build | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|:---:|
-| 1 | [docker](https://github.com/ballerina-platform/module-ballerina-docker) | [![Build](https://github.com/ballerina-platform/module-ballerina-docker/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-docker/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-docker/blob/master/gradle.properties) | []() | 
+| 1 | [docker](https://github.com/ballerina-platform/module-ballerina-docker) | [![Build](https://github.com/ballerina-platform/module-ballerina-docker/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-docker/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-docker/blob/master/gradle.properties) | [#641](https://github.com/ballerina-platform/module-ballerina-docker/pull/641) | 
 |  | [io](https://github.com/ballerina-platform/module-ballerina-io) | [![Build](https://github.com/ballerina-platform/module-ballerina-io/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-io/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-io/blob/master/gradle.properties) | []() | 
 |  | [jballerina.java.arrays](https://github.com/ballerina-platform/module-ballerina-jballerina.java.arrays) | [![Build](https://github.com/ballerina-platform/module-ballerina-jballerina.java.arrays/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-jballerina.java.arrays/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-jballerina.java.arrays/blob/master/gradle.properties) | []() | 
 |  | [random](https://github.com/ballerina-platform/module-ballerina-random) | [![Build](https://github.com/ballerina-platform/module-ballerina-random/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-random/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-random/blob/main/gradle.properties) | []() | 
