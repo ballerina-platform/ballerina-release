@@ -85,12 +85,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 - Use included record parameters instead of the record type in the listener initialization
 
 ##### `http` Package
-- Improve the `http:Client` remote methods to support the contextually-expected type inference
-- Change the configuration parameters of the listeners and clients to include the record parameters
+- Improved the `http:Client` remote methods to support the contextually-expected type inference
+- Changed the configuration parameters of the listeners and clients to include the record parameters
 
 ##### `sql` Package
-- Added SQL Array Value type support and introduced new distinct array value types for identified SQL types.
-- Marked the `sql:Client` class as an isolated class.
+- Added the SQL Array Value type support and introduced the new distinct array value types for identified SQL types
+- Marked the `sql:Client` class as an isolated class
 
 ##### `websubhub` Package
 - Include the auth configuration to the WebSubHub publisher client configuration
