@@ -170,12 +170,11 @@ def get_lag_button(module):
 def get_pending_pr(module):
     pr_id = ""
     pending_pr_link = ""
-    pr_number = check_pending_pr_checks(module[MODULE_NAME])
+    pr = get_pending_automated_pr(module[MODULE_NAME])
 
-    if pr_number is not None:
-        pr_id = "#" + str(pr_number)
-        pending_pr_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] + "/pull/" + str(
-            pr_number)
+    if pr is not None:
+        pr_id = "#" + str(pr.number)
+        pending_pr_link = pr.html_url
     pending_pr = "[" + pr_id + "](" + pending_pr_link + ")"
 
     return pending_pr
@@ -217,7 +216,9 @@ def get_lang_version_statement():
     days, hrs = format_lag(ballerina_lag)
     ballerina_lang_lag = ""
 
-    if days > 0:
+    if days == 1:
+        ballerina_lang_lag = str(days) + " day"
+    elif days > 1:
         ballerina_lang_lag = str(days) + " days"
     elif hrs > 0:
         ballerina_lang_lag = str(hrs) + " h"
@@ -237,11 +238,11 @@ def get_distribution_statement():
     days, hrs = get_lag_info(BALLERINA_DISTRIBUTION)[0:2]
     distribution_lag = ""
 
-    distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
-    distribution_pr_link = "https://github.com/ballerina-platform/" + BALLERINA_DISTRIBUTION + "/pull/" + \
-                           str(distribution_pr_number)
+    distribution_pr = get_pending_automated_pr(BALLERINA_DISTRIBUTION)
 
-    if days > 0:
+    if days == 1:
+        distribution_lag = str(days) + " day"
+    elif days > 1:
         distribution_lag = str(days) + " days"
     elif hrs > 0:
         distribution_lag = str(hrs) + " h"
@@ -249,12 +250,13 @@ def get_distribution_statement():
     if not distribution_lag:
         distribution_lag_statement = "<code>ballerina-distribution</code> repository is up to date."
     else:
-        if str(distribution_pr_number) == "None":
-            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag
+        if distribution_pr is None:
+            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + "."
         else:
-            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + \
-                                         " and pending PR [#" + str(distribution_pr_number) + "](" + \
-                                         distribution_pr_link + ") is available"
+            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + \
+                                         distribution_lag + " and pending PR " + "<a href='" + \
+                                         distribution_pr.html_url + "'>#" + str(distribution_pr.number) + \
+                                         "</a>  is available."
 
     return distribution_lag_statement
 
@@ -317,13 +319,13 @@ def make_pie(val):
     plt.savefig(constants.PIE_CHART_IMAGE)
 
 
-def check_pending_pr_checks(module_name):
+def get_pending_automated_pr(module_name):
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
     pulls = repo.get_pulls(state="open")
 
     for pull in pulls:
         if pull.head.ref == constants.DEPENDENCY_UPDATE_BRANCH:
-            return pull.number
+            return pull
     return None
 
 
