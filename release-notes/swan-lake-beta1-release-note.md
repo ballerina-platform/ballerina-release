@@ -44,8 +44,8 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 #### Improvements
 
 - Worker deadlock detection has been improved to include the `wait` action.
-- `self` of an isolated object no longer needs to be accessed within a `lock` statement unless it is used to access a field that is either not `final` or is not a subtype of `readonly` or `isolated object {}`.
-- `lang.xml:strip()` does not mutate the XML value, thus using `lang.xml:strip()` on immutable XML values is allowed.
+- The `self` variable of an isolated object no longer needs to be accessed within a `lock` statement unless it is used to access a field that is either not `final` or is of a type that is not a subtype of `readonly` or `isolated object {}`.
+- The `lang.xml:strip()` function does not mutate an XML value. Therefore, using the `lang.xml:strip()` function on immutable XML values is allowed.
 
 #### Breaking Changes
 
