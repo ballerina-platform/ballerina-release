@@ -11,6 +11,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-c2c"
             ]
@@ -24,6 +25,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerinax-datamapper",
                 "module-ballerina-log",
@@ -40,6 +42,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -53,6 +56,7 @@
             "default_branch": "main",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-websub"
             ]
@@ -66,6 +70,7 @@
             "default_branch": "main",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-log",
                 "module-ballerina-uuid"
@@ -80,6 +85,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-crypto",
                 "module-ballerina-file",
@@ -95,6 +101,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-graphql",
                 "ballerina-openapi",
@@ -111,6 +118,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-openapi"
             ]
@@ -124,6 +132,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
@@ -143,6 +152,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -156,6 +166,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-file",
@@ -178,6 +189,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-file"
             ]
@@ -191,6 +203,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-cache",
                 "module-ballerina-email",
@@ -206,6 +219,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -219,6 +233,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
@@ -234,6 +249,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
@@ -248,6 +264,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -261,6 +278,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
@@ -275,6 +293,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": []
         },
         {
@@ -286,6 +305,7 @@
             "default_branch": "main",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": []
         },
         {
@@ -297,6 +317,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -310,6 +331,7 @@
             "default_branch": "main",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -323,6 +345,7 @@
             "default_branch": "main",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -336,6 +359,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -349,6 +373,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -362,6 +387,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -375,6 +401,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -388,6 +415,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
@@ -411,6 +439,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -424,6 +453,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -437,6 +467,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-c2c"
             ]
@@ -450,6 +481,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerina-c2c",
                 "module-ballerinax-choreo"
@@ -464,6 +496,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -477,6 +510,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerinax-kafka",
                 "module-ballerinax-rabbitmq",
@@ -492,6 +526,7 @@
             "default_branch": "main",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -505,6 +540,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -518,6 +554,7 @@
             "default_branch": "main",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -531,6 +568,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -544,6 +582,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": []
         },
         {
@@ -555,6 +594,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": []
         },
         {
@@ -566,6 +606,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": [
                 "module-ballerinax-java.jdbc",
                 "module-ballerinax-mysql",
@@ -581,6 +622,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": []
         },
         {
@@ -592,6 +634,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
             "dependents": []
         },
         {
@@ -603,6 +646,7 @@
             "default_branch": "master",
             "auto_merge": true,
             "central_only_module": false,
+            "build_action_file": "main",
             "dependents": []
         }
     ],
@@ -616,6 +660,7 @@
             "default_branch": "main",
             "auto_merge": false,
             "central_only_module": true,
+            "build_action_file": "build-main",
             "dependents": []
         },
         {
@@ -627,6 +672,7 @@
             "default_branch": "main",
             "auto_merge": false,
             "central_only_module": true,
+            "build_action_file": "build-main",
             "dependents": []
         },
         {
@@ -638,6 +684,7 @@
             "default_branch": "main",
             "auto_merge": false,
             "central_only_module": true,
+            "build_action_file": "build-main",
             "dependents": []
         }
     ]

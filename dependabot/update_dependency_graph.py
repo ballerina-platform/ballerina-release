@@ -206,9 +206,17 @@ def initialize_module_details(modules_list):
             'default_branch': default_branch,
             'auto_merge': module.get('auto_merge', True),
             'central_only_module': module.get('central_only_module', True),
+            'build_action_file': module.get('build_action_file', get_default_build_file(module['name'])),
             'dependents': []})
     # TODO: Add transitive dependencies
     return module_details_json
+
+
+def get_default_build_file(module):
+    if module == 'ballerina-distribution':
+        return 'main'
+    else:
+        return 'build-timestamped-master'
 
 
 # Gets all the dependents of each module to generate the dependency graph
