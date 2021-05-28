@@ -39,46 +39,20 @@ jobs:
           pip install PyGithub
           pip install httplib2
 
-      - name: "[Scheduled] Update Ballerina Language Version"
+      - name: Update Ballerina Language Version
         if: github.event_name == 'schedule'
         run: |
-          python dependabot/update_dependencies_in_pipeline.py "false" "" "true" "schedule"
-          curl -X POST \
-          https://api.github.com/repos/ballerina-platform/ballerina-release/dispatches \
-          -H 'Accept: application/vnd.github.v3+json' \
-          -H 'Authorization: token ${{ secrets.BALLERINA_BOT_TOKEN }}' \
-          --data "{
-            \"event_type\": \"dashboard-update\",
-            \"client_payload\": {
-              \"sendNotification\": \"true\"
-            }
-          }"
-        env:
-          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
-          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
-          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
-          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
-          BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
-          BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
-          BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
-
-      - name: "[Manual] Update Ballerina Language Version"
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.isRetrigger }}" \
+          if ${IS_SCHEDULE_WORKFLOW} == true; then
+            echo "Schedule Workflow Triggered"
+            python dependabot/update_dependencies_in_pipeline.py "false" "" "true" "schedule" 
+           else
+             echo "Manual Trigger"
+             python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.isRetrigger }}" \
                                                             "${{ github.event.inputs.ballerinaVersion }}" \
                                                             "${{ github.event.inputs.autoMergePRs }}"
-          curl -X POST \
-          https://api.github.com/repos/ballerina-platform/ballerina-release/dispatches \
-          -H 'Accept: application/vnd.github.v3+json' \
-          -H 'Authorization: token ${{ secrets.BALLERINA_BOT_TOKEN }}' \
-          --data "{
-            \"event_type\": \"dashboard-update\",
-            \"client_payload\": {
-              \"sendNotification\": \"false\"
-            }
-          }"
+           fi
         env:
+          IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'schedule' }}    
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
@@ -86,3 +60,18 @@ jobs:
           BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
           BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
           BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
+ 
+      - name: Trigger Dashboard Update
+        env:
+          SEND_NOTIFICATION: ${{ github.event_name == 'schedule' }}
+        run: |
+          curl -X POST \
+          https://api.github.com/repos/ballerina-platform/ballerina-release/dispatches \
+          -H 'Accept: application/vnd.github.v3+json' \
+          -H 'Authorization: token ${{ secrets.BALLERINA_BOT_TOKEN }}' \
+          --data "{
+            \"event_type\": \"dashboard-update\",
+            \"client_payload\": {
+              \"sendNotification\": \"${SEND_NOTIFICATION}\"
+            }
+          }"
