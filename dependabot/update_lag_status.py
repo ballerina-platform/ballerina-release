@@ -20,13 +20,19 @@ github = Github(ballerina_bot_token)
 all_modules = []
 modules_with_no_lag = 0
 
+is_distribution_lagging = False
+lag_reminder_modules = []
+
 MODULE_NAME = "name"
 MODULE_BUILD_ACTION_FILE = "build_action_file"
 ballerina_timestamp = ""
 ballerina_lang_version = ""
+send_reminder_chat = sys.argv[1]
 
 
 def main():
+    global send_reminder_chat
+    global lag_reminder_modules
     update_lang_version()
 
     updated_readme = get_updated_readme()
@@ -63,7 +69,9 @@ def main():
                                 '[Automated] Update Extension Dependency Dashboard',
                                 'Update extension dependency dashboard',
                                 constants.DASHBOARD_UPDATE_BRANCH)
-        notify_chat.notify_lag_update(commit)
+        if send_reminder_chat:
+            notify_chat.send_reminder(lag_reminder_modules)
+
     else:
         print('No changes to ' + README_FILE + ' file')
 
@@ -150,11 +158,14 @@ def get_lag_info(module_name):
 
 def get_lag_button(module):
     global modules_with_no_lag
+    lag = False
     days, hrs, color = get_lag_info(module[MODULE_NAME])
     if days > 0:
         lag_status = str(days) + "%20days"
+        lag = True
     elif hrs > 0:
         lag_status = str(hrs) + "%20h"
+        lag = True
     else:
         lag_status = "no%20lag"
         modules_with_no_lag += 1
@@ -164,23 +175,29 @@ def get_lag_button(module):
     lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + "?label=)](" \
                  + lag_status_link + ")"
 
-    return lag_button
+    return lag_button, lag
 
 
 def get_pending_pr(module):
+    pending_pr_status = False
     pr_id = ""
     pending_pr_link = ""
     pr = get_pending_automated_pr(module[MODULE_NAME])
 
     if pr is not None:
+        pending_pr_status = True
         pr_id = "#" + str(pr.number)
         pending_pr_link = pr.html_url
     pending_pr = "[" + pr_id + "](" + pending_pr_link + ")"
 
-    return pending_pr
+    return pending_pr, pending_pr_status
 
 
 def update_modules(updated_readme, module_details_list):
+    global lag_reminder_modules
+
+    lagging_modules_level = 0
+
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
 
@@ -198,8 +215,16 @@ def update_modules(updated_readme, module_details_list):
                            "/actions/workflows/" + module[MODULE_BUILD_ACTION_FILE] + ".yml/badge.svg)]" + \
                            "(" + constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                            module[MODULE_BUILD_ACTION_FILE] + ".yml)"
-            lag_button = get_lag_button(module)
-            pending_pr = get_pending_pr(module)
+            lag_button, lag = get_lag_button(module)
+            pending_pr, pending_pr_status = get_pending_pr(module)
+
+            if is_distribution_lagging and lag:
+                if lagging_modules_level == 0:
+                    # All modules have been up to date so far
+                    lag_reminder_modules.append(module)
+                    lagging_modules_level = module['level']
+                elif module['level'] == lagging_modules_level:
+                    lag_reminder_modules.append(module)
 
             level = ""
             if idx == 0:
@@ -208,6 +233,7 @@ def update_modules(updated_readme, module_details_list):
             table_row = "| " + level + " | [" + name + "](" + constants.BALLERINA_ORG_URL + module[
                 MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr + " | "
             updated_readme += table_row + "\n"
+
     return updated_readme
 
 
@@ -234,6 +260,8 @@ def get_lang_version_statement():
 
 
 def get_distribution_statement():
+    global is_distribution_lagging
+
     BALLERINA_DISTRIBUTION = "ballerina-distribution"
     days, hrs = get_lag_info(BALLERINA_DISTRIBUTION)[0:2]
     distribution_lag = ""
@@ -250,6 +278,7 @@ def get_distribution_statement():
     if not distribution_lag:
         distribution_lag_statement = "<code>ballerina-distribution</code> repository is up to date."
     else:
+        is_distribution_lagging = True
         if distribution_pr is None:
             distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + "."
         else:
