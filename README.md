@@ -4,7 +4,7 @@
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
 <code>ballerina-distribution</code> repository is up to date.<br><br>
-<code>ballerina-lang</code> repository version <b>2.0.0-beta.1-20210525-215400-91ffc5d8</b> (2.5 days) has been updated as follows
+<code>ballerina-lang</code> repository version <b>2.0.0-beta.1-20210525-215400-91ffc5d8</b> (3 days) has been updated as follows
 </td>
 </tr></tbody></table> 
 
@@ -58,6 +58,6 @@
 ## Modules Released to Central
 | Level | Modules | Build | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|:---:|
-| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Build](https://github.com/ballerina-platform/module-ballerinax-jaeger/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-jaeger/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-1%20days-yellow?label=)](https://github.com/ballerina-platform/module-ballerinax-jaeger/blob/main/gradle.properties) | [#81](https://github.com/ballerina-platform/module-ballerinax-jaeger/pull/81) | 
-|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Build](https://github.com/ballerina-platform/module-ballerinax-prometheus/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-prometheus/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-1%20days-yellow?label=)](https://github.com/ballerina-platform/module-ballerinax-prometheus/blob/main/gradle.properties) | [#81](https://github.com/ballerina-platform/module-ballerinax-prometheus/pull/81) | 
-|  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Build](https://github.com/ballerina-platform/module-ballerinax-choreo/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-choreo/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-1%20days-yellow?label=)](https://github.com/ballerina-platform/module-ballerinax-choreo/blob/main/gradle.properties) | [#81](https://github.com/ballerina-platform/module-ballerinax-choreo/pull/81) | 
+| 9 | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Build](https://github.com/ballerina-platform/module-ballerinax-jaeger/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-jaeger/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-jaeger/blob/main/gradle.properties) | []() | 
+|  | [prometheus](https://github.com/ballerina-platform/module-ballerinax-prometheus) | [![Build](https://github.com/ballerina-platform/module-ballerinax-prometheus/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-prometheus/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-prometheus/blob/main/gradle.properties) | []() | 
+|  | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Build](https://github.com/ballerina-platform/module-ballerinax-choreo/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-choreo/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-choreo/blob/main/gradle.properties) | []() | 
