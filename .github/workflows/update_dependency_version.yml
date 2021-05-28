@@ -43,6 +43,16 @@ jobs:
         if: github.event_name == 'schedule'
         run: |
           python dependabot/update_dependencies_in_pipeline.py "false" "" "true" "schedule"
+          curl -X POST \
+          https://api.github.com/repos/ballerina-platform/ballerina-release/dispatches \
+          -H 'Accept: application/vnd.github.v3+json' \
+          -H 'Authorization: token ${{ secrets.BALLERINA_BOT_TOKEN }}' \
+          --data "{
+            \"event_type\": \"dashboard-update\",
+            \"client_payload\": {
+              \"sendNotification\": \"true\"
+            }
+          }"
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -58,6 +68,16 @@ jobs:
           python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.isRetrigger }}" \
                                                             "${{ github.event.inputs.ballerinaVersion }}" \
                                                             "${{ github.event.inputs.autoMergePRs }}"
+          curl -X POST \
+          https://api.github.com/repos/ballerina-platform/ballerina-release/dispatches \
+          -H 'Accept: application/vnd.github.v3+json' \
+          -H 'Authorization: token ${{ secrets.BALLERINA_BOT_TOKEN }}' \
+          --data "{
+            \"event_type\": \"dashboard-update\",
+            \"client_payload\": {
+              \"sendNotification\": \"false\"
+            }
+          }"
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
