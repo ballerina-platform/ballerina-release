@@ -51,7 +51,7 @@ jobs:
                                                             "${{ github.event.inputs.autoMergePRs }}"
            fi
         env:
-          IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'schedule' }}    
+          IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'schedule' }}
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
@@ -59,7 +59,7 @@ jobs:
           BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
           BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
           BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
- 
+
       - name: Trigger Dashboard Update
         env:
           SEND_NOTIFICATION: ${{ github.event_name == 'schedule' }}

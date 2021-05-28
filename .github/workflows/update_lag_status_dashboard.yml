@@ -30,11 +30,18 @@ jobs:
           pip install matplotlib
           pip install httplib2
           pip install Image
-      - name: "[Manual] Update Status Dashboard"
-        if: github.event_name == 'workflow_dispatch'
+
+      - name: Update Status Dashboard
         run: |
-          python dependabot/update_lag_status.py "${{ github.event.inputs.sendReminderNotification }}"
+          if ${IS_SCHEDULE_WORKFLOW} == true; then
+            echo "Schedule Workflow Triggered"
+            python dependabot/update_lag_status.py "${{ github.event.client_payload.sendNotification }}"
+          else
+            echo "Manual Trigger"
+            python dependabot/update_lag_status.py "${{ github.event.inputs.sendReminderNotification }}"
+          fi
         env:
+          IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'repository_dispatch' }}
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
@@ -42,17 +49,3 @@ jobs:
           BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
           BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
           BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
-
-      - name: "[Auto] Update after daily dependency upgrade"
-        if: github.event_name == 'repository_dispatch'
-        run: |
-          python dependabot/update_lag_status.py "${{ github.event.client_payload.sendNotification }}"
-        env:
-          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
-          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
-          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
-          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
-          BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
-          BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
-          BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
-
