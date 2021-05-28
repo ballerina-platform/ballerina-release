@@ -5,6 +5,8 @@ on:
     workflows: [ "Extensions - Update Ballerina Version" ]
     branches: [ master ]
   workflow_dispatch:
+  schedule:
+    - cron: '30 6 * * *'
 
 jobs:
   update-lag-status:
@@ -27,8 +29,9 @@ jobs:
           pip install httplib2
           pip install Image
       - name: Update Status Dashboard
+        if: github.event_name != 'schedule'
         run: |
-          python dependabot/update_lag_status.py
+          python dependabot/update_lag_status.py "false"
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -37,3 +40,17 @@ jobs:
           BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
           BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
           BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
+
+      - name: Send Reminder Notification
+        if: github.event_name == 'schedule'
+        run: |
+          python dependabot/update_lag_status.py "true"
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+          BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
+          BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
+          BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
+

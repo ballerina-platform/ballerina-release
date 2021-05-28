@@ -18,16 +18,26 @@ README_FILE = "README.md"
 github = Github(ballerina_bot_token)
 
 all_modules = []
+lag_reminder_modules = []
 modules_with_no_lag = 0
 
 MODULE_NAME = "name"
 MODULE_BUILD_ACTION_FILE = "build_action_file"
 ballerina_timestamp = ""
 ballerina_lang_version = ""
+readme_file = ""
+send_reminder_chat = sys.argv[1]
 
 
 def main():
+    global readme_file
+    global send_reminder_chat
+    global lag_reminder_modules
     update_lang_version()
+
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + "ballerina-release")
+    readme_file = repo.get_contents(README_FILE)
+    readme_file = readme_file.decoded_content.decode(constants.ENCODING)
 
     updated_readme = get_updated_readme()
 
@@ -63,7 +73,9 @@ def main():
                                 '[Automated] Update Extension Dependency Dashboard',
                                 'Update extension dependency dashboard',
                                 constants.DASHBOARD_UPDATE_BRANCH)
-        notify_chat.notify_lag_update(commit)
+        if send_reminder_chat:
+            notify_chat.send_reminder(lag_reminder_modules)
+
     else:
         print('No changes to ' + README_FILE + ' file')
 
@@ -150,6 +162,9 @@ def get_lag_info(module_name):
 
 def get_lag_button(module):
     global modules_with_no_lag
+    global readme_file
+    color_order = {"brightgreen": 0, "yellow": 1, "red": 2}
+    color_change = False
     days, hrs, color = get_lag_info(module[MODULE_NAME])
     if days > 0:
         lag_status = str(days) + "%20days"
@@ -164,23 +179,33 @@ def get_lag_button(module):
     lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + "?label=)](" \
                  + lag_status_link + ")"
 
-    return lag_button
+    for line in readme_file.splitlines():
+        if module[MODULE_NAME] in line:
+            current_lag_color = line.split("|")[4].split("-")[2].split("?")[0]
+            if color_order[color] > color_order[current_lag_color]:
+                color_change = True
+
+    return lag_button, color_change
 
 
 def get_pending_pr(module):
+    pending_pr_status = False
     pr_id = ""
     pending_pr_link = ""
     pr = get_pending_automated_pr(module[MODULE_NAME])
 
     if pr is not None:
+        pending_pr_status = True
         pr_id = "#" + str(pr.number)
         pending_pr_link = pr.html_url
     pending_pr = "[" + pr_id + "](" + pending_pr_link + ")"
 
-    return pending_pr
+    return pending_pr, pending_pr_status
 
 
 def update_modules(updated_readme, module_details_list):
+    global lag_reminder_modules
+    reminder_modules = []
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
 
@@ -198,8 +223,15 @@ def update_modules(updated_readme, module_details_list):
                            "/actions/workflows/" + module[MODULE_BUILD_ACTION_FILE] + ".yml/badge.svg)]" + \
                            "(" + constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                            module[MODULE_BUILD_ACTION_FILE] + ".yml)"
-            lag_button = get_lag_button(module)
-            pending_pr = get_pending_pr(module)
+            lag_button, color_change = get_lag_button(module)
+            pending_pr, pending_pr_status = get_pending_pr(module)
+
+            if color_change and pending_pr_status:
+                if not reminder_modules:
+                    reminder_modules.append(module)
+                    reminder_level = module['level']
+                elif module['level'] == reminder_level:
+                    reminder_modules.append(module)
 
             level = ""
             if idx == 0:
@@ -208,6 +240,7 @@ def update_modules(updated_readme, module_details_list):
             table_row = "| " + level + " | [" + name + "](" + constants.BALLERINA_ORG_URL + module[
                 MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr + " | "
             updated_readme += table_row + "\n"
+    lag_reminder_modules.append(reminder_modules)
     return updated_readme
 
 
