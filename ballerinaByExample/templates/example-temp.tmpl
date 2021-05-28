@@ -4,6 +4,7 @@ title: {{yamlEscape .Name}}
 description: {{yamlEscape .MetaDescription}}
 keywords: {{yamlEscape .MetaKeywords}}
 permalink: {{if .IsLatest}}/learn/by-example/{{.Id}}{{else}}/{{.Version}}/learn/by-example/{{.Id}}{{end}}
+active: {{.Id}}{{end}}
 redirect_from:
   - /{{.RedirectVersion}}/learn/by-example/{{.Id}}
   - /{{.RedirectVersion}}/learn/by-example/{{.Id}}.html
