@@ -40,7 +40,6 @@ jobs:
           pip install httplib2
 
       - name: Update Ballerina Language Version
-        if: github.event_name == 'schedule'
         run: |
           if ${IS_SCHEDULE_WORKFLOW} == true; then
             echo "Schedule Workflow Triggered"
