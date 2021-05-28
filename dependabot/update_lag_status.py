@@ -25,19 +25,13 @@ MODULE_NAME = "name"
 MODULE_BUILD_ACTION_FILE = "build_action_file"
 ballerina_timestamp = ""
 ballerina_lang_version = ""
-readme_file = ""
 send_reminder_chat = sys.argv[1]
 
 
 def main():
-    global readme_file
     global send_reminder_chat
     global lag_reminder_modules
     update_lang_version()
-
-    repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + "ballerina-release")
-    readme_file = repo.get_contents(README_FILE)
-    readme_file = readme_file.decoded_content.decode(constants.ENCODING)
 
     updated_readme = get_updated_readme()
 
@@ -162,14 +156,14 @@ def get_lag_info(module_name):
 
 def get_lag_button(module):
     global modules_with_no_lag
-    global readme_file
-    color_order = {"brightgreen": 0, "yellow": 1, "red": 2}
-    color_change = False
+    lag = False
     days, hrs, color = get_lag_info(module[MODULE_NAME])
     if days > 0:
         lag_status = str(days) + "%20days"
+        lag = True
     elif hrs > 0:
         lag_status = str(hrs) + "%20h"
+        lag = True
     else:
         lag_status = "no%20lag"
         modules_with_no_lag += 1
@@ -179,13 +173,7 @@ def get_lag_button(module):
     lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + "?label=)](" \
                  + lag_status_link + ")"
 
-    for line in readme_file.splitlines():
-        if module[MODULE_NAME] in line:
-            current_lag_color = line.split("|")[4].split("-")[2].split("?")[0]
-            if color_order[color] > color_order[current_lag_color]:
-                color_change = True
-
-    return lag_button, color_change
+    return lag_button, lag
 
 
 def get_pending_pr(module):
@@ -223,10 +211,10 @@ def update_modules(updated_readme, module_details_list):
                            "/actions/workflows/" + module[MODULE_BUILD_ACTION_FILE] + ".yml/badge.svg)]" + \
                            "(" + constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                            module[MODULE_BUILD_ACTION_FILE] + ".yml)"
-            lag_button, color_change = get_lag_button(module)
+            lag_button, lag = get_lag_button(module)
             pending_pr, pending_pr_status = get_pending_pr(module)
 
-            if color_change and pending_pr_status:
+            if lag and pending_pr_status:
                 if not reminder_modules:
                     reminder_modules.append(module)
                     reminder_level = module['level']
