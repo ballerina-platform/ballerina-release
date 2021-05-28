@@ -29,7 +29,7 @@ def send_message(message):
 
 
 def send_reminder(lag_reminder_modules):
-    if not any(lag_reminder_modules):
+    if len(lag_reminder_modules) > 0:
         chat_message = "Reminder on the following modules dependency update..." + "\n"
         for module_list in lag_reminder_modules:
             for module in module_list:

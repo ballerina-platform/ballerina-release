@@ -69,7 +69,7 @@ def main():
                                 '[Automated] Update Extension Dependency Dashboard',
                                 'Update extension dependency dashboard',
                                 constants.DASHBOARD_UPDATE_BRANCH)
-        if send_reminder_chat:
+        if send_reminder_chat == 'true':
             notify_chat.send_reminder(lag_reminder_modules)
 
     else:
