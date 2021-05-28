@@ -4,7 +4,7 @@ from json import dumps
 from httplib2 import Http
 
 import constants
-import utils
+
 
 def send_message(message):
     build_chat_id = os.environ[constants.ENV_BALLERINA_BUILD_CHAT_ID]

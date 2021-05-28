@@ -18,8 +18,10 @@ README_FILE = "README.md"
 github = Github(ballerina_bot_token)
 
 all_modules = []
-lag_reminder_modules = []
 modules_with_no_lag = 0
+
+is_distribution_lagging = False
+lag_reminder_modules = []
 
 MODULE_NAME = "name"
 MODULE_BUILD_ACTION_FILE = "build_action_file"
@@ -193,7 +195,9 @@ def get_pending_pr(module):
 
 def update_modules(updated_readme, module_details_list):
     global lag_reminder_modules
-    reminder_modules = []
+
+    lagging_modules_level = 0
+
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
 
@@ -214,12 +218,13 @@ def update_modules(updated_readme, module_details_list):
             lag_button, lag = get_lag_button(module)
             pending_pr, pending_pr_status = get_pending_pr(module)
 
-            if lag and pending_pr_status:
-                if not reminder_modules:
-                    reminder_modules.append(module)
-                    reminder_level = module['level']
-                elif module['level'] == reminder_level:
-                    reminder_modules.append(module)
+            if is_distribution_lagging and lag:
+                if lagging_modules_level == 0:
+                    # All modules have been up to date so far
+                    lag_reminder_modules.append(module)
+                    lagging_modules_level = module['level']
+                elif module['level'] == lagging_modules_level:
+                    lag_reminder_modules.append(module)
 
             level = ""
             if idx == 0:
@@ -228,7 +233,7 @@ def update_modules(updated_readme, module_details_list):
             table_row = "| " + level + " | [" + name + "](" + constants.BALLERINA_ORG_URL + module[
                 MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr + " | "
             updated_readme += table_row + "\n"
-    lag_reminder_modules.append(reminder_modules)
+
     return updated_readme
 
 
@@ -255,6 +260,8 @@ def get_lang_version_statement():
 
 
 def get_distribution_statement():
+    global is_distribution_lagging
+
     BALLERINA_DISTRIBUTION = "ballerina-distribution"
     days, hrs = get_lag_info(BALLERINA_DISTRIBUTION)[0:2]
     distribution_lag = ""
@@ -271,6 +278,7 @@ def get_distribution_statement():
     if not distribution_lag:
         distribution_lag_statement = "<code>ballerina-distribution</code> repository is up to date."
     else:
+        is_distribution_lagging = True
         if distribution_pr is None:
             distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + "."
         else:
