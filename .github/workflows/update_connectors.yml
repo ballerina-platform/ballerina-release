@@ -33,23 +33,19 @@ jobs:
           pip install retry
           pip install PyGithub
 
-      - name: "[Automatic] Update Ballerina Language Version"
-        if: github.event_name != 'workflow_dispatch'
+      - name: Update Ballerina Language Version
         run: |
-          python dependabot/update_connectors.py "${{ github.event.client_payload.ballerinaVersion }}" \
-                                                              "true" "repository_dispatch"
+          if ${IS_SCHEDULE_WORKFLOW} == true; then
+            echo "Schedule Workflow Triggered"
+            python dependabot/update_connectors.py "${{ github.event.client_payload.ballerinaVersion }}" \
+                                                                          "true" "repository_dispatch"
+           else
+             echo "Manual Trigger"
+             python dependabot/update_connectors.py "${{ github.event.inputs.ballerinaVersion }}" \
+                                                    "${{ github.event.inputs.autoMergePRs }}"
+           fi
         env:
-          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
-          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
-          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
-          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
-
-      - name: "[Manual] Update Ballerina Language Version"
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          python dependabot/update_connectors.py "${{ github.event.inputs.ballerinaVersion }}" \
-                                                            "${{ github.event.inputs.autoMergePRs }}"
-        env:
+          IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'repository_dispatch' }}
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
