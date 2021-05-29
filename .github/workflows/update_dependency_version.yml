@@ -61,6 +61,7 @@ jobs:
           BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
 
       - name: Trigger Dashboard Update
+        if: always()
         env:
           SEND_NOTIFICATION: ${{ github.event_name == 'schedule' }}
         run: |
