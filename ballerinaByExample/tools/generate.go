@@ -457,9 +457,10 @@ func  parseExamples(categories []BBECategory) []*Example {
             metatagsFilePath := fileDirPath + exampleBaseFilePattern + metatagsFileExtn
 
             balFiles := getAllBalFiles(fileDirPath);
-            //if len(balFiles) == 0 {
-                //fmt.Fprintln(os.Stderr, "\t[WARN] Skipping bbe : " + exampleName + ". No ///*.bal files are found")
-                //continue
+            // Following is removed due to lang bbes without sample code
+	    //if len(balFiles) == 0 {
+            //    fmt.Fprintln(os.Stderr, "\t[WARN] Skipping bbe : " + exampleName + ". No ///*.bal files are found")
+            //    continue
             //}
 
             rearrangedPaths = appendFilePath(rearrangedPaths, descFilePath)
