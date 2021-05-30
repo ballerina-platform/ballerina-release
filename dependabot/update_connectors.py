@@ -24,7 +24,7 @@ PULL_REQUEST_TITLE = '[Automated] Update Ballerina Lang Version ('
 AUTO_MERGE_PULL_REQUEST_TITLE = '[AUTO MERGE] Ballerina Lang Version ('
 
 SLEEP_INTERVAL = 30  # 30s
-MAX_WAIT_CYCLES = 120  # Script timeout is 1h
+MAX_WAIT_CYCLES = 20  # Script timeout is 10 m
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 
