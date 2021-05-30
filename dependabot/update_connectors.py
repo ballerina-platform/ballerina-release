@@ -38,13 +38,13 @@ if len(sys.argv) > 3:
 github = Github(ballerina_bot_token)
 
 connectors = []
-status_completed_modules = 0
+status_completed_connectors = 0
 
 
 def main():
     global connectors
     global auto_merge_pull_requests
-    global status_completed_modules
+    global status_completed_connectors
 
     print('Workflow started with Ballerina Lang version : ' + ballerina_version)
 
@@ -68,7 +68,6 @@ def main():
         total_connectors = len(connectors)
 
         wait_cycles = 0
-        status_completed_connectors = 0
 
         while status_completed_connectors != total_connectors:
             for index, connector in enumerate(connectors):
@@ -91,7 +90,7 @@ def main():
             filter(lambda s: s[CONNECTOR_CONCLUSION] == CONNECTOR_CONCLUSION_PR_CHECK_FAILURE, connectors))
         if len(pr_checks_failed_modules) != 0:
             connector_release_failure = True
-            print('Following modules dependency PRs have failed checks...')
+            print('\nFollowing modules dependency PRs have failed checks...')
             for module in pr_checks_failed_modules:
                 print(module['name'])
 
@@ -99,7 +98,7 @@ def main():
             filter(lambda s: s[CONNECTOR_CONCLUSION] == CONNECTOR_CONCLUSION_PR_MERGE_FAILURE, connectors))
         if len(pr_merged_failed_modules) != 0:
             connector_release_failure = True
-            print('Following modules dependency PRs could not be merged...')
+            print('\nFollowing modules dependency PRs could not be merged...')
             for module in pr_merged_failed_modules:
                 print(module['name'])
 
@@ -111,6 +110,7 @@ def main():
 
 def update_connector(index: int):
     global connectors
+    global status_completed_connectors
 
     connector = connectors[index]
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + connector['name'])
@@ -136,6 +136,8 @@ def update_connector(index: int):
         connectors[index][CONNECTOR_CREATED_PR] = pr
     else:
         connectors[index][CONNECTOR_STATUS] = CONNECTOR_STATUS_COMPLETED
+        connectors[index][CONNECTOR_CONCLUSION] = CONNECTOR_CONCLUSION_PR_MERGE_SUCCESS
+        status_completed_connectors += 1
 
 
 def create_pull_request(idx: int, repo):
@@ -189,7 +191,7 @@ def create_pull_request(idx: int, repo):
 
 def check_pending_pr_checks(index: int):
     global connectors
-    global status_completed_modules
+    global status_completed_connectors
 
     connector = connectors[index]
 
@@ -242,7 +244,7 @@ def check_pending_pr_checks(index: int):
             print("[Error] Dependency bump PR checks have failed for '" + connector_name + "'")
             for check in failed_pr_checks:
                 print("[" + connector_name + "] PR check '" + check["name"] + "' failed for " + check["html_url"])
-        status_completed_modules += 1
+        status_completed_connectors += 1
 
 
 main()
