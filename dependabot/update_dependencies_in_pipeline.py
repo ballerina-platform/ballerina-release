@@ -186,7 +186,6 @@ def wait_for_current_level_build(level):
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules dependency PRs have failed checks...')
         chat_message += 'Following modules dependency PRs have failed checks...' + "\n"
         for module in pr_checks_failed_modules:
             chat_message += "<" + module[MODULE_CREATED_PR].html_url + "|" + module['name'] + ">" + "\n"

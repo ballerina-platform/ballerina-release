@@ -92,7 +92,7 @@ def main():
             connector_release_failure = True
             print('\nFollowing modules dependency PRs have failed checks...')
             for module in pr_checks_failed_modules:
-                print(module['name'])
+                print(module['name'] + '(' + module[CONNECTOR_CREATED_PR].html_url + ')')
 
         pr_merged_failed_modules = list(
             filter(lambda s: s[CONNECTOR_CONCLUSION] == CONNECTOR_CONCLUSION_PR_MERGE_FAILURE, connectors))
@@ -100,7 +100,7 @@ def main():
             connector_release_failure = True
             print('\nFollowing modules dependency PRs could not be merged...')
             for module in pr_merged_failed_modules:
-                print(module['name'])
+                print(module['name'] + '(' + module[CONNECTOR_CREATED_PR].html_url + ')')
 
         if connector_release_failure:
             sys.exit(1)
