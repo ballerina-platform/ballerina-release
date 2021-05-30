@@ -21,10 +21,13 @@ all_modules = []
 modules_with_no_lag = 0
 
 is_distribution_lagging = False
+lagging_modules_level = 0
 lag_reminder_modules = []
 
 MODULE_NAME = "name"
 MODULE_BUILD_ACTION_FILE = "build_action_file"
+MODULE_PULL_REQUEST = "pull_request"
+
 ballerina_timestamp = ""
 ballerina_lang_version = ""
 send_reminder_chat = sys.argv[1]
@@ -69,9 +72,15 @@ def main():
                                 '[Automated] Update Extension Dependency Dashboard',
                                 'Update extension dependency dashboard',
                                 constants.DASHBOARD_UPDATE_BRANCH)
-        if send_reminder_chat == 'true':
-            notify_chat.send_reminder(lag_reminder_modules)
-
+        if send_reminder_chat == 'true' and len(lag_reminder_modules) > 0:
+            chat_message = "Reminder on the following modules dependency update..." + "\n"
+            for module in lag_reminder_modules:
+                lag_status_link = module[MODULE_PULL_REQUEST]
+                if lag_status_link == "":
+                    lag_status_link = constants.BALLERINA_ORG_URL + module[MODULE_NAME]
+                chat_message += "<" + lag_status_link + "|" + module['name'] + ">" + "\n"
+                print("\n" + chat_message)
+                notify_chat.send_message(chat_message)
     else:
         print('No changes to ' + README_FILE + ' file')
 
@@ -188,15 +197,14 @@ def get_pending_pr(module):
         pending_pr_status = True
         pr_id = "#" + str(pr.number)
         pending_pr_link = pr.html_url
-    pending_pr = "[" + pr_id + "](" + pending_pr_link + ")"
+    pending_pr_button = "[" + pr_id + "](" + pending_pr_link + ")"
 
-    return pending_pr, pending_pr_status
+    return pending_pr_button, pending_pr_link, pending_pr_status
 
 
 def update_modules(updated_readme, module_details_list):
     global lag_reminder_modules
-
-    lagging_modules_level = 0
+    global lagging_modules_level
 
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
@@ -216,9 +224,10 @@ def update_modules(updated_readme, module_details_list):
                            "(" + constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                            module[MODULE_BUILD_ACTION_FILE] + ".yml)"
             lag_button, lag = get_lag_button(module)
-            pending_pr, pending_pr_status = get_pending_pr(module)
+            pending_pr_button, pending_pr_link, pending_pr_status = get_pending_pr(module)
 
             if is_distribution_lagging and lag:
+                module[MODULE_PULL_REQUEST] = pending_pr_link
                 if lagging_modules_level == 0:
                     # All modules have been up to date so far
                     lag_reminder_modules.append(module)
@@ -231,7 +240,7 @@ def update_modules(updated_readme, module_details_list):
                 level = str(current_level)
 
             table_row = "| " + level + " | [" + name + "](" + constants.BALLERINA_ORG_URL + module[
-                MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr + " | "
+                MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr_button + " | "
             updated_readme += table_row + "\n"
 
     return updated_readme

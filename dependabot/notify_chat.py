@@ -26,13 +26,3 @@ def send_message(message):
         headers=message_headers,
         body=dumps(bot_message),
     )
-
-
-def send_reminder(lag_reminder_modules):
-    if len(lag_reminder_modules) > 0:
-        chat_message = "Reminder on the following modules dependency update..." + "\n"
-        for module in lag_reminder_modules:
-            lag_status_link = "https://github.com/ballerina-platform/" + module['name'] \
-                    + "/blob/" + module["default_branch"] + "/" + constants.GRADLE_PROPERTIES_FILE
-            chat_message += "<" + lag_status_link + "|" + module['name'] + ">" + "\n"
-        send_message(chat_message)
