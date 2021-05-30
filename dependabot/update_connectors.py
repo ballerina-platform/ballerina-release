@@ -38,11 +38,13 @@ if len(sys.argv) > 3:
 github = Github(ballerina_bot_token)
 
 connectors = []
+status_completed_modules = 0
 
 
 def main():
     global connectors
     global auto_merge_pull_requests
+    global status_completed_modules
 
     print('Workflow started with Ballerina Lang version : ' + ballerina_version)
 
@@ -72,8 +74,6 @@ def main():
             for index, connector in enumerate(connectors):
                 if connector[CONNECTOR_STATUS] == CONNECTOR_STATUS_IN_PROGRESS:
                     check_pending_pr_checks(index)
-                else:
-                    status_completed_connectors += 1
 
             if wait_cycles < MAX_WAIT_CYCLES:
                 time.sleep(SLEEP_INTERVAL)
@@ -189,6 +189,7 @@ def create_pull_request(idx: int, repo):
 
 def check_pending_pr_checks(index: int):
     global connectors
+    global status_completed_modules
 
     connector = connectors[index]
 
@@ -241,6 +242,7 @@ def check_pending_pr_checks(index: int):
             print("[Error] Dependency bump PR checks have failed for '" + connector_name + "'")
             for check in failed_pr_checks:
                 print("[" + connector_name + "] PR check '" + check["name"] + "' failed for " + check["html_url"])
+        status_completed_modules += 1
 
 
 main()
