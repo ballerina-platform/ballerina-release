@@ -1,4 +1,5 @@
 import os
+import sys
 from json import dumps
 
 from httplib2 import Http
@@ -30,3 +31,4 @@ def send_message(message):
         print("Successfully send notification")
     else:
         print("Failed to send notification, status code: " + str(resp.status))
+        sys.exit(1)
