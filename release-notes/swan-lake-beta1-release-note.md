@@ -57,8 +57,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 
 ##### Improved configurable variables to support for enum types
 
-Configurable variables with enum types are supported to provide values through command line arguments and toml file.
-As an example refer configurable variable with enum type.
+Configurable variables with enum types are supported to provide values through command-line arguments and a TOML file.
+For example, see the configurable variable with enum type.
 
 ```ballerina
 public enum HttpVersion {
@@ -69,7 +69,7 @@ public enum HttpVersion {
 configurable configLib:HttpVersion & readonly httpVersion = ?;
 ```
 
-Value for above 'httpVersion' can be provided via 'Config.toml' or as a command line argument as below.
+The value for  'httpVersion' can be provided via the 'Config.toml' file or as a command-line argument as below.
 
 TOML
 
@@ -78,7 +78,7 @@ TOML
 httpVersion = "HTTP_1_1"
 ```
 
-Command line argument
+Command-line argument:
 
 ```
 -ChttpVersion=HTTP_1_1
@@ -87,7 +87,7 @@ Command line argument
 ##### Improved configurable variables to support for map types
 
 The `configurable` feature is improved to support variables with map types through the TOML syntax. 
-For example, if the map typed configurable variables are defined in the following way, 
+For example, if the map-typed configurable variables are defined in the following way, 
 
 ``` ballerina
 configurable map<string> admin = ?;
