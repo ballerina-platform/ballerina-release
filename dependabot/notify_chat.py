@@ -19,9 +19,14 @@ def send_message(message):
 
     http_obj = Http()
 
-    http_obj.request(
+    resp = http_obj.request(
         uri=url,
         method='POST',
         headers=message_headers,
         body=dumps(bot_message),
-    )
+    )[0]
+
+    if resp.status == 200:
+        print("Successfully send notification")
+    else:
+        print("Failed to send notification, status code: " + str(resp.status))
