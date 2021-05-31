@@ -21,6 +21,7 @@ all_modules = []
 modules_with_no_lag = 0
 
 is_distribution_lagging = False
+distribution_lag = ''
 lagging_modules_level = 0
 lag_reminder_modules = []
 
@@ -73,7 +74,8 @@ def main():
                                 'Update extension dependency dashboard',
                                 constants.DASHBOARD_UPDATE_BRANCH)
         if send_reminder_chat == 'true' and len(lag_reminder_modules) > 0:
-            chat_message = "Reminder on the following modules dependency update..." + "\n"
+            chat_message = "Distributions\' dependency update lags by " + distribution_lag + ".\n" + \
+                           "Reminder on the following modules\' dependency update..." + "\n"
             for module in lag_reminder_modules:
                 lag_status_link = module[MODULE_PULL_REQUEST]
                 if lag_status_link == "":
@@ -270,6 +272,7 @@ def get_lang_version_statement():
 
 def get_distribution_statement():
     global is_distribution_lagging
+    global distribution_lag
 
     BALLERINA_DISTRIBUTION = "ballerina-distribution"
     days, hrs = get_lag_info(BALLERINA_DISTRIBUTION)[0:2]

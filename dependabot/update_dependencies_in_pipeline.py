@@ -181,12 +181,12 @@ def wait_for_current_level_build(level):
             sys.exit(1)
 
     module_release_failure = False
-    chat_message = ""
+    chat_message = "Dependency update to lang version \'" + lang_version + "\'.\n"
     pr_checks_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
-        chat_message += 'Following modules dependency PRs have failed checks...' + "\n"
+        chat_message += 'Following modules\' Automated Dependency Update PRs have failed checks...' + "\n"
         for module in pr_checks_failed_modules:
             chat_message += "<" + module[MODULE_CREATED_PR].html_url + "|" + module['name'] + ">" + "\n"
 
@@ -194,7 +194,7 @@ def wait_for_current_level_build(level):
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_MERGE_FAILURE, current_level_modules))
     if len(pr_merged_failed_modules) != 0:
         module_release_failure = True
-        chat_message += 'Following modules dependency PRs could not be merged...' + "\n"
+        chat_message += 'Following modules\' Automated Dependency Update PRs could not be merged...' + "\n"
         for module in pr_merged_failed_modules:
             chat_message += "<" + module[MODULE_CREATED_PR].html_url + "|" + module['name'] + ">" + "\n"
 
@@ -202,7 +202,7 @@ def wait_for_current_level_build(level):
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_FAILURE, current_level_modules))
     if len(build_checks_failed_modules) != 0:
         module_release_failure = True
-        chat_message += 'Following modules timestamped build checks failed...' + "\n"
+        chat_message += 'Following modules\' Timestamped Build checks have failed...' + "\n"
         for module in build_checks_failed_modules:
             build_actions_page = constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                                  module[MODULE_BUILD_ACTION_FILE] + ".yml"
@@ -212,7 +212,7 @@ def wait_for_current_level_build(level):
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED, current_level_modules))
     if len(build_version_failed_modules) != 0:
         module_release_failure = True
-        chat_message += 'Following modules timestamped build version cannot be identified...' + "\n"
+        chat_message += 'Following modules\' latest Timestamped Build Version cannot be identified...' + "\n"
         for module in build_version_failed_modules:
             build_actions_page = constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                                  module[MODULE_BUILD_ACTION_FILE] + ".yml"
