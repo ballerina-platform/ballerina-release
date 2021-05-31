@@ -13,9 +13,8 @@ def send_message(message):
 
     url = 'https://chat.googleapis.com/v1/spaces/' + build_chat_id + \
           '/messages?key=' + build_chat_key + '&token=' + build_chat_token
-    bot_message = {
-        'text': message}
 
+    bot_message = {'text': message}
     message_headers = {'Content-Type': 'application/json; charset=UTF-8'}
 
     http_obj = Http()
