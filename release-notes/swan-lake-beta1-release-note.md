@@ -241,4 +241,4 @@ To view bug fixes, see the GitHub milestone for Swan Lake Beta1 of the repositor
 
 ### Breaking Changes
 
-- Taint analyzer is disabled and the `--taint-check` option is removed. The annotations `@tainted` and `@untainted` were left intact as place holders for backward compatibility. Any script that used to pass `--taint-check` option to `bal run/build` commands will fail.
+- Taint analyzer is disabled and the `--taint-check` option is removed. The annotations `@tainted` and `@untainted` were left intact as place holders for backward compatibility. Any script that used to pass the `--taint-check` option to the `bal run` or `bal build` commands will fail.
