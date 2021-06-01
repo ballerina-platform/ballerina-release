@@ -58,7 +58,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 - Type narrowing will now be reset after a compound assignment.
 - Worker message passing after waiting for the same worker has been disallowed.
 - When a named worker is used in a `wait` action, it can no longer be used in a variable reference anywhere else.
-- When the `type-descriptor` is ambiguous, it is considered according to the following table, in which the type precedence is presented in the decreasing order.
+- When the type-descriptor is ambiguous, it is parsed according to the following table, in which the precedence is specified in decreasing order.
 
   For example, `A & B | C` is considered to be `(A & B) | C`.
 
