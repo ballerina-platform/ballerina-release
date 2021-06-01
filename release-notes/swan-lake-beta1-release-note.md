@@ -149,9 +149,6 @@ location = "UK"
 username = "Jane"
 location = "US"
 ```
-#### Other Changes
-
-- Taint analyzer is disabled and `--taint-check` compiler flag is removed. The annotations `@tainted` and `@untainted` were left intact as place holders for backword compatibility.
 
 #### Breaking Changes
 
@@ -241,5 +238,9 @@ To view bug fixes, see the GitHub milestone for Swan Lake Beta1 of the repositor
 - [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Beta%22) 
 
 #### Ballerina Packages Updates
+
+### Other Changes
+
+- Taint analyzer is disabled and `--taint-check` compiler flag is removed. The annotations `@tainted` and `@untainted` were left intact as place holders for backword compatibility.
 
 ### Breaking Changes
