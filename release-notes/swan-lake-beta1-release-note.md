@@ -241,6 +241,6 @@ To view bug fixes, see the GitHub milestone for Swan Lake Beta1 of the repositor
 
 ### Other Changes
 
-- Taint analyzer is disabled and `--taint-check` compiler flag is removed. The annotations `@tainted` and `@untainted` were left intact as place holders for backword compatibility.
+- Taint analyzer is disabled and the `--taint-check` option is removed. The annotations `@tainted` and `@untainted` were left intact as place holders for backward compatibility.
 
 ### Breaking Changes
