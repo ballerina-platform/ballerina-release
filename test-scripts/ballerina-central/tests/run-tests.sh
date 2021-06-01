@@ -86,11 +86,11 @@ echo ">>>>>>>>>>>>>>>>>>>> Test with ALPHA2 <<<<<<<<<<<<<<<<<<<<<"
 echo "-----------------------------------------------------------"
 
 # Test push and pull with alpha2
-VERSION=7.5.5 ./libs/bats/bin/bats alpha2/init-gh.bats
+VERSION=7.5.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats alpha2/init-gh.bats
 VERSION=7.5.5 ./libs/bats/bin/bats alpha2/push-gh.bats
 VERSION=7.5.5 ./libs/bats/bin/bats alpha2/pull-gh.bats
 VERSION=7.5.5 ./libs/bats/bin/bats alpha2/pull-latest-gh.bats
-VERSION=8.6.2 ./libs/bats/bin/bats alpha2/init-gh.bats
+VERSION=8.6.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats alpha2/init-gh.bats
 VERSION=8.6.2 ./libs/bats/bin/bats alpha2/push-gh.bats
 VERSION=8.6.2 ./libs/bats/bin/bats alpha2/pull-gh.bats
 VERSION=8.6.2 ./libs/bats/bin/bats alpha2/pull-latest-gh.bats
@@ -139,7 +139,7 @@ VERSION=8.6.2 ./libs/bats/bin/bats alpha1/pull-latest-gh.bats
 VERSION=8.6.2 ./libs/bats/bin/bats alpha2/pull-latest-gh.bats
 
 # Test push with alpha2 and pull with alpha3
-VERSION=9.8.4 ./libs/bats/bin/bats alpha2/init-gh.bats
+VERSION=9.8.4 REMOVE_STD_LIBS=true ./libs/bats/bin/bats alpha2/init-gh.bats
 VERSION=9.8.4 ./libs/bats/bin/bats alpha2/push-gh.bats
 VERSION=9.8.4 ./libs/bats/bin/bats alpha2/pull-latest-gh.bats
 VERSION=9.8.4 ./libs/bats/bin/bats alpha3/pull-latest-gh.bats
@@ -216,15 +216,15 @@ echo "-----------------------------------------------------------"
 
 # Test push and pull with beta1
 VERSION=14.8.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/init-gh.bats
-VERSION=14.8.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/push-gh.bats
-VERSION=14.8.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/pull-gh.bats
-VERSION=14.8.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/search-gh.bats
-VERSION=14.8.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+VERSION=14.8.2 ./libs/bats/bin/bats beta1/push-gh.bats
+VERSION=14.8.2 ./libs/bats/bin/bats beta1/pull-gh.bats
+VERSION=14.8.2 ./libs/bats/bin/bats beta1/search-gh.bats
+VERSION=14.8.2 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 VERSION=14.9.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/init-gh.bats
-VERSION=14.9.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/push-gh.bats
-VERSION=14.9.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/pull-gh.bats
-VERSION=14.9.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/pull-latest-gh.bats
-VERSION=14.9.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/pull-gh.bats
+VERSION=14.9.5 ./libs/bats/bin/bats beta1/push-gh.bats
+VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-gh.bats
+VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-gh.bats
 
 # Test pull with SLP8
 VERSION=9.5.5 ./libs/bats/bin/bats slp8/pull-latest-gh.bats

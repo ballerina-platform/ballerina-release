@@ -30,8 +30,7 @@ load '../libs/bats-assert/load'
   then
     sed -i'.original' -e "s/import ballerina\/io;/ /g" "$PACKAGE_NAME.bal"
     sed -i'.original' -e 's/io:println("Hello World!");/ /g' "$PACKAGE_NAME.bal"
-    sed -i'.original' -e "s/observabilityIncluded = true/observabilityIncluded = false/g" "Ballerina.toml"
-  elif
+  fi
   rm "Ballerina.toml.original"
   echo '# Sample github package' > "Package.md"
   cd -
