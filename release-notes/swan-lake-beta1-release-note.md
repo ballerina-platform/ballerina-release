@@ -45,6 +45,31 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Improvements
 
+- Worker deadlock detection has been improved to include the `wait` action.
+- The `self` variable of an isolated object no longer needs to be accessed within a `lock` statement unless it is used to access a field that is either not `final` or is of a type that is not a subtype of `readonly` or `isolated object {}`.
+- The `lang.xml:strip()` function does not mutate an XML value. Therefore, using the `lang.xml:strip()` function on immutable XML values is allowed.
+
+#### Breaking Changes
+
+- An included record parameter of a function can only be specified after any required and/or defaultable parameters of the function.
+- Additive expressions and multiplicative expressions are no longer supported with numeric values when the static types of the operands belong to different numeric basic types.
+- Configurable variables are implicitly `final` now. Moreover, the type of such a variable is now effectively the intersection of the specified type and `readonly`. Therefore, configurable variables no longer support the `final` and `isolated` qualifiers.
+- Type narrowing will no longer take place for captured variables of an anonymous function since the narrowed type cannot be guaranteed during the execution of the function.
+- Type narrowing will now be reset after a compound assignment.
+- Worker message passing after waiting for the same worker has been disallowed.
+- When a named worker is used in a `wait` action, it can no longer be used in a variable reference anywhere else.
+- When the `type-descriptor` is ambiguous, it is considered according to the following table, in which the type precedence is presented in the decreasing order.
+
+  For example, `A & B | C` is considered to be `(A & B) | C`.
+
+  | Operator                  | Associativity |
+  |---------------------------|---------------|
+  | distinct T                |               |
+  | T[ ]                      |               |
+  | T1 & T2                   | left          |
+  | T1 &#124; T2              | left          |
+  | function (args) returns T | right         |
+
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta1%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
@@ -124,6 +149,10 @@ location = "UK"
 username = "Jane"
 location = "US"
 ```
+#### Breaking Changes
+
+- The `io.ballerina.runtime.api.types.Type#getName` and `io.ballerina.runtime.api.types.Type#getQualifiedName` methods now return an empty string if no name was associated with the type. The `io.ballerina.runtime.api.types.Type#toString` method can be used to get the string representation of a type if required.
+- Wait actions that wait for expressions that are not named workers can return errors now. The eventual type of such wait future expressions is now `T|error`, `T` being the type of the original return value.
 
 #### Bug Fixes
 
