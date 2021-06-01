@@ -41,32 +41,9 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ### Language Updates
 
+#### New Features
+
 #### Improvements
-
-- Worker deadlock detection has been improved to include the `wait` action.
-- The `self` variable of an isolated object no longer needs to be accessed within a `lock` statement unless it is used to access a field that is either not `final` or is of a type that is not a subtype of `readonly` or `isolated object {}`.
-- The `lang.xml:strip()` function does not mutate an XML value. Therefore, using the `lang.xml:strip()` function on immutable XML values is allowed.
-
-#### Breaking Changes
-
-- An included record parameter of a function can only be specified after any required and/or defaultable parameters of the function.
-- Additive expressions and multiplicative expressions are no longer supported with numeric values when the static types of the operands belong to different numeric basic types.
-- Configurable variables are implicitly `final` now. Moreover, the type of such a variable is now effectively the intersection of the specified type and `readonly`. Therefore, configurable variables no longer support the `final` and `isolated` qualifiers.
-- Type narrowing will no longer take place for captured variables of an anonymous function since the narrowed type cannot be guaranteed during the execution of the function.
-- Type narrowing will now be reset after a compound assignment.
-- Worker message passing after waiting for the same worker has been disallowed.
-- When a named worker is used in a `wait` action, it can no longer be used in a variable reference anywhere else.
-- When the `type-descriptor` is ambiguous, it is considered according to the following table, in which the type precedence is presented in the decreasing order.
-  
-  For example, `A & B | C` is considered to be `(A & B) | C`.
-  
-  | Operator                  | Associativity |
-  |---------------------------|---------------|
-  | distinct T                |               |
-  | T[ ]                      |               |
-  | T1 & T2                   | left          |
-  | T1 &#124; T2              | left          |
-  | function (args) returns T | right         |
 
 #### Bug Fixes
 
@@ -78,11 +55,75 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 
 #### Improvements
 
-#### Breaking Changes
+##### Improved configurable variables to support for enum types
 
-- The `io.ballerina.runtime.api.types.Type#getName` and `io.ballerina.runtime.api.types.Type#getQualifiedName` methods now return an empty string if no name was associated with the type. The `io.ballerina.runtime.api.types.Type#toString` method can be used to get the string representation of a type if required.
-- Wait actions that wait for expressions that are not named workers can return errors now. The eventual type of such wait future expressions is now `T|error`, `T` being the type of the original return value.
+Configurable variables with enum types are supported to provide values through command-line arguments and a TOML file.
+For example, see the configurable variable with enum type.
 
+```ballerina
+public enum HttpVersion {
+    HTTP_1_1,
+    HTTP_2
+}
+
+configurable configLib:HttpVersion & readonly httpVersion = ?;
+```
+
+The value for  'httpVersion' can be provided via the 'Config.toml' file or as a command-line argument as below.
+
+TOML
+
+```toml
+[configUnionTypes]
+httpVersion = "HTTP_1_1"
+```
+
+Command-line argument:
+
+```
+-ChttpVersion=HTTP_1_1
+```
+
+##### Improved configurable variables to support for map types
+
+The `configurable` feature is improved to support variables with map types through the TOML syntax. 
+For example, if the map-typed configurable variables are defined in the following way, 
+
+``` ballerina
+configurable map<string> admin = ?;
+
+type HttpResponse record {|
+    string method;
+    string httpVersion = "HTTP_1_0";
+    map<string> headers;
+|};
+
+configurable HttpResponse response = ?;
+configurable map<string>[] users = ?;
+```
+The values can be provided in `Config.toml` as follows.
+
+
+```toml
+[admin]
+username = "John Doe"
+mail = "John@hotmail.com"
+location = "LK"
+
+[response]
+method = "POST"
+httpVersion = "HTTP_2_0"
+headers.Status = "200 OK"
+headers.Content-Type = "text/html"
+
+[[users]]
+username = "Jack"
+location = "UK"
+
+[[users]]
+username = "Jane"
+location = "US"
+```
 
 #### Bug Fixes
 
@@ -101,6 +142,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 
 #### Improvements
 
+##### `cache` Package
+- Marked the `cache:Cache` class as an isolated class.
+
+##### `file` Package
+- Marked the `file:Listener` class as an isolated class.
+
 ##### `graphql` Package
 - Improved introspection validation and execution
 - Added missing fields in the GraphQL types
@@ -108,8 +155,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 - Use included record parameters instead of the record type in the listener initialization
 
 ##### `http` Package
-- Improve the `http:Client` remote methods to support the contextually-expected type inference
-- Change the configuration parameters of the listeners and clients to include the record parameters
+- Improved the `http:Client` remote methods to support the contextually-expected type inference
+- Changed the configuration parameters of the listeners and clients to include the record parameters
+
+##### `sql` Package
+- Added the SQL Array Value type support and introduced the new distinct array value types for identified SQL types
+- Marked the `sql:Client` class as an isolated class
 
 ##### `websubhub` Package
 - Include the auth configuration to the WebSubHub publisher client configuration
@@ -121,6 +172,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github
 ### Code to Cloud Updates
 
 #### New Features
+- Add `@cloud:Expose` annotation to support custom listeners
 
 #### Improvements
 
@@ -140,6 +192,10 @@ To view bug fixes, see the GitHub milestone for Swan Lake Beta1 of the repositor
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta1](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+BetaRC1%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer).
 
 #### New Features
+
+##### Debugger
+- Added remote debugging support for the command, which runs the Ballerina executable JAR.
+- Added support for debugging single Ballerina tests in Visual Studio Code.
 
 #### Improvements
 

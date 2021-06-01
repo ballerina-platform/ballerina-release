@@ -20,13 +20,23 @@ github = Github(ballerina_bot_token)
 all_modules = []
 modules_with_no_lag = 0
 
+is_distribution_lagging = False
+distribution_lag = ''
+lagging_modules_level = 0
+lag_reminder_modules = []
+
 MODULE_NAME = "name"
 MODULE_BUILD_ACTION_FILE = "build_action_file"
+MODULE_PULL_REQUEST = "pull_request"
+
 ballerina_timestamp = ""
 ballerina_lang_version = ""
+send_reminder_chat = sys.argv[1]
 
 
 def main():
+    global send_reminder_chat
+    global lag_reminder_modules
     update_lang_version()
 
     updated_readme = get_updated_readme()
@@ -63,7 +73,16 @@ def main():
                                 '[Automated] Update Extension Dependency Dashboard',
                                 'Update extension dependency dashboard',
                                 constants.DASHBOARD_UPDATE_BRANCH)
-        notify_chat.notify_lag_update(commit)
+        if send_reminder_chat == 'true' and len(lag_reminder_modules) > 0:
+            chat_message = "Distributions\' dependency update lags by " + distribution_lag + ".\n" + \
+                           "Reminder on the following modules\' dependency update..." + "\n"
+            for module in lag_reminder_modules:
+                lag_status_link = module[MODULE_PULL_REQUEST]
+                if lag_status_link == "":
+                    lag_status_link = constants.BALLERINA_ORG_URL + module[MODULE_NAME]
+                chat_message += "<" + lag_status_link + "|" + module['name'] + ">" + "\n"
+            print("\n" + chat_message)
+            notify_chat.send_message(chat_message)
     else:
         print('No changes to ' + README_FILE + ' file')
 
@@ -150,11 +169,14 @@ def get_lag_info(module_name):
 
 def get_lag_button(module):
     global modules_with_no_lag
+    lag = False
     days, hrs, color = get_lag_info(module[MODULE_NAME])
     if days > 0:
         lag_status = str(days) + "%20days"
+        lag = True
     elif hrs > 0:
         lag_status = str(hrs) + "%20h"
+        lag = True
     else:
         lag_status = "no%20lag"
         modules_with_no_lag += 1
@@ -164,24 +186,28 @@ def get_lag_button(module):
     lag_button = "[![Lag](https://img.shields.io/badge/lag-" + lag_status + "-" + color + "?label=)](" \
                  + lag_status_link + ")"
 
-    return lag_button
+    return lag_button, lag
 
 
 def get_pending_pr(module):
+    pending_pr_status = False
     pr_id = ""
     pending_pr_link = ""
-    pr_number = check_pending_pr_checks(module[MODULE_NAME])
+    pr = get_pending_automated_pr(module[MODULE_NAME])
 
-    if pr_number is not None:
-        pr_id = "#" + str(pr_number)
-        pending_pr_link = "https://github.com/ballerina-platform/" + module[MODULE_NAME] + "/pull/" + str(
-            pr_number)
-    pending_pr = "[" + pr_id + "](" + pending_pr_link + ")"
+    if pr is not None:
+        pending_pr_status = True
+        pr_id = "#" + str(pr.number)
+        pending_pr_link = pr.html_url
+    pending_pr_button = "[" + pr_id + "](" + pending_pr_link + ")"
 
-    return pending_pr
+    return pending_pr_button, pending_pr_link, pending_pr_status
 
 
-def update_modules(updated_readme, module_details_list):
+def update_modules(updated_readme, module_details_list, is_central_modules):
+    global lag_reminder_modules
+    global lagging_modules_level
+
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
 
@@ -199,16 +225,26 @@ def update_modules(updated_readme, module_details_list):
                            "/actions/workflows/" + module[MODULE_BUILD_ACTION_FILE] + ".yml/badge.svg)]" + \
                            "(" + constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                            module[MODULE_BUILD_ACTION_FILE] + ".yml)"
-            lag_button = get_lag_button(module)
-            pending_pr = get_pending_pr(module)
+            lag_button, lag = get_lag_button(module)
+            pending_pr_button, pending_pr_link, pending_pr_status = get_pending_pr(module)
+
+            if (not is_central_modules) and is_distribution_lagging and lag:
+                module[MODULE_PULL_REQUEST] = pending_pr_link
+                if lagging_modules_level == 0:
+                    # All modules have been up to date so far
+                    lag_reminder_modules.append(module)
+                    lagging_modules_level = module['level']
+                elif module['level'] == lagging_modules_level:
+                    lag_reminder_modules.append(module)
 
             level = ""
             if idx == 0:
                 level = str(current_level)
 
             table_row = "| " + level + " | [" + name + "](" + constants.BALLERINA_ORG_URL + module[
-                MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr + " | "
+                MODULE_NAME] + ") | " + build_button + " | " + lag_button + " | " + pending_pr_button + " | "
             updated_readme += table_row + "\n"
+
     return updated_readme
 
 
@@ -217,7 +253,9 @@ def get_lang_version_statement():
     days, hrs = format_lag(ballerina_lag)
     ballerina_lang_lag = ""
 
-    if days > 0:
+    if days == 1:
+        ballerina_lang_lag = str(days) + " day"
+    elif days > 1:
         ballerina_lang_lag = str(days) + " days"
     elif hrs > 0:
         ballerina_lang_lag = str(hrs) + " h"
@@ -233,15 +271,18 @@ def get_lang_version_statement():
 
 
 def get_distribution_statement():
+    global is_distribution_lagging
+    global distribution_lag
+
     BALLERINA_DISTRIBUTION = "ballerina-distribution"
     days, hrs = get_lag_info(BALLERINA_DISTRIBUTION)[0:2]
     distribution_lag = ""
 
-    distribution_pr_number = check_pending_pr_checks(BALLERINA_DISTRIBUTION)
-    distribution_pr_link = "https://github.com/ballerina-platform/" + BALLERINA_DISTRIBUTION + "/pull/" + \
-                           str(distribution_pr_number)
+    distribution_pr = get_pending_automated_pr(BALLERINA_DISTRIBUTION)
 
-    if days > 0:
+    if days == 1:
+        distribution_lag = str(days) + " day"
+    elif days > 1:
         distribution_lag = str(days) + " days"
     elif hrs > 0:
         distribution_lag = str(hrs) + " h"
@@ -249,12 +290,14 @@ def get_distribution_statement():
     if not distribution_lag:
         distribution_lag_statement = "<code>ballerina-distribution</code> repository is up to date."
     else:
-        if str(distribution_pr_number) == "None":
-            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag
+        is_distribution_lagging = True
+        if distribution_pr is None:
+            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + "."
         else:
-            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + \
-                                         " and pending PR [#" + str(distribution_pr_number) + "](" + \
-                                         distribution_pr_link + ") is available"
+            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + \
+                                         distribution_lag + " and pending PR " + "<a href='" + \
+                                         distribution_pr.html_url + "'>#" + str(distribution_pr.number) + \
+                                         "</a>  is available."
 
     return distribution_lag_statement
 
@@ -281,7 +324,7 @@ def get_updated_readme():
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
-    updated_readme = update_modules(updated_readme, module_details_list)
+    updated_readme = update_modules(updated_readme, module_details_list, False)
 
     updated_readme += "## Modules Released to Central" + "\n"
 
@@ -290,7 +333,7 @@ def get_updated_readme():
 
     central_modules = all_modules["central_modules"]
 
-    updated_readme = update_modules(updated_readme, central_modules)
+    updated_readme = update_modules(updated_readme, central_modules, True)
 
     repositories_updated = round((modules_with_no_lag / (len(module_details_list) + len(central_modules))) * 100)
     make_pie(repositories_updated)
@@ -317,13 +360,13 @@ def make_pie(val):
     plt.savefig(constants.PIE_CHART_IMAGE)
 
 
-def check_pending_pr_checks(module_name):
+def get_pending_automated_pr(module_name):
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
     pulls = repo.get_pulls(state="open")
 
     for pull in pulls:
         if pull.head.ref == constants.DEPENDENCY_UPDATE_BRANCH:
-            return pull.number
+            return pull
     return None
 
 

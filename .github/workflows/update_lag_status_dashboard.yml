@@ -1,10 +1,14 @@
 name: Update Status Dashboard
 
 on:
-  workflow_run:
-    workflows: [ "Extensions - Update Ballerina Version" ]
-    branches: [ master ]
+  repository_dispatch:
+    types: [ dashboard-update ]
   workflow_dispatch:
+    inputs:
+      sendReminderNotification:
+        description: 'Remind lagging modules with chat notification'
+        required: false
+        default: 'false'
 
 jobs:
   update-lag-status:
@@ -26,14 +30,22 @@ jobs:
           pip install matplotlib
           pip install httplib2
           pip install Image
+
       - name: Update Status Dashboard
         run: |
-          python dependabot/update_lag_status.py
+          if ${IS_SCHEDULE_WORKFLOW} == true; then
+            echo "Schedule Workflow Triggered"
+            python dependabot/update_lag_status.py "${{ github.event.client_payload.sendNotification }}"
+          else
+            echo "Manual Trigger"
+            python dependabot/update_lag_status.py "${{ github.event.inputs.sendReminderNotification }}"
+          fi
         env:
+          IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'repository_dispatch' }}
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
           BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
-          BALLERINA_BUILD_CHAT_ID: ${{ secrets.BALLERINA_BUILD_CHAT_ID }}
-          BALLERINA_BUILD_CHAT_KEY: ${{ secrets.BALLERINA_BUILD_CHAT_KEY }}
-          BALLERINA_BUILD_CHAT_TOKEN: ${{ secrets.BALLERINA_BUILD_CHAT_TOKEN }}
+          CHAT_ID: ${{ secrets.BALLERINA_CHAT_ID }}
+          CHAT_KEY: ${{ secrets.BALLERINA_CHAT_KEY }}
+          CHAT_TOKEN: ${{ secrets.BALLERINA_CHAT_TOKEN }}
