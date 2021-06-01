@@ -149,6 +149,10 @@ location = "UK"
 username = "Jane"
 location = "US"
 ```
+#### Other Changes
+
+- Taint analyzer is disabled and `--taint-check` compiler flag is removed. The annotations `@tainted` and `@untainted` were left intact as place holders for backword compatibility.
+
 #### Breaking Changes
 
 - The `io.ballerina.runtime.api.types.Type#getName` and `io.ballerina.runtime.api.types.Type#getQualifiedName` methods now return an empty string if no name was associated with the type. The `io.ballerina.runtime.api.types.Type#toString` method can be used to get the string representation of a type if required.
