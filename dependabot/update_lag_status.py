@@ -18,6 +18,9 @@ README_FILE = "README.md"
 github = Github(ballerina_bot_token)
 
 all_modules = []
+repo_status_file = {}
+repo_status_modules = []
+repo_status_central_only_modules = []
 modules_with_no_lag = 0
 
 is_distribution_lagging = False
@@ -37,6 +40,13 @@ send_reminder_chat = sys.argv[1]
 def main():
     global send_reminder_chat
     global lag_reminder_modules
+    global repo_status_file
+
+    try:
+        repo_status_file = utils.read_json_file(constants.REPO_STATUS_FILE)
+    except Exception as e:
+        print('[Error] Error while loading repo status', e)
+        sys.exit(1)
     update_lang_version()
 
     updated_readme = get_updated_readme()
@@ -63,6 +73,12 @@ def main():
         if update_readme:
             utils.commit_image_file('ballerina-release', constants.PIE_CHART_IMAGE, img_byte_arr.getvalue(),
                                     constants.DASHBOARD_UPDATE_BRANCH, '[Automated] Update status pie chart')
+
+            try:
+                utils.write_json_file(constants.REPO_STATUS_FILE, repo_status_file)
+            except Exception as e:
+                print('Failed to write to repo_status.json', e)
+                sys.exit()
 
     except GithubException as e:
         print('Error occurred while committing status pie chart', e)
@@ -191,6 +207,7 @@ def get_lag_button(module):
 
 def get_pending_pr(module):
     pending_pr_status = False
+    repo_status_module = {}
     pr_id = ""
     pending_pr_link = ""
     pr = get_pending_automated_pr(module[MODULE_NAME])
@@ -199,14 +216,21 @@ def get_pending_pr(module):
         pending_pr_status = True
         pr_id = "#" + str(pr.number)
         pending_pr_link = pr.html_url
+        repo_status_module = {
+            'pending_pr': pending_pr_link,
+            'pending_pr_number': pr_id
+        }
     pending_pr_button = "[" + pr_id + "](" + pending_pr_link + ")"
 
-    return pending_pr_button, pending_pr_link, pending_pr_status
+    return pending_pr_button, pending_pr_link, pending_pr_status, repo_status_module
 
 
 def update_modules(updated_readme, module_details_list, is_central_modules):
+    global repo_status_modules
+    global repo_status_central_only_modules
     global lag_reminder_modules
     global lagging_modules_level
+    repo_status_module_level = 0
 
     module_details_list.sort(reverse=True, key=lambda s: s['level'])
     last_level = module_details_list[0]['level']
@@ -226,8 +250,29 @@ def update_modules(updated_readme, module_details_list, is_central_modules):
                            "(" + constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                            module[MODULE_BUILD_ACTION_FILE] + ".yml)"
             lag_button, lag = get_lag_button(module)
-            pending_pr_button, pending_pr_link, pending_pr_status = get_pending_pr(module)
+            pending_pr_button, pending_pr_link, pending_pr_status, repo_status_module = get_pending_pr(module)
 
+            if pending_pr_status:
+                repo_status_module['name'] = name
+                repo_status_module['module_link'] = constants.BALLERINA_ORG_URL + module[
+                MODULE_NAME]
+                days, hrs, color = get_lag_info(module['name'])
+                repo_status_module['lag_color'] = color
+                if days > 0:
+                    lag_status = str(days) + " days"
+                else:
+                    lag_status = str(hrs) + " h"
+                repo_status_module['lag'] = lag_status
+                if(module['level'] == repo_status_module_level):
+                    repo_status_module['level'] = ""
+                else:
+                    repo_status_module_level = module['level']
+                    repo_status_module['level'] = module['level']
+
+                if module['central_only_module']:
+                    repo_status_central_only_modules.append(repo_status_module)
+                else:
+                    repo_status_modules.append(repo_status_module)
             if (not is_central_modules) and is_distribution_lagging and lag:
                 module[MODULE_PULL_REQUEST] = pending_pr_link
                 if lagging_modules_level == 0:
@@ -263,9 +308,12 @@ def get_lang_version_statement():
     if not ballerina_lang_lag:
         lang_version_statement = "<code>ballerina-lang</code> repository version <b>" + ballerina_lang_version + \
                                  "</b> has been updated as follows"
+        repo_status_file['statements'][0]['statement'] = ballerina_lang_version
     else:
         lang_version_statement = "<code>ballerina-lang</code> repository version <b>" + ballerina_lang_version + \
                                  "</b> (" + ballerina_lang_lag + ") has been updated as follows"
+        repo_status_file['statements'][0]['statement'] = ballerina_lang_version + "(" + ballerina_lang_lag + ")"
+
 
     return lang_version_statement
 
@@ -289,15 +337,18 @@ def get_distribution_statement():
 
     if not distribution_lag:
         distribution_lag_statement = "<code>ballerina-distribution</code> repository is up to date."
+        repo_status_file['statements'][1]['statement'] = "repository is up to date."
     else:
         is_distribution_lagging = True
         if distribution_pr is None:
             distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + "."
+            repo_status_file['statements'][1]['statement'] = "repository lags by" + distribution_lag + "."          
         else:
             distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + \
                                          distribution_lag + " and pending PR " + "<a href='" + \
                                          distribution_pr.html_url + "'>#" + str(distribution_pr.number) + \
                                          "</a>  is available."
+            repo_status_file['statements'][1]['statement'] = "repository lags by " + distribution_lag + " and pending PR #" + str(distribution_pr.number) + "  is available."
 
     return distribution_lag_statement
 
@@ -305,6 +356,7 @@ def get_distribution_statement():
 def get_updated_readme():
     updated_readme = ""
     global all_modules
+    global repo_status_file
 
     all_modules = utils.read_json_file(constants.EXTENSIONS_FILE)
     module_details_list = all_modules["modules"]
@@ -334,6 +386,9 @@ def get_updated_readme():
     central_modules = all_modules["central_modules"]
 
     updated_readme = update_modules(updated_readme, central_modules, True)
+
+    repo_status_file['modules'] = repo_status_modules
+    repo_status_file['central_modules'] = repo_status_central_only_modules
 
     repositories_updated = round((modules_with_no_lag / (len(module_details_list) + len(central_modules))) * 100)
     make_pie(repositories_updated)

@@ -18,6 +18,7 @@ MODULE_LIST_FILE = 'dependabot/resources/module_list.json'
 EXTENSIONS_FILE = 'dependabot/resources/extensions.json'
 LANG_VERSION_FILE = 'dependabot/resources/latest_ballerina_lang_version.json'
 CONNECTORS_FILE = 'dependabot/resources/connector_list.json'
+REPO_STATUS_FILE = 'dependabot/resources/repo_status.json'
 PIE_CHART_IMAGE = 'dependabot/resources/repo_status_graph.jpeg'
 
 BUILD_GRADLE_FILE = 'build.gradle'
