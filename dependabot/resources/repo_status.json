@@ -1,0 +1,71 @@
+{
+    "modules": [
+            {
+                "name": "docker",
+                "module_link": "https://github.com/ballerina-platform/module-ballerina-docker",
+                "level": 1,
+                "build": "passing",
+                "build_color": "red",
+                "lag": "5 h",
+                "lag_color": "red",
+                "pending_pr": "https://github.com/ballerina-platform/module-ballerina-graphql/pull/262",
+                "pending_pr_number": "#262"
+            },
+            {
+                "name": "io",
+                "module_link": "https://github.com/ballerina-platform/module-ballerina-docker",
+                "level": "",
+                "build": "passing",
+                "build_color": "yellow",
+                "lag": "4 days",
+                "lag_color": "rgb(204,0,0)",
+                "pending_pr": "https://github.com/ballerina-platform/module-ballerina-graphql/pull/262",
+                "pending_pr_number": "#262"
+            },
+            {
+                "name": "crypto",
+                "level": 2,
+                "build": "passing",
+                "build_color": "green",
+                "lag": "4 days",
+                "lag_color": "rgb(204,0,0)",
+                "pending_pr": "https://github.com/ballerina-platform/module-ballerina-graphql/pull/262",
+                "pending_pr_number": "#262"
+            }
+        ],
+    "central_modules": [
+        {
+            "name": "jaeger",
+            "module_link": "https://github.com/ballerina-platform/module-ballerinax-jaeger",
+            "level": 9,
+            "build": "passing",
+            "build_color": "green",
+            "lag": "5 h",
+            "lag_color": "rgb(241,194,50)",
+            "pending_pr": "https://github.com/ballerina-platform/module-ballerina-graphql/pull/262",
+            "pending_pr_number": "#262"
+        },
+        {
+            "name": "prometheus",
+            "module_link": "https://github.com/ballerina-platform/module-ballerina-docker",
+            "level": "",
+            "build": "passing",
+            "build_color": "green",
+            "lag": "5 h",
+            "lag_color": "rgb(241,194,50)",
+            "pending_pr": "https://github.com/ballerina-platform/module-ballerina-graphql/pull/262",
+            "pending_pr_number": "#262"
+        }
+        ],
+    "statements": [
+        {
+            "name": "ballerina-distribution",
+            "statement": "repository is upto date."
+        },
+        {
+            "name": "ballerina-lang",
+            "version": "2.0.0-beta.1-20210531-110100-2fd74128"
+        }
+    ]
+}
+              
