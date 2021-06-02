@@ -215,12 +215,12 @@ echo ">>>>>>>>>>>>>>>>>>>> Test with BETA1 <<<<<<<<<<<<<<<<<<<<<"
 echo "-----------------------------------------------------------"
 
 # Test push and pull with beta1
-VERSION=14.8.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/init-gh.bats
+VERSION=14.8.2 ./libs/bats/bin/bats beta1/init-gh.bats
 VERSION=14.8.2 ./libs/bats/bin/bats beta1/push-gh.bats
 VERSION=14.8.2 ./libs/bats/bin/bats beta1/pull-gh.bats
 VERSION=14.8.2 ./libs/bats/bin/bats beta1/search-gh.bats
 VERSION=14.8.2 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
-VERSION=14.9.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta1/init-gh.bats
+VERSION=14.9.5 ./libs/bats/bin/bats beta1/init-gh.bats
 VERSION=14.9.5 ./libs/bats/bin/bats beta1/push-gh.bats
 VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-gh.bats
 VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
