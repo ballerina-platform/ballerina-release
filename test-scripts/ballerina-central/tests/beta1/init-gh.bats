@@ -17,8 +17,8 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Create package '$PACKAGE_NAME:$VERSION' from ALPHA2." {
-  run $ALPHA2/bin/bal new $PACKAGE_NAME
+@test "Create package '$PACKAGE_NAME:$VERSION' from BETA1." {
+  run $BETA1/bin/bal new $PACKAGE_NAME -t lib
   assert_output "Created new Ballerina package '$PACKAGE_NAME' at $PACKAGE_NAME."
   [ "$status" -eq 0 ]
   mv $PACKAGE_NAME "$PACKAGE_NAME-$VERSION"
@@ -28,17 +28,17 @@ load '../libs/bats-assert/load'
   sed -i'.original' -e "s/0.1.0/$VERSION/g" "Ballerina.toml"
   if [ "$REMOVE_STD_LIBS" == "true" ]
   then
-    sed -i'.original' -e "s/import ballerina\/io;/ /g" "main.bal"
-    sed -i'.original' -e 's/io:println("Hello World!");/ /g' "main.bal"
+    sed -i'.original' -e "s/import ballerina\/io;/ /g" "$PACKAGE_NAME.bal"
+    sed -i'.original' -e 's/io:println("Hello World!");/ /g' "$PACKAGE_NAME.bal"
   fi
   rm "Ballerina.toml.original"
   echo '# Sample github package' > "Package.md"
   cd -
 }
 
-@test "Build package '$PACKAGE_NAME:$VERSION' from ALPHA2" {
+@test "Build package '$PACKAGE_NAME:$VERSION' from BETA1" {
   cd "$PACKAGE_NAME-$VERSION"
-  run $ALPHA2/bin/bal build
+  run $BETA1/bin/bal build -c
   assert_line --partial "target/bala/$TEST_ORGANIZATION-$PACKAGE_NAME-any-$VERSION.bala"
   [ "$status" -eq 0 ]
   cd -

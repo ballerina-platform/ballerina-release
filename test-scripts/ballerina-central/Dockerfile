@@ -30,6 +30,7 @@ FROM ballerina/ballerina:swan-lake-alpha2 AS alpha2-pack
 FROM ballerina/ballerina:swan-lake-alpha3 AS alpha3-pack
 FROM ballerina/ballerina:swan-lake-alpha4 AS alpha4-pack
 FROM ballerina/ballerina:swan-lake-alpha5 AS alpha5-pack
+FROM ballerina/ballerina:swan-lake-beta1 AS beta1-pack
 
 FROM adoptopenjdk/openjdk11:alpine
 
@@ -44,6 +45,7 @@ COPY --from=alpha2-pack /ballerina/runtime /ballerina/alpha2
 COPY --from=alpha3-pack /ballerina/runtime /ballerina/alpha3
 COPY --from=alpha4-pack /ballerina/runtime /ballerina/alpha4
 COPY --from=alpha5-pack /ballerina/runtime /ballerina/alpha5
+COPY --from=beta1-pack /ballerina/runtime /ballerina/beta1
 
 ARG BALLERINA_CENTRAL_ACCESS_TOKEN=""
 ARG TEST_ORGANIZATION="bc2testorg"
@@ -59,6 +61,7 @@ ENV ALPHA2=/ballerina/alpha2
 ENV ALPHA3=/ballerina/alpha3
 ENV ALPHA4=/ballerina/alpha4
 ENV ALPHA5=/ballerina/alpha5
+ENV BETA1=/ballerina/beta1
 
 ENV JAVA11=/opt/java/openjdk
 ENV JAVA8=/usr/lib/jvm/java-1.8-openjdk
