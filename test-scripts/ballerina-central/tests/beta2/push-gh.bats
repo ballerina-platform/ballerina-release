@@ -17,24 +17,10 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Create package '$PACKAGE_NAME:$VERSION' from BETA1." {
-  run $BETA1/bin/bal new $PACKAGE_NAME -t lib
-  assert_output "Created new Ballerina package '$PACKAGE_NAME' at $PACKAGE_NAME."
-  [ "$status" -eq 0 ]
-  mv $PACKAGE_NAME "$PACKAGE_NAME-$VERSION"
-  local current_user=$(whoami);
+@test "Push package '$PACKAGE_NAME:$VERSION' from BETA2." {
   cd "$PACKAGE_NAME-$VERSION"
-  sed -i'.original' -e "s/$current_user/$TEST_ORGANIZATION/g" "Ballerina.toml"
-  sed -i'.original' -e "s/0.1.0/$VERSION/g" "Ballerina.toml"
-  rm "Ballerina.toml.original"
-  echo '# Sample github package' > "Package.md"
-  cd -
-}
-
-@test "Build package '$PACKAGE_NAME:$VERSION' from BETA1" {
-  cd "$PACKAGE_NAME-$VERSION"
-  run $BETA1/bin/bal build -c
-  assert_line --partial "target/bala/$TEST_ORGANIZATION-$PACKAGE_NAME-any-$VERSION.bala"
+  run $BETA2/bin/bal push
+  assert_line --partial "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION pushed to central successfully"
   [ "$status" -eq 0 ]
   cd -
 }
