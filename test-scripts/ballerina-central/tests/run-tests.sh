@@ -248,46 +248,46 @@ VERSION=15.3.5 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
 VERSION=10.3.6 ./libs/bats/bin/bats alpha4/pull-latest-gh.bats
 VERSION=15.3.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 
-echo "-----------------------------------------------------------"
-echo ">>>>>>>>>>>>>>>>>>>> Test with BETA2 <<<<<<<<<<<<<<<<<<<<<"
-echo "-----------------------------------------------------------"
+# echo "-----------------------------------------------------------"
+# echo ">>>>>>>>>>>>>>>>>>>> Test with BETA2 <<<<<<<<<<<<<<<<<<<<<"
+# echo "-----------------------------------------------------------"
 
-# Test push and pull with beta2
-VERSION=16.7.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta2/init-gh.bats
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/push-gh.bats
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/pull-gh.bats
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/search-gh.bats
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
-VERSION=16.8.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta2/init-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/push-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-gh.bats
+# # Test push and pull with beta2
+# VERSION=16.7.2 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta2/init-gh.bats
+# VERSION=16.7.2 ./libs/bats/bin/bats beta2/push-gh.bats
+# VERSION=16.7.2 ./libs/bats/bin/bats beta2/pull-gh.bats
+# VERSION=16.7.2 ./libs/bats/bin/bats beta2/search-gh.bats
+# VERSION=16.7.2 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
+# VERSION=16.8.5 REMOVE_STD_LIBS=true ./libs/bats/bin/bats beta2/init-gh.bats
+# VERSION=16.8.5 ./libs/bats/bin/bats beta2/push-gh.bats
+# VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-gh.bats
+# VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
+# VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-gh.bats
 
-# Test pull with SLP8
-VERSION=9.5.5 ./libs/bats/bin/bats slp8/pull-latest-gh.bats
+# # Test pull with SLP8
+# VERSION=9.5.5 ./libs/bats/bin/bats slp8/pull-latest-gh.bats
 
-# Test pull with alpha2
-VERSION=9.8.4 ./libs/bats/bin/bats alpha2/pull-latest-gh.bats
+# # Test pull with alpha2
+# VERSION=9.8.4 ./libs/bats/bin/bats alpha2/pull-latest-gh.bats
 
-# Test pull with alpha3
-VERSION=16.8.5 ./libs/bats/bin/bats alpha3/pull-latest-gh.bats
+# # Test pull with alpha3
+# VERSION=16.8.5 ./libs/bats/bin/bats alpha3/pull-latest-gh.bats
 
-# Test pull with alpha4
-VERSION=10.3.6 ./libs/bats/bin/bats alpha4/pull-latest-gh.bats
+# # Test pull with alpha4
+# VERSION=10.3.6 ./libs/bats/bin/bats alpha4/pull-latest-gh.bats
 
-# Test pull with alpha5
-VERSION=15.3.5 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
+# # Test pull with alpha5
+# VERSION=15.3.5 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
 
-# Test pull with beta1
-VERSION=16.8.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+# # Test pull with beta1
+# VERSION=16.8.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 
-# Test push with beta2 and pull with alpha4, beta1 and beta2
-VERSION=17.4.4 ./libs/bats/bin/bats alpha5/init-gh.bats
-VERSION=17.4.4 ./libs/bats/bin/bats alpha5/push-gh.bats
-VERSION=17.4.4 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
-VERSION=10.3.6 ./libs/bats/bin/bats alpha4/pull-latest-gh.bats
-VERSION=17.4.4 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
-VERSION=17.4.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
+# # Test push with beta2 and pull with alpha4, beta1 and beta2
+# VERSION=17.4.4 ./libs/bats/bin/bats alpha5/init-gh.bats
+# VERSION=17.4.4 ./libs/bats/bin/bats alpha5/push-gh.bats
+# VERSION=17.4.4 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
+# VERSION=10.3.6 ./libs/bats/bin/bats alpha4/pull-latest-gh.bats
+# VERSION=17.4.4 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+# VERSION=17.4.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 
 rm -rf bctest*
