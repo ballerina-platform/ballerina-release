@@ -23,4 +23,4 @@ jobs:
           "./delete-packages-scripts/delete-all-unused-packages.sh"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PACKAGE_DELETE_PAT: ${{secrets.PACKAGE_DELETE_PAT}}
+          DELETE_PACKAGE_PAT: ${{secrets.DELETE_PACKAGE_PAT}}

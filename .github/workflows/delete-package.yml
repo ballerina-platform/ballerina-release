@@ -46,4 +46,4 @@ jobs:
         if: steps.setUname.outputs.foundUname != '' && steps.setid.outputs.versionId != ''
         with:
           package-version-ids: ${{ steps.setid.outputs.versionId }}
-          token: ${{ secrets.PACKAGE_DELETE_PAT }}
+          token: ${{ secrets.DELETE_PACKAGE_PAT }}
