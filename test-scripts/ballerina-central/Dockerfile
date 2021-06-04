@@ -30,7 +30,7 @@ FROM ballerina/ballerina:swan-lake-alpha2 AS alpha2-pack
 FROM ballerina/ballerina:swan-lake-alpha3 AS alpha3-pack
 FROM ballerina/ballerina:swan-lake-alpha4 AS alpha4-pack
 FROM ballerina/ballerina:swan-lake-alpha5 AS alpha5-pack
-FROM ballerina/ballerina:swan-lake-beta1-rc6 AS beta1-pack
+FROM ballerina/ballerina:swan-lake-beta1 AS beta1-pack
 
 FROM adoptopenjdk/openjdk11:alpine
 
