@@ -31,6 +31,7 @@ MODULE_PULL_REQUEST = "pull_request"
 
 ballerina_timestamp = ""
 ballerina_lang_version = ""
+latest_ballerina_stable_version = ''
 send_reminder_chat = sys.argv[1]
 
 
@@ -87,8 +88,7 @@ def main():
         print('No changes to ' + README_FILE + ' file')
 
 
-def get_lang_version_lag():
-    global ballerina_timestamp
+def get_lang_latest_timestamp():
     try:
         version_string = utils.get_latest_lang_version()
     except Exception as e:
@@ -96,19 +96,20 @@ def get_lang_version_lag():
         sys.exit(1)
     lang_version = version_string.split("-")
     timestamp = create_timestamp(lang_version[2], lang_version[3])
-    ballerina_lag = timestamp - ballerina_timestamp
 
-    return ballerina_lag
+    return timestamp
 
 
 def update_lang_version():
     global ballerina_lang_version
     global ballerina_timestamp
+    global latest_ballerina_stable_version
 
     data = utils.read_json_file(constants.LANG_VERSION_FILE)
     ballerina_lang_version = data["version"]
     lang_version = ballerina_lang_version.split("-")
     ballerina_timestamp = create_timestamp(lang_version[2], lang_version[3])
+    latest_ballerina_stable_version = '-'.join(ballerina_lang_version.split('-')[0:2])
 
 
 def days_hours_minutes(td):
@@ -125,8 +126,11 @@ def create_timestamp(date, time):
     return timestamp
 
 
-def format_lag(delta):
-    days, hours = days_hours_minutes(delta)
+def format_lag(timestamp):
+    global ballerina_timestamp
+    if timestamp == -1 or timestamp == -2:
+        return timestamp, 0
+    days, hours = days_hours_minutes(abs(ballerina_timestamp - timestamp))
     if days > 0:
         hrs = round((hours / 24) * 2) / 2
         days = days + hrs
@@ -139,7 +143,7 @@ def format_lag(delta):
 def get_lag_color(lag_days, lag_hrs):
     if lag_days == 0 and lag_hrs == 0:
         color = "brightgreen"
-    elif lag_days < 2:
+    elif 0 <= lag_days < 2:
         color = "yellow"
     else:
         color = "red"
@@ -148,7 +152,7 @@ def get_lag_color(lag_days, lag_hrs):
 
 
 def get_lag_info(module_name):
-    global ballerina_timestamp
+    global latest_ballerina_stable_version
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + "/" + module_name)
     properties_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
     properties_file = properties_file.decoded_content.decode(constants.ENCODING)
@@ -156,11 +160,17 @@ def get_lag_info(module_name):
     for line in properties_file.splitlines():
         if line.startswith(constants.LANG_VERSION_KEY):
             current_version = line.split("=")[-1]
-            timestamp_string = current_version.split("-")[2:4]
-            timestamp = create_timestamp(timestamp_string[0], timestamp_string[1])
+            split_timestamp_string = current_version.split("-")
+            if '-'.join(split_timestamp_string[0:2]) == latest_ballerina_stable_version:
+                timestamp = create_timestamp(split_timestamp_string[2], split_timestamp_string[3])
+            else:
+                if len(split_timestamp_string) > 2:
+                    timestamp = -2
+                else:
+                    # This is in stable version
+                    timestamp = -1
 
-    update_timestamp = ballerina_timestamp - timestamp
-    days, hrs = format_lag(update_timestamp)
+    days, hrs = format_lag(timestamp)
 
     color = get_lag_color(days, hrs)
 
@@ -174,8 +184,14 @@ def get_lag_button(module):
     if days > 0:
         lag_status = str(days) + "%20days"
         lag = True
-    elif hrs > 0:
+    elif days == 0 and hrs > 0:
         lag_status = str(hrs) + "%20h"
+        lag = True
+    elif days == -1:
+        lag_status = "Latest%20Stable%20Version"
+        lag = True
+    elif days == -2:
+        lag_status = "Previous%20Development%20Version"
         lag = True
     else:
         lag_status = "no%20lag"
@@ -249,8 +265,8 @@ def update_modules(updated_readme, module_details_list, is_central_modules):
 
 
 def get_lang_version_statement():
-    ballerina_lag = get_lang_version_lag()
-    days, hrs = format_lag(ballerina_lag)
+    ballerina_timestamp = get_lang_latest_timestamp()
+    days, hrs = format_lag(ballerina_timestamp)
     ballerina_lang_lag = ""
 
     if days == 1:
@@ -280,7 +296,11 @@ def get_distribution_statement():
 
     distribution_pr = get_pending_automated_pr(BALLERINA_DISTRIBUTION)
 
-    if days == 1:
+    if days == -2:
+        distribution_lag = "previous Development version"
+    if days == -1:
+        distribution_lag = "latest Stable version"
+    elif days == 1:
         distribution_lag = str(days) + " day"
     elif days > 1:
         distribution_lag = str(days) + " days"
@@ -291,13 +311,17 @@ def get_distribution_statement():
         distribution_lag_statement = "<code>ballerina-distribution</code> repository is up to date."
     else:
         is_distribution_lagging = True
-        if distribution_pr is None:
-            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag + "."
+        if days < 0:
+            distribution_lag_statement = "<code>ballerina-distribution</code> repository has not been updated from " + distribution_lag
         else:
-            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + \
-                                         distribution_lag + " and pending PR " + "<a href='" + \
-                                         distribution_pr.html_url + "'>#" + str(distribution_pr.number) + \
-                                         "</a>  is available."
+            distribution_lag_statement = "<code>ballerina-distribution</code> repository lags by " + distribution_lag
+
+        if distribution_pr is None:
+            distribution_lag_statement += "."
+        else:
+            distribution_lag_statement += " and pending PR " + "<a href='" + \
+                                          distribution_pr.html_url + "'>#" + str(distribution_pr.number) + \
+                                          "</a>  is available."
 
     return distribution_lag_statement
 
