@@ -1,6 +1,8 @@
 name: Update Status Dashboard
 
 on:
+  schedule:
+    - cron: '30 3 * * *'
   repository_dispatch:
     types: [ dashboard-update ]
   workflow_dispatch:
@@ -35,13 +37,17 @@ jobs:
         run: |
           if ${IS_SCHEDULE_WORKFLOW} == true; then
             echo "Schedule Workflow Triggered"
+            python dependabot/update_lag_status.py "true"
+          elif ${IS_REPOSITORY_DISPATCH} == true; then
+            echo "Repository Dispatch Workflow Triggered"
             python dependabot/update_lag_status.py "${{ github.event.client_payload.sendNotification }}"
           else
             echo "Manual Trigger"
             python dependabot/update_lag_status.py "${{ github.event.inputs.sendReminderNotification }}"
           fi
         env:
-          IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'repository_dispatch' }}
+          IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'schedule' }}
+          IS_REPOSITORY_DISPATCH: ${{ github.event_name == 'repository_dispatch' }}
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}

@@ -62,8 +62,6 @@ jobs:
 
       - name: Trigger Dashboard Update
         if: always()
-        env:
-          SEND_NOTIFICATION: ${{ github.event_name == 'schedule' }}
         run: |
           curl -X POST \
           https://api.github.com/repos/ballerina-platform/ballerina-release/dispatches \
@@ -72,6 +70,6 @@ jobs:
           --data "{
             \"event_type\": \"dashboard-update\",
             \"client_payload\": {
-              \"sendNotification\": \"${SEND_NOTIFICATION}\"
+              \"sendNotification\": \"false\"
             }
           }"
