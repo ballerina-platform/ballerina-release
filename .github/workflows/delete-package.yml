@@ -14,8 +14,9 @@ on:
           required: true
           default: 'ballerina-lang'
         package:
-          description: 'Specific package'
+          description: 'Specific package(groupId.artifactId)'
           required: true
+          default: 'org.ballerinalang.jballerina-tools'
         version:
           description: 'Package version'
           required: true
