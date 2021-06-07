@@ -14,7 +14,7 @@ on:
           required: true
           default: 'ballerina-lang'
         package:
-          description: 'Specific package'
+          description: 'Specific package(groupId.artifactId)'
           required: true
         version:
           description: 'Package version'
