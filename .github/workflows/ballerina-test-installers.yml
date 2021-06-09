@@ -1,10 +1,10 @@
 name: Installer Tests
 
 on: workflow_dispatch
-  inputs:
-    stagingUpdate:
-      description: 'Ballerina Staging Update'
-      default: true
+inputs:
+  stagingUpdate:
+    description: 'Ballerina Staging Update'
+    default: true
 
 jobs:
   installer-ubuntu-build:
