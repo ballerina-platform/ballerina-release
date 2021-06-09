@@ -34,6 +34,8 @@ import java.util.Locale;
 
 public class Utils {
     private static final String OS = System.getProperty("os.name").toLowerCase(Locale.getDefault());
+    public static final boolean BALLERINA_STAGING_UPDATE = Boolean.parseBoolean(
+            System.getenv("BALLERINA_STAGING_UPDATE"));
 
     private static TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
@@ -86,6 +88,9 @@ public class Utils {
         String output = "";
         try {
             ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", command);
+            if (BALLERINA_STAGING_UPDATE) {
+                pb.environment().put("BALLERINA_STAGING_UPDATE", "true");
+            }
             Process p = pb.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
