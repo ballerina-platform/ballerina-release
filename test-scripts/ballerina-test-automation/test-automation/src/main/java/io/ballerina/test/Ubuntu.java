@@ -43,7 +43,9 @@ public class Ubuntu implements Executor {
     @Override
     public String executeCommand(String command, boolean isAdminMode, String toolVersion) {
         String sudoCommand = isAdminMode ? "sudo " : "";
-        return Utils.executeCommand(sudoCommand + Utils.getCommandName(toolVersion) + command);
+        String ballerinaStagingUpdate = Utils.BALLERINA_STAGING_UPDATE ? "BALLERINA_STAGING_UPDATE=true" : "";
+        System.out.println(Utils.BALLERINA_STAGING_UPDATE);
+        return Utils.executeCommand(sudoCommand + ballerinaStagingUpdate + Utils.getCommandName(toolVersion) + command);
     }
 
     @Override
