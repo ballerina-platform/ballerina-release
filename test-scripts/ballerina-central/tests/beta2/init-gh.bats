@@ -17,8 +17,8 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Create package '$PACKAGE_NAME:$VERSION' from ALPHA4." {
-  run $ALPHA4/bin/bal new $PACKAGE_NAME -t lib
+@test "Create package '$PACKAGE_NAME:$VERSION' from BETA2." {
+  run $BETA2/bin/bal new $PACKAGE_NAME -t lib
   assert_output "Created new Ballerina package '$PACKAGE_NAME' at $PACKAGE_NAME."
   [ "$status" -eq 0 ]
   mv $PACKAGE_NAME "$PACKAGE_NAME-$VERSION"
@@ -36,9 +36,9 @@ load '../libs/bats-assert/load'
   cd -
 }
 
-@test "Build package '$PACKAGE_NAME:$VERSION' from ALPHA4" {
+@test "Build package '$PACKAGE_NAME:$VERSION' from BETA2" {
   cd "$PACKAGE_NAME-$VERSION"
-  run $ALPHA4/bin/bal build -c
+  run $BETA2/bin/bal build -c
   assert_line --partial "target/bala/$TEST_ORGANIZATION-$PACKAGE_NAME-any-$VERSION.bala"
   [ "$status" -eq 0 ]
   cd -
