@@ -3,8 +3,8 @@
 <table><tbody><tr>
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
-<code>ballerina-distribution</code> repository has not been updated from the latest Stable version and pending PR <a href='https://github.com/ballerina-platform/ballerina-distribution/pull/1948'>#1948</a>  is available.<br><br>
-<code>ballerina-lang</code> repository version <b>2.0.0-beta.2-20210611-090300-a411f23f</b> (6 h) has been updated as follows
+<code>ballerina-distribution</code> repository is up to date.<br><br>
+<code>ballerina-lang</code> repository version <b>2.0.0-beta.2-20210611-090300-a411f23f</b> (12 h) has been updated as follows
 </td>
 </tr></tbody></table> 
 
@@ -54,7 +54,7 @@
 |  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Build](https://github.com/ballerina-platform/module-ballerina-sql/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-sql/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-sql/blob/master/gradle.properties) | []() | 
 | 8 | [java.jdbc](https://github.com/ballerina-platform/module-ballerinax-java.jdbc) | [![Build](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/blob/master/gradle.properties) | []() | 
 |  | [mysql](https://github.com/ballerina-platform/module-ballerinax-mysql) | [![Build](https://github.com/ballerina-platform/module-ballerinax-mysql/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-mysql/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-mysql/blob/master/gradle.properties) | []() | 
-|  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Build](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml/badge.svg)](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml) | [![Lag](https://img.shields.io/badge/lag-Latest%20Stable%20Version-red?label=)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | [#1948](https://github.com/ballerina-platform/ballerina-distribution/pull/1948) | 
+|  | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Build](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml/badge.svg)](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | []() | 
 ## Modules Released to Central
 | Level | Modules | Build | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|:---:|
