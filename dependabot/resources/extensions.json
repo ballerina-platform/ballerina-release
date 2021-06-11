@@ -103,6 +103,8 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "dependents": [
+                "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
                 "module-ballerina-graphql",
                 "ballerina-openapi",
                 "module-ballerina-websub",
