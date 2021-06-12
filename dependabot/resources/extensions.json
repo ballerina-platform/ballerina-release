@@ -107,6 +107,7 @@
                 "module-ballerinax-azure.functions",
                 "module-ballerina-graphql",
                 "ballerina-openapi",
+                "module-ballerinai-transaction",
                 "module-ballerina-websub",
                 "module-ballerina-websubhub"
             ]
