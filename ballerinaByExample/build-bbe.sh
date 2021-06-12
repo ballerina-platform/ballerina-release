@@ -83,3 +83,5 @@ rm -rf awslambda
 
 go run ballerinaByExample/tools/generate.go "target/dependencies/ballerina-examples/examples" $SITE_VERSION $BBE_GEN_DIR $GEN_FOR_JEKYLL $IS_LATEST_VERSION
 echo "....Completed building BBE Site...."
+
+cp target/dependencies/ballerina-examples/examples/images/* $BBE_GEN_DIR
