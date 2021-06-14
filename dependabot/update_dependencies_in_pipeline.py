@@ -121,7 +121,14 @@ def main():
             update_module(idx, current_level)
 
         if auto_merge_pull_requests.lower() == 'true':
-            wait_for_current_level_build(current_level, False)
+            module_release_failure, chat_message = wait_for_current_level_build(current_level)
+            if module_release_failure:
+                print(chat_message)
+                chat_message += "After following up on the above, retrigger the <" + \
+                    "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
+                    "|Dependency Update Workflow>"
+                notify_chat.send_message(chat_message)
+                sys.exit(1)
     print('Successfully bumped dependencies in extensions packed in ballerina-distribution')
 
     central_module_level = extensions_file['central_modules'][-1]['level']
@@ -136,11 +143,11 @@ def main():
             update_module(idx, current_level)
 
         if auto_merge_pull_requests.lower() == 'true':
-            wait_for_current_level_build(current_level, True)
+            wait_for_current_level_build(current_level)
     print('Successfully bumped dependencies in extensions available in central')
 
 
-def wait_for_current_level_build(level, is_central_only_modules):
+def wait_for_current_level_build(level):
     global MAX_WAIT_CYCLES
 
     print("[Info] Waiting for level '" + str(level) + "' module build.")
@@ -218,14 +225,7 @@ def wait_for_current_level_build(level, is_central_only_modules):
                                  module[MODULE_BUILD_ACTION_FILE] + ".yml"
             chat_message += "<" + build_actions_page + "|" + module['name'] + ">" + "\n"
 
-    if module_release_failure:
-        print(chat_message)
-        chat_message += "After following up on the above, retrigger the <" + \
-                        "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
-                        "|Dependency Update Workflow>"
-        if not is_central_only_modules:
-            notify_chat.send_message(chat_message)
-        sys.exit(1)
+    return module_release_failure, chat_message
 
 
 def check_pending_pr_checks(index: int):
