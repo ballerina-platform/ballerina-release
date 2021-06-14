@@ -20,7 +20,6 @@ LANG_VERSION_FILE = 'dependabot/resources/latest_ballerina_lang_version.json'
 CONNECTORS_FILE = 'dependabot/resources/connector_list.json'
 PIE_CHART_IMAGE = 'dependabot/resources/repo_status_graph.jpeg'
 
-BUILD_GRADLE_FILE = 'build.gradle'
 GRADLE_PROPERTIES_FILE = 'gradle.properties'
 
 LANG_VERSION_KEY = 'ballerinaLangVersion'

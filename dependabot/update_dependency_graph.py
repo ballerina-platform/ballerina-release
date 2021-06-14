@@ -85,19 +85,20 @@ def sort_module_name_list():
 
 # Gets dependencies of ballerina extension module from build.gradle file in module repository
 # returns: list of dependencies
-def get_dependencies(module_name):
+def get_dependencies(module_name, module_details_json):
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module_name)
-    gradle_file = repo.get_contents(constants.BUILD_GRADLE_FILE)
+    gradle_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
     data = gradle_file.decoded_content.decode(constants.ENCODING)
 
     dependencies = []
 
     for line in data.splitlines():
-        if 'https://maven.pkg.github.com/ballerina-platform' in line:
-            module = line.split('/')[-1][:-1]
-            if module == module_name:
-                continue
-            dependencies.append(module)
+        for module in module_details_json['modules']:
+            if module['version_key'] in line:
+                if module['name'] == module_name:
+                    continue
+                dependencies.append(module['name'])
+                break
 
     return dependencies
 
@@ -223,7 +224,7 @@ def get_default_build_file(module):
 # returns: module details JSON with updated dependent details
 def get_immediate_dependents(module_name_list, module_details_json):
     for module_name in module_name_list:
-        dependencies = get_dependencies(module_name['name'])
+        dependencies = get_dependencies(module_name['name'], module_details_json)
         for module in module_details_json['modules']:
             if module['name'] in dependencies:
                 module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(
