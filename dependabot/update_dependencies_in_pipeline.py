@@ -121,7 +121,7 @@ def main():
             update_module(idx, current_level)
 
         if auto_merge_pull_requests.lower() == 'true':
-            wait_for_current_level_build(current_level)
+            wait_for_current_level_build(current_level, False)
     print('Successfully bumped dependencies in extensions packed in ballerina-distribution')
 
     central_module_level = extensions_file['central_modules'][-1]['level']
@@ -136,11 +136,11 @@ def main():
             update_module(idx, current_level)
 
         if auto_merge_pull_requests.lower() == 'true':
-            wait_for_current_level_build(current_level)
+            wait_for_current_level_build(current_level, True)
     print('Successfully bumped dependencies in extensions available in central')
 
 
-def wait_for_current_level_build(level):
+def wait_for_current_level_build(level, is_central_only_modules):
     global MAX_WAIT_CYCLES
 
     print("[Info] Waiting for level '" + str(level) + "' module build.")
@@ -223,7 +223,8 @@ def wait_for_current_level_build(level):
         chat_message += "After following up on the above, retrigger the <" + \
                         "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
                         "|Dependency Update Workflow>"
-        notify_chat.send_message(chat_message)
+        if not is_central_only_modules:
+            notify_chat.send_message(chat_message)
         sys.exit(1)
 
 
