@@ -207,18 +207,16 @@ def get_lag_button(module):
 
 
 def get_pending_pr(module):
-    pending_pr_status = False
     pr_id = ""
     pending_pr_link = ""
     pr = get_pending_automated_pr(module[MODULE_NAME])
 
     if pr is not None:
-        pending_pr_status = True
         pr_id = "#" + str(pr.number)
         pending_pr_link = pr.html_url
     pending_pr_button = "[" + pr_id + "](" + pending_pr_link + ")"
 
-    return pending_pr_button, pending_pr_link, pending_pr_status
+    return pending_pr_button, pending_pr_link
 
 
 def update_modules(updated_readme, module_details_list, is_central_modules):
@@ -243,7 +241,7 @@ def update_modules(updated_readme, module_details_list, is_central_modules):
                            "(" + constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                            module[MODULE_BUILD_ACTION_FILE] + ".yml)"
             lag_button, lag = get_lag_button(module)
-            pending_pr_button, pending_pr_link, pending_pr_status = get_pending_pr(module)
+            pending_pr_button, pending_pr_link = get_pending_pr(module)
 
             if (not is_central_modules) and is_distribution_lagging and lag:
                 module[MODULE_PULL_REQUEST] = pending_pr_link
