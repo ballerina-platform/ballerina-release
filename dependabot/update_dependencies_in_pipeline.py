@@ -143,7 +143,7 @@ def main():
             update_module(idx, current_level)
 
         if auto_merge_pull_requests.lower() == 'true':
-            wait_for_current_level_build(current_level)
+            _, _ = wait_for_current_level_build(current_level)
     print('Successfully bumped dependencies in extensions available in central')
 
 
