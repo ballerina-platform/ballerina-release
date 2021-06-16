@@ -184,6 +184,10 @@
         },
         {
             "name": "module-ballerina-xslt"
+        },
+        {
+            "name": "module-ballerinax-postgresql",
+            "central_only_module": false
         }
     ]
 }
