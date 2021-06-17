@@ -4,7 +4,7 @@
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
 <code>ballerina-distribution</code> repository lags by 2 days.<br><br>
-<code>ballerina-lang</code> repository version <b>2.0.0-beta.2-20210616-174900-ca50418a</b> (3 h) has been updated as follows
+<code>ballerina-lang</code> repository version <b>2.0.0-beta.2-20210616-174900-ca50418a</b> (5 h) has been updated as follows
 </td>
 </tr></tbody></table> 
 
