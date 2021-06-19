@@ -282,6 +282,30 @@
             ]
         },
         {
+            "name": "module-ballerinax-nats",
+            "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "nats-ballerina",
+            "version_key": "stdlibNatsVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-stan",
+            "level": 3,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "stan-ballerina",
+            "version_key": "stdlibStanVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
+            "dependents": []
+        },
+        {
             "name": "module-ballerina-tcp",
             "level": 3,
             "group_id": "org.ballerinalang",
@@ -547,6 +571,30 @@
             ]
         },
         {
+            "name": "module-ballerinax-kafka",
+            "level": 7,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "kafka-ballerina",
+            "version_key": "stdlibKafkaVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-rabbitmq",
+            "level": 7,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "rabbitmq-ballerina",
+            "version_key": "stdlibRabbitmqVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
+            "dependents": []
+        },
+        {
             "name": "module-ballerina-sql",
             "level": 7,
             "group_id": "org.ballerinalang",
@@ -564,6 +612,42 @@
             ]
         },
         {
+            "name": "module-ballerinax-java.jdbc",
+            "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "java.jdbc-ballerina",
+            "version_key": "stdlibJdbcVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-mysql",
+            "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "mysql-ballerina",
+            "version_key": "stdlibMysqlVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-postgresql",
+            "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "postgresql-ballerina",
+            "version_key": "stdlibPostgresqlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
+            "dependents": []
+        },
+        {
             "name": "ballerina-distribution",
             "level": 8,
             "group_id": "org.ballerinalang",
@@ -577,30 +661,6 @@
         }
     ],
     "central_modules": [
-        {
-            "name": "module-ballerinax-nats",
-            "level": 9,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "nats-ballerina",
-            "version_key": "stdlibNatsVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "central_only_module": true,
-            "build_action_file": "build-timestamped-master",
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-stan",
-            "level": 9,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "stan-ballerina",
-            "version_key": "stdlibStanVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "central_only_module": true,
-            "build_action_file": "build-timestamped-master",
-            "dependents": []
-        },
         {
             "name": "module-ballerinax-jaeger",
             "level": 9,
@@ -635,66 +695,6 @@
             "auto_merge": false,
             "central_only_module": true,
             "build_action_file": "build-main",
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-kafka",
-            "level": 9,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "kafka-ballerina",
-            "version_key": "stdlibKafkaVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "central_only_module": true,
-            "build_action_file": "build-timestamped-master",
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-rabbitmq",
-            "level": 9,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "rabbitmq-ballerina",
-            "version_key": "stdlibRabbitmqVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "central_only_module": true,
-            "build_action_file": "build-timestamped-master",
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-java.jdbc",
-            "level": 9,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "java.jdbc-ballerina",
-            "version_key": "stdlibJdbcVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "central_only_module": true,
-            "build_action_file": "build-timestamped-master",
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-mysql",
-            "level": 9,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "mysql-ballerina",
-            "version_key": "stdlibMysqlVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "central_only_module": true,
-            "build_action_file": "build-timestamped-master",
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-postgresql",
-            "level": 9,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "postgresql-ballerina",
-            "version_key": "stdlibPostgresqlVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "central_only_module": true,
-            "build_action_file": "build-timestamped-master",
             "dependents": []
         }
     ]
