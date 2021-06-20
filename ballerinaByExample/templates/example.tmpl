@@ -177,32 +177,34 @@
                     </table>
 
                     {{range  $i, $element := .Segs}}
-                        {{range .}}
-                            {{if ne $i 0}}
-                                {{if and (not .CodeLeading) (not .IsConsoleOutput)}}
-                                    <div class="bal-separator">
-                                        <!-- This table is a temporary table to add spacing between output and next bal file-->
-                                        <table class="cTopBorder-table">
-                                            <tbody><tr>
-                                                <td class="cCodeTD"></td>
-                                                <td class="cDescTD"></td>
-                                            </tr>
-                                        </tbody></table>
-                                    </div>
-                                {{end}}
-                            {{end}}
-                        {{end}}
+                    // no deed this code -start
+                        // {{range .}}
+                        //     {{if ne $i 0}}
+                        //         {{if and (not .CodeLeading) (not .IsConsoleOutput)}}
+                        //             <div class="bal-separator">
+                        //                 <!-- This table is a temporary table to add spacing between output and next bal file-->
+                        //                 <table class="cTopBorder-table">
+                        //                     <tbody><tr>
+                        //                         <td class="cCodeTD"></td>
+                        //                         <td class="cDescTD"></td>
+                        //                     </tr>
+                        //                 </tbody></table>
+                        //             </div>
+                        //         {{end}}
+                        //     {{end}}
+                        // {{end}}
+                    // no deed this code -end
 
-                    <div>
+                    <div class="codeSnippeset">
 
-                        <table class="cBBE-body">
+                        <div class="cBBE-body">
                             {{range $element}}
-                            <tr class="cTR{{if and (not .DocEmpty)}} hover-enable{{end}}{{if .IsConsoleOutput}} cOutputTr{{end}}">
+                            <div class="cTR{{if and (not .DocEmpty)}} hover-enable{{end}}{{if .IsConsoleOutput}} cOutputTr{{end}}">
 
-                                <td class="code{{if .CodeEmpty}} empty{{end}}{{if .CodeLeading}} leading{{end}}{{if .IsConsoleOutput}} cOutput{{end}}">
+                                <div class="code{{if .CodeEmpty}} empty{{end}}{{if .CodeLeading}} leading{{end}}{{if .IsConsoleOutput}} cOutput{{end}}">
                                     {{.CodeRendered}}
-                                </td>
-                                <td class="docs">
+                                </div>
+                                <div class="docs">
                                     {{if and (not .DocEmpty)}}
                                     <div class="cCodeDesription">
                                         <div>
@@ -210,20 +212,23 @@
                                         </div>
                                     </div>
                                     {{end}}
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                             {{end}}
-                        </table>
+                        </div>
                     </div>
                     {{end}}
 
+                    // no deed this code -start
 
-                    <table class="cBottomBorder-table">
-                        <tr>
-                            <td class="cCodeTD"></td>
-                            <td class="cDescTD"></td>
-                        </tr>
-                    </table>
+                    // <table class="cBottomBorder-table">
+                    //     <tr>
+                    //         <td class="cCodeTD"></td>
+                    //         <td class="cDescTD"></td>
+                    //     </tr>
+                    // </table>
+                    // no deed this code -end
+
                 </div>
             </div>
         </div>
