@@ -9,169 +9,170 @@ redirect_from:
   - /{{.RedirectVersion}}/learn/by-example/{{.Id}}
   - /{{.RedirectVersion}}/learn/by-example/{{.Id}}.html
 ---
-
 <div class="row cBallerina-io-Gray-row">
-  <div class="container cBallerinaBySampleContainer">
-    <div class="FullCode">
-      {{.FullCode}}
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-      <table class="cTopInfoContainer cTopControlsContainer">
-        <tr>
-          <td class="cLeftTD">
-            <h2>{{.Name}}</h2>
-            <p>{{.Descs}}</p>
-          </td>
-          <td class="cRightTD">
-            <div class="cTopButtonContainer">
-              {{if .PrevExample}}
-              <div class="cButtonInfoContainer">
-                <a class="prev" href="{{.PrevExample.Id}}.html">
-                  <span>< PREVIOUS</span>
-                  <p>{{.PrevExample.Name}}</p>
-                </a>
-              </div>
-              {{ end }} {{if .NextExample}}
-              <div class="cButtonInfoContainer">
-                <a class="next" href="{{.NextExample.Id}}.html">
-                  <span>NEXT ></span>
-                  <p>{{.NextExample.Name}}</p>
-                </a>
-              </div>
-              {{ end }}
+        <div class="container cBallerinaBySampleContainer">
+            <div class="FullCode">
+                {{.FullCode}}
             </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="example" id="{{.Id}}">
-      <div class="col-xs-12 col-sm-12 col-md-12 cBBETable-container cCodeLeft">
-        <table class="cTopControlsContainer">
-          <tr>
-            <td class="cLeftTD">
-              <div class="cBBE-links">
-                <ul>
-                  <li>
-                    <a class="copy"><img src="/img/copy-icon.svg" /></a>
-                  </li>
-                  <li>
-                    <a target="_blank" href="{{.GithubLink}}"
-                      ><img src="/img/github-logo-green.svg"
-                    /></a>
-                  </li>
-                  {{if .EnablePlayground}}
-                  <li>
-                    <a target="_blank" href="{{.PlaygroundLink}}"
-                      ><img src="/img/main-play-green-btn.svg"
-                    /></a>
-                  </li>
-                  {{
-                    end
-                  }}
-                </ul>
-              </div>
-            </td>
-            <td></td>
-          </tr>
-        </table>
 
-        {{range  $i, $element := .Segs}}
-        {{range .}}
-        {{if ne $i 0}}
-        {{if and (not .CodeLeading) (not .IsConsoleOutput)}}
-        <div class="bal-separator">
-          <!-- This table is a temporary table to add spacing between output and next bal file-->
-          <table class="cTopBorder-table">
-            <tbody>
-              <tr>
-                <td class="cCodeTD"></td>
-                <td class="cDescTD"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        {{ end }}
-        {{ end }}
-        {{ end }}
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <table class="cTopInfoContainer cTopControlsContainer">
+                    <tr>
+                        <td class="cLeftTD">
+                            <h2>{{.Name}}</h2>
+                            <p>{{.Descs}}</p>
 
-        <div className="codeSnippeset">
-          <div class="cBBE-body">
-            {{range $element}}
-            <div
-              class="cTR{{if and (not .DocEmpty)}} hover-enable{{
-                end
-              }}{{if .IsConsoleOutput}} cOutputTr{{ end }}"
-            >
-              <div
-                class="code{{if .CodeEmpty}} empty{{
-                  end
-                }}{{if .CodeLeading}} leading{{
-                  end
-                }}{{if .IsConsoleOutput}} cOutput{{ end }}"
-              >
-                {{.CodeRendered}}
-              </div>
-              <div class="docs">
-                {{if and (not .DocEmpty)}}
-                <div class="cCodeDesription">
-                  <div>
-                    {{.DocsRendered}}
-                  </div>
+                        </td>
+                        <td class="cRightTD">
+                            <div class="cTopButtonContainer">
+                                {{if .PrevExample}}
+                                <div class="cButtonInfoContainer">
+                                    <a class="prev" href="{{.PrevExample.Id}}.html">
+                                        <span>< PREVIOUS</span>
+                                        <p>{{.PrevExample.Name}}</p>
+                                    </a>
+                                </div>
+                                {{end}} {{if .NextExample}}
+                                <div class="cButtonInfoContainer">
+                                    <a class="next" href="{{.NextExample.Id}}.html">
+                                        <span>NEXT ></span>
+                                        <p>{{.NextExample.Name}}</p>
+                                    </a>
+                                </div>
+                                {{end}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="example" id="{{.Id}}">
+                <div class="col-xs-12 col-sm-12 col-md-12 cBBETable-container cCodeLeft">
+                    <table class="cTopControlsContainer">
+                        <tr>
+                            <td class="cLeftTD">
+                                <div class="cBBE-links">
+                                    <ul>
+                                        <li>
+                                            <a class="copy"><img src="/img/copy-icon.svg" /></a>
+                                        </li>
+                                        <li>
+                                            <a target="_blank" href="{{.GithubLink}}"><img src="/img/github-logo-green.svg" /></a>
+                                        </li>
+                                        {{if .EnablePlayground}}
+                                        <li>
+                                            <a target="_blank" href="{{.PlaygroundLink}}"><img src="/img/main-play-green-btn.svg" /></a>
+                                        </li>
+                                        {{end}}
+                                    </ul>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                    <table class="cTopBorder-table">
+                        <tr>
+                            <td class="cCodeTD"></td>
+                            <td class="cDescTD"></td>
+                        </tr>
+                    </table>
+
+                    {{range  $i, $element := .Segs}}
+                        {{range .}}
+                            {{if ne $i 0}}
+                                {{if and (not .CodeLeading) (not .IsConsoleOutput)}}
+                                    <div class="bal-separator">
+                                        <!-- This table is a temporary table to add spacing between output and next bal file-->
+                                        <table class="cTopBorder-table">
+                                            <tbody><tr>
+                                                <td class="cCodeTD"></td>
+                                                <td class="cDescTD"></td>
+                                            </tr>
+                                        </tbody></table>
+                                    </div>
+                                {{end}}
+                            {{end}}
+                        {{end}}
+
+                    <div class="codeSnippeset">
+
+                        <div class="cBBE-body">
+                            {{range $element}}
+                            <div class="cTR{{if and (not .DocEmpty)}} hover-enable{{end}}{{if .IsConsoleOutput}} cOutputTr{{end}}">
+
+                                <div class="code{{if .CodeEmpty}} empty{{end}}{{if .CodeLeading}} leading{{end}}{{if .IsConsoleOutput}} cOutput{{end}}">
+                                    {{.CodeRendered}}
+                                </div>
+                                <div class="docs">
+                                    {{if and (not .DocEmpty)}}
+                                    <div class="cCodeDesription">
+                                        <div>
+                                            {{.DocsRendered}}
+                                        </div>
+                                    </div>
+                                    {{end}}
+                                </div>
+                            </div>
+                            {{end}}
+                        </div>
+                    </div>
+                    {{end}}
+
+
+                    <table class="cBottomBorder-table">
+                        <tr>
+                            <td class="cCodeTD"></td>
+                            <td class="cDescTD"></td>
+                        </tr>
+                    </table>
                 </div>
-                {{ end }}
-              </div>
             </div>
-            {{ end }}
-          </div>
         </div>
-        {{ end }}
-      </div>
     </div>
-  </div>
-</div>
 
-<script>
-  $(document).ready(function () {
-    // hljs.initHighlightingOnLoad();
+     <script>
+            $(document).ready(function() {
 
-    $(".switch").click(function () {
-      $(".cCodeRight").toggleClass("cShow");
-      $(".cCodeLeft").toggleClass("cHide");
-    });
+                // hljs.initHighlightingOnLoad();
 
-    // register "copy to clipboard" event to elements with "copy" class
-    var clipboard = new ClipboardJS(".copy", {
-      text: function (trigger) {
-        return $(".FullCode").find("pre").text();
-      },
-    });
+                $(".switch").click(function() {
+                    $(".cCodeRight").toggleClass('cShow');
+                    $(".cCodeLeft").toggleClass('cHide');
+                });
 
-    // Register events show hide tooltip on click event
-    clipboard.on("success", function (e) {
-      setTooltip(e.trigger, "Copied!");
-      hideTooltip(e.trigger);
-    });
+                // register "copy to clipboard" event to elements with "copy" class
+                var clipboard = new ClipboardJS('.copy', {
+                    text: function(trigger) {
+                        return $('.FullCode').find('pre').text();
+                    }
+                });
 
-    clipboard.on("error", function (e) {
-      setTooltip(e.trigger, "Failed!");
-      hideTooltip(e.trigger);
-    });
+                // Register events show hide tooltip on click event
+                clipboard.on('success', function(e) {
+                    setTooltip(e.trigger, 'Copied!');
+                    hideTooltip(e.trigger);
+                });
 
-    $(".copy").tooltip({
-      trigger: "click",
-      placement: "bottom",
-    });
-    $("a.copy").unbind("click");
-  });
+                clipboard.on('error', function(e) {
+                    setTooltip(e.trigger, 'Failed!');
+                    hideTooltip(e.trigger);
+                });
 
-  function setTooltip(btn, message) {
-    $(btn).attr("data-original-title", message).tooltip("show");
-  }
+                $('.copy').tooltip({
+                    trigger: 'click',
+                    placement: 'bottom'
+                });
+                $("a.copy").unbind("click");
+            });
 
-  function hideTooltip(btn) {
-    setTimeout(function () {
-      $(btn).tooltip("hide").removeAttr("data-original-title");
-    }, 1000);
-  }
-</script>
+            function setTooltip(btn, message) {
+                $(btn).attr('data-original-title', message)
+                    .tooltip('show');
+            }
+
+            function hideTooltip(btn) {
+                setTimeout(function() {
+                    $(btn).tooltip('hide').removeAttr('data-original-title');
+                }, 1000);
+            }
+        </script>
