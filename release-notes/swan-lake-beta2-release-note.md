@@ -60,7 +60,7 @@ The new `postgresql` database package is introduced with this release. This pack
 Added Observability span context values to log messages when observability is enabled.
 
 ##### I/O Package
-Introduced `io:fprint` and `io:fprintln` APIs.
+Introduced the `io:fprint` and `io:fprintln` APIs.
 ```ballerina
 io:fprint(io:stderr, "Unexpected error occurred");
 io:fprintln(io:stderr, "Unexpected error occurred");
