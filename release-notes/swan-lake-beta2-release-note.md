@@ -52,7 +52,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github
 
 ### Standard Library Updates
 
-The new PostgreSQL database package is introduced with this release. This package provides the functionality required to access and manipulate data stored in a PostgreSQL database.
+The new `postgresql` database package is introduced with this release. This package provides the functionality required to access and manipulate data stored in a PostgreSQL database.
 
 #### New Features
 
