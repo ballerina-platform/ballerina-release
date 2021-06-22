@@ -80,7 +80,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 ##### Debugger 
 - Added expression evaluation support for client remote method call actions.
-- Improved structured variable value presentation. Now the users can view the child variable count inline without having to expand the parent elements of Ballerina structured (i.e. Map, List, Table, XML and JSON) variables.
+- Added support to show the child element count inline (without having to expand the parent element) for Ballerina structured (i.e. Map, List, Table, XML and JSON) variables.
 
 #### Improvements
 
@@ -91,7 +91,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake Beta2 of the repositor
 - [Language](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22+label%3AType%2FBug+label%3ATeam%2FDevTools)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
 - [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Beta%22)
-- [Debugger] (https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3AType%2FBug+label%3AArea%2FDebugger+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22
+- [Debugger](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3AType%2FBug+label%3AArea%2FDebugger+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22)
 
 #### Ballerina Packages Updates
 
