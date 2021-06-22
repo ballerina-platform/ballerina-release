@@ -71,7 +71,7 @@ io:fprintln(io:stdout, "Passed without an error");
 #### Improvements
 
 ##### Database Packages
-Returned type of the stream is now inferred as a second parameter to the query remote method.
+Return type of the stream is now inferred as a second parameter to the query remote method.
 
 **Previous Syntax**
 
