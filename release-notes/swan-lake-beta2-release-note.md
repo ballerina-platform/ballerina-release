@@ -35,6 +35,15 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 #### New Features
 
 #### Improvements
+Support for recursive tuple types is enabled with this release.
+
+```
+type A [int, A[]];
+public function cyclicTupleTest() {
+    A a = [1];
+    A b = [1, [a]];
+}
+```
 
 #### Bug Fixes
 
