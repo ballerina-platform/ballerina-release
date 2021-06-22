@@ -71,23 +71,7 @@ redirect_from:
                     </table>
 
               
-                    {{range  $i, $element := .Segs}}
-                        {{range .}}
-                            {{if ne $i 0}}
-                                {{if and (not .CodeLeading) (not .IsConsoleOutput)}}
-                                    <div class="bal-separator">
-                                        <!-- This table is a temporary table to add spacing between output and next bal file-->
-                                        <table class="cTopBorder-table">
-                                            <tbody><tr>
-                                                <td class="cCodeTD"></td>
-                                                <td class="cDescTD"></td>
-                                            </tr>
-                                        </tbody></table>
-                                    </div>
-                                {{end}}
-                            {{end}}
-                        {{end}}
-
+                 
                     <div class="codeSnippeset">
 
                         <div class="cBBE-body">
