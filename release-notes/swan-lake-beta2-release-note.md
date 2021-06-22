@@ -57,7 +57,7 @@ The new `postgresql` database package is introduced with this release. This pack
 #### New Features
 
 ##### Log Package
-Added Observability span context values to log messages when Observability is enabled.
+Added Observability span context values to log messages when observability is enabled.
 
 ##### I/O Package
 Introduced `io:fprint` and `io:fprintln` APIs.
