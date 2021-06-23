@@ -35,7 +35,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 #### New Features
 
 #### Improvements
-Support for recursive tuple types is enabled with this release.
+- Support for recursive tuple types has been introduced with this release.
 
 ```
 type A [int, A[]];
