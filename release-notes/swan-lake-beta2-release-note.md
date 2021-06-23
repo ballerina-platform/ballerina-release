@@ -38,10 +38,12 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 - Support for recursive tuple types has been introduced with this release.
 
 ```
-type A [int, A[]];
-public function cyclicTupleTest() {
-    A a = [1];
-    A b = [1, [a]];
+type RecursiveType [int, RecursiveType[]];
+
+public function main() {
+    RecursiveType a = [1];
+    RecursiveType b = [1, []];
+    RecursiveType c = [1, [a]];
 }
 ```
 
