@@ -36,6 +36,27 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Improvements
 
+The `Configurable` feature is improved to support variables with the `union` types through the TOML syntax. 
+
+Here are some examples with `union` types.
+
+```ballerina
+configurable map<anydata> myMap = ?;
+
+configurable int|string id = ?;
+
+```
+
+**TOML:**
+
+```toml
+id = "12345"
+
+[myMap]
+name="John"
+age=10
+```
+
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
