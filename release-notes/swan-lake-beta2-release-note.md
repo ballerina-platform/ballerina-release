@@ -35,6 +35,17 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 #### New Features
 
 #### Improvements
+- Support for recursive tuple types has been introduced with this release.
+
+```
+type RecursiveType [int, RecursiveType[]];
+
+public function main() {
+    RecursiveType a = [1];
+    RecursiveType b = [1, []];
+    RecursiveType c = [1, [a]];
+}
+```
 
 The `Configurable` feature is improved to support variables with the `union` types through the TOML syntax. 
 
