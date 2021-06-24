@@ -52,10 +52,45 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github
 
 ### Standard Library Updates
 
+The new `postgresql` database package is introduced with this release. This package provides the functionality required to access and manipulate data stored in a PostgreSQL database.
+
 #### New Features
+
+##### Log Package
+Added Observability span context values to log messages when observability is enabled.
+
+##### I/O Package
+Introduced the `io:fprint` and `io:fprintln` APIs.
+```ballerina
+io:fprint(io:stderr, "Unexpected error occurred");
+io:fprintln(io:stderr, "Unexpected error occurred");
+io:fprint(io:stdout, "Passed without an error");
+io:fprintln(io:stdout, "Passed without an error");
+```
 
 #### Improvements
 
+##### Database Packages
+Return type of the stream is now inferred as a second parameter to the query remote method.
+
+**Previous Syntax**
+
+```ballerina
+stream<record{}, error> resultStream =
+        jdbcClient->query(`SELECT * FROM Customers`, Customer);
+
+stream<Customer, sql:Error> customerStream =
+        <stream<Customer, sql:Error>>resultStream;
+```
+According to the previous syntax, the Ballerina user can give the `Customer` record as the expected record 
+type of the stream but the user can not get that stream directly. Ballerina developer has to cast the returned 
+stream to the expected stream. Therefore, This has been improved to directly get data as an expected record type.
+
+**New Syntax**
+
+```ballerina
+stream<Customer, error> customerStream = sqlClient->query(`SELECT * FROM Customers`);
+```
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+Beta2%22+label%3AType%2FBug).
