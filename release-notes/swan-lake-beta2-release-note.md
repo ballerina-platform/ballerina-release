@@ -36,19 +36,19 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Improvements
 
-#### Bug Fixes
-
-To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
-
-Set the value type of the string iteration sequence to string:Char.
+The static type of string iteration has been changed from `string` to `string:Char`.
 
 public function main() {
-    string str = "foo";
+string str = "foo";
 
     foreach string:Char s in str {
         
     }
 }
+
+#### Bug Fixes
+
+To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
 ### Runtime Updates
 
