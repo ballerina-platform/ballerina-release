@@ -73,6 +73,24 @@ age=10
 - Added support for map of tuples as the data set for data provider functions
 - Added case based filtering when running tests against data sets
 
+- The static type of string iteration has been changed from `string` to `string:Char`.
+
+```ballerina
+public function main() {
+    string str = "foo";
+
+    foreach string:Char s in str {
+        io:println(s);        
+    }
+
+    record {| string:Char value; |}? next = str.iterator().next();
+
+    if !(next is ()) {
+        io:println(next.value);
+    }
+}
+```
+
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
