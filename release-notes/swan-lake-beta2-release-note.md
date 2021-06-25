@@ -47,27 +47,6 @@ public function main() {
 }
 ```
 
-The `Configurable` feature is improved to support variables with the `union` types through the TOML syntax. 
-
-Here are some examples with `union` types.
-
-```ballerina
-configurable map<anydata> myMap = ?;
-
-configurable int|string id = ?;
-
-```
-
-**TOML:**
-
-```toml
-id = "12345"
-
-[myMap]
-name="John"
-age=10
-```
-
 - The static type of string iteration has been changed from `string` to `string:Char`.
 
 ```ballerina
@@ -95,6 +74,25 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github
 #### New Features
 
 #### Improvements
+
+- Support for configure variables with the `union` types through the TOML syntax. 
+
+```ballerina
+configurable map<anydata> myMap = ?;
+
+configurable int|string id = ?;
+
+```
+
+**TOML:**
+
+```toml
+id = "12345"
+
+[myMap]
+name="John"
+age=10
+```
 
 #### Bug Fixes
 
