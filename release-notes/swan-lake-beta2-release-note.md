@@ -105,6 +105,12 @@ io:fprint(io:stdout, "Passed without an error");
 io:fprintln(io:stdout, "Passed without an error");
 ```
 
+##### WebSocket Package
+- Introduce declarative auth support for server side. 
+
+##### WebSub Package
+- Add a utility method to retrieve http-headers from `websub:ContentDistributionMessage`.
+
 #### Improvements
 
 ##### Database Packages
@@ -128,6 +134,31 @@ stream to the expected stream. Therefore, This has been improved to directly get
 ```ballerina
 stream<Customer, error> customerStream = sqlClient->query(`SELECT * FROM Customers`);
 ```
+
+##### HTTP Package
+- Respond with 202 Accepted response when the resource function returns nil. If the http:Caller is used in the resource, then returning nil from the resource leads to a  500 Internal Server Error response.
+- Log error stacktrace when an error is returned from the resource function and connection failures.
+- Log warning when the same request is responded more than one time.
+
+##### GraphQL Package
+- Make GraphQL resource execution non-blocking
+- Sending `BAD_REQUEST` status code for the responses with document validation errors
+
+##### FTP Package
+- Change `get`, `append` and `put` method APIs to support `stream` instead of using `io:ReadableByteChannel` for reading and writing files.
+- Support SFTP protocol with password and private key based authentication.
+
+##### WebSub Package
+- Log error stacktrace when an error is returned from the remote function of Subscriber Service.
+- Return module specific errors from the WebSub public APIs.
+- Allow non-remote methods in Subscriber Service.
+
+##### WebSubHub Package
+- Log error stacktrace when an error is returned from the remote function of Hub Service.
+- Return module specific errors from the WebSubHub public APIs.
+- Allow non-remote methods in Hub Service.
+- Allow `http:Headers` as optional parameter to specific remote-methods(`onRegisterTopic`/`onDeregisterTopic`/`onUpdateMessage`/`onSubscription`/`onUnsubscription`).
+
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+Beta2%22+label%3AType%2FBug).
