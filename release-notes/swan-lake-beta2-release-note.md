@@ -68,11 +68,6 @@ name="John"
 age=10
 ```
 
-#### Test Framework
-
-- Added support for map of tuples as the data set for data provider functions
-- Added case based filtering when running tests against data sets
-
 - The static type of string iteration has been changed from `string` to `string:Char`.
 
 ```ballerina
@@ -207,6 +202,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 ##### Bindgen Tool
 - Changed the default bindings mapping approach to generate module-level mappings, instead of having to use an explicit flag for this behavior. Generation of single directory mappings is facilitated using the option `[(-o|--output) <output-path>]`.
+
+##### Test Framework
+
+- Added support for map of tuples as the data set for data provider functions.
+- Added case based filtering when running tests against data sets.
 
 #### Bug Fixes
 
