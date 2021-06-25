@@ -39,7 +39,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 The static type of string iteration has been changed from `string` to `string:Char`.
 
 public function main() {
-string str = "foo";
+    string str = "foo";
 
     foreach string:Char s in str {
         
