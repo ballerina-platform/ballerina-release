@@ -205,6 +205,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### Improvements
 
+##### Bindgen Tool
+- Changed the default bindings mapping approach to generate module-level mappings, instead of having to use an explicit flag for this behavior. Generation of single directory mappings is facilitated using the option `[(-o|--output) <output-path>]`.
+
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake Beta2 of the repositories below.
