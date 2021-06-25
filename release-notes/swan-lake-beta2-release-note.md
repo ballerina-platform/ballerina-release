@@ -75,13 +75,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta2](https://github
 
 #### Improvements
 
-- Support for configure variables with the `union` types through the TOML syntax. 
+- Support has been introduced for configurable variables of union types via the TOML syntax. 
 
 ```ballerina
 configurable map<anydata> myMap = ?;
 
 configurable int|string id = ?;
-
 ```
 
 **TOML:**
