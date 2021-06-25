@@ -36,7 +36,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### Improvements
 
-The static type of string iteration has been changed from `string` to `string:Char`.
+- The static type of string iteration has been changed from `string` to `string:Char`.
 
 ```ballerina
 public function main() {
