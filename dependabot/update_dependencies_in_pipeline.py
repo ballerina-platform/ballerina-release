@@ -392,7 +392,10 @@ def get_updated_properties_file(module_name, current_level, properties_file):
     updated_properties_file = ''
 
     split_lang_version = lang_version.split('-')
-    processed_lang_version = split_lang_version[2] + split_lang_version[3]
+    if len(split_lang_version) > 3:
+        processed_lang_version = split_lang_version[2] + split_lang_version[3]
+    else:
+        processed_lang_version = split_lang_version[1]
 
     for line in properties_file.splitlines():
         if line.startswith(constants.LANG_VERSION_KEY):
@@ -403,7 +406,7 @@ def get_updated_properties_file(module_name, current_level, properties_file):
             if len(split_current_version) > 3:
                 processed_current_version = split_current_version[2] + split_current_version[3]
 
-                if processed_current_version < processed_lang_version:
+                if len(split_current_version) < 3 or processed_current_version < processed_lang_version:
                     print("[Info] Updating the lang version in module: '" + module_name + "'")
                     updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
                 else:
