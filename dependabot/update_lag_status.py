@@ -96,7 +96,10 @@ def get_lang_latest_timestamp():
         print('[Error] Failed to get ballerina packages version', e)
         sys.exit(1)
     lang_version = version_string.split("-")
-    timestamp = create_timestamp(lang_version[2], lang_version[3])
+    if len(lang_version) > 3:
+        timestamp = create_timestamp(lang_version[2], lang_version[3])
+    else:
+        timestamp = 0
 
     return timestamp
 
@@ -109,7 +112,11 @@ def update_lang_version():
     data = utils.read_json_file(constants.LANG_VERSION_FILE)
     ballerina_lang_version = data["version"]
     lang_version = ballerina_lang_version.split("-")
-    ballerina_timestamp = create_timestamp(lang_version[2], lang_version[3])
+
+    if len(lang_version) > 3:
+        ballerina_timestamp = create_timestamp(lang_version[2], lang_version[3])
+    else:
+        ballerina_timestamp = -3
     latest_ballerina_stable_version = '-'.join(ballerina_lang_version.split('-')[0:2])
 
 
@@ -131,6 +138,8 @@ def format_lag(timestamp):
     global ballerina_timestamp
     if timestamp == -1 or timestamp == -2:
         return timestamp, 0
+    if ballerina_timestamp == -3:
+        return -2, 0
     days, hours = days_hours_minutes(abs(ballerina_timestamp - timestamp))
     if days > 0:
         hrs = round((hours / 24) * 2) / 2
@@ -146,6 +155,8 @@ def get_lag_color(lag_days, lag_hrs):
         color = "brightgreen"
     elif 0 <= lag_days < 2:
         color = "yellow"
+    elif ballerina_timestamp == -3 and lag_days == -1:
+        color = "brightgreen"
     else:
         color = "red"
 
@@ -162,7 +173,9 @@ def get_lag_info(module_name):
         if line.startswith(constants.LANG_VERSION_KEY):
             current_version = line.split("=")[-1]
             split_timestamp_string = current_version.split("-")
-            if '-'.join(split_timestamp_string[0:2]) == latest_ballerina_stable_version:
+            if current_version == latest_ballerina_stable_version:
+                timestamp = -1
+            elif '-'.join(split_timestamp_string[0:2]) == latest_ballerina_stable_version:
                 timestamp = create_timestamp(split_timestamp_string[2], split_timestamp_string[3])
             else:
                 if len(split_timestamp_string) > 2:
@@ -189,8 +202,12 @@ def get_lag_button(module):
         lag_status = str(hrs) + "%20h"
         lag = True
     elif days == -1:
-        lag_status = "Latest%20Stable%20Version"
-        lag = True
+        if ballerina_timestamp == -3:
+            lag_status = "no%20lag"
+            modules_with_no_lag += 1
+        else:
+            lag_status = "Latest%20Stable%20Version"
+            lag = True
     elif days == -2:
         lag_status = "Previous%20Development%20Version"
         lag = True
@@ -296,9 +313,9 @@ def get_distribution_statement():
     distribution_pr = get_pending_automated_pr(BALLERINA_DISTRIBUTION)
 
     if days == -2:
-        distribution_lag = "previous Development version"
+        distribution_lag = "previous development version"
     if days == -1:
-        distribution_lag = "latest Stable version"
+        distribution_lag = "latest stable version"
     elif days == 1:
         distribution_lag = str(days) + " day"
     elif days > 1:

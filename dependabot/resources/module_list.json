@@ -1,5 +1,5 @@
 {
-    "auto_bump": true,
+    "auto_bump": false,
     "lang_version_substring": "beta.2",
     "modules": [
         {
