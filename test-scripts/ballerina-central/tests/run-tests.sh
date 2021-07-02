@@ -70,7 +70,7 @@ VERSION=12.9.1 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
 VERSION=15.3.5 ./libs/bats/bin/bats alpha5/init-gh.bats
 VERSION=15.3.5 ./libs/bats/bin/bats alpha5/push-gh.bats
 VERSION=15.3.5 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
-VERSION=15.3.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 
 echo "-----------------------------------------------------------"
 echo ">>>>>>>>>>>>>>>>>>>> Test with BETA2 <<<<<<<<<<<<<<<<<<<<<"
@@ -92,13 +92,13 @@ VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-gh.bats
 VERSION=15.3.5 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
 
 # Test pull with beta1
-VERSION=16.8.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 
 # Test push with alpha5 and pull with beta1 and beta2
 VERSION=17.4.4 ./libs/bats/bin/bats alpha5/init-gh.bats
 VERSION=17.4.4 ./libs/bats/bin/bats alpha5/push-gh.bats
 VERSION=17.4.4 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
-VERSION=17.4.4 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 VERSION=17.4.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 
 # echo "-----------------------------------------------------------"
@@ -121,7 +121,7 @@ VERSION=17.4.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 # VERSION=17.4.4 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
 
 # # Test pull with beta1
-# VERSION=18.6.1 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+# VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 
 # # Test pull with beta2
 # VERSION=18.6.1 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
@@ -130,7 +130,7 @@ VERSION=17.4.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 # VERSION=19.7.4 ./libs/bats/bin/bats alpha5/init-gh.bats
 # VERSION=19.7.4 ./libs/bats/bin/bats alpha5/push-gh.bats
 # VERSION=19.7.4 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
-# VERSION=19.7.4 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
+# VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 # VERSION=19.7.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 # VERSION=19.7.4 ./libs/bats/bin/bats beta3/pull-latest-gh.bats
 
