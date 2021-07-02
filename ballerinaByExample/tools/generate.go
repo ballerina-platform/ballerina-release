@@ -727,10 +727,10 @@ func main() {
         panic(err)
     }
 
-    er := os.Mkdir(siteDir + "/images", 0755)
-    if er != nil {
-        panic(er)
-    }
+    // er := os.Mkdir(siteDir + "/images", 0755)
+    // if er != nil {
+    //     panic(er)
+    // }
 
     copyFile(templateDir + "site.css", siteDir+"/site.css")
     copyFile(templateDir + "ballerina-example.css", siteDir+"/ballerina-example.css")
@@ -738,7 +738,7 @@ func main() {
     copyFile(templateDir + "404.html", siteDir+"/404.html")
     copyFile(templateDir + "play.png", siteDir+"/play.png")
     copyFile(examplesDir + "/index.json", siteDir+"/all-bbes.json")
-    copyFile(examplesDir + "/images/sequence-diagram.png", siteDir+"/images/sequence-diagram.png")
+    // copyFile(examplesDir + "/images/sequence-diagram.png", siteDir+"/images/sequence-diagram.png")
     
     bbeCategories := getBBECategories()
     examples := parseExamples(bbeCategories)
