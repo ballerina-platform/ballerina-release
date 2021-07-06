@@ -6,6 +6,7 @@ on:
       stagingUpdate:
         description: 'Ballerina Staging Update'
         default: 'true'
+        required: false
 
 jobs:
   installer-ubuntu-build:
