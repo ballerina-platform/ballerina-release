@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -34,6 +35,9 @@ import java.util.Locale;
 
 public class Utils {
     private static final String OS = System.getProperty("os.name").toLowerCase(Locale.getDefault());
+    public static final boolean BALLERINA_STAGING_UPDATE = Boolean.parseBoolean(
+            System.getenv("BALLERINA_STAGING_UPDATE"));
+    public static final PrintStream OUT = System.out;
 
     private static TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
@@ -51,9 +55,10 @@ public class Utils {
             }
     };
 
-    public static final String DISTRIBUTION_LOCATION ="http://dist-dev.ballerina.io/downloads/";
+    public static final String DISTRIBUTION_LOCATION = "http://dist-dev.ballerina.io/downloads/";
 
     public static void downloadFile(String version, String installerName) {
+        OUT.println("Downloading " + installerName);
         try {
             String destination = getUserHome();
             File output = new File(destination + File.separator + installerName);
@@ -74,66 +79,56 @@ public class Utils {
                         out.write(b, 0, count);
                     }
                 } catch (IOException e) {
-                    System.out.print(e);
+                    OUT.println(e);
                 }
             }
         } catch (Exception e) {
-            System.out.print(e);
+            OUT.println("Error occurred while downloading installer: " + e.getMessage());
         }
     }
-
-    public static String executeWindowsCommand(String command) {
-        String output = "";
-        try {
-            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", command);
-            Process p = pb.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output += line + "\n";
-            }
-        } catch (Exception e) {
-            System.out.print("Error occurred");
-        }
-        return output;
-    }
-
 
     public static String executeCommand(String command) {
+        OUT.println("Executing: " + command);
         String output = "";
         try {
-            File file = new File(getUserHome() + File.separator
-                    + "temp-" + new Timestamp(System.currentTimeMillis()).getTime() + ".sh");
-            file.createNewFile();
-            file.setExecutable(true);
-            PrintWriter writer = new PrintWriter(file.getPath(), "UTF-8");
-            writer.println(command);
-            writer.close();
-
-            ProcessBuilder pb = new ProcessBuilder(file.getPath());
-            Process process = pb.start();
+            ProcessBuilder processBuilder;
+            if (isWindows()) {
+                processBuilder = new ProcessBuilder("cmd", "/c", command);
+            } else {
+                processBuilder = new ProcessBuilder("bash", "-c", command);
+            }
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
             InputStream inputStream = process.getInputStream();
+            if (exitCode != 0) {
+                inputStream = process.getErrorStream();
+            }
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
                 output += line + "\n";
             }
-            if (output.isEmpty()) {
-                inputStream =  process.getErrorStream();
+            if (isWindows() && output.isEmpty()) {
+                inputStream = process.getErrorStream();
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 while ((line = reader.readLine()) != null) {
                     output += line + "\n";
                 }
             }
-            file.delete();
-        } catch (Exception e) {
-            System.out.print("Error occurred");
+            OUT.println(output);
+        } catch (IOException | InterruptedException e) {
+            OUT.println("Error occurred while executing " + command + ": " + e.getMessage());
         }
         return output;
     }
 
     private static boolean isUnix() {
         return OS.contains("nix") || OS.contains("nux") || OS.contains("aix");
+    }
+
+    private static boolean isWindows() {
+        return OS.contains("win");
     }
 
     /**

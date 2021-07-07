@@ -17,17 +17,15 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Pull module '$PACKAGE_NAME:$VERSION' with version from 1.2.x." {
+@test "Pull package '$PACKAGE_NAME:*' from BETA1" {
   local user_dir="$(eval echo ~$USER)"
-  rm -rf "$user_dir/.ballerina/balo_cache/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION"
-  run $B12X/bin/ballerina pull "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION"
+  rm -rf "$user_dir/.ballerina/repositories/central.ballerina.io/bala/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION"
+  run $BETA1/bin/bal pull "$TEST_ORGANIZATION/$PACKAGE_NAME"
   assert_line --partial "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION pulled from central successfully"
   [ "$status" -eq 0 ]
-  local package_file="$user_dir/.ballerina/balo_cache/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION/$PACKAGE_NAME-2020r1-any-$VERSION.balo"
+  local package_file="$user_dir/.ballerina/repositories/central.ballerina.io/bala/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION/any/package.json"
   if [ ! -f "$package_file" ]; then
       assert_failure
   fi
-  rm -rf "$user_dir/.ballerina/balo_cache/"
-  rm -rf "$user_dir/.ballerina/bir_cache-1.2.8/"
-  rm -rf "$user_dir/.ballerina/jar_cache-1.2.8/"
+  rm -rf "$user_dir/.ballerina/repositories/"
 }

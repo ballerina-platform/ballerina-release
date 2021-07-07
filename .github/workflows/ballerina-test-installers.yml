@@ -1,19 +1,12 @@
 name: Installer Tests
 
 on:
-  pull_request:
-    paths-ignore:
-      - 'dependabot/**'
-      - 'README.md'
-  push:
-    branches-ignore:
-      - 'automated/extension_update'
-      - 'automated/extension_update_tmp'
-      - 'automated/dashboard_update'
-      - 'automated/dashboard_update_tmp'
-    paths-ignore:
-      - 'dependabot/**'
-      - 'README.md'
+  workflow_dispatch:
+    inputs:
+      stagingUpdate:
+        description: 'Ballerina Staging Update'
+        default: 'true'
+        required: false
 
 jobs:
   installer-ubuntu-build:
@@ -47,6 +40,8 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
+      env:
+        BALLERINA_STAGING_UPDATE: ${{ github.event.inputs.stagingUpdate }}
       working-directory: ./test-scripts/ballerina-test-automation/update-tool-test
       run: .././gradlew build --stacktrace -scan --console=plain --no-daemon
   update-tool-macos-build:
@@ -58,6 +53,8 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
+      env:
+        BALLERINA_STAGING_UPDATE: ${{ github.event.inputs.stagingUpdate }}
       working-directory: ./test-scripts/ballerina-test-automation/update-tool-test
       run: .././gradlew build --stacktrace -scan --console=plain --no-daemon
   # windows-build:

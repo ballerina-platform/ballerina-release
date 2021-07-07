@@ -1,9 +1,11 @@
-name: Ballerina Central Tests
+name: Scheduled Ballerina Central Tests on Dev 
 
-on: workflow_dispatch
+on:
+  schedule:
+    - cron:  '0 */6 * * *'
 
 jobs:
-  ballerina-central-test:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -15,4 +17,4 @@ jobs:
 
     - name: Run Script
       working-directory: ./test-scripts/ballerina-central/
-      run: docker build --build-arg BALLERINA_CENTRAL_ACCESS_TOKEN=${{ secrets.BALLERINA_CENTRAL_DEV_USER_ACCESS_TOKEN }} .
+      run: docker build --build-arg BALLERINA_CENTRAL_ACCESS_TOKEN=${{ secrets.BALLERINA_DEV_CENTRAL_ACCESS_TOKEN }} --build-arg BALLERINA_DEV_CENTRAL=true .

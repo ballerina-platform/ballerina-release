@@ -20,7 +20,7 @@ function getPackageVersionsofRepos () {
   done
   cat /tmp/versions-to-delete.json | while read packageversionline
   do
-    curl -X POST -H "Accept: application/vnd.github.package-deletes-preview+json" -H "Authorization: bearer $PACKAGE_DELETE_PAT" -d '{"query":"mutation { deletePackageVersion(input:{packageVersionId:\"'$packageversionline'\"}) { success }}"}' --url 'https://api.github.com/graphql'
+    curl -X POST -H "Accept: application/vnd.github.package-deletes-preview+json" -H "Authorization: bearer $DELETE_PACKAGE_PAT" -d '{"query":"mutation { deletePackageVersion(input:{packageVersionId:\"'$packageversionline'\"}) { success }}"}' --url 'https://api.github.com/graphql'
   done
 }
 

@@ -17,9 +17,9 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Push package '$PACKAGE_NAME:$VERSION' from ALPHA3." {
+@test "Push package '$PACKAGE_NAME:$VERSION' from BETA1." {
   cd "$PACKAGE_NAME-$VERSION"
-  run $ALPHA3/bin/bal push
+  run $BETA1/bin/bal push
   assert_line --partial "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION pushed to central successfully"
   [ "$status" -eq 0 ]
   cd -

@@ -17,15 +17,8 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Pull package '$PACKAGE_NAME:*' from ALPHA1." {
-  local user_dir="$(eval echo ~$USER)"
-  rm -rf "$user_dir/.ballerina/balo/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION"
-  run $ALPHA1/bin/bal pull "$TEST_ORGANIZATION/$PACKAGE_NAME"
-  assert_line --partial "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION pulled from central successfully"
-  [ "$status" -eq 0 ]
-  local package_file="$user_dir/.ballerina/balo/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION/$TEST_ORGANIZATION-$PACKAGE_NAME-any-$VERSION.balo"
-  if [ ! -f "$package_file" ]; then
-      assert_failure
-  fi
-  rm -rf "$user_dir/.ballerina/balo/"
+@test "Search package '$PACKAGE_NAME' with version from BETA1." {
+  run $BETA1/bin/bal search "$PACKAGE_NAME"
+  assert_line --partial "bc2testorg/..."
+  assert_line --partial "$VERSION"
 }

@@ -17,18 +17,15 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Push package '$PACKAGE_NAME:$VERSION' with curl as from ALPHA1." {
-  cd "$PACKAGE_NAME-$VERSION"
-  local hostname="api.central.ballerina.io"
-  if [ "$BALLERINA_DEV_CENTRAL" = "true" ]; then
-    hostname="api.dev-central.ballerina.io"
-  fi
-
-  if [ "$BALLERINA_STAGE_CENTRAL" = "true" ]; then
-    hostname="api.staging-central.ballerina.io"
-  fi
-  run curl -v -H "Authorization: Bearer $BALLERINA_CENTRAL_ACCESS_TOKEN" -H "Content-Type: application/octet-stream" -H "User-Agent: slalpha1" --data-binary "@target/balo/$TEST_ORGANIZATION-$PACKAGE_NAME-any-$VERSION.balo" https://$hostname/2.0/registry/packages
-  assert_line --partial "HTTP/2 204"
+@test "Pull package '$PACKAGE_NAME:$VERSION' with version from BETA2." {
+  local user_dir="$(eval echo ~$USER)"
+  rm -rf "$user_dir/.ballerina/repositories/central.ballerina.io/bala/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION"
+  run $BETA2/bin/bal pull "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION"
+  assert_line --partial "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION pulled from central successfully"
   [ "$status" -eq 0 ]
-  cd -
+  local package_file="$user_dir/.ballerina/repositories/central.ballerina.io/bala/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION/any/package.json"
+  if [ ! -f "$package_file" ]; then
+      assert_failure
+  fi
+  rm -rf "$user_dir/.ballerina/repositories/"
 }

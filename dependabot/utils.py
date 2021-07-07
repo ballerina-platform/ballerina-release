@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import time
 import urllib.request
 
@@ -34,6 +35,22 @@ def write_json_file(file_path, file_content):
             json_file.truncate()
     except Exception as e:
         raise e
+
+
+def get_module_message(module, link):
+    module_message = "<" + link + "|" + module['name'] + ">" + "\t\t"
+    if module['code_owner_id_env'] != "":
+        code_owner_id = os.getenv(module['code_owner_id_env'])
+        if code_owner_id != "":
+            module_message += "<users/" + code_owner_id + ">\n"
+        else:
+            print("Code owner for module '" + module['name'] + "' is empty.")
+    return module_message
+
+
+def get_sanitised_chat_message(message):
+    sanitised = re.sub('<user/.*>', '', message)
+    return sanitised
 
 
 @retry(
@@ -88,9 +105,9 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
             remote_file_in_pr_branch = ""
 
         if updated_file_content == remote_file_contents:
-            return False
+            return False, ""
         elif updated_file_content == remote_file_in_pr_branch:
-            return True
+            return True, ""
         else:
             base = repo.get_branch(repo.default_branch)
             branch = commit_branch
@@ -120,7 +137,40 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
                 update_branch = repo.get_git_ref("heads/" + commit_branch)
                 update_branch.edit(update["commit"].sha, force=True)
                 repo.get_git_ref("heads/" + branch).delete()
-            return True
+            return True, update["commit"].sha
+    except GithubException as e:
+        raise e
+
+
+def commit_image_file(repository_name, file_path, updated_file_content, commit_branch, commit_message):
+    try:
+        author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
+
+        repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + repository_name)
+
+        remote_file = repo.get_contents(file_path)
+        remote_file_contents = remote_file.decoded_content
+
+        try:
+            remote_file_in_pr_branch = repo.get_contents(file_path, commit_branch)
+            remote_file_in_pr_branch = remote_file_in_pr_branch.decoded_content
+        except GithubException:
+            remote_file_in_pr_branch = ""
+
+        if updated_file_content == remote_file_contents:
+            return
+        elif updated_file_content == remote_file_in_pr_branch:
+            return
+        else:
+            repo.update_file(
+                file_path,
+                commit_message,
+                updated_file_content,
+                remote_file.sha,
+                branch=commit_branch,
+                author=author
+            )
+            return
     except GithubException as e:
         raise e
 

@@ -6,9 +6,12 @@ import time
 from github import Github, GithubException
 
 import constants
+import notify_chat
 import utils
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
+
+MODULE_BUILD_ACTION_FILE = "build_action_file"
 
 MODULE_CREATED_PR = 'created_pr'
 MODULE_TIMESTAMPED_VERSION = 'timestamped_version'
@@ -90,7 +93,7 @@ def main():
         update = utils.commit_file('ballerina-release',
                                    constants.LANG_VERSION_FILE, updated_file_content,
                                    constants.EXTENSIONS_UPDATE_BRANCH,
-                                   '[Automated] Update Workflow Lang Version')
+                                   '[Automated] Update Workflow Lang Version')[0]
         if update:
             utils.open_pr_and_merge('ballerina-release',
                                     '[Automated] Update Dependency Bump Workflow Triggered Version',
@@ -118,7 +121,14 @@ def main():
             update_module(idx, current_level)
 
         if auto_merge_pull_requests.lower() == 'true':
-            wait_for_current_level_build(current_level)
+            module_release_failure, chat_message = wait_for_current_level_build(current_level)
+            if module_release_failure:
+                chat_message += "After following up on the above, retrigger the <" + \
+                                "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
+                                "|Dependency Update Workflow>"
+                print(utils.get_sanitised_chat_message(chat_message))
+                notify_chat.send_message(chat_message)
+                sys.exit(1)
     print('Successfully bumped dependencies in extensions packed in ballerina-distribution')
 
     central_module_level = extensions_file['central_modules'][-1]['level']
@@ -133,7 +143,7 @@ def main():
             update_module(idx, current_level)
 
         if auto_merge_pull_requests.lower() == 'true':
-            wait_for_current_level_build(current_level)
+            _, _ = wait_for_current_level_build(current_level)
     print('Successfully bumped dependencies in extensions available in central')
 
 
@@ -178,40 +188,44 @@ def wait_for_current_level_build(level):
             sys.exit(1)
 
     module_release_failure = False
+    chat_message = "Dependency update to lang version \'" + lang_version + "\'.\n"
     pr_checks_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules dependency PRs have failed checks...')
+        chat_message += 'Following modules\' Automated Dependency Update PRs have failed checks...' + "\n"
         for module in pr_checks_failed_modules:
-            print(module['name'])
+            chat_message += utils.get_module_message(module, module[MODULE_CREATED_PR].html_url)
 
     pr_merged_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_MERGE_FAILURE, current_level_modules))
     if len(pr_merged_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules dependency PRs could not be merged...')
+        chat_message += 'Following modules\' Automated Dependency Update PRs could not be merged...' + "\n"
         for module in pr_merged_failed_modules:
-            print(module['name'])
+            chat_message += utils.get_module_message(module, module[MODULE_CREATED_PR].html_url)
 
     build_checks_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_FAILURE, current_level_modules))
     if len(build_checks_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules timestamped build checks failed...')
+        chat_message += 'Following modules\' Timestamped Build checks have failed...' + "\n"
         for module in build_checks_failed_modules:
-            print(module['name'])
+            build_actions_page = constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
+                                 module[MODULE_BUILD_ACTION_FILE] + ".yml"
+            chat_message += utils.get_module_message(module, build_actions_page)
 
     build_version_failed_modules = list(
         filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED, current_level_modules))
     if len(build_version_failed_modules) != 0:
         module_release_failure = True
-        print('Following modules timestamped build version cannot be identified...')
+        chat_message += 'Following modules\' latest Timestamped Build Version cannot be identified...' + "\n"
         for module in build_version_failed_modules:
-            print(module['name'])
+            build_actions_page = constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
+                                 module[MODULE_BUILD_ACTION_FILE] + ".yml"
+            chat_message += utils.get_module_message(module, build_actions_page)
 
-    if module_release_failure:
-        sys.exit(1)
+    return module_release_failure, chat_message
 
 
 def check_pending_pr_checks(index: int):
@@ -220,12 +234,14 @@ def check_pending_pr_checks(index: int):
     print("[Info] Checking the status of the dependency bump PR in module '" + module['name'] + "'")
     passing = True
     pending = False
+    count = 0
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
 
     failed_pr_checks = []
     pull_request = repo.get_pull(module[MODULE_CREATED_PR].number)
     sha = pull_request.head.sha
     for pr_check in repo.get_commit(sha=sha).get_check_runs():
+        count += 1
         # Ignore codecov checks temporarily due to bug
         if not pr_check.name.startswith('codecov'):
             if pr_check.status != 'completed':
@@ -243,6 +259,9 @@ def check_pending_pr_checks(index: int):
                 }
                 failed_pr_checks.append(failed_pr_check)
                 passing = False
+    if count < 1:
+        # Here the checks have not been triggered yet.
+        return
     if not pending:
         if passing:
             if module['auto_merge'] & ('AUTO MERGE' in pull_request.title):
@@ -350,7 +369,7 @@ def update_module(idx: int, current_level):
     updated_properties_file = get_updated_properties_file(module['name'], current_level, properties_file)
 
     update = utils.commit_file(module['name'], constants.GRADLE_PROPERTIES_FILE, updated_properties_file,
-                               constants.DEPENDENCY_UPDATE_BRANCH, COMMIT_MESSAGE)
+                               constants.DEPENDENCY_UPDATE_BRANCH, COMMIT_MESSAGE)[0]
 
     if update:
         print("[Info] Update lang dependency in module '" + module['name'] + "'")
@@ -373,7 +392,10 @@ def get_updated_properties_file(module_name, current_level, properties_file):
     updated_properties_file = ''
 
     split_lang_version = lang_version.split('-')
-    processed_lang_version = split_lang_version[2] + split_lang_version[3]
+    if len(split_lang_version) > 3:
+        processed_lang_version = split_lang_version[2] + split_lang_version[3]
+    else:
+        processed_lang_version = split_lang_version[1]
 
     for line in properties_file.splitlines():
         if line.startswith(constants.LANG_VERSION_KEY):
@@ -384,7 +406,7 @@ def get_updated_properties_file(module_name, current_level, properties_file):
             if len(split_current_version) > 3:
                 processed_current_version = split_current_version[2] + split_current_version[3]
 
-                if processed_current_version < processed_lang_version:
+                if len(split_current_version) < 3 or processed_current_version < processed_lang_version:
                     print("[Info] Updating the lang version in module: '" + module_name + "'")
                     updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
                 else:
