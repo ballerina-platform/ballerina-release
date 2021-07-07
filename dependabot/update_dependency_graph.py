@@ -208,6 +208,8 @@ def initialize_module_details(modules_list):
             'auto_merge': module.get('auto_merge', True),
             'central_only_module': module.get('central_only_module', True),
             'build_action_file': module.get('build_action_file', get_default_build_file(module['name'])),
+            'code_owner_id_env': module.get('code_owner_id_env',
+                                            'ALL_USER_ID' if module['name'] == 'ballerina-distribution' else ''),
             'dependents': []})
     # TODO: Add transitive dependencies
     return module_details_json
