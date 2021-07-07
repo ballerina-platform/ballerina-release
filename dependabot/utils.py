@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import time
 import urllib.request
 
@@ -34,6 +35,20 @@ def write_json_file(file_path, file_content):
             json_file.truncate()
     except Exception as e:
         raise e
+
+
+def get_module_message(module, link):
+    module_message = "<" + link + "|" + module['name'] + ">" + "\t\t"
+    if module['code_owner_id_env'] != "":
+        code_owner_id = os.getenv(module['code_owner_id_env'])
+        if code_owner_id != "":
+            module_message += "<users/" + code_owner_id + ">\n"
+    return module_message
+
+
+def get_sanitised_chat_message(message):
+    sanitised = re.sub('<user/.*>', '', message)
+    return sanitised
 
 
 @retry(

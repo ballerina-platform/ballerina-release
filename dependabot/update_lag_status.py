@@ -82,8 +82,8 @@ def main():
                 lag_status_link = module[MODULE_PULL_REQUEST]
                 if lag_status_link == "":
                     lag_status_link = constants.BALLERINA_ORG_URL + module[MODULE_NAME]
-                chat_message += "<" + lag_status_link + "|" + module['name'] + ">" + "\n"
-            print("\n" + chat_message)
+                chat_message += utils.get_module_message(module, lag_status_link)
+            print("\n" + utils.get_sanitised_chat_message(chat_message))
             notify_chat.send_message(chat_message)
     else:
         print('No changes to ' + README_FILE + ' file')
