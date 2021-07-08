@@ -45,7 +45,7 @@ def get_module_message(module, link):
             module_message += "<users/" + code_owner_id + ">"
         else:
             print("Code owner for module '" + module['name'] + "' is empty.")
-        module_message += "\n"
+    module_message += "\n"
     return module_message
 
 
