@@ -42,9 +42,10 @@ def get_module_message(module, link):
     if module['code_owner_id_env'] != "":
         code_owner_id = os.getenv(module['code_owner_id_env'])
         if code_owner_id != "":
-            module_message += "<users/" + code_owner_id + ">\n"
+            module_message += "<users/" + code_owner_id + ">"
         else:
             print("Code owner for module '" + module['name'] + "' is empty.")
+        module_message += "\n"
     return module_message
 
 
