@@ -210,6 +210,7 @@ def initialize_module_details(modules_list):
             'build_action_file': module.get('build_action_file', get_default_build_file(module['name'])),
             'code_owner_id_env': module.get('code_owner_id_env',
                                             'ALL_USER_ID' if module['name'] == 'ballerina-distribution' else ''),
+            'send_notification': module.get('send_notification', True),
             'dependents': []})
     # TODO: Add transitive dependencies
     return module_details_json
