@@ -43,10 +43,11 @@ MAX_WAIT_CYCLES = 120  # Initial timeout is 1h, changed to 80 & 100 m in level 5
 retrigger_dependency_bump = sys.argv[1]
 override_ballerina_version = sys.argv[2]
 auto_merge_pull_requests = sys.argv[3]
+send_notification = sys.argv[4]
 
 event_type = 'workflow_dispatch'
-if len(sys.argv) > 4:
-    event_type = sys.argv[4]
+if len(sys.argv) > 5:
+    event_type = sys.argv[5]
 
 github = Github(ballerina_bot_token)
 
@@ -122,7 +123,7 @@ def main():
 
         if auto_merge_pull_requests.lower() == 'true':
             module_release_failure, chat_message = wait_for_current_level_build(current_level)
-            if module_release_failure:
+            if send_notification == 'true' and module_release_failure:
                 chat_message += "After following up on the above, retrigger the <" + \
                                 "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
                                 "|Dependency Update Workflow>"
