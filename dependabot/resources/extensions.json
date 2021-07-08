@@ -1,6 +1,6 @@
 {
-    "auto_bump": false,
-    "lang_version_substring": "beta.2",
+    "auto_bump": true,
+    "lang_version_substring": "beta.3",
     "modules": [
         {
             "name": "module-ballerina-docker",
