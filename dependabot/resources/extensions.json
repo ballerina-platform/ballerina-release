@@ -647,6 +647,7 @@
             "code_owner_id_env": "LAHIRU_USER_ID",
             "dependents": [
                 "module-ballerinax-java.jdbc",
+                "module-ballerinax-mssql",
                 "module-ballerinax-mysql",
                 "module-ballerinax-postgresql",
                 "ballerina-distribution"
@@ -663,6 +664,19 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "LAHIRU_USER_ID",
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-mssql",
+            "level": 8,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mssql-ballerina",
+            "version_key": "stdlibMssqlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "central_only_module": false,
+            "build_action_file": "build-timestamped-master",
+            "code_owner_id_env": "KANEEL_USER_ID",
             "dependents": []
         },
         {
