@@ -184,21 +184,21 @@ def wait_for_current_level_build(level):
 
     module_release_failure = False
     chat_message = "Dependency update to lang version \'" + lang_version + "\'.\n"
-    pr_checks_failed_modules = filter_modules(current_level_modules, MODULE_CONCLUSION_PR_CHECK_FAILURE)
+    pr_checks_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_PR_CHECK_FAILURE)
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
         chat_message += 'Following modules\' Automated Dependency Update PRs have failed checks...' + "\n"
         for module in pr_checks_failed_modules:
             chat_message += utils.get_module_message(module, module[MODULE_CREATED_PR].html_url)
 
-    pr_merged_failed_modules = filter_modules(current_level_modules, MODULE_CONCLUSION_PR_MERGE_FAILURE)
+    pr_merged_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_PR_MERGE_FAILURE)
     if len(pr_merged_failed_modules) != 0:
         module_release_failure = True
         chat_message += 'Following modules\' Automated Dependency Update PRs could not be merged...' + "\n"
         for module in pr_merged_failed_modules:
             chat_message += utils.get_module_message(module, module[MODULE_CREATED_PR].html_url)
 
-    build_checks_failed_modules = filter_modules(current_level_modules, MODULE_CONCLUSION_BUILD_FAILURE)
+    build_checks_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_BUILD_FAILURE)
     if len(build_checks_failed_modules) != 0:
         module_release_failure = True
         chat_message += 'Following modules\' Timestamped Build checks have failed...' + "\n"
@@ -207,7 +207,7 @@ def wait_for_current_level_build(level):
                                  module[MODULE_BUILD_ACTION_FILE] + ".yml"
             chat_message += utils.get_module_message(module, build_actions_page)
 
-    build_version_failed_modules = filter_modules(current_level_modules, MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED)
+    build_version_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED)
     if len(build_version_failed_modules) != 0:
         module_release_failure = True
         chat_message += 'Following modules\' latest Timestamped Build Version cannot be identified...' + "\n"
@@ -226,7 +226,7 @@ def wait_for_current_level_build(level):
         sys.exit(1)
 
 
-def filter_modules(modules, conclusion):
+def filter_failed_modules(modules, conclusion):
     filtered_list = list(
         filter(lambda s: s[MODULE_CONCLUSION] == conclusion and s['send_notification'] is True, modules))
     return filtered_list
