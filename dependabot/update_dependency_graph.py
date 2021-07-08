@@ -201,7 +201,7 @@ def initialize_module_details(modules_list):
         module_details_json['modules'].append({
             'name': module['name'],
             'level': 0,
-            'group_id': module.get('group_id', 'org.ballerinalang'),
+            'group_id': module.get('group_id', 'io.ballerina.stdlib'),
             'artifact_id': module.get('artifact_id', default_artifact_id),
             'version_key': module.get('version_key', default_version_key),
             'default_branch': default_branch,
