@@ -15,6 +15,10 @@ on:
         description: 'Auto Merge PRs'
         required: false
         default: 'true'
+      sendNotification:
+        description: 'Send failure notification to Google Chat'
+        required: false
+        default: 'true'
   schedule:
     - cron: '30 6 * * *'
 
@@ -43,12 +47,13 @@ jobs:
         run: |
           if ${IS_SCHEDULE_WORKFLOW} == true; then
             echo "Schedule Workflow Triggered"
-            python dependabot/update_dependencies_in_pipeline.py "false" "" "true" "schedule" 
+            python dependabot/update_dependencies_in_pipeline.py "false" "" "true" "true" "schedule"
            else
              echo "Manual Trigger"
              python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.isRetrigger }}" \
                                                             "${{ github.event.inputs.ballerinaVersion }}" \
-                                                            "${{ github.event.inputs.autoMergePRs }}"
+                                                            "${{ github.event.inputs.autoMergePRs }}" \
+                                                            "${{ github.event.inputs.sendNotification }}"
            fi
         env:
           IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'schedule' }}
