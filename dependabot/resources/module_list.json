@@ -231,6 +231,11 @@
             "name": "module-ballerinax-postgresql",
             "central_only_module": false,
             "code_owner_id_env": "KALAIYARASI_USER_ID"
+        },
+        {
+            "name": "module-ballerinax-mssql",
+            "central_only_module": false,
+            "code_owner_id_env": "KANEEL_USER_ID"
         }
     ]
 }

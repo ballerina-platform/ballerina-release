@@ -76,6 +76,7 @@ jobs:
           AYESH_USER_ID: ${{ secrets.AYESH_USER_ID }}
           DILAN_USER_ID: ${{ secrets.DILAN_USER_ID }}
           LAHIRU_USER_ID: ${{ secrets.LAHIRU_USER_ID }}
+          KANEEL_USER_ID: ${{ secrets.KANEEL_USER_ID }}
           ALL_USER_ID: 'all'
 
       - name: Trigger Dashboard Update
