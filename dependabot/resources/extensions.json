@@ -13,6 +13,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "ANURUDDHA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-c2c"
             ]
@@ -28,6 +29,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "BUDDHI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerinax-datamapper",
                 "module-ballerina-log",
@@ -46,6 +48,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "BUDDHI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -61,6 +64,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "MADHUKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-websub"
             ]
@@ -76,6 +80,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KALAIYARASI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-log",
                 "module-ballerina-uuid"
@@ -92,6 +97,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "BUDDHI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-crypto",
                 "module-ballerina-file",
@@ -109,6 +115,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "CHANANKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -124,6 +131,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KALAIYARASI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-openapi"
             ]
@@ -139,6 +147,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "CHANANKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
@@ -160,6 +169,7 @@
             "central_only_module": false,
             "build_action_file": "build-master",
             "code_owner_id_env": "",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -175,6 +185,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "MADHUKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-file",
@@ -199,6 +210,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "MADHUKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-file"
             ]
@@ -214,6 +226,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KALAIYARASI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-cache",
                 "module-ballerina-email",
@@ -231,6 +244,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KALAIYARASI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -246,6 +260,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KALAIYARASI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
@@ -263,6 +278,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KALAIYARASI_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
@@ -279,6 +295,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "MANINDA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -294,6 +311,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "CHAMIL_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
@@ -310,6 +328,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "ARSHIKA_USER_ID",
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -323,6 +342,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "ARSHIKA_USER_ID",
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -336,6 +356,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "BHASHINEE_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -351,6 +372,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "MANINDA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -366,6 +388,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "MADHUKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -381,6 +404,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "CHANANKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -396,6 +420,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "MANINDA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -411,6 +436,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "CHANANKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -426,6 +452,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "CHANANKA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-http"
             ]
@@ -441,6 +468,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "CHAMIL_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
@@ -466,6 +494,7 @@
             "central_only_module": false,
             "build_action_file": "build-master",
             "code_owner_id_env": "ANJANA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -481,6 +510,7 @@
             "central_only_module": false,
             "build_action_file": "build-master",
             "code_owner_id_env": "ANJANA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -496,6 +526,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "THISARU_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-c2c"
             ]
@@ -511,6 +542,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "DANESH_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerina-c2c",
                 "module-ballerinax-choreo"
@@ -527,6 +559,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "SUMUDU_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -542,6 +575,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "GIMANTHA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerinax-kafka",
                 "module-ballerinax-rabbitmq",
@@ -559,6 +593,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "BHASHINEE_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -574,6 +609,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "AYESH_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -589,6 +625,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "AYESH_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -604,6 +641,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "ANURUDDHA_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
@@ -619,6 +657,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "DILAN_USER_ID",
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -632,6 +671,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "ARSHIKA_USER_ID",
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -645,6 +685,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "LAHIRU_USER_ID",
+            "send_notification": true,
             "dependents": [
                 "module-ballerinax-java.jdbc",
                 "module-ballerinax-mssql",
@@ -664,6 +705,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "LAHIRU_USER_ID",
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -677,6 +719,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KANEEL_USER_ID",
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -690,6 +733,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "LAHIRU_USER_ID",
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -703,6 +747,7 @@
             "central_only_module": false,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KALAIYARASI_USER_ID",
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -716,6 +761,7 @@
             "central_only_module": false,
             "build_action_file": "main",
             "code_owner_id_env": "ALL_USER_ID",
+            "send_notification": true,
             "dependents": []
         }
     ],
@@ -731,6 +777,7 @@
             "central_only_module": true,
             "build_action_file": "build-main",
             "code_owner_id_env": "",
+            "send_notification": false,
             "dependents": []
         },
         {
@@ -744,6 +791,7 @@
             "central_only_module": true,
             "build_action_file": "build-main",
             "code_owner_id_env": "",
+            "send_notification": false,
             "dependents": []
         },
         {
@@ -757,6 +805,7 @@
             "central_only_module": true,
             "build_action_file": "build-main",
             "code_owner_id_env": "",
+            "send_notification": false,
             "dependents": []
         }
     ]
