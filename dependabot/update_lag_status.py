@@ -360,13 +360,13 @@ def get_updated_readme():
     updated_readme += distribution_statement + "<br><br>\n"
     updated_readme += lang_version_statement + "\n</td>\n</tr></tbody></table> \n\n "
 
-    updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
+    updated_readme += "## Ballerina Standard library" + "\n"
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
     updated_readme = update_modules(updated_readme, module_details_list, False)
 
-    updated_readme += "## Modules Released to Central" + "\n"
+    updated_readme += "## Ballerina Extended libraries" + "\n"
 
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
