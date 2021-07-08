@@ -8,7 +8,7 @@
 </td>
 </tr></tbody></table> 
 
- ## Modules and Extensions Packed in Distribution
+ ## Ballerina Standard library
 | Level | Modules | Build | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|:---:|
 | 1 | [docker](https://github.com/ballerina-platform/module-ballerina-docker) | [![Build](https://github.com/ballerina-platform/module-ballerina-docker/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-docker/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-docker/blob/master/gradle.properties) | []() | 
@@ -49,7 +49,7 @@
 | 7 | [c2c](https://github.com/ballerina-platform/module-ballerina-c2c) | [![Build](https://github.com/ballerina-platform/module-ballerina-c2c/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-c2c/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-c2c/blob/master/gradle.properties) | []() | 
 |  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Build](https://github.com/ballerina-platform/module-ballerina-sql/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-sql/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-sql/blob/master/gradle.properties) | []() | 
 | 8 | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Build](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml/badge.svg)](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | []() | 
-## Modules Released to Central
+## Ballerina Extended libraries
 | Level | Modules | Build | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|:---:|
 | 9 | [nats](https://github.com/ballerina-platform/module-ballerinax-nats) | [![Build](https://github.com/ballerina-platform/module-ballerinax-nats/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-nats/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-nats/blob/master/gradle.properties) | []() | 
