@@ -190,6 +190,7 @@
         },
         {
             "name": "module-ballerinai-transaction",
+            "group_id": "org.ballerinalang",
             "code_owner_id_env": "GIMANTHA_USER_ID"
         },
         {
