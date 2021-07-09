@@ -184,32 +184,32 @@ def wait_for_current_level_build(level):
 
     module_release_failure = False
     chat_message = "Dependency update to lang version \'" + lang_version + "\'.\n"
-    pr_checks_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_PR_CHECK_FAILURE)
+    failure, pr_checks_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_PR_CHECK_FAILURE)
+    module_release_failure = module_release_failure or failure
     if len(pr_checks_failed_modules) != 0:
-        module_release_failure = True
         chat_message += 'Following modules\' Automated Dependency Update PRs have failed checks...' + "\n"
         for module in pr_checks_failed_modules:
             chat_message += utils.get_module_message(module, module[MODULE_CREATED_PR].html_url)
 
-    pr_merged_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_PR_MERGE_FAILURE)
+    failure, pr_merged_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_PR_MERGE_FAILURE)
+    module_release_failure = module_release_failure or failure
     if len(pr_merged_failed_modules) != 0:
-        module_release_failure = True
         chat_message += 'Following modules\' Automated Dependency Update PRs could not be merged...' + "\n"
         for module in pr_merged_failed_modules:
             chat_message += utils.get_module_message(module, module[MODULE_CREATED_PR].html_url)
 
-    build_checks_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_BUILD_FAILURE)
+    failure, build_checks_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_BUILD_FAILURE)
+    module_release_failure = module_release_failure or failure
     if len(build_checks_failed_modules) != 0:
-        module_release_failure = True
         chat_message += 'Following modules\' Timestamped Build checks have failed...' + "\n"
         for module in build_checks_failed_modules:
             build_actions_page = constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
                                  module[MODULE_BUILD_ACTION_FILE] + ".yml"
             chat_message += utils.get_module_message(module, build_actions_page)
 
-    build_version_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED)
+    failure, build_version_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED)
+    module_release_failure = module_release_failure or failure
     if len(build_version_failed_modules) != 0:
-        module_release_failure = True
         chat_message += 'Following modules\' latest Timestamped Build Version cannot be identified...' + "\n"
         for module in build_version_failed_modules:
             build_actions_page = constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
@@ -228,9 +228,12 @@ def wait_for_current_level_build(level):
 
 
 def filter_failed_modules(modules, conclusion):
-    filtered_list = list(
-        filter(lambda s: s[MODULE_CONCLUSION] == conclusion and s['send_notification'] is True, modules))
-    return filtered_list
+    failure = False
+    filtered_failed_modules = list(filter(lambda s: s[MODULE_CONCLUSION] == conclusion, modules))
+    filtered_list = list(filter(lambda s: s['send_notification'] is True, filtered_failed_modules))
+    if len(filtered_failed_modules) > 0:
+        failure = True
+    return failure, filtered_list
 
 
 def check_pending_pr_checks(index: int):
