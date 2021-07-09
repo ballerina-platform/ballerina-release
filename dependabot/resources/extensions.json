@@ -539,7 +539,7 @@
         {
             "name": "module-ballerinai-transaction",
             "level": 6,
-            "group_id": "io.ballerina.stdlib",
+            "group_id": "org.ballerinalang",
             "artifact_id": "transaction-ballerina",
             "version_key": "stdlibTransactionVersion",
             "default_branch": "master",
