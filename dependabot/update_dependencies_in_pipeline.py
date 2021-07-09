@@ -220,9 +220,10 @@ def wait_for_current_level_build(level):
                     "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
                     "|Dependency Update Workflow>"
 
-    if send_notification == 'true' and module_release_failure:
+    if module_release_failure:
         print(utils.get_sanitised_chat_message(chat_message))
-        notify_chat.send_message(chat_message)
+        if send_notification == 'true':
+            notify_chat.send_message(chat_message)
         sys.exit(1)
 
 
