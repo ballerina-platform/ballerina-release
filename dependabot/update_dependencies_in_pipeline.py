@@ -183,10 +183,12 @@ def wait_for_current_level_build(level):
             sys.exit(1)
 
     module_release_failure = False
+    chat_message_send = False
     chat_message = "Dependency update to lang version \'" + lang_version + "\'.\n"
     failure, pr_checks_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_PR_CHECK_FAILURE)
     module_release_failure = module_release_failure or failure
     if len(pr_checks_failed_modules) != 0:
+        chat_message_send = True
         chat_message += 'Following modules\' Automated Dependency Update PRs have failed checks...' + "\n"
         for module in pr_checks_failed_modules:
             chat_message += utils.get_module_message(module, module[MODULE_CREATED_PR].html_url)
@@ -194,6 +196,7 @@ def wait_for_current_level_build(level):
     failure, pr_merged_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_PR_MERGE_FAILURE)
     module_release_failure = module_release_failure or failure
     if len(pr_merged_failed_modules) != 0:
+        chat_message_send = True
         chat_message += 'Following modules\' Automated Dependency Update PRs could not be merged...' + "\n"
         for module in pr_merged_failed_modules:
             chat_message += utils.get_module_message(module, module[MODULE_CREATED_PR].html_url)
@@ -201,6 +204,7 @@ def wait_for_current_level_build(level):
     failure, build_checks_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_BUILD_FAILURE)
     module_release_failure = module_release_failure or failure
     if len(build_checks_failed_modules) != 0:
+        chat_message_send = True
         chat_message += 'Following modules\' Timestamped Build checks have failed...' + "\n"
         for module in build_checks_failed_modules:
             build_actions_page = constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
@@ -210,6 +214,7 @@ def wait_for_current_level_build(level):
     failure, build_version_failed_modules = filter_failed_modules(current_level_modules, MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED)
     module_release_failure = module_release_failure or failure
     if len(build_version_failed_modules) != 0:
+        chat_message_send = True
         chat_message += 'Following modules\' latest Timestamped Build Version cannot be identified...' + "\n"
         for module in build_version_failed_modules:
             build_actions_page = constants.BALLERINA_ORG_URL + module['name'] + "/actions/workflows/" + \
@@ -220,10 +225,11 @@ def wait_for_current_level_build(level):
                     "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
                     "|Dependency Update Workflow>"
 
+    if send_notification == 'true' and chat_message_send:
+        notify_chat.send_message(chat_message)
+
     if module_release_failure:
         print(utils.get_sanitised_chat_message(chat_message))
-        if send_notification == 'true':
-            notify_chat.send_message(chat_message)
         sys.exit(1)
 
 
