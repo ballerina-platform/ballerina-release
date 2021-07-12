@@ -4,7 +4,7 @@
     "modules": [
         {
             "name": "module-ballerina-auth",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "code_owner_id_env": "USER_ID_CHANANKA"
         },
         {
             "name": "module-ballerinax-aws.lambda",
@@ -12,7 +12,7 @@
             "artifact_id": "awslambda-extension-bala",
             "version_key": "awslambdaVersion",
             "build_action_file": "build-master",
-            "code_owner_id_env": "ANJANA_USER_ID"
+            "code_owner_id_env": "USER_ID_ANJANA"
         },
         {
             "name": "module-ballerinax-azure.functions",
@@ -20,18 +20,18 @@
             "artifact_id": "azurefunctions-extension",
             "version_key": "azFunctionsVersion",
             "build_action_file": "build-master",
-            "code_owner_id_env": "ANJANA_USER_ID"
+            "code_owner_id_env": "USER_ID_ANJANA"
         },
         {
             "name": "module-ballerina-c2c",
             "group_id": "io.ballerina",
             "artifact_id": "c2c-ballerina",
             "version_key": "c2cVersion",
-            "code_owner_id_env": "ANURUDDHA_USER_ID"
+            "code_owner_id_env": "USER_ID_ANURUDDHA"
         },
         {
             "name": "module-ballerina-cache",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "code_owner_id_env": "USER_ID_KALAIYARASI"
         },
         {
             "name": "module-ballerinax-choreo",
@@ -44,7 +44,7 @@
         },
         {
             "name": "module-ballerina-crypto",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "code_owner_id_env": "USER_ID_CHANANKA"
         },
         {
             "name": "module-ballerinax-datamapper",
@@ -58,35 +58,35 @@
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
             "version_key": "dockerVersion",
-            "code_owner_id_env": "ANURUDDHA_USER_ID"
+            "code_owner_id_env": "USER_ID_ANURUDDHA"
         },
         {
             "name": "module-ballerina-email",
-            "code_owner_id_env": "MANINDA_USER_ID"
+            "code_owner_id_env": "USER_ID_MANINDA"
         },
         {
             "name": "module-ballerina-file",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "code_owner_id_env": "USER_ID_KALAIYARASI"
         },
         {
             "name": "module-ballerina-ftp",
-            "code_owner_id_env": "MANINDA_USER_ID"
+            "code_owner_id_env": "USER_ID_MANINDA"
         },
         {
             "name": "module-ballerina-graphql",
-            "code_owner_id_env": "THISARU_USER_ID"
+            "code_owner_id_env": "USER_ID_THISARU"
         },
         {
             "name": "module-ballerina-grpc",
-            "code_owner_id_env": "DANESH_USER_ID"
+            "code_owner_id_env": "USER_ID_DANESH"
         },
         {
             "name": "module-ballerina-http",
-            "code_owner_id_env": "CHAMIL_USER_ID"
+            "code_owner_id_env": "USER_ID_CHAMIL"
         },
         {
             "name": "module-ballerina-io",
-            "code_owner_id_env": "BUDDHI_USER_ID"
+            "code_owner_id_env": "USER_ID_BUDDHI"
         },
         {
             "name": "module-ballerinax-jaeger",
@@ -100,52 +100,52 @@
         {
             "name": "module-ballerinax-java.jdbc",
             "version_key": "stdlibJdbcVersion",
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "code_owner_id_env": "USER_ID_LAHIRU"
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
             "version_key": "stdlibJavaArraysVersion",
-            "code_owner_id_env": "BUDDHI_USER_ID"
+            "code_owner_id_env": "USER_ID_BUDDHI"
         },
         {
             "name": "module-ballerina-jwt",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "code_owner_id_env": "USER_ID_CHANANKA"
         },
         {
             "name": "module-ballerinax-kafka",
-            "code_owner_id_env": "DILAN_USER_ID"
+            "code_owner_id_env": "USER_ID_DILAN"
         },
         {
             "name": "module-ballerina-log",
-            "code_owner_id_env": "MADHUKA_USER_ID"
+            "code_owner_id_env": "USER_ID_MADHUKA"
         },
         {
             "name": "module-ballerina-mime",
-            "code_owner_id_env": "CHAMIL_USER_ID"
+            "code_owner_id_env": "USER_ID_CHAMIL"
         },
         {
             "name": "module-ballerinax-mysql",
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "code_owner_id_env": "USER_ID_LAHIRU"
         },
         {
             "name": "module-ballerinax-nats",
-            "code_owner_id_env": "ARSHIKA_USER_ID"
+            "code_owner_id_env": "USER_ID_ARSHIKA"
         },
         {
             "name": "module-ballerina-oauth2",
             "version_key": "stdlibOAuth2Version",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "code_owner_id_env": "USER_ID_CHANANKA"
         },
         {
             "name": "ballerina-openapi",
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-openapi",
             "version_key": "openapiVersion",
-            "code_owner_id_env": "SUMUDU_USER_ID"
+            "code_owner_id_env": "USER_ID_SUMUDU"
         },
         {
             "name": "module-ballerina-os",
-            "code_owner_id_env": "MADHUKA_USER_ID"
+            "code_owner_id_env": "USER_ID_MADHUKA"
         },
         {
             "name": "module-ballerinax-prometheus",
@@ -158,80 +158,80 @@
         },
         {
             "name": "module-ballerinax-rabbitmq",
-            "code_owner_id_env": "ARSHIKA_USER_ID"
+            "code_owner_id_env": "USER_ID_ARSHIKA"
         },
         {
             "name": "module-ballerina-random",
-            "code_owner_id_env": "MADHUKA_USER_ID"
+            "code_owner_id_env": "USER_ID_MADHUKA"
         },
         {
             "name": "module-ballerina-regex",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "code_owner_id_env": "USER_ID_KALAIYARASI"
         },
         {
             "name": "module-ballerina-sql",
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "code_owner_id_env": "USER_ID_LAHIRU"
         },
         {
             "name": "module-ballerinax-stan",
-            "code_owner_id_env": "ARSHIKA_USER_ID"
+            "code_owner_id_env": "USER_ID_ARSHIKA"
         },
         {
             "name": "module-ballerina-task",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "code_owner_id_env": "USER_ID_KALAIYARASI"
         },
         {
             "name": "module-ballerina-tcp",
-            "code_owner_id_env": "BHASHINEE_USER_ID"
+            "code_owner_id_env": "USER_ID_BHASHINEE"
         },
         {
             "name": "module-ballerina-time",
-            "code_owner_id_env": "BUDDHI_USER_ID"
+            "code_owner_id_env": "USER_ID_BUDDHI"
         },
         {
             "name": "module-ballerinai-transaction",
             "group_id": "org.ballerinalang",
-            "code_owner_id_env": "GIMANTHA_USER_ID"
+            "code_owner_id_env": "USER_ID_GIMANTHA"
         },
         {
             "name": "module-ballerina-udp",
-            "code_owner_id_env": "MANINDA_USER_ID"
+            "code_owner_id_env": "USER_ID_MANINDA"
         },
         {
             "name": "module-ballerina-url",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "code_owner_id_env": "USER_ID_CHANANKA"
         },
         {
             "name": "module-ballerina-uuid",
-            "code_owner_id_env": "MADHUKA_USER_ID"
+            "code_owner_id_env": "USER_ID_MADHUKA"
         },
         {
             "name": "module-ballerina-websocket",
-            "code_owner_id_env": "BHASHINEE_USER_ID"
+            "code_owner_id_env": "USER_ID_BHASHINEE"
         },
         {
             "name": "module-ballerina-websub",
-            "code_owner_id_env": "AYESH_USER_ID"
+            "code_owner_id_env": "USER_ID_AYESH"
         },
         {
             "name": "module-ballerina-websubhub",
-            "code_owner_id_env": "AYESH_USER_ID"
+            "code_owner_id_env": "USER_ID_AYESH"
         },
         {
             "name": "module-ballerina-xmldata",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "code_owner_id_env": "USER_ID_KALAIYARASI"
         },
         {
             "name": "module-ballerina-xslt",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "code_owner_id_env": "USER_ID_KALAIYARASI"
         },
         {
             "name": "module-ballerinax-postgresql",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "code_owner_id_env": "USER_ID_KALAIYARASI"
         },
         {
             "name": "module-ballerinax-mssql",
-            "code_owner_id_env": "KANEEL_USER_ID"
+            "code_owner_id_env": "USER_ID_KANEEL"
         }
     ]
 }
