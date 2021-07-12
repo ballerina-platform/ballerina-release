@@ -253,7 +253,7 @@ def get_chat_message(modules, log_start, pr_link):
             else:
                 link = constants.BALLERINA_ORG_URL + notification_module['name'] + "/actions/workflows/" + \
                        notification_module[MODULE_BUILD_ACTION_FILE] + ".yml"
-            chat_message += utils.get_module_message(module, link)
+            chat_message += utils.get_module_message(notification_module, link)
 
     return send_chat, chat_message
 
