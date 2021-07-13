@@ -1,5 +1,5 @@
 {
-    "auto_bump": false,
+    "auto_bump": true,
     "lang_version_substring": "beta.3",
     "modules": [
         {
@@ -66,7 +66,8 @@
             "code_owner_id_env": "MADHUKA_USER_ID",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-websub"
+                "module-ballerina-websub",
+                "module-ballerina-websubhub"
             ]
         },
         {
