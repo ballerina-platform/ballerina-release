@@ -188,7 +188,7 @@ def wait_for_current_level_build(level):
     pr_checks_failed_modules = list(filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
-        pr_failed_message = 'Following modules\' Automated Dependency Update PRs have failed checks...' + "\n"
+        pr_failed_message = 'Following modules\' Automated Dependency Update PRs have failed checks...'
         send_chat, partial_chat_message = get_chat_message(pr_checks_failed_modules, pr_failed_message, True)
         chat_message_send = chat_message_send or send_chat
         chat_message += partial_chat_message
@@ -196,7 +196,7 @@ def wait_for_current_level_build(level):
     pr_merged_failed_modules = list(filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_MERGE_FAILURE, current_level_modules))
     if len(pr_merged_failed_modules) != 0:
         module_release_failure = True
-        pr_merged_failed_message = 'Following modules\' Automated Dependency Update PRs could not be merged...' + "\n"
+        pr_merged_failed_message = 'Following modules\' Automated Dependency Update PRs could not be merged...'
         send_chat, partial_chat_message = get_chat_message(pr_merged_failed_modules, pr_merged_failed_message, True)
         chat_message_send = chat_message_send or send_chat
         chat_message += partial_chat_message
@@ -204,7 +204,7 @@ def wait_for_current_level_build(level):
     build_checks_failed_modules = list(filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_FAILURE, current_level_modules))
     if len(build_checks_failed_modules) != 0:
         module_release_failure = True
-        build_checks_failed_message = 'Following modules\' Timestamped Build checks have failed...' + "\n"
+        build_checks_failed_message = 'Following modules\' Timestamped Build checks have failed...'
         send_chat, partial_chat_message = get_chat_message(build_checks_failed_modules, build_checks_failed_message, False)
         chat_message_send = chat_message_send or send_chat
         chat_message += partial_chat_message
@@ -212,7 +212,7 @@ def wait_for_current_level_build(level):
     build_version_failed_modules = list(filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED, current_level_modules))
     if len(build_version_failed_modules) != 0:
         module_release_failure = True
-        build_version_failed_message = 'Following modules\' latest Timestamped Build Version cannot be identified...' + "\n"
+        build_version_failed_message = 'Following modules\' latest Timestamped Build Version cannot be identified...'
         send_chat, partial_chat_message = get_chat_message(build_version_failed_modules, build_version_failed_message, False)
         chat_message_send = chat_message_send or send_chat
         chat_message += partial_chat_message
@@ -225,6 +225,7 @@ def wait_for_current_level_build(level):
         notify_chat.send_message(chat_message)
 
     if module_release_failure:
+        print('\nModules that were notified:')
         print(utils.get_sanitised_chat_message(chat_message))
         sys.exit(1)
 
@@ -232,6 +233,7 @@ def wait_for_current_level_build(level):
 def get_chat_message(modules, log_start, pr_link):
     print_log_modules = list(filter(lambda s: s['send_notification'] is False, modules))
     if len(print_log_modules) > 0:
+        print('\nModules that were not notified:')
         print(log_start)
         for failed_module in print_log_modules:
             if pr_link:
@@ -246,7 +248,7 @@ def get_chat_message(modules, log_start, pr_link):
     notification_modules = list(filter(lambda s: s['send_notification'] is True, modules))
     if len(notification_modules) > 0:
         send_chat = True
-        chat_message = log_start
+        chat_message = log_start + '\n'
         for notification_module in notification_modules:
             if pr_link:
                 link = notification_module[MODULE_CREATED_PR].html_url
