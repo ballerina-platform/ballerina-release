@@ -50,7 +50,7 @@ def get_module_message(module, link):
 
 
 def get_sanitised_chat_message(message):
-    sanitised = re.sub('<user/.*>', '', message)
+    sanitised = re.sub('<users/.*>', '', message)
     return sanitised
 
 
