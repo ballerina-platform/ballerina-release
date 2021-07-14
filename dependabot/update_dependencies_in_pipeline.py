@@ -217,7 +217,7 @@ def wait_for_current_level_build(level):
         chat_message_send = chat_message_send or send_chat
         chat_message += partial_chat_message
 
-    chat_message += "After following up on the above, retrigger the <" + \
+    chat_message += "After following up on the above, trigger the <" + \
                     "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
                     "|Dependency Update Workflow>"
 
