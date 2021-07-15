@@ -184,7 +184,7 @@ def wait_for_current_level_build(level):
 
     module_release_failure = False
     chat_message_send = False
-    chat_message = "Dependency update to lang version *" + lang_version + "*\n"
+    chat_message = "Dependency update to lang version *" + lang_version + "*\n\n"
     pr_checks_failed_modules = list(filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
