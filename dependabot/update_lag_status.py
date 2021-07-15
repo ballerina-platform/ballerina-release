@@ -195,8 +195,11 @@ def get_lag_button(module):
     global modules_with_no_lag
     lag = False
     days, hrs, color = get_lag_info(module[MODULE_NAME])
-    if days > 0:
+    if days > 1:
         lag_status = str(days) + "%20days"
+        lag = True
+    elif days > 0:
+        lag_status = str(days) + "%20day"
         lag = True
     elif days == 0 and hrs > 0:
         lag_status = str(hrs) + "%20h"
