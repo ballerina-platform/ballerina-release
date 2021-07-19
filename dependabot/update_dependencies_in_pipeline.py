@@ -97,8 +97,8 @@ def main():
                                    '[Automated] Update Workflow Lang Version')[0]
         if update:
             utils.open_pr_and_merge('ballerina-release',
-                                    '[Automated] Update Dependency Bump Workflow Triggered Version',
-                                    'Update bumped ballerina lang version',
+                                    '[Automated] Update Workflow Triggered Ballerina Version',
+                                    'Update workflow triggered ballerina lang version',
                                     constants.EXTENSIONS_UPDATE_BRANCH)
         else:
             print('No changes to ' + constants.LANG_VERSION_FILE + ' file')
@@ -112,7 +112,7 @@ def main():
 
     last_level = all_modules[-1]['level']
 
-    print('Start dependency bump to extensions packed in ballerina-distribution')
+    print('Start dependency update for Ballerina Standard Library')
     for i in range(last_level):
         current_level = i + 1
         current_level_modules = list(filter(lambda s: s['level'] == current_level, all_modules))
@@ -123,11 +123,11 @@ def main():
 
         if auto_merge_pull_requests.lower() == 'true':
             wait_for_current_level_build(current_level)
-    print('Successfully bumped dependencies in extensions packed in ballerina-distribution')
+    print('Successfully updated dependencies in Ballerina Standard Library')
 
     central_module_level = extensions_file['central_modules'][-1]['level']
 
-    print('Start dependency bump to extensions available only in central')
+    print('Start dependency update for Ballerina Extended Library')
     for j in range(last_level, central_module_level):
         current_level = j + 1
         current_level_modules = list(filter(lambda s: s['level'] == current_level, extensions_file['central_modules']))
@@ -138,7 +138,7 @@ def main():
 
         if auto_merge_pull_requests.lower() == 'true':
             wait_for_current_level_build(current_level)
-    print('Successfully bumped dependencies in extensions available in central')
+    print('Successfully updated dependencies in Ballerina Extended Library')
 
 
 def wait_for_current_level_build(level):
@@ -176,7 +176,7 @@ def wait_for_current_level_build(level):
             wait_cycles = wait_cycles + 1
         else:
             # Force stop script with all in progress modules printed
-            print('Dependency bump script timed out. Following modules are in pending state')
+            print('Dependency update script timed out. Following modules are in pending state')
             for module in current_level_modules:
                 if module[MODULE_STATUS] == MODULE_STATUS_IN_PROGRESS:
                     print(module['name'])
@@ -265,7 +265,7 @@ def get_chat_message(modules, log_start, pr_link):
 def check_pending_pr_checks(index: int):
     module = current_level_modules[index]
     global status_completed_modules
-    print("[Info] Checking the status of the dependency bump PR in module '" + module['name'] + "'")
+    print("[Info] Checking the status of the dependency update PR in module '" + module['name'] + "'")
     passing = True
     pending = False
     count = 0
@@ -301,7 +301,7 @@ def check_pending_pr_checks(index: int):
             if module['auto_merge'] & ('AUTO MERGE' in pull_request.title):
                 try:
                     pull_request.merge()
-                    log_message = "[Info] Automated version bump PR merged for module '" + module['name'] \
+                    log_message = "[Info] Automated version update PR merged for module '" + module['name'] \
                                   + "'. PR: " + pull_request.html_url
                     print(log_message)
                     current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
@@ -320,7 +320,7 @@ def check_pending_pr_checks(index: int):
             current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
             current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_PR_CHECK_FAILURE
             module_name = module['name']
-            print("[Error] Dependency bump PR checks have failed for '" + module_name + "'")
+            print("[Error] Dependency update PR checks have failed for '" + module_name + "'")
             for check in failed_pr_checks:
                 print("[" + module_name + "] PR check '" + check["name"] + "' failed for " + check["html_url"])
             status_completed_modules += 1
@@ -338,7 +338,9 @@ def check_pending_build_checks(index: int):
     sha = pull_request.merge_commit_sha
 
     failed_build_name, failed_build_html = [], []
-    if module[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_PENDING:
+    if module['name'] == 'ballerina-distribution':
+        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
+    elif module[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_PENDING:
         for build_check in repo.get_commit(sha=sha).get_check_runs():
             build_check_found = True
             # Ignore codecov checks temporarily due to bug
@@ -359,7 +361,7 @@ def check_pending_build_checks(index: int):
                 current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
                 current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_FAILURE
                 module_name = module['name']
-                print("[Error] Dependency bump PR merge build checks have failed for '" + module_name + "'")
+                print("[Error] Dependency update PR merge build checks have failed for '" + module_name + "'")
                 for name, html_url in zip(failed_build_name, failed_build_html):
                     print("[" + module_name + "] Build check '" + name + "' failed for " + html_url)
                 status_completed_modules += 1
@@ -368,28 +370,25 @@ def check_pending_build_checks(index: int):
         current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_SUCCESS
 
     if current_level_modules[index][MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_SUCCESS:
-        if current_level_modules[index]['name'] == 'ballerina-distribution':
+        try:
+            packages_url = 'https://api.github.com/orgs/' + constants.BALLERINA_ORG_NAME + '/packages/maven/' \
+                           + module['group_id'] + '.' + module['artifact_id'] + '/versions'
+            packages_list_string = utils.open_url(packages_url).read()
+            packages_list = json.loads(packages_list_string)
+            latest_package = packages_list[0]['name']
+
+            if retrigger_dependency_bump.lower() == 'true':
+                for package in packages_list:
+                    sha_of_released_package = package['name'].split('-')[-1]
+                    if sha_of_released_package in sha:
+                        latest_package = package['name']
+                        break
+
             current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
-        else:
-            try:
-                packages_url = 'https://api.github.com/orgs/' + constants.BALLERINA_ORG_NAME + '/packages/maven/' \
-                               + module['group_id'] + '.' + module['artifact_id'] + '/versions'
-                packages_list_string = utils.open_url(packages_url).read()
-                packages_list = json.loads(packages_list_string)
-                latest_package = packages_list[0]['name']
-
-                if retrigger_dependency_bump.lower() == 'true':
-                    for package in packages_list:
-                        sha_of_released_package = package['name'].split('-')[-1]
-                        if sha_of_released_package in sha:
-                            latest_package = package['name']
-                            break
-
-                current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
-                current_level_modules[index][MODULE_TIMESTAMPED_VERSION] = latest_package
-            except Exception as e:
-                print("[Error] Failed to get latest timestamped version for module '" + module['name'] + "'", e)
-                current_level_modules[index][MODULE_STATUS] = MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED
+            current_level_modules[index][MODULE_TIMESTAMPED_VERSION] = latest_package
+        except Exception as e:
+            print("[Error] Failed to get latest timestamped version for module '" + module['name'] + "'", e)
+            current_level_modules[index][MODULE_STATUS] = MODULE_CONCLUSION_VERSION_CANNOT_BE_IDENTIFIED
         current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
         status_completed_modules += 1
 
@@ -482,7 +481,7 @@ def create_pull_request(idx: int, repo):
                 title=pull.title.rsplit('-', 1)[0] + '-' + sha_of_lang + ')',
                 body=pull.body.rsplit('-', 1)[0] + '-' + sha_of_lang + '` and relevant extensions.'
             )
-            print("[Info] Automated version bump PR found for module '" + module['name'] + "'. PR: " + pull.html_url)
+            print("[Info] Automated version update PR found for module '" + module['name'] + "'. PR: " + pull.html_url)
             break
 
     if not pr_exists:
@@ -498,7 +497,7 @@ def create_pull_request(idx: int, repo):
                 head=constants.DEPENDENCY_UPDATE_BRANCH,
                 base=repo.default_branch
             )
-            log_message = "[Info] Automated version bump PR created for module '" + module['name'] \
+            log_message = "[Info] Automated version update PR created for module '" + module['name'] \
                           + "'. PR: " + created_pr.html_url
             print(log_message)
         except Exception as e:
