@@ -340,6 +340,8 @@ def check_pending_build_checks(index: int):
     failed_build_name, failed_build_html = [], []
     if module['name'] == 'ballerina-distribution':
         current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_RELEASED
+        current_level_modules[index][MODULE_STATUS] = MODULE_STATUS_COMPLETED
+        status_completed_modules += 1
     elif module[MODULE_CONCLUSION] == MODULE_CONCLUSION_BUILD_PENDING:
         for build_check in repo.get_commit(sha=sha).get_check_runs():
             build_check_found = True
