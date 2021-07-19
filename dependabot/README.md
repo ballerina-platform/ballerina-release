@@ -16,15 +16,15 @@ For this will process the 'build.gradle' file in the root folder. This will look
 
 ## Update Dependencies in Extensions
 
-`update_dependencies_in_pipeline.py` script will bump dependencies in extensions.
+`update_dependencies_in_pipeline.py` script will update dependencies in extensions.
 
 Parameters:
-1. Retrigger a failed dependency bump workflow (true/false) - This flag is so that intermediate dependencies will not be bumped to latest, if this set to true
+1. Retrigger a failed dependency update workflow (true/false) - This flag is so that intermediate dependencies will not be updated to latest, if this set to true
 
-2. Ballerina Lang Version - If an empty string is passed the workflow will bump all extensions to the latest available version. This is
-mandatory if the "Retrigger a failed dependency bump workflow" is set to true.
+2. Ballerina Lang Version - If an empty string is passed the workflow will update all extensions to the latest available version. This is
+mandatory if the "Retrigger a failed dependency update workflow" is set to true.
 
-3. Auto Merge PRs - This will stop auto merging the dependency bump PRs if set to true.
+3. Auto Merge PRs - This will stop auto merging the dependency update PRs if set to true.
 
 4. Event Type (Optional) - USed to differentiate scheduled jobs from manual trigger.
 
@@ -44,16 +44,16 @@ The scripts can be configured in `resources/module_list.json`
     |group_id|Group id of the published package|org.ballerinalang|
     |artifact_id|Artifact id of the published package|<artifact-name>+ "-ballerina"*|
     |version_key|Version Key to be used in gradle.properties|"stdlib" + <Capitalised-Artifact-Name> + "Versions"|
-    |auto_merge|Whether to auto merge dependent bump PRs|true|
+    |auto_merge|Whether to auto merge dependent update PRs|true|
 
 ## Update Dependencies in Connectors
 
-`update_connectors.py` script will bump dependencies in connectors.
+`update_connectors.py` script will update dependencies in connectors.
 
 Parameters:
 1. Ballerina Lang Version
 
-2. Auto Merge PRs - This will stop auto merging the dependency bump PRs if set to true.
+2. Auto Merge PRs - This will stop auto merging the dependency update PRs if set to true.
 
 ### Configurations
 
@@ -66,4 +66,4 @@ The scripts can be configured in `resources/connector_list.json`
    |Key|Description|Default|
    |:---|:---|:---|
    |name|Repository name|N/A|
-   |auto_merge|Whether to auto merge dependent bump PRs|true|
+   |auto_merge|Whether to auto merge dependent update PRs|true|

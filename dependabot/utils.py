@@ -212,6 +212,6 @@ def approve_pr(module, auto_merge_pull_requests, pr_number):
         try:
             pr.create_review(event='APPROVE')
             print(
-                "[Info] Automated version bump PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
+                "[Info] Automated version update PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
         except Exception as e:
             raise e
