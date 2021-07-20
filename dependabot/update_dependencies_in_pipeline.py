@@ -185,6 +185,7 @@ def wait_for_current_level_build(level):
     module_release_failure = False
     chat_message_send = False
     chat_message = "Dependency update to lang version *" + lang_version + "*\n\n"
+    print()
     pr_checks_failed_modules = list(filter(lambda s: s[MODULE_CONCLUSION] == MODULE_CONCLUSION_PR_CHECK_FAILURE, current_level_modules))
     if len(pr_checks_failed_modules) != 0:
         module_release_failure = True
@@ -222,19 +223,21 @@ def wait_for_current_level_build(level):
                     "|Dependency Update Workflow>"
 
     if send_notification == 'true' and chat_message_send:
+        print('Failing modules that is being notified:')
+        print(utils.get_sanitised_chat_message(chat_message))
         notify_chat.send_message(chat_message)
+    elif chat_message_send:
+        print('Failing modules that is NOT being notified:')
+        print(utils.get_sanitised_chat_message(chat_message))
 
     if module_release_failure:
-        print('\nModules that were notified:')
-        print(utils.get_sanitised_chat_message(chat_message))
         sys.exit(1)
 
 
 def get_chat_message(modules, log_start, pr_link):
     print_log_modules = list(filter(lambda s: s['send_notification'] is False, modules))
     if len(print_log_modules) > 0:
-        print('\nModules that were not notified:')
-        print(log_start)
+        print(log_start + '\n')
         for failed_module in print_log_modules:
             if pr_link:
                 link = failed_module[MODULE_CREATED_PR].html_url
@@ -242,7 +245,7 @@ def get_chat_message(modules, log_start, pr_link):
                 link = constants.BALLERINA_ORG_URL + failed_module['name'] + "/actions/workflows/" + \
                        failed_module[MODULE_BUILD_ACTION_FILE] + ".yml"
             print(failed_module['name'] + ' (' + link + ')')
-        print('\n')
+        print()
 
     send_chat = False
     chat_message = ''
