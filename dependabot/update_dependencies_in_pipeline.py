@@ -53,6 +53,7 @@ github = Github(ballerina_bot_token)
 
 extensions_file = {}
 all_modules = []
+highest_level = 0
 current_level_modules = []
 lang_version = ''
 status_completed_modules = 0
@@ -63,6 +64,7 @@ def main():
     global extensions_file
     global all_modules
     global current_level_modules
+    global highest_level
 
     try:
         extensions_file = utils.read_json_file(constants.EXTENSIONS_FILE)
@@ -111,6 +113,7 @@ def main():
     all_modules = extensions_file['modules']
 
     last_level = all_modules[-1]['level']
+    highest_level = last_level + 1
 
     print('Start dependency update for Ballerina Standard Library')
     for i in range(last_level):
@@ -126,6 +129,7 @@ def main():
     print('Successfully updated dependencies in Ballerina Standard Library')
 
     central_module_level = extensions_file['central_modules'][-1]['level']
+    highest_level = central_module_level + 1
 
     print('Start dependency update for Ballerina Extended Library')
     for j in range(last_level, central_module_level):
@@ -144,6 +148,8 @@ def main():
 def wait_for_current_level_build(level):
     global MAX_WAIT_CYCLES
     global send_notification
+    global status_completed_modules
+    global highest_level
 
     print("[Info] Waiting for level '" + str(level) + "' module build.")
     total_modules = len(current_level_modules)
@@ -159,7 +165,6 @@ def wait_for_current_level_build(level):
         MAX_WAIT_CYCLES = 200
 
     wait_cycles = 0
-    global status_completed_modules
     status_completed_modules = 0
 
     while status_completed_modules != total_modules:
@@ -218,9 +223,10 @@ def wait_for_current_level_build(level):
         chat_message_send = chat_message_send or send_chat
         chat_message += partial_chat_message
 
-    chat_message += "After following up on the above, trigger the <" + \
-                    "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
-                    "|Dependency Update Workflow>"
+    if level < highest_level:
+        chat_message += "After following up on the above, trigger the <" + \
+                        "https://github.com/ballerina-platform/ballerina-release/actions/workflows/update_dependency_version.yml" + \
+                        "|Dependency Update Workflow>"
 
     if send_notification == 'true' and chat_message_send:
         print('Failing modules that is being notified:')
