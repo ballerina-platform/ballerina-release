@@ -515,10 +515,10 @@ def create_pull_request(idx: int, repo):
             print("[Error] Error occurred while creating pull request for module '" + module['name'] + "'.", e)
             sys.exit(1)
 
-        try:
-            utils.approve_pr(module, auto_merge_pull_requests, created_pr.number)
-        except Exception as e:
-            print("[Error] Error occurred while approving dependency PR for module '" + module['name'] + "'", e)
+    try:
+        utils.approve_pr(module, auto_merge_pull_requests, created_pr.number)
+    except Exception as e:
+        print("[Error] Error occurred while approving dependency PR for module '" + module['name'] + "'", e)
 
     current_level_modules[idx][MODULE_CREATED_PR] = created_pr
     current_level_modules[idx][MODULE_STATUS] = MODULE_STATUS_IN_PROGRESS
