@@ -113,7 +113,6 @@ def main():
     all_modules = extensions_file['modules']
 
     last_level = all_modules[-1]['level']
-    highest_level = last_level + 1
 
     print('Start dependency update for Ballerina Standard Library')
     for i in range(last_level):
