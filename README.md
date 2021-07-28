@@ -4,7 +4,7 @@
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
 <code>ballerina-distribution</code> repository lags by 5.5 days and pending PR <a href='https://github.com/ballerina-platform/ballerina-distribution/pull/2063'>#2063</a>  is available.<br><br>
-<code>ballerina-lang</code> repository version <b>2.0.0-beta.3-20210727-000400-fecf8b4c</b> (12 h) has been updated as follows
+<code>ballerina-lang</code> repository version <b>2.0.0-beta.3-20210727-000400-fecf8b4c</b> (20 h) has been updated as follows
 </td>
 </tr></tbody></table> 
 
