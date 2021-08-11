@@ -17,10 +17,10 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Pull package '$PACKAGE_NAME:*' from ALPHA3." {
+@test "Pull package '$PACKAGE_NAME:$VERSION' with version from BETA1." {
   local user_dir="$(eval echo ~$USER)"
   rm -rf "$user_dir/.ballerina/repositories/central.ballerina.io/bala/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION"
-  run $ALPHA3/bin/bal pull "$TEST_ORGANIZATION/$PACKAGE_NAME"
+  run $BETA1/bin/bal pull "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION"
   assert_line --partial "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION pulled from central successfully"
   [ "$status" -eq 0 ]
   local package_file="$user_dir/.ballerina/repositories/central.ballerina.io/bala/$TEST_ORGANIZATION/$PACKAGE_NAME/$VERSION/any/package.json"

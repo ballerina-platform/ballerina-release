@@ -17,32 +17,29 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Create project '$PACKAGE_NAME:$VERSION' from 1.2.x." {
-  run $B12X/bin/ballerina new $PACKAGE_NAME
-  assert_line --partial "Created new Ballerina project at $PACKAGE_NAME"
+@test "Create package '$PACKAGE_NAME:$VERSION' from BETA3." {
+  run $BETA3/bin/bal new $PACKAGE_NAME -t lib
+  assert_output "Created new Ballerina package '$PACKAGE_NAME' at $PACKAGE_NAME."
   [ "$status" -eq 0 ]
   mv $PACKAGE_NAME "$PACKAGE_NAME-$VERSION"
   local current_user=$(whoami);
   cd "$PACKAGE_NAME-$VERSION"
   sed -i'.original' -e "s/$current_user/$TEST_ORGANIZATION/g" "Ballerina.toml"
   sed -i'.original' -e "s/0.1.0/$VERSION/g" "Ballerina.toml"
+  if [ "$REMOVE_STD_LIBS" == "true" ] || [ "$BALLERINA_DEV_CENTRAL" == "true" ] || [ "$BALLERINA_STAGE_CENTRAL" == "true" ]
+  then
+    sed -i'.original' -e "s/import ballerina\/io;/ /g" "$PACKAGE_NAME.bal"
+    sed -i'.original' -e 's/io:println("Hello World!");/ /g' "$PACKAGE_NAME.bal"
+  fi
   rm "Ballerina.toml.original"
   echo '# Sample github package' > "Package.md"
   cd -
 }
 
-@test "Add new module to '$PACKAGE_NAME:$VERSION' from 1.2.x." {
+@test "Build package '$PACKAGE_NAME:$VERSION' from BETA3" {
   cd "$PACKAGE_NAME-$VERSION"
-  run $B12X/bin/ballerina add $PACKAGE_NAME
-  assert_line --partial "Added new ballerina module at 'src/$PACKAGE_NAME'"
-  [ "$status" -eq 0 ]
-  cd -
-}
-
-@test "Build module '$PACKAGE_NAME:$VERSION' from 1.2.x" {
-  cd "$PACKAGE_NAME-$VERSION"
-  run $B12X/bin/ballerina build $PACKAGE_NAME
-  assert_line --partial "target/bin/$PACKAGE_NAME.jar"
+  run $BETA3/bin/bal build -c
+  assert_line --partial "target/bala/$TEST_ORGANIZATION-$PACKAGE_NAME-any-$VERSION.bala"
   [ "$status" -eq 0 ]
   cd -
 }

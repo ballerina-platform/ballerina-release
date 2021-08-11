@@ -17,10 +17,8 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-@test "Push module '$PACKAGE_NAME:$VERSION' from 1.2.x." {
-  cd "$PACKAGE_NAME-$VERSION"
-  run $B12X/bin/ballerina push $PACKAGE_NAME
-  assert_line --partial "$TEST_ORGANIZATION/$PACKAGE_NAME:$VERSION pushed to central successfully"
-  [ "$status" -eq 0 ]
-  cd -
+@test "Search package '$PACKAGE_NAME' with version from BETA3." {
+  run $BETA3/bin/bal search "$PACKAGE_NAME"
+  assert_line --partial "bc2testorg/..."
+  assert_line --partial "$VERSION"
 }

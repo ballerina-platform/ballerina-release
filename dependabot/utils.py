@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import time
 import urllib.request
 
@@ -34,6 +35,23 @@ def write_json_file(file_path, file_content):
             json_file.truncate()
     except Exception as e:
         raise e
+
+
+def get_module_message(module, link):
+    module_message = "<" + link + "|" + module['name'] + ">" + "\t\t"
+    if module['code_owner_id_env'] != "":
+        code_owner_id = os.getenv(module['code_owner_id_env'])
+        if code_owner_id != "":
+            module_message += "<users/" + code_owner_id + ">"
+        else:
+            print("Code owner for module '" + module['name'] + "' is empty.")
+    module_message += "\n"
+    return module_message
+
+
+def get_sanitised_chat_message(message):
+    sanitised = re.sub('<users/.*>', '', message)
+    return sanitised
 
 
 @retry(
@@ -125,6 +143,39 @@ def commit_file(repository_name, file_path, updated_file_content, commit_branch,
         raise e
 
 
+def commit_image_file(repository_name, file_path, updated_file_content, commit_branch, commit_message):
+    try:
+        author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
+
+        repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + repository_name)
+
+        remote_file = repo.get_contents(file_path)
+        remote_file_contents = remote_file.decoded_content
+
+        try:
+            remote_file_in_pr_branch = repo.get_contents(file_path, commit_branch)
+            remote_file_in_pr_branch = remote_file_in_pr_branch.decoded_content
+        except GithubException:
+            remote_file_in_pr_branch = ""
+
+        if updated_file_content == remote_file_contents:
+            return
+        elif updated_file_content == remote_file_in_pr_branch:
+            return
+        else:
+            repo.update_file(
+                file_path,
+                commit_message,
+                updated_file_content,
+                remote_file.sha,
+                branch=commit_branch,
+                author=author
+            )
+            return
+    except GithubException as e:
+        raise e
+
+
 def open_pr_and_merge(repository_name, title, body, head_branch):
     try:
         repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + repository_name)
@@ -161,6 +212,6 @@ def approve_pr(module, auto_merge_pull_requests, pr_number):
         try:
             pr.create_review(event='APPROVE')
             print(
-                "[Info] Automated version bump PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
+                "[Info] Automated version update PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
         except Exception as e:
             raise e

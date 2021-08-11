@@ -2,7 +2,7 @@
 layout: ballerina-left-nav-release-notes
 title: Swan Lake <VERSION>
 permalink: /downloads/swan-lake-release-notes/swan-lake-<VERSION>/
-active: swan-lake-alpha5
+active: swan-lake-<VERSION>
 redirect_from: 
     - /downloads/swan-lake-release-notes/swan-lake-<VERSION>
     - /downloads/swan-lake-release-notes/

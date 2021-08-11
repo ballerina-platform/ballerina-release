@@ -85,19 +85,20 @@ def sort_module_name_list():
 
 # Gets dependencies of ballerina extension module from build.gradle file in module repository
 # returns: list of dependencies
-def get_dependencies(module_name):
+def get_dependencies(module_name, module_details_json):
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module_name)
-    gradle_file = repo.get_contents(constants.BUILD_GRADLE_FILE)
+    gradle_file = repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
     data = gradle_file.decoded_content.decode(constants.ENCODING)
 
     dependencies = []
 
     for line in data.splitlines():
-        if 'https://maven.pkg.github.com/ballerina-platform' in line:
-            module = line.split('/')[-1][:-1]
-            if module == module_name:
-                continue
-            dependencies.append(module)
+        for module in module_details_json['modules']:
+            if module['version_key'] in line:
+                if module['name'] == module_name:
+                    continue
+                dependencies.append(module['name'])
+                break
 
     return dependencies
 
@@ -200,22 +201,33 @@ def initialize_module_details(modules_list):
         module_details_json['modules'].append({
             'name': module['name'],
             'level': 0,
-            'group_id': module.get('group_id', 'org.ballerinalang'),
+            'group_id': module.get('group_id', 'io.ballerina.stdlib'),
             'artifact_id': module.get('artifact_id', default_artifact_id),
             'version_key': module.get('version_key', default_version_key),
             'default_branch': default_branch,
             'auto_merge': module.get('auto_merge', True),
             'central_only_module': module.get('central_only_module', True),
+            'build_action_file': module.get('build_action_file', get_default_build_file(module['name'])),
+            'code_owner_id_env': module.get('code_owner_id_env',
+                                            'ALL_USER_ID' if module['name'] == 'ballerina-distribution' else ''),
+            'send_notification': module.get('send_notification', True),
             'dependents': []})
     # TODO: Add transitive dependencies
     return module_details_json
+
+
+def get_default_build_file(module):
+    if module == 'ballerina-distribution':
+        return 'main'
+    else:
+        return 'build-timestamped-master'
 
 
 # Gets all the dependents of each module to generate the dependency graph
 # returns: module details JSON with updated dependent details
 def get_immediate_dependents(module_name_list, module_details_json):
     for module_name in module_name_list:
-        dependencies = get_dependencies(module_name['name'])
+        dependencies = get_dependencies(module_name['name'], module_details_json)
         for module in module_details_json['modules']:
             if module['name'] in dependencies:
                 module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(

@@ -14,7 +14,7 @@ on:
           required: true
           default: 'ballerina-lang'
         package:
-          description: 'Specific package'
+          description: 'Specific package(groupId.artifactId)'
           required: true
         version:
           description: 'Package version'
@@ -46,4 +46,4 @@ jobs:
         if: steps.setUname.outputs.foundUname != '' && steps.setid.outputs.versionId != ''
         with:
           package-version-ids: ${{ steps.setid.outputs.versionId }}
-          token: ${{ secrets.PACKAGE_DELETE_PAT }}
+          token: ${{ secrets.DELETE_PACKAGE_PAT }}

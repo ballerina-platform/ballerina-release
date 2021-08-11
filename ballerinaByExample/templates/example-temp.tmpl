@@ -4,6 +4,7 @@ title: {{yamlEscape .Name}}
 description: {{yamlEscape .MetaDescription}}
 keywords: {{yamlEscape .MetaKeywords}}
 permalink: {{if .IsLatest}}/learn/by-example/{{.Id}}{{else}}/{{.Version}}/learn/by-example/{{.Id}}{{end}}
+active: {{.Id}}
 redirect_from:
   - /{{.RedirectVersion}}/learn/by-example/{{.Id}}
   - /{{.RedirectVersion}}/learn/by-example/{{.Id}}.html
@@ -26,14 +27,14 @@ redirect_from:
                             <div class="cTopButtonContainer">
                                 {{if .PrevExample}}
                                 <div class="cButtonInfoContainer">
-                                    <a class="prev" href="{{.PrevExample.Id}}.html">
+                                    <a class="prev" href="{{.PrevExample.Id}}.html?is_ref_by_example=true">
                                         <span>< PREVIOUS</span>
                                         <p>{{.PrevExample.Name}}</p>
                                     </a>
                                 </div>
                                 {{end}} {{if .NextExample}}
                                 <div class="cButtonInfoContainer">
-                                    <a class="next" href="{{.NextExample.Id}}.html">
+                                    <a class="next" href="{{.NextExample.Id}}.html?is_ref_by_example=true">
                                         <span>NEXT ></span>
                                         <p>{{.NextExample.Name}}</p>
                                     </a>
@@ -46,9 +47,9 @@ redirect_from:
             </div>
             <div class="example" id="{{.Id}}">
                 <div class="col-xs-12 col-sm-12 col-md-12 cBBETable-container cCodeLeft">
-                    <table class="cTopControlsContainer">
-                        <tr>
-                            <td class="cLeftTD">
+                    <div class="cTopControlsContainer">
+                        <div class="cTopControlsRow">
+                            <div class="cLeftTD">
                                 <div class="cBBE-links">
                                     <ul>
                                         <li>
@@ -64,45 +65,21 @@ redirect_from:
                                         {{end}}
                                     </ul>
                                 </div>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
-
-                    <table class="cTopBorder-table">
-                        <tr>
-                            <td class="cCodeTD"></td>
-                            <td class="cDescTD"></td>
-                        </tr>
-                    </table>
-
+                            </div> 
+                        </div>
+                    </div>
+              
                     {{range  $i, $element := .Segs}}
-                        {{range .}}
-                            {{if ne $i 0}}
-                                {{if and (not .CodeLeading) (not .IsConsoleOutput)}}
-                                    <div class="bal-separator">
-                                        <!-- This table is a temporary table to add spacing between output and next bal file-->
-                                        <table class="cTopBorder-table">
-                                            <tbody><tr>
-                                                <td class="cCodeTD"></td>
-                                                <td class="cDescTD"></td>
-                                            </tr>
-                                        </tbody></table>
-                                    </div>
-                                {{end}}
-                            {{end}}
-                        {{end}}
+                    <div class="codeSnippeset">
 
-                    <div>
-
-                        <table class="cBBE-body">
+                        <div class="cBBE-body">
                             {{range $element}}
-                            <tr class="cTR{{if and (not .DocEmpty)}} hover-enable{{end}}{{if .IsConsoleOutput}} cOutputTr{{end}}">
+                            <div class="cTR{{if and (not .DocEmpty)}} hover-enable{{end}}{{if .IsConsoleOutput}} cOutputTr{{end}}">
 
-                                <td class="code{{if .CodeEmpty}} empty{{end}}{{if .CodeLeading}} leading{{end}}{{if .IsConsoleOutput}} cOutput{{end}}">
+                                <div class="code{{if .CodeEmpty}} empty{{end}}{{if .CodeLeading}} leading{{end}}{{if .IsConsoleOutput}} cOutput{{end}}">
                                     {{.CodeRendered}}
-                                </td>
-                                <td class="docs">
+                                </div>
+                                <div class="docs">
                                     {{if and (not .DocEmpty)}}
                                     <div class="cCodeDesription">
                                         <div>
@@ -110,20 +87,15 @@ redirect_from:
                                         </div>
                                     </div>
                                     {{end}}
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                             {{end}}
-                        </table>
+                        </div>
                     </div>
                     {{end}}
 
 
-                    <table class="cBottomBorder-table">
-                        <tr>
-                            <td class="cCodeTD"></td>
-                            <td class="cDescTD"></td>
-                        </tr>
-                    </table>
+                     
                 </div>
             </div>
         </div>
