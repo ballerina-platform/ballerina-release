@@ -75,42 +75,36 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 #### New Features
 
 ##### Ballerina OpenAPI Tool
-- Introduced new command line option to generate all the record fields that are not specifically mentioned as 
-  `nullable:false` in openAPI schema property as nullable to reduce the type conversion errors in the OpenAPI to
+- Introduced a new command-line option to generate all the record fields that are not specifically mentioned as 
+  `nullable:false` in the OpenAPI schema property as nullable to reduce the type conversion errors in the OpenAPI to
   Ballerina command
   >`bal openapi -i <openapi-contract-file>  --nullable`
-- Introduced new command line option for adding user required license or copyright headers for generated Ballerina
-  files in OpenAPI to Ballerina command
+- Introduced a new command-line option to add user-required license or copyright headers for the generated Ballerina
+  files via OpenAPI to Ballerina command
   >`bal openapi -i <openapi-contract-file> --license <license-file> `
-- Introduced a new command line option to generate the JSON file in the Ballerina to OpenAPI command
+- Introduced a new command-line option to generate the JSON file via the Ballerina to OpenAPI command
   >`bal openapi -i <service-file> --json`
-- Added support to generate boilerplate of test functions for each remote function implemented within a
+- Added support to generate a boilerplate of test functions for each remote function implemented within a
   client connector  
   
-  
-
 #### Improvements
 ##### Ballerina OpenAPI Tool
 ###### Ballerina OpenAPI client and schema generation improvements for the OpenAPI to Ballerina command
-- Added support to generate suitable client connector authentication mechanisms by mapping with security schemes
+- Added support to generate suitable client connector authentication mechanisms by mapping the security schemes
   given in the OpenAPI specification (OAS)
-- Added support to generate api documentation for client init method, remote functions and records
-- Added support to users to set common client configurations when initializing the connector 
-- Added support for generating records for nested referenced schemas in the OpenAPI specification 
-- Added improvement to select `https` server URL when multiple URLs given in the OpenAPI specification
+- Added support to generate API documentation for the client init method, remote functions and records
+- Added support to facilitate users to set common client configurations when initializing the connector 
+- Added support to generate records for nested referenced schemas in the OpenAPI specification 
+- Improved the OpenAPI tool to select `https` server URL when multiple URLs are given in the OpenAPI specification
  
 ###### The Ballerina to OpenAPI command improvements
-- Added support for Language Server Extension 
-- Improved the response status code map to `202` when resource function hasn't `return` type in the resource function
-- Improved mapping different status code response in resource function
-- Enhanced generating openAPI schema with Ballerina typeInclusion scenarios
-- Added resource function api documentation mapping to OAS description and summary
+- Added support for language server extension 
+- Improved the response status code map to `202` when the resource function does not have `return` type
+- Improved mapping different status code response in the resource function
+- Enhanced generating openAPI schema with Ballerina `typeInclusion` scenarios
+- Added resource function API documentation mapping to the OAS description and summary
 - Improved resource function request payload mapping with OAS requestBody   
  
-
-
- 
-
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake Beta2 of the repositories below.
