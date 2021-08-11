@@ -79,21 +79,21 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
   `nullable:false` in openAPI schema property as nullable to reduce the type conversion errors in the OpenAPI to
   Ballerina command
   >`bal openapi -i <openapi-contract-file>  --nullable`
-- Introduced new command line option for adding user required license or copyright headers for generated service and
-  client ballerina file
+- Introduced new command line option for adding user required license or copyright headers for generated Ballerina
+  files in OpenAPI to Ballerina command
   >`bal openapi -i <openapi-contract-file> --license <license-file> `
 - Introduced a new command line option to generate the JSON file in the Ballerina to OpenAPI command
   >`bal openapi -i <service-file> --json`
 - Added support to generate boilerplate of test functions for each remote function implemented within a
- client connector  
+  client connector  
   
   
 
 #### Improvements
 ##### Ballerina OpenAPI Tool
 ###### Ballerina OpenAPI client and schema generation improvements for the OpenAPI to Ballerina command
-- Added support to generate suitable connector authentication mechanisms by mapping with security schemes given in the
-  OpenAPI specification (OAS)
+- Added support to generate suitable client connector authentication mechanisms by mapping with security schemes
+  given in the OpenAPI specification (OAS)
 - Added support to generate api documentation for client init method, remote functions and records
 - Added support to users to set common client configurations when initializing the connector 
 - Added support for generating records for nested referenced schemas in the OpenAPI specification 
