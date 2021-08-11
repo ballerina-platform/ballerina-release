@@ -92,16 +92,16 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 ###### Ballerina OpenAPI client and schema generation improvements for the OpenAPI to Ballerina command
 - Added support to generate suitable client connector authentication mechanisms by mapping the security schemes
   given in the OpenAPI specification (OAS)
-- Added support to generate API documentation for the client init method, remote functions and records
+- Added support to generate API documentation for the client init method, remote functions, and records
 - Added support to facilitate users to set common client configurations when initializing the connector 
 - Added support to generate records for nested referenced schemas in the OpenAPI specification 
-- Improved the OpenAPI tool to select `https` server URL when multiple URLs are given in the OpenAPI specification
+- Improved the OpenAPI tool to select the `https` server URL when multiple URLs are given in the OpenAPI specification
  
 ###### The Ballerina to OpenAPI command improvements
 - Added support for language server extension 
-- Improved the response status code map to `202` when the resource function does not have `return` type
-- Improved mapping different status code response in the resource function
-- Enhanced generating openAPI schema with Ballerina `typeInclusion` scenarios
+- Improved the response status code map to `202` when the resource function does not have the `return` type
+- Improved mapping different status code responses in the resource function
+- Enhanced generating an OpenAPI schema with Ballerina `typeInclusion` scenarios
 - Added resource function API documentation mapping to the OAS description and summary
 - Improved resource function request payload mapping with OAS requestBody   
  
