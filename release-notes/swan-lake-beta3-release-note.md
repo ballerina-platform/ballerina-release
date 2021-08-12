@@ -54,7 +54,41 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 #### New Features
 
+##### Crypto Package
+- Improved the hash APIs for cryptographic salt
+
+##### GraphQL Package
+- Added field alias support for GraphQL documents
+- Added variable support in GraphQL requests
+- Added mutation support for GraphQL services
+- Added typename introspection
+
+##### gRPC Package
+- Added declarative auth configurations
+- Added timestamp, duration, and struct type support
+
+##### HTTP Package
+- Enabled HTTP trace and access log support
+- Added HATEOAS link support
+- Introduced the `http:CacheConfig` annotation to the resource signature
+- Introduced support for the service-specific media-type subtype prefix
+- Introduced the introspection resource method to get the generated OpenAPI document of the service
+
+##### JWT Package
+- Added HMAC signature support for JWT
+
 #### Improvements
+
+##### GraphQL Package
+- Validate the `maxQueryDepth` at runtime as opposed to validating it at compile time
+
+##### HTTP Package
+- Added support for the `map<json>` as query parameter type
+- Added support for nilable client data binding types
+
+##### WebSocket Package
+- Made the WebSocket caller isolated
+- Introduced a write timeout for the WebSocket client
 
 #### Bug Fixes
 
