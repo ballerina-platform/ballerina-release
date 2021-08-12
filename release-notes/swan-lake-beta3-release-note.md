@@ -78,10 +78,10 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 - Added HMAC signature support for JWT
   
 ##### Log Package
-- Added Observability span context values to log messages when Observability is enabled.
+- Added observability span context values to the log messages when observability is enabled.
 
 ##### SQL Package
-- Added support for queryRow() in the database connectors. This method allows retrieving a single row as a record, or a single value from the database.
+- Added support for `queryRow()` in the database connectors. This method allows retrieving a single row as a record, or a single value from the database.
 ```ballerina
 record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id = 1`)
 int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
@@ -101,9 +101,9 @@ int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
 - Introduced a write timeout for the WebSocket client
 
 ##### SQL Package
-- Improved throughput performance with asynchronous database queries
+- Improved the throughput performance with asynchronous database queries
 - Introduced new array out parameter types in call procedures.
-- The return type of the SQL query API is changed to include the completion type as nil in the stream. With this change, the below SQL query code,
+- Changed the return type of the SQL query API to include the completion type as nil in the stream. The SQL query code below demonstrates this change.
     
     **Previous Syntax**
     ```ballerina
@@ -115,7 +115,7 @@ int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
     ```
 
 ##### IO Package
-- Changed the `io:readin` function input parameter to optional. In the previous API, it was required to pass a value to be printed before reading the user input as a string. Decided to remove it, due to the breaking change, made it optional. It is not recommended to pass a value to print in the console.
+- Changed the `io:readin` function input parameter to optional. In the previous API, it was required to pass a value to be printed before reading the user input as a string. Remove it due to the breaking change and made it optional. It is not recommended to pass a value to print it in the console.
 
 #### Bug Fixes
 
