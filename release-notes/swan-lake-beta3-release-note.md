@@ -36,7 +36,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ##### Introduction of the `!is` Operator
 
-The `!is` operator has been introduced to check if an expression does not belong to a given type. This is the negation of the `is` operator.
+The `!is` operator has been introduced to check if a value does not belong to a given type. This is the negation of the `is` operator.
 
 ```ballerina
 import ballerina/io;
@@ -54,7 +54,7 @@ public function main() {
 
 The type for numeric literals in additive and multiplicative expressions is now inferred from the contextually-expected type.
 
-When the contextually-expected type for an additive or multiplicative expression is `float`, the type of a literal used as sub expression is inferred to be `float`. Similarly if the contextually-expected type is `decimal` the type of the literal is inferred to be `decimal`.
+When the contextually-expected type for an additive or multiplicative expression is `float`, the type of a literal used as a sub expression is inferred to be `float`. Similarly, if the contextually-expected type is `decimal` the type of the literal is inferred to be `decimal`.
 
 ```ballerina
 float a = 10 + 3.0 + 5.0;
@@ -65,7 +65,7 @@ decimal d = 10 + 5 - 3.0;
 
 ##### Isolated Inference
 
-The compiler now infers isolatedness for service objects, class definitions, variables, and functions in scenarios where if all of them explicitly specified an `isolated` qualifier they would meet the requirements for isolated functions and isolated objects.
+The compiler now infers `isolated` for service objects, class definitions, variables, and functions in scenarios where if all of them explicitly specified an `isolated` qualifier they would meet the requirements for isolated functions and isolated objects.
 
 The following service and its methods are now inferred to be isolated.
 ```ballerina
@@ -95,7 +95,7 @@ service / on new http:Listener(8080) {
 }
 ```
 
-The compiler does not infer isolatedness for any constructs that are publicly exposed.
+The compiler does not infer `isolated` for any constructs that are exposed outside the module.
 
 ###### Type Narrowing in the `where` Clause of a Query Expression/Action
 
@@ -137,11 +137,11 @@ enum TrailStatus {
 }
 ```
 
-However it is an error for the same enum declaration to have duplicate members. Similarly, it is also an error for different enums to initialize the same member with different values.
+However, it is an error for the same enum declaration to have duplicate members. Similarly, it is also an error for different enums to initialize the same member with different values.
 
 ##### `string:Char` as the Static Type of String Member Access
 
-The static type of the member access operation on a value of `string` type has been updated to be `string:Char` instead of `string`.
+The static type of the member access operation on a value of type `string` has been updated to be `string:Char` instead of `string`.
 
 ```ballerina
 public function main() {
@@ -196,7 +196,7 @@ json b = a;
 ##### Error Return in the `init` Method of a Service Declaration
 
 Previously the `init` method of a service declaration could not have a return type containing error. With this release that restriction has been removed.
-If the `init` method of a service declaration returns an error value, it will result in a module initialization failure.
+If the `init` method of a service declaration returns an error value, it will result in the module initialization failing.
 
 ```ballerina
 import ballerina/http;
@@ -225,8 +225,7 @@ class NumberGenerator {
    int lowerLimit;
  
    // `check` can be used in the field initializer
-   // since the `init` method's return type allows
-   // `error`.
+   // since the `init` method's return type allows `error`.
    int upperLimit = check value.ensureType();
  
    function init(int lowerLimit) returns error? {
@@ -262,7 +261,7 @@ var _ = error("custom error"); // Compilation error.
 
 ##### Relaxed Static Type Requirements for `==` and `!=`
 
-Previously `==` and `!=` were allowed only when both operands were of static types that are subtypes of `anydata`. This has now been relaxed to allow `==` and `!=` even if the static type of only one operand is a subtype of `anydata`.
+Previously `==` and `!=` were allowed only when both operands were of static types that are subtypes of `anydata`. This has now been relaxed to allow `==` and `!=` if the static type of at least one operand is a subtype of `anydata`.
 ```ballerina
 error? x = ();
  
@@ -274,10 +273,9 @@ if x == () {
 
 #### Bug Fixes
 
-- In a stream type `stream<T, C>`; the completion type `C` should always include nil if it is a bounded stream. A bug where this was not validated for stream implementor’s has been fixed.
+- In a stream type `stream<T, C>`; the completion type `C` should always include nil if it is a bounded stream. A bug where this was not validated for stream implementors has been fixed.
 
 ```ballerina
- 
 class StreamImplementor {
    public isolated function next() returns record {|int value;|}|error? {
        return;
@@ -317,7 +315,7 @@ public function main() {
 }
 ```
 
-The above code snippet which previously printed `Hello world!  ὠ0` will now print `Hello world! `.
+The above code snippet which previously printed `Hello world!  ὠ0` will now print `Hello word! 😀`.
 
 - A bug in escaping of NumericEscape has been fixed.
 
@@ -359,7 +357,7 @@ To view all bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://gi
 ```ballerina
 stream<int, error?> stm = new (new StreamImplementor());
  
-// Evaluated to true until SL Beta2, evaluates to false now.
+// Evaluated to true in SL Beta2, evaluates to false now.
 boolean streamCheck = stm is stream<int>;
 ```
 
