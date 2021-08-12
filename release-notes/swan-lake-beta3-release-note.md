@@ -76,6 +76,16 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 ##### JWT Package
 - Added HMAC signature support for JWT
+  
+##### Log Package
+- Added observability span context values to the log messages when observability is enabled.
+
+##### SQL Package
+- Added support for `queryRow()` in the database connectors. This method allows retrieving a single row as a record, or a single value from the database.
+```ballerina
+record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id = 1`)
+int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
+```
 
 #### Improvements
 
@@ -89,6 +99,23 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 ##### WebSocket Package
 - Made the WebSocket caller isolated
 - Introduced a write timeout for the WebSocket client
+
+##### SQL Package
+- Improved the throughput performance with asynchronous database queries
+- Introduced new array out parameter types in call procedures.
+- Changed the return type of the SQL query API to include the completion type as nil in the stream. The SQL query code below demonstrates this change.
+    
+    **Previous Syntax**
+    ```ballerina
+    stream<RowType, error> resultStream = sqlClient->query(“”);
+    ```
+    **New Syntax**
+    ```ballerina
+    stream<RowType, error?> resultStream = sqlClient->query(“”);
+    ```
+
+##### IO Package
+- Changed the `io:readin` function input parameter to optional. In the previous API, it was required to pass a value to be printed before reading the user input as a string. Remove it due to the breaking change and made it optional. It is not recommended to pass a value to print it in the console.
 
 #### Bug Fixes
 
