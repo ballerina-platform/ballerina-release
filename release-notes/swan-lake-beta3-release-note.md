@@ -97,7 +97,7 @@ service / on new http:Listener(8080) {
 
 The compiler does not infer `isolated` for any constructs that are exposed outside the module.
 
-###### Type Narrowing in the `where` Clause of a Query Expression/Action
+##### Type Narrowing in the `where` Clause of a Query Expression/Action
 
 The `where` clause in a query now narrows types, similar to `if` statements.
 
@@ -310,12 +310,12 @@ service class Bar {
 import ballerina/io;
  
 public function main() {
-  string str = "Hello word! \u{1F600}";
+  string str = "Hello world! \u{1F600}";
   io:println(str);
 }
 ```
 
-The above code snippet which previously printed `Hello world!  ὠ0` will now print `Hello word! 😀`.
+The above code snippet which previously printed `Hello world!  ὠ0` will now print `Hello world! 😀`.
 
 - A bug in escaping of NumericEscape has been fixed.
 
@@ -331,6 +331,7 @@ public function main() {
 This code snippet which previously printed `\u0061pple` will now print `\u{61}pple`.
 
 - A bug that resulted in NumericEscape in the template string not being interpreted literally has been fixed.
+
 ```ballerina
 import ballerina/io;
  
