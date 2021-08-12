@@ -55,40 +55,40 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 #### New Features
 
 ##### Crypto Package
-- Improve hash APIs for cryptographic salt.
+- Improved the hash APIs for cryptographic salt
 
 ##### GraphQL Package
-- Add field alias support for GraphQL documents.
-- Add variable support in GraphQL requests.
-- Add mutation support for GraphQL services.
-- Add typename introspection.
+- Added field alias support for GraphQL documents
+- Added variable support in GraphQL requests
+- Added mutation support for GraphQL services
+- Added typename introspection
 
 ##### gRPC Package
-- Add declarative auth configurations.
-- Add Timestamp, Duration, and Struct type support.
+- Added declarative auth configurations
+- Added timestamp, duration, and struct type support
 
 ##### HTTP Package
-- Enable HTTP trace and access log support.
-- Add HATEOAS link support.
-- Introduce `http:CacheConfig` annotation to the resource signature.
-- Introduce support for service specific media-type subtype prefix.
-- Introduce introspection resource method to get generated OpenAPI document of the service.
+- Enabled HTTP trace and access log support
+- Added HATEOAS link support
+- Introduced the `http:CacheConfig` annotation to the resource signature
+- Introduced support for the service-specific media-type subtype prefix
+- Introduced the introspection resource method to get the generated OpenAPI document of the service
 
 ##### JWT Package
-- Add HMAC signature support for JWT.
+- Added HMAC signature support for JWT
 
 #### Improvements
 
 ##### GraphQL Package
-- Validate `maxQueryDepth` at runtime, as opposed to validating it on compile time.
+- Validate the `maxQueryDepth` at runtime as opposed to validating it at compile time
 
 ##### HTTP Package
-- Add support for `map<json>` as query parameter type.
-- Support nilable client data binding types.
+- Added support for the `map<json>` as query parameter type
+- Added support for nilable client data binding types
 
 ##### WebSocket Package
-- Make the WebSocket caller isolated.
-- Introduce write timeout for WebSocket client.
+- Made the WebSocket caller isolated
+- Introduced a write timeout for the WebSocket client
 
 #### Bug Fixes
 
