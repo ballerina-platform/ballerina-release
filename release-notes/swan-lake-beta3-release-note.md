@@ -63,6 +63,10 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 - Add mutation support for GraphQL services.
 - Add typename introspection.
 
+##### gRPC Package
+- Add declarative auth configurations.
+- Add Timestamp, Duration, and Struct type support.
+
 ##### HTTP Package
 - Enable HTTP trace and access log support.
 - Add HATEOAS link support.
@@ -72,10 +76,6 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 ##### JWT Package
 - Add HMAC signature support for JWT.
-
-##### gRPC Package
-- Add declarative auth configurations.
-- Add Timestamp, Duration, and Struct type support.
 
 #### Improvements
 
