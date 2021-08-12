@@ -1,0 +1,137 @@
+digraph "Stdlib Dependency Graph" {
+	subgraph cluster_1 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		io
+		"jballerina.java.arrays"
+		random
+		regex
+		time
+		url
+		xmldata
+		label="level 1"
+	}
+	subgraph cluster_2 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		crypto
+		log
+		os
+		task
+		xslt
+		label="level 2"
+	}
+	subgraph cluster_3 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		cache
+		file
+		ftp
+		mime
+		nats
+		stan
+		tcp
+		udp
+		uuid
+		label="level 3"
+	}
+	subgraph cluster_4 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		auth
+		email
+		jwt
+		oauth2
+		label="level 4"
+	}
+	subgraph cluster_5 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		http
+		label="level 5"
+	}
+	subgraph cluster_6 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		graphql
+		grpc
+		"module-ballerinai-transaction"
+		websocket
+		websub
+		websubhub
+		label="level 6"
+	}
+	subgraph cluster_7 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		kafka
+		rabbitmq
+		sql
+		label="level 7"
+	}
+	subgraph cluster_8 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		"java.jdbc"
+		mssql
+		mysql
+		postgresql
+		label="level 8"
+	}
+	io -> log
+	io -> os
+	io -> xslt
+	random -> websub
+	random -> websubhub
+	regex -> log
+	regex -> uuid
+	time -> crypto
+	time -> file
+	time -> task
+	url -> http
+	crypto -> auth
+	crypto -> jwt
+	crypto -> nats
+	crypto -> oauth2
+	crypto -> stan
+	crypto -> tcp
+	crypto -> uuid
+	log -> auth
+	log -> file
+	log -> ftp
+	log -> jwt
+	log -> mime
+	log -> nats
+	log -> oauth2
+	log -> stan
+	log -> tcp
+	log -> udp
+	os -> file
+	task -> cache
+	task -> email
+	task -> ftp
+	cache -> auth
+	cache -> jwt
+	cache -> oauth2
+	file -> email
+	file -> http
+	mime -> email
+	mime -> http
+	uuid -> http
+	auth -> http
+	jwt -> http
+	oauth2 -> http
+	http -> graphql
+	http -> grpc
+	http -> "module-ballerinai-transaction"
+	http -> websocket
+	http -> websub
+	http -> websubhub
+	"module-ballerinai-transaction" -> kafka
+	"module-ballerinai-transaction" -> rabbitmq
+	"module-ballerinai-transaction" -> sql
+	sql -> "java.jdbc"
+	sql -> mssql
+	sql -> mysql
+	sql -> postgresql
+}
