@@ -42,9 +42,135 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 ### Runtime Updates
 
-#### New Features
-
 #### Improvements
+
+##### Improved configurable variables to support xml types through TOML syntax
+
+The `configurable` feature is improved to support variables with xml types through the TOML syntax.
+
+For example, if the xml typed configurable variables are defined in the following way,
+
+``` ballerina
+configurable xml xmlVar = ?;
+```
+The values can be provided in `Config.toml` as follows,
+
+
+```toml
+xmlVar = "<book><name>Sherlock Holmes</name></book>"
+```
+
+##### Improved configurable variables to support additional fields and rest fields for records
+
+The `configurable` feature is improved to support additional fields and rest fields in record variables through the TOML syntax.
+
+For example, if a configurable variable with open record type is defined in the following way,
+
+```ballerina
+type Person record {
+};
+
+configurable Person person = ?;
+```
+
+The values can be provided in `Config.toml` as follows,
+
+
+```toml
+[person]
+intVal = 22
+floatVal = 22.33
+stringVal = "abc"
+arrVal = [1,2,3]
+mapVal.a = "a"
+mapVal.b = 123
+```
+
+The additional fields that are created from the TOML values will have the following types.
+
+TOML Integer - `int`
+TOML Float - `float`
+TOML String - `string`
+TOML Boolean - `boolean`
+TOML Table - `map<anydata>`
+TOML Table array - `map<anydata>[]`
+
+Similarly, if a configurable variable with a record type that contains a rest field is defined in the following way
+
+```ballerina
+public type Numbers record {|
+   int ...;
+|};
+
+configurable Numbers numbers = ?;
+```
+
+The values can be provided in `Config.toml` as follows,
+
+
+```toml
+num1 = 11
+num2 = 26
+```
+
+##### Improved print error stacktrace with cause
+
+Error stack trace has been improved to have the error cause locations. Stack frames of the wrapped error causes are also added to the stack trace.
+
+e.g:
+For the following example,
+```ballerina
+public function main() {
+    panic bar();
+}
+function bar() returns error {
+    return error("a", y());
+}
+function y() returns error {
+    return x();
+}
+function x() returns error {
+    return error("b");
+}
+```
+
+The expected stack trace is
+
+```
+error: a
+at cause_location.0:bar(main.bal:6)
+cause_location.0:main(main.bal:2)
+cause: b
+at cause_location.0:x(main.bal:14)
+cause_location.0:y(main.bal:10)
+... 2 more
+```
+
+##### New Runtime Java APIs
+
+###### Invoke ballerina object method asynchronously
+New JAVA Runtime API is introduced for execute ballerina object method from Java. Object method caller can decide weather to execute the object method sequentially or concurrently using isIsolated parameter.
+
+```java
+invokeMethodAsync(BObject, String, String, StrandMetadata, boolean, Callback, Map, Type, Object...)}
+```
+
+Previous invokeMethodAsync methods are deprecated.
+
+######  API to retrieve ballerina object or object method is isolated
+
+Following two new APIs are introduced to ObjectType.
+```java
+    boolean isIsolated();
+
+    boolean isIsolated(String methodName);
+```
+
+##### Removed package version from runtime
+
+Full qualified package version has been removed from runtime and will only have major version. So when we provide 
+the version to ballerina runtime java api like create runtime values, we need to provide only package runtime version. Stacktraces will contain only major package versions.
+
 
 #### Bug Fixes
 
