@@ -54,13 +54,34 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 #### New Features
 
-##### Log Package
+##### Crypto Package
+- Improved the hash APIs for cryptographic salt
 
-Added Observability span context values to log messages when Observability is enabled.
+##### GraphQL Package
+- Added field alias support for GraphQL documents
+- Added variable support in GraphQL requests
+- Added mutation support for GraphQL services
+- Added typename introspection
+
+##### gRPC Package
+- Added declarative auth configurations
+- Added timestamp, duration, and struct type support
+
+##### HTTP Package
+- Enabled HTTP trace and access log support
+- Added HATEOAS link support
+- Introduced the `http:CacheConfig` annotation to the resource signature
+- Introduced support for the service-specific media-type subtype prefix
+- Introduced the introspection resource method to get the generated OpenAPI document of the service
+
+##### JWT Package
+- Added HMAC signature support for JWT
+  
+##### Log Package
+- Added Observability span context values to log messages when Observability is enabled.
 
 ##### SQL Package
-
-Added support for queryRow() in the database connectors. This method allows retrieving a single row as a record, or a single value from the database.
+- Added support for queryRow() in the database connectors. This method allows retrieving a single row as a record, or a single value from the database.
 ```ballerina
 record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id = 1`)
 int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
@@ -68,8 +89,18 @@ int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
 
 #### Improvements
 
-##### SQL Package
+##### GraphQL Package
+- Validate the `maxQueryDepth` at runtime as opposed to validating it at compile time
 
+##### HTTP Package
+- Added support for the `map<json>` as query parameter type
+- Added support for nilable client data binding types
+
+##### WebSocket Package
+- Made the WebSocket caller isolated
+- Introduced a write timeout for the WebSocket client
+
+##### SQL Package
 - Improved throughput performance with asynchronous database queries
 - Introduced new array out parameter types in call procedures.
 - The return type of the SQL query API is changed to include the completion type as nil in the stream. With this change, the below SQL query code,
@@ -84,8 +115,7 @@ int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
     ```
 
 ##### IO Package
-
-Changed the `io:readin` function input parameter to optional. In the previous API, it was required to pass a value to be printed before reading the user input as a string. Decided to remove it, due to the breaking change, made it optional. It is not recommended to pass a value to print in the console.
+- Changed the `io:readin` function input parameter to optional. In the previous API, it was required to pass a value to be printed before reading the user input as a string. Decided to remove it, due to the breaking change, made it optional. It is not recommended to pass a value to print in the console.
 
 #### Bug Fixes
 
