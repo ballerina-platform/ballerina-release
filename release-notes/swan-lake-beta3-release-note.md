@@ -73,14 +73,15 @@ int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
 - Improved throughput performance with asynchronous database queries
 - Introduced new array out parameter types in call procedures.
 - The return type of the SQL query API is changed to include the completion type as nil in the stream. With this change, the below SQL query code,
-**Previous Syntax**
-```ballerina
-stream<RowType, error> resultStream = sqlClient->query(“”);
-```
-**New Syntax**
-```ballerina
-stream<RowType, error?> resultStream = sqlClient->query(“”);
-```
+    
+    **Previous Syntax**
+    ```ballerina
+    stream<RowType, error> resultStream = sqlClient->query(“”);
+    ```
+    **New Syntax**
+    ```ballerina
+    stream<RowType, error?> resultStream = sqlClient->query(“”);
+    ```
 
 ##### IO Package
 
