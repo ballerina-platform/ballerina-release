@@ -88,12 +88,12 @@ mapVal.b = 123
 
 The additional fields that are created from the TOML values will have the following types.
 
-TOML Integer - `int`
-TOML Float - `float`
-TOML String - `string`
-TOML Boolean - `boolean`
-TOML Table - `map<anydata>`
-TOML Table array - `map<anydata>[]`
+* TOML Integer - `int`
+* TOML Float - `float`
+* TOML String - `string`
+* TOML Boolean - `boolean`
+* TOML Table - `map<anydata>`
+* TOML Table array - `map<anydata>[]`
 
 Similarly, if a configurable variable with a record type that contains a rest field is defined in the following way,
 
