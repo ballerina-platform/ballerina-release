@@ -135,6 +135,14 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 #### New Features
 
+##### Language Server
+
+- Added a code action to pull modules from the Ballerina Central
+- Added the completion extension API for TOML configuration files
+- Added completion support for the `Ballerina.toml` file
+- Added the offline build configuration option
+Clients can set the `ls.compilation.online` system property to`true` or `false` in order to run the language server's compilations online or offline. By default, the compilations are running offline. 
+
 ##### Ballerina OpenAPI Tool
 - Introduced a new command-line option to generate all the record fields that are not specifically mentioned as 
   `nullable:false` in the OpenAPI schema property as nullable to reduce the type conversion errors in the OpenAPI to
@@ -147,7 +155,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
   >`bal openapi -i <service-file> --json`
 - Added support to generate a boilerplate of test functions for each remote function implemented within a
   client connector  
-  
+
 #### Improvements
 ##### Ballerina OpenAPI Tool
 ###### Ballerina OpenAPI client and schema generation improvements for the OpenAPI to Ballerina command
