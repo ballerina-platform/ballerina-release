@@ -137,7 +137,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 ##### Language Server
 
-- Add code action to pull modules from the Ballerina Central
+- Added a code action to pull modules from the Ballerina Central
 - Add Completion extension API for toml configuration files
 - Add completion support for `Ballerina.toml`
 - Add offline build configuration option
