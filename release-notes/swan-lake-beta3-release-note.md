@@ -330,7 +330,7 @@ public function main() {
 
 This code snippet, which previously printed `\u0061pple` will now print `\u{61}pple`.
 
-- A bug that resulted in NumericEscape in the template string not being interpreted literally has been fixed.
+- A bug that resulted in `NumericEscape` in the template string not being interpreted literally has been fixed.
 
 ```ballerina
 import ballerina/io;
