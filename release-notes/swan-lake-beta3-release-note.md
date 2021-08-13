@@ -139,7 +139,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 - Add code action to pull modules from the Ballerina Central
 - Add Completion extension API for toml configuration files
-- Add completion support for Ballerina.toml
+- Add completion support for `Ballerina.toml`
 - Add offline build configuration option
 Clients can set the `ls.compilation.online` system property `true` or `false`, in order to run the language server's compilations online or offline. By default, the compilations are running offline. 
 
