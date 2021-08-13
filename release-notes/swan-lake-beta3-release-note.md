@@ -574,9 +574,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 ### Code to Cloud Updates
 
-#### New Features
-
 #### Improvements
+- Added a flag to disable docker image generation
+- Added the secret generation support for http clients
+- Improved diagnostics for failed value retrievals
+- Added support for multiple volumes
 
 #### Bug Fixes
 
