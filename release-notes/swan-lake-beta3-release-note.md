@@ -343,6 +343,17 @@ public function main() {
 
 The code snippet above, which previously printed `\u0061pple` will now print `\u{61}pple`.
 
+- A bug that resulted in self-referencing not being detected when referenced via a `let` expression or a constant reference expression has been fixed.
+
+The following will now result in errors.
+
+```ballerina
+const int INTEGER = INTEGER; // Compilation error.
+
+public function main() {
+    string s = let string[] arr = [s] in arr[0]; // Compilation error.
+}
+```
 To view all bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta3%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
 ### Runtime Updates
