@@ -123,7 +123,7 @@ public function main() returns error? {
 
 Enum declarations can have duplicate members.
 
-For example, the following declarations where both `LiftStatus` and `TrailStatus` have the same ‘OPEN’ and ‘CLOSED’ members are now allowed.
+For example, the following declarations where both `LiftStatus` and `TrailStatus` have the same `OPEN` and `CLOSED` members are now allowed.
 ```ballerina
 enum LiftStatus {
    OPEN,
@@ -317,7 +317,7 @@ public function main() {
 
 The above code snippet which previously printed `Hello world!  ὠ0` will now print `Hello world! 😀`.
 
-- A bug in escaping of NumericEscape has been fixed.
+- A bug in escaping `NumericEscape` has been fixed.
 
 ```ballerina
 import ballerina/io;
@@ -361,7 +361,6 @@ stream<int, error?> stm = new (new StreamImplementor());
 // Evaluated to true in SL Beta2, evaluates to false now.
 boolean streamCheck = stm is stream<int>;
 ```
-
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta3%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
 
