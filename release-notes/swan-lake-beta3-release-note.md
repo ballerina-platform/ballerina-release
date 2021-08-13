@@ -44,23 +44,23 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 #### Improvements
 
-##### Improved configurable variables to support xml types through TOML syntax
+##### Improved Configurable Variables to Support XML Types Through TOML Syntax
 
-The `configurable` feature is improved to support variables with xml types through the TOML syntax.
+The `configurable` feature is improved to support variables with XML types through the TOML syntax.
 
-For example, if the xml typed configurable variables are defined in the following way,
+For example, if the XML-typed configurable variables are defined in the following way,
 
 ``` ballerina
 configurable xml xmlVar = ?;
 ```
-The values can be provided in `Config.toml` as follows,
+the values can be provided in the `Config.toml` file as follows.
 
 
 ```toml
 xmlVar = "<book><name>Sherlock Holmes</name></book>"
 ```
 
-##### Improved configurable variables to support additional fields and rest fields for records
+##### Improved Configurable Variables to Support Additional Fields and Rest Fields for Records
 
 The `configurable` feature is improved to support additional fields and rest fields in record variables through the TOML syntax.
 
@@ -73,7 +73,7 @@ type Person record {
 configurable Person person = ?;
 ```
 
-The values can be provided in `Config.toml` as follows,
+the values can be provided in the `Config.toml` file as follows.
 
 
 ```toml
@@ -95,7 +95,7 @@ TOML Boolean - `boolean`
 TOML Table - `map<anydata>`
 TOML Table array - `map<anydata>[]`
 
-Similarly, if a configurable variable with a record type that contains a rest field is defined in the following way
+Similarly, if a configurable variable with a record type that contains a rest field is defined in the following way,
 
 ```ballerina
 public type Numbers record {|
@@ -105,7 +105,7 @@ public type Numbers record {|
 configurable Numbers numbers = ?;
 ```
 
-The values can be provided in `Config.toml` as follows,
+the values can be provided in the `Config.toml` file as follows.
 
 
 ```toml
@@ -113,11 +113,11 @@ num1 = 11
 num2 = 26
 ```
 
-##### Improved print error stacktrace with cause
+##### Improved the Printed Error Stacktrace to Include the Cause
 
-Error stack trace has been improved to have the error cause locations. Stack frames of the wrapped error causes are also added to the stack trace.
+The error stack trace has been improved to include the error cause locations. Stack frames of the wrapped error causes are also added to the stack trace.
 
-e.g:
+E.g.,
 For the following example,
 ```ballerina
 public function main() {
@@ -134,7 +134,7 @@ function x() returns error {
 }
 ```
 
-The expected stack trace is
+the expected stack trace will be as follows.
 
 ```
 error: a
@@ -148,28 +148,28 @@ cause_location.0:y(main.bal:10)
 
 ##### New Runtime Java APIs
 
-###### Invoke ballerina object method asynchronously
-New JAVA Runtime API is introduced for execute ballerina object method from Java. Object method caller can decide weather to execute the object method sequentially or concurrently using isIsolated parameter.
+###### Invoking the Ballerina Object Method Asynchronously
+The new JAVA Runtime API is introduced for executing a Ballerina object method from Java. The object method caller can decide whether to execute the object method sequentially or concurrently using the `isIsolated` parameter.
 
 ```java
 invokeMethodAsync(BObject, String, String, StrandMetadata, boolean, Callback, Map, Type, Object...)}
 ```
 
-Previous invokeMethodAsync methods are deprecated.
+The `invokeMethodAsync` methods that were there previously are deprecated.
 
-######  API to retrieve ballerina object or object method is isolated
+######  Isolation of the API to Retrieve a Ballerina Object or an Object method
 
-Following two new APIs are introduced to ObjectType.
+The following two new APIs are introduced to the `ObjectType`.
 ```java
     boolean isIsolated();
 
     boolean isIsolated(String methodName);
 ```
 
-##### Removed package version from runtime
+##### Removed the Package Version from the Runtime
 
-Full qualified package version has been removed from runtime and will only have major version. So when we provide 
-the version to ballerina runtime java api like create runtime values, we need to provide only package runtime version. Stacktraces will contain only major package versions.
+The fully-qualified package version has been removed from the runtime and will only have the major version. Therefore, when you provide 
+the version to the Ballerina runtime Java API like creating runtime values, you need to provide only the package runtime version. The stack traces will contain only the major package versions.
 
 
 #### Bug Fixes
