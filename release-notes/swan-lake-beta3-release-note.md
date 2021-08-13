@@ -195,7 +195,7 @@ json b = a;
 
 ##### Error Return in the `init` Method of a Service Declaration
 
-Previously the `init` method of a service declaration could not have a return type containing error. With this release that restriction has been removed.
+Previously, the `init` method of a service declaration could not have a return type containing an error. That restriction has been removed with this release.
 If the `init` method of a service declaration returns an error value, it will result in the module initialization failing.
 
 ```ballerina
