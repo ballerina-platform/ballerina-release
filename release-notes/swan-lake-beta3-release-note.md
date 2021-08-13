@@ -54,7 +54,7 @@ public function main() {
 
 The type for numeric literals in additive and multiplicative expressions is now inferred from the contextually-expected type.
 
-When the contextually-expected type for an additive or multiplicative expression is `float`, the type of a literal used as a sub expression is inferred to be `float`. Similarly, if the contextually-expected type is `decimal` the type of the literal is inferred to be `decimal`.
+When the contextually-expected type for an additive or multiplicative expression is `float`, the type of a literal used as a sub expression is inferred to be `float`. Similarly, if the contextually-expected type is `decimal`, the type of the literal is inferred to be `decimal`.
 
 ```ballerina
 float a = 10 + 3.0 + 5.0;
@@ -65,7 +65,7 @@ decimal d = 10 + 5 - 3.0;
 
 ##### Isolated Inference
 
-The compiler now infers `isolated` for service objects, class definitions, variables, and functions in scenarios where if all of them explicitly specified an `isolated` qualifier they would meet the requirements for isolated functions and isolated objects.
+The compiler now infers `isolated` for service objects, class definitions, variables, and functions in scenarios where if all of them explicitly specify an `isolated` qualifier, they would meet the requirements for isolated functions and isolated objects.
 
 The following service and its methods are now inferred to be isolated.
 ```ballerina
@@ -99,7 +99,7 @@ The compiler does not infer `isolated` for any constructs that are exposed outsi
 
 ##### Type Narrowing in the `where` Clause of a Query Expression/Action
 
-The `where` clause in a query now narrows types, similar to `if` statements.
+The `where` clause in a query now narrows the types similar to `if` statements.
 
 ```ballerina
 import ballerina/io;
@@ -123,7 +123,7 @@ public function main() returns error? {
 
 Enum declarations can have duplicate members.
 
-For example, the following declarations where both `LiftStatus` and `TrailStatus` have the same ‘OPEN’ and ‘CLOSED’ members is now allowed.
+For example, the following declarations where both `LiftStatus` and `TrailStatus` have the same ‘OPEN’ and ‘CLOSED’ members are now allowed.
 ```ballerina
 enum LiftStatus {
    OPEN,
@@ -137,7 +137,7 @@ enum TrailStatus {
 }
 ```
 
-However, it is an error for the same enum declaration to have duplicate members. Similarly, it is also an error for different enums to initialize the same member with different values.
+However, it is an error if the same enum declaration has duplicate members. Similarly, it is also an error if different enums initialize the same member with different values.
 
 ##### `string:Char` as the Static Type of String Member Access
 
@@ -154,7 +154,7 @@ public function main() {
 
 ##### Directly Calling Function-typed Fields of an Object
 
-Fields of an object that are of a function type can now be directly called via an object value using method call syntax.
+Fields of an object that are of a function type can now be directly called via an object value using the method call syntax.
 
 ```ballerina
 class Engine {
@@ -261,7 +261,7 @@ var _ = error("custom error"); // Compilation error.
 
 ##### Relaxed Static Type Requirements for `==` and `!=`
 
-Previously `==` and `!=` were allowed only when both operands were of static types that are subtypes of `anydata`. This has now been relaxed to allow `==` and `!=` if the static type of at least one operand is a subtype of `anydata`.
+Previously, `==` and `!=` were allowed only when both operands were of static types that are subtypes of `anydata`. This has now been relaxed to allow `==` and `!=` if the static type of at least one operand is a subtype of `anydata`.
 ```ballerina
 error? x = ();
  
@@ -328,7 +328,7 @@ public function main() {
 }
 ```
 
-This code snippet which previously printed `\u0061pple` will now print `\u{61}pple`.
+This code snippet, which previously printed `\u0061pple` will now print `\u{61}pple`.
 
 - A bug that resulted in NumericEscape in the template string not being interpreted literally has been fixed.
 
@@ -341,7 +341,7 @@ public function main() {
 }
 ```
 
-The code snippet above which previously printed `\u0061pple` will now print `\u{61}pple`.
+The code snippet above, which previously printed `\u0061pple` will now print `\u{61}pple`.
 
 To view all bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta3%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
