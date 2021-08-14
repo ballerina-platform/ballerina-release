@@ -609,6 +609,17 @@ Clients can set the `ls.compilation.online` system property to`true` or `false` 
 - Added support to generate a boilerplate of test functions for each remote function implemented within a
   client connector  
 
+##### Debugger
+- Added debugger expression evaluation support for the following types:
+    - error constructor expressions
+    - explicit new expressions
+    - XML attribute access expressions
+    - annotation access expressions
+    - range expressions
+    - trap expressions
+    - function, object method and action invocations with rest arguments
+- Introduced log points support
+
 #### Improvements
 ##### Ballerina OpenAPI Tool
 ###### Ballerina OpenAPI client and schema generation improvements for the OpenAPI to Ballerina command
@@ -634,7 +645,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake Beta2 of the repositor
 - [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta3%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
 - [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta3%22+label%3AType%2FBug)
-- [Debugger](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3AType%2FBug+label%3AArea%2FDebugger+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22)
+- [Debugger](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3AType%2FBug+label%3AArea%2FDebugger+milestone%3A%22Ballerina+Swan+Lake+-+Beta3%22+is%3Aclosed)
 - [Test Framework](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FTestFramework+milestone%3A%22Ballerina+Swan+Lake+-+Beta2%22+label%3AType%2FBug+)
 
 #### Ballerina Packages Updates
