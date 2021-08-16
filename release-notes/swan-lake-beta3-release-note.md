@@ -586,7 +586,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 ### Dependency Management 
 
-With SL Beta3 we have changed how the dependencies of a package are managed. The new implementation will ensure the following. 
+With Swan Lake Beta3, the way how dependencies of a package are managed has been changed. The new implementation will ensure the following. 
 
  - The new build will ensure that you will get updates of the dependent packages ( direct or transitive ) automatically
  - Introducing --sticky flag in case you want to lock the dependency versions for subsequent builds
