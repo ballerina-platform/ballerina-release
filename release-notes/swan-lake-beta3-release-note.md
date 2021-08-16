@@ -588,7 +588,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 With Swan Lake Beta3, the way how dependencies of a package are managed has been changed. The new implementation will ensure the following. 
 
- - The new build will ensure that you will get updates of the dependent packages ( direct or transitive ) automatically
+ - The new build will ensure that you will get updates of the dependent packages (direct or transitive) automatically
  - Introducing --sticky flag in case you want to lock the dependency versions for subsequent builds
 
 Following changes has been introduced 
