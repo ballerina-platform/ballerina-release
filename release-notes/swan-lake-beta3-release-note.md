@@ -273,12 +273,11 @@ if x == () {
 
 ##### Relaxed Query Expression Keywords
 
-Keywords, that are used in query expression context (`where`, `join`, `order`, `by`, `equals`, `ascending`, `descending`, `limit`, `outer`, `select`) can now be used as identifiers outside the query context.
-
+Identifiers that are keywords in a query expression context (`where`, `join`, `order`, `by`, `equals`, `ascending`, `descending`, `limit`, `outer`, and `select`) can now be used as ordinary identifiers outside query contexts. i.e., they are no longer required to be quoted identifiers.
 ```ballerina
 // Now allowed.
 int limit = 5;
-// `string:'join()` now can be used without initial quote.
+// `string:'join()` is no longer required to use quoted identifiers.
 string b = string:join(" ", "hello", "world!"); 
 ``` 
 
