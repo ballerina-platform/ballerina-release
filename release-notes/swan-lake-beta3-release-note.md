@@ -589,7 +589,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 With Swan Lake Beta3, the way how dependencies of a package are managed has been changed. The new implementation will ensure the following. 
 
  - The new build will ensure that you will get updates of the dependent packages (direct or transitive) automatically
- - Introducing --sticky flag in case you want to lock the dependency versions for subsequent builds
+ - Introducing the `--sticky` flag in case you want to lock the dependency versions for subsequent builds
 
 Following changes has been introduced 
 - Introduce Dependencies.toml version 2. Going forward this will be automatically managed by the build command and users should not modify it. If you already have a Dependencies.toml it will be automatically updated to the new version.
