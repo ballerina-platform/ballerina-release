@@ -584,6 +584,20 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+Beta3%22).
 
+### Dependency Management 
+
+With Swan Lake Beta3, the way how dependencies of a package are managed has been changed. The new implementation will ensure the following. 
+
+ - The new build will ensure that you will get updates of the dependent packages (direct or transitive) automatically
+ - Introducing the `--sticky` flag in case you want to lock the dependency versions for subsequent builds
+
+The following changes have been introduced.
+- Introduced the `Dependencies.toml` version 2. Going forward, this will be automatically managed by the `build` command and you should not modify it. If you already have a `Dependencies.toml` file, it will be automatically updated to the new version.
+- Packages in the local repository need to be configured in the `Ballerina.toml` file. The format is as follows.
+    ```
+    // To be finalized
+    ```
+    
 ### Developer Tools Updates
 
 #### New Features
