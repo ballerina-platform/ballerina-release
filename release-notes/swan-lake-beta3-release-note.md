@@ -593,7 +593,7 @@ With Swan Lake Beta3, the way how dependencies of a package are managed has been
 
 The following changes have been introduced.
 - Introduce Dependencies.toml version 2. Going forward this will be automatically managed by the build command and users should not modify it. If you already have a Dependencies.toml it will be automatically updated to the new version.
-- Packages in the local repository need to be configured in Ballerina.toml. The format is as below.
+- Packages in the local repository need to be configured in the `Ballerina.toml` file. The format is as follows.
     ```
     // To be finalized
     ```
