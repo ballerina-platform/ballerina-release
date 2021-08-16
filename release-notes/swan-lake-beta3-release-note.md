@@ -271,6 +271,17 @@ if x == () {
 }
 ``` 
 
+##### Relaxed Query Expression Keywords
+
+Keywords, that are used in query expression context (`where`, `join`, `order`, `by`, `equals`, `ascending`, `descending`, `limit`, `outer`, `select`) can now be used as identifiers outside the query context.
+
+```ballerina
+// Now allowed.
+int limit = 5;
+// `string:'join()` now can be used without initial quote.
+string b = string:join(" ", "hello", "world!"); 
+``` 
+
 #### Bug Fixes
 
 - In a stream type `stream<T, C>`; the completion type `C` should always include nil if it is a bounded stream. A bug where this was not validated for stream implementors has been fixed.
