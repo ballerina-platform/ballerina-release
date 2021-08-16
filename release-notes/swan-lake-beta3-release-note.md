@@ -592,7 +592,7 @@ With Swan Lake Beta3, the way how dependencies of a package are managed has been
  - Introducing the `--sticky` flag in case you want to lock the dependency versions for subsequent builds
 
 The following changes have been introduced.
-- Introduce Dependencies.toml version 2. Going forward this will be automatically managed by the build command and users should not modify it. If you already have a Dependencies.toml it will be automatically updated to the new version.
+- Introduces the `Dependencies.toml` version 2. Going forward, this will be automatically managed by the `build` command and you should not modify it. If you already have a `Dependencies.toml` file, it will be automatically updated to the new version.
 - Packages in the local repository need to be configured in the `Ballerina.toml` file. The format is as follows.
     ```
     // To be finalized
