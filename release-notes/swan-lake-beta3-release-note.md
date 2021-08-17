@@ -528,6 +528,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 ##### gRPC Package
 - Added declarative auth configurations
 - Added timestamp, duration, and struct type support
+- Added OAuth2 JWT bearer grant type support for client
 
 ##### HTTP Package
 - Enabled HTTP trace and access log support
@@ -535,6 +536,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 - Introduced the `http:CacheConfig` annotation to the resource signature
 - Introduced support for the service-specific media-type subtype prefix
 - Introduced the introspection resource method to get the generated OpenAPI document of the service
+- Added OAuth2 JWT bearer grant type support for client
 
 ##### JWT Package
 - Added HMAC signature support for JWT
@@ -542,12 +544,18 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 ##### Log Package
 - Added observability span context values to the log messages when observability is enabled.
 
+##### OAuth2 Package
+- Added JWT bearer grant type support
+    
 ##### SQL Package
 - Added support for `queryRow()` in the database connectors. This method allows retrieving a single row as a record, or a single value from the database.
 ```ballerina
 record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id = 1`)
 int count = sqlClient->queryRow(“SELECT COUNT(*) FROM ExTable”)
 ```
+
+##### WebSocket Package
+- Added OAuth2 JWT bearer grant type support for client
 
 #### Improvements
 
