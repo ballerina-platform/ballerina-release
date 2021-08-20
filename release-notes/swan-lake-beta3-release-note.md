@@ -366,7 +366,7 @@ public function main() {
 }
 ```
 
-- Type narrowing is now reset on any assignment to a narrowed variable. Previously type narrowing was not reset if the static type of the new value was a subtype of the narrowed type. This was a deviation from the specification.
+- Type narrowing is now reset on any assignment to a narrowed variable. Previously, type narrowing was not reset if the static type of the new value was a subtype of the narrowed type. This was a deviation from the specification.
 
 ```ballerina
 public function main() {
@@ -375,7 +375,7 @@ public function main() {
     if v is int {
         int x = v; // Valid.
 
-        // Now resets the type to `int|string` even though `1` belongs to `int`.
+        // Now, the type is reset to `int|string` even though `1` belongs to `int`.
         v += 1;
 
         int y = v; // Invalid, will now result in an error.
