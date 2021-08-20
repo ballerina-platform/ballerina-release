@@ -529,6 +529,16 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 - Added declarative auth configurations
 - Added timestamp, duration, and struct type support
 - Added OAuth2 JWT bearer grant type support for client
+- Introduced the support for a directory with PROTO files as the input (`--input` flag) for the gRPC command
+- Introduced the support for external import paths in the gRPC command using the `--proto_path` flag
+- Added the PROTO file name as a suffix for the `ROOT_DESCRIPTOR` constant and `getDescriptorMap` function to fix the re-declared symbol issue when multiple stub files are put into the same module. If you are going to regenerate the stub files with the Swan Lake Beta3 release, you need to change the service annotation like below.
+```ballerina
+@grpc:ServiceDescriptor {
+   descriptor: ROOT_DESCRIPTOR_<PROTO_FILE_NAME>,
+   descMap: getDescriptorMap<Proto_File_Name>()
+}
+service "HelloWorld" on new grpc:Listener(9090) {
+```
 
 ##### HTTP Package
 - Enabled HTTP trace and access log support
