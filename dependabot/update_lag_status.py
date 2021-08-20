@@ -350,7 +350,7 @@ def get_updated_readme():
     global all_modules
 
     all_modules = utils.read_json_file(constants.EXTENSIONS_FILE)
-    module_details_list = all_modules["modules"]
+    module_details_list = all_modules["standard_library"]
 
     lang_version_statement = get_lang_version_statement()
     distribution_statement = get_distribution_statement()

@@ -1,7 +1,7 @@
 {
     "auto_bump": true,
     "lang_version_substring": "beta.3",
-    "modules": [
+    "standard_library": [
         {
             "name": "module-ballerina-auth",
             "code_owner_id_env": "CHANANKA_USER_ID"

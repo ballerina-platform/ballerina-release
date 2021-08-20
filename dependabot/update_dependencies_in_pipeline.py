@@ -108,7 +108,7 @@ def main():
 
     print('Workflow started with Ballerina Lang version : ' + lang_version)
 
-    all_modules = extensions_file['modules']
+    all_modules = extensions_file['standard_library']
 
     last_level = all_modules[-1]['level']
 
