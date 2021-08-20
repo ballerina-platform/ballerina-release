@@ -148,6 +148,10 @@
             "code_owner_id_env": "MADHUKA_USER_ID"
         },
         {
+            "name": "module-ballerina-protobuf",
+            "code_owner_id_env": "MADHUKA_USER_ID"
+        },
+        {
             "name": "module-ballerinax-prometheus",
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
