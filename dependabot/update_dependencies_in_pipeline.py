@@ -125,12 +125,12 @@ def main():
             wait_for_current_level_build(current_level, True)
     print('Successfully updated dependencies in Ballerina Standard Library')
 
-    central_module_level = extensions_file['central_modules'][-1]['level']
+    extended_library_level = extensions_file['extended_library'][-1]['level']
 
     print('Start dependency update for Ballerina Extended Library')
-    for j in range(last_level, central_module_level):
+    for j in range(last_level, extended_library_level):
         current_level = j + 1
-        current_level_modules = list(filter(lambda s: s['level'] == current_level, extensions_file['central_modules']))
+        current_level_modules = list(filter(lambda s: s['level'] == current_level, extensions_file['extended_library']))
 
         for idx, module in enumerate(current_level_modules):
             print("[Info] Check lang dependency in module '" + module['name'] + "'")

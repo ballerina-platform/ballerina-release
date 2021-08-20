@@ -26,7 +26,7 @@ def main():
     print('Generated module dependency graph and updated module levels')
     module_details_json['modules'].sort(key=lambda s: s['level'])
     module_details_json = remove_modules_not_included_in_distribution(module_details_json)
-    print('Removed central only modules and updated the list')
+    print('Removed extended library modules and updated the list')
 
     try:
         utils.write_json_file(constants.EXTENSIONS_FILE, module_details_json)
@@ -206,7 +206,7 @@ def initialize_module_details(modules_list):
             'version_key': module.get('version_key', default_version_key),
             'default_branch': default_branch,
             'auto_merge': module.get('auto_merge', True),
-            'central_only_module': module.get('central_only_module', True),
+            'is_extended_library_module': module.get('is_extended_library_module', True),
             'build_action_file': module.get('build_action_file', get_default_build_file(module['name'])),
             'code_owner_id_env': module.get('code_owner_id_env',
                                             'ALL_USER_ID' if module['name'] == 'ballerina-distribution' else ''),
@@ -243,7 +243,7 @@ def remove_modules_not_included_in_distribution(module_details_json):
 
     for module in module_details_json['modules']:
         if (module['name'] != 'ballerina-distribution' and not module['dependents'] and
-                module['central_only_module']):
+                module['is_extended_library_module']):
             removed_modules.append(module)
 
     for removed_module in removed_modules:
@@ -251,9 +251,9 @@ def remove_modules_not_included_in_distribution(module_details_json):
         removed_module['level'] = last_level + 1
 
     for module in module_details_json['modules']:
-        module['central_only_module'] = False
+        module['is_extended_library_module'] = False
 
-    module_details_json['central_modules'] = removed_modules
+    module_details_json['extended_library'] = removed_modules
 
     return module_details_json
 
