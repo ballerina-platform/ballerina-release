@@ -365,6 +365,24 @@ public function main() {
     string s = let string[] arr = [s] in arr[0]; // Compilation error.
 }
 ```
+
+- Type narrowing is now reset on any assignment to a narrowed variable. Previously, type narrowing was not reset if the static type of the new value was a subtype of the narrowed type. This was a deviation from the specification.
+
+```ballerina
+public function main() {
+    int|string v = 0;
+
+    if v is int {
+        int x = v; // Valid.
+
+        // Now, the type is reset to `int|string` even though `1` belongs to `int`.
+        v += 1;
+
+        int y = v; // Invalid, will now result in an error.
+    }
+}
+```
+
 To view all bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta3%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
 ### Runtime Updates
