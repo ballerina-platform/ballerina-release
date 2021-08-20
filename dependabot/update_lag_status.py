@@ -239,7 +239,7 @@ def get_pending_pr(module):
     return pending_pr_button, pending_pr_link
 
 
-def update_modules(updated_readme, module_details_list, is_central_modules):
+def update_modules(updated_readme, module_details_list, is_extended_library):
     global lag_reminder_modules
     global lagging_modules_level
 
@@ -263,7 +263,7 @@ def update_modules(updated_readme, module_details_list, is_central_modules):
             lag_button, lag = get_lag_button(module)
             pending_pr_button, pending_pr_link = get_pending_pr(module)
 
-            if (not is_central_modules) and is_distribution_lagging and lag:
+            if (not is_extended_library) and is_distribution_lagging and lag:
                 module[MODULE_PULL_REQUEST] = pending_pr_link
                 if lagging_modules_level == 0:
                     # All modules have been up to date so far
@@ -350,7 +350,7 @@ def get_updated_readme():
     global all_modules
 
     all_modules = utils.read_json_file(constants.EXTENSIONS_FILE)
-    module_details_list = all_modules["modules"]
+    module_details_list = all_modules["standard_library"]
 
     lang_version_statement = get_lang_version_statement()
     distribution_statement = get_distribution_statement()
@@ -374,11 +374,11 @@ def get_updated_readme():
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
-    central_modules = all_modules["central_modules"]
+    extended_library = all_modules["extended_library"]
 
-    updated_readme = update_modules(updated_readme, central_modules, True)
+    updated_readme = update_modules(updated_readme, extended_library, True)
 
-    repositories_updated = round((modules_with_no_lag / (len(module_details_list) + len(central_modules))) * 100)
+    repositories_updated = round((modules_with_no_lag / (len(module_details_list) + len(extended_library))) * 100)
     make_pie(repositories_updated)
 
     return updated_readme
