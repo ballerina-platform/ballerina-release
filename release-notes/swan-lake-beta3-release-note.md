@@ -491,26 +491,6 @@ cause_location.0:y(main.bal:10)
 ... 2 more
 ```
 
-##### New Runtime Java APIs
-
-###### Invoking the Ballerina Object Method Asynchronously
-The new JAVA Runtime API is introduced for executing a Ballerina object method from Java. The object method caller can decide whether to execute the object method sequentially or concurrently using the `isIsolated` parameter.
-
-```java
-invokeMethodAsync(BObject, String, String, StrandMetadata, boolean, Callback, Map, Type, Object...)}
-```
-
-The `invokeMethodAsync` methods that were there previously are deprecated.
-
-######  Isolation of the API to Retrieve a Ballerina Object or an Object method
-
-The following two new APIs are introduced to the `ObjectType`.
-```java
-    boolean isIsolated();
-
-    boolean isIsolated(String methodName);
-```
-
 ##### Removed the Package Version from the Runtime
 
 The fully-qualified package version has been removed from the runtime and will only have the major version. Therefore, when you provide 
