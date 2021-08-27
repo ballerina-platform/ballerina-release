@@ -1,0 +1,17 @@
+.heading {
+    margin: auto;
+    width: 99%;
+    padding: 10px;
+    text-align: center;
+    background-color: #22b7b1;
+    color: #f0f0f0;
+}
+
+.graph {
+    margin: auto;
+    text-align: center;
+    text-anchor: middle;
+    text-align-all: center;
+    padding: 10px;
+    text-decoration-color: #92c9d9;
+}
