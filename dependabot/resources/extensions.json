@@ -66,6 +66,7 @@
             "code_owner_id_env": "MADHUKA_USER_ID",
             "send_notification": true,
             "dependents": [
+                "module-ballerina-grpc",
                 "module-ballerina-websub",
                 "module-ballerina-websubhub"
             ]
