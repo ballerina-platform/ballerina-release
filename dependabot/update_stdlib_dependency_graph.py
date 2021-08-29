@@ -1,12 +1,19 @@
 import json
 from graphviz import Digraph
 import requests
+import os
+from github import Github
+import constants
+import utils
 
 dependencies = []
 stdlib_modules_by_level = dict()
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-standard-library/' \
                                'main/release/resources/stdlib_modules.json'
 graph_file_path = 'dashboard/stdlib_graph.gv'
+
+#ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
+#github = Github(ballerina_bot_token)
 
 
 def main():
@@ -17,6 +24,17 @@ def main():
     read_stdlib_modules()
     if dependencies:
         create_graph(stdlib_modules_by_level, dependencies)
+
+    updated_file_content = open(graph_file_path, 'r').read()
+    update = utils.commit_file('ballerina-release', graph_file_path, updated_file_content, 'master',
+                               '[Automated] Update Stdlib Dependency Graph')[0]
+    if update:
+        utils.open_pr_and_merge('ballerina-release',
+                                '[Automated] Update Stdlib Dependency Graph',
+                                'Update dependency graph in stdlib_graph.gv',
+                                'master')
+    else:
+        print('No changes to ' + graph_file_path + ' file')
 
 
 def read_stdlib_modules():

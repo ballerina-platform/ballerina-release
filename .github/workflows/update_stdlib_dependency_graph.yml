@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 12 * * *'
+  push:
 
 jobs:
   create:
@@ -29,15 +30,3 @@ jobs:
       - name: Get Dependencies and Update Dependency Graph
         run: |
           python dependabot/update_stdlib_dependency_graph.py
-      - name: Commit Files
-        run: |
-          git config --local user.email ${{ secrets.BALLERINA_BOT_EMAIL }}
-          git config --local user.name ${{ secrets.BALLERINA_BOT_USERNAME }}
-          git add -A
-          git commit -m "Update stdlib dependency graph" -a
-
-      - name: Push Changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.BALLERINA_BOT_TOKEN }}
-          branch: master
