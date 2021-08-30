@@ -2,6 +2,7 @@ import json
 from graphviz import Digraph
 import requests
 import utils
+import constants
 
 dependencies = []
 stdlib_modules_by_level = dict()
@@ -20,13 +21,13 @@ def main():
         create_graph(stdlib_modules_by_level, dependencies)
 
     updated_file_content = open(graph_file_path, 'r').read()
-    update = utils.commit_file('ballerina-release', graph_file_path, updated_file_content, 'master',
-                               '[Automated] Update Stdlib Dependency Graph')[0]
+    update = utils.commit_file('ballerina-release', graph_file_path, updated_file_content,
+                               constants.EXTENSIONS_UPDATE_BRANCH, '[Automated] Update Stdlib Dependency Graph')[0]
     if update:
         utils.open_pr_and_merge('ballerina-release',
                                 '[Automated] Update Stdlib Dependency Graph',
                                 'Update dependency graph in stdlib_graph.gv',
-                                'master')
+                                constants.EXTENSIONS_UPDATE_BRANCH)
     else:
         print('No changes to ' + graph_file_path + ' file')
 
