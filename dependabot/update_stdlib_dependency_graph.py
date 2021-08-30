@@ -1,6 +1,7 @@
 import json
 from graphviz import Digraph
 import requests
+import utils
 
 dependencies = []
 stdlib_modules_by_level = dict()
@@ -17,6 +18,17 @@ def main():
     read_stdlib_modules()
     if dependencies:
         create_graph(stdlib_modules_by_level, dependencies)
+
+    updated_file_content = open(graph_file_path, 'r').read()
+    update = utils.commit_file('ballerina-release', graph_file_path, updated_file_content, 'master',
+                               '[Automated] Update Stdlib Dependency Graph')[0]
+    if update:
+        utils.open_pr_and_merge('ballerina-release',
+                                '[Automated] Update Stdlib Dependency Graph',
+                                'Update dependency graph in stdlib_graph.gv',
+                                'master')
+    else:
+        print('No changes to ' + graph_file_path + ' file')
 
 
 def read_stdlib_modules():
@@ -61,15 +73,15 @@ def create_graph(levels, edges):
 
 def remove_module_group_name(module_name):
     ballerina = "module-ballerina-"
-    ballerinai = "module-ballerina-"
+    ballerinai = "module-ballerinai-"
     ballerinax = "module-ballerinax-"
 
     if ballerina in module_name:
-        module_name.replace(ballerina, "")
+        module_name = module_name.replace(ballerina, "")
     elif ballerinai in module_name:
-        module_name.replace(ballerinai, "")
+        module_name = module_name.replace(ballerinai, "")
     elif ballerinax in module_name:
-        module_name.replace(ballerinax, "")
+        module_name = module_name.replace(ballerinax, "")
 
     return module_name
 
