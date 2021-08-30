@@ -17,6 +17,7 @@ digraph "Stdlib Dependency Graph" {
 		crypto
 		log
 		os
+		protobuf
 		task
 		xslt
 		label="level 2"
@@ -55,7 +56,7 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		graphql
 		grpc
-		"module-ballerinai-transaction"
+		transaction
 		websocket
 		websub
 		websubhub
@@ -81,12 +82,14 @@ digraph "Stdlib Dependency Graph" {
 	io -> log
 	io -> os
 	io -> xslt
+	random -> grpc
 	random -> websub
 	random -> websubhub
 	regex -> log
 	regex -> uuid
 	time -> crypto
 	time -> file
+	time -> protobuf
 	time -> task
 	url -> http
 	crypto -> auth
@@ -123,13 +126,13 @@ digraph "Stdlib Dependency Graph" {
 	oauth2 -> http
 	http -> graphql
 	http -> grpc
-	http -> "module-ballerinai-transaction"
+	http -> transaction
 	http -> websocket
 	http -> websub
 	http -> websubhub
-	"module-ballerinai-transaction" -> kafka
-	"module-ballerinai-transaction" -> rabbitmq
-	"module-ballerinai-transaction" -> sql
+	transaction -> kafka
+	transaction -> rabbitmq
+	transaction -> sql
 	sql -> "java.jdbc"
 	sql -> mssql
 	sql -> mysql
