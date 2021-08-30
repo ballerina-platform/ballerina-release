@@ -1,9 +1,6 @@
 import json
 from graphviz import Digraph
 import requests
-import os
-from github import Github
-import constants
 import utils
 
 dependencies = []
@@ -11,9 +8,6 @@ stdlib_modules_by_level = dict()
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-standard-library/' \
                                'main/release/resources/stdlib_modules.json'
 graph_file_path = 'dashboard/stdlib_graph.gv'
-
-#ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
-#github = Github(ballerina_bot_token)
 
 
 def main():
@@ -79,15 +73,15 @@ def create_graph(levels, edges):
 
 def remove_module_group_name(module_name):
     ballerina = "module-ballerina-"
-    ballerinai = "module-ballerina-"
+    ballerinai = "module-ballerinai-"
     ballerinax = "module-ballerinax-"
 
     if ballerina in module_name:
-        module_name.replace(ballerina, "")
+        module_name = module_name.replace(ballerina, "")
     elif ballerinai in module_name:
-        module_name.replace(ballerinai, "")
+        module_name = module_name.replace(ballerinai, "")
     elif ballerinax in module_name:
-        module_name.replace(ballerinax, "")
+        module_name = module_name.replace(ballerinax, "")
 
     return module_name
 
