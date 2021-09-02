@@ -490,6 +490,36 @@ at cause_location.0:x(main.bal:14)
 cause_location.0:y(main.bal:10)
 ... 2 more
 ```
+##### New Runtime Java APIs
+
+###### Invoke ballerina object method asynchronously
+New JAVA Runtime APIs are introduced for execute ballerina object method from Java. Object method caller can decide 
+weather to execute the object method sequentially or concurrently using appropriate API.
+
+If the caller can ensure that given object and object method is isolated and no data race is possible for the mutable 
+state with given arguments, they can use invokeMethodAsyncConcurrently otherwise invokeMethodAsyncSequentially.
+
+```java
+boolean isIsolated = object.getType().isIsolated(methodName);
+if (isIsolated) {
+    BFuture bFuture = env.getRuntime().invokeMethodAsyncConcurrently(object, methodName, strandName, metadata, 
+                                    callback, properties, returnType, args);
+} else {
+    BFuture bFuture = env.getRuntime().invokeMethodAsyncSequentially(object, methodName, strandName, metadata,
+                                    callback, properties, returnType, args);
+}
+```
+
+Previous invokeMethodAsync methods are deprecated.
+
+######  API to retrieve ballerina object or object method is isolated
+
+Following two new APIs are introduced to ObjectType.
+```java
+    boolean isIsolated();
+
+    boolean isIsolated(String methodName);
+```
 
 ##### Removed the Package Version from the Runtime
 
