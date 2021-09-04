@@ -110,6 +110,7 @@ digraph "Stdlib Dependency Graph" {
 	log -> tcp
 	log -> udp
 	os -> file
+	protobuf -> grpc
 	task -> cache
 	task -> email
 	task -> ftp
