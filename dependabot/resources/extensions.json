@@ -230,7 +230,9 @@
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "MADHUKA_USER_ID",
             "send_notification": true,
-            "dependents": []
+            "dependents": [
+                "module-ballerina-grpc"
+            ]
         },
         {
             "name": "module-ballerina-task",
