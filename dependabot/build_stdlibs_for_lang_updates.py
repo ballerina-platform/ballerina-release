@@ -12,11 +12,11 @@ stdlib_module_versions = dict()
 ballerina_lang_branch = "master"
 exit_code = 0
 
-#ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
-#ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
+ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
+ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 
-ballerina_bot_username = "NipunaMadhushan"
-ballerina_bot_token = "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"
+#ballerina_bot_username = "NipunaMadhushan"
+#ballerina_bot_token = "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"
 
 
 def main():
