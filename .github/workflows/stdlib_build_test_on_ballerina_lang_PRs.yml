@@ -1,0 +1,37 @@
+name: Standard library build test for ballerina-lang PRs
+
+on:
+  workflow_dispatch:
+      inputs:
+        ballerina_lang_branch:
+          description: 'Ballerina-lang branch'
+          required: true
+          default: 'master'
+
+jobs:
+  build-stdlibs:
+    name: Build Standard Libraries
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Python Packages
+        run: |
+          pip install requests
+          pip install retry
+          pip install PyGithub
+
+      - name: Build Standard Libraries
+        run: |
+          python dependabot/build_stdlibs_for_lang_updates.py ${{ github.event.inputs.ballerina_lang_branch }}
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
