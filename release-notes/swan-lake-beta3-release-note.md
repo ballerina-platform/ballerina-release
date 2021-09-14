@@ -552,6 +552,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 - Added variable support in GraphQL requests
 - Added mutation support for GraphQL services
 - Added typename introspection
+- Added input objects support
+- Added block string support
 
 ##### gRPC Package
 - Added declarative auth configurations
