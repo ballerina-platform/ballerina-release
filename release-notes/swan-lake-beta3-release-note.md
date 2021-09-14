@@ -711,7 +711,7 @@ Clients can set the `ls.compilation.online` system property to`true` or `false` 
 - Added resource function API documentation mapping to the OAS description and summary
 - Improved the resource function request payload mapping with the OAS `requestBody`
 - Added the resource signature `http:Cache` annotation mapping to response headers
-- Improved reference resolve for accessing separate module data type to map OAS object schemas
+- Improved reference resolving for accessing a separate module data type to map OAS object schemas
 - Improved nullable record field mapping to OAS schema property
  
 #### Bug Fixes
