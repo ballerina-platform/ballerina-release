@@ -573,7 +573,7 @@ service "HelloWorld" on new grpc:Listener(9090) {
 ##### HTTP Package
 - Enabled HTTP trace and access log support
 - Added HATEOAS link support
-- Introduced the `http:CacheConfig` annotation to the resource signature
+- Introduced the `http:Cache` annotation to the resource signature
 - Introduced support for the service-specific media-type subtype prefix
 - Introduced the introspection resource method to get the generated OpenAPI document of the service
 - Added OAuth2 JWT bearer grant type support for client
