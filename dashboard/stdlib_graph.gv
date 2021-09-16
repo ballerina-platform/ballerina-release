@@ -83,6 +83,7 @@ digraph "Stdlib Dependency Graph" {
 	io -> os
 	io -> xslt
 	random -> grpc
+	random -> kafka
 	random -> websub
 	random -> websubhub
 	regex -> log
