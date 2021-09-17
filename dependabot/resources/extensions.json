@@ -67,6 +67,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerina-grpc",
+                "module-ballerinax-kafka",
                 "module-ballerina-websub",
                 "module-ballerina-websubhub"
             ]
