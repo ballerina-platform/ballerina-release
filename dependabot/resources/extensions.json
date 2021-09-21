@@ -275,7 +275,7 @@
             "group_id": "io.ballerina.stdlib",
             "artifact_id": "cache-ballerina",
             "version_key": "stdlibCacheVersion",
-            "default_branch": "",
+            "default_branch": "master",
             "auto_merge": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
