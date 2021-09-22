@@ -76,6 +76,7 @@ digraph "Stdlib Dependency Graph" {
 		"java.jdbc"
 		mssql
 		mysql
+		oracledb
 		postgresql
 		label="level 8"
 	}
@@ -138,5 +139,6 @@ digraph "Stdlib Dependency Graph" {
 	sql -> "java.jdbc"
 	sql -> mssql
 	sql -> mysql
+	sql -> oracledb
 	sql -> postgresql
 }
