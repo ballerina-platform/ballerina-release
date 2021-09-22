@@ -237,6 +237,10 @@
         {
             "name": "module-ballerinax-mssql",
             "code_owner_id_env": "KANEEL_USER_ID"
+        },
+        {
+            "name": "module-ballerinax-oracledb",
+            "code_owner_id_env": "LAHIRU_USER_ID"
         }
     ]
 }
