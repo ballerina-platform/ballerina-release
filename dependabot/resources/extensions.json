@@ -655,7 +655,6 @@
                 "module-ballerinax-mssql",
                 "module-ballerinax-mysql",
                 "module-ballerinax-postgresql",
-                "module-ballerinax-oracledb",
                 "ballerina-distribution"
             ]
         },
@@ -826,20 +825,6 @@
             "is_extended_library_module": true,
             "build_action_file": "build-timestamped-master",
             "code_owner_id_env": "KALAIYARASI_USER_ID",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-oracledb",
-            "level": 9,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "oracledb-ballerina",
-            "version_key": "stdlibOracledbVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "code_owner_id_env": "LAHIRU_USER_ID",
             "send_notification": true,
             "dependents": []
         }
