@@ -77,6 +77,7 @@ digraph "Stdlib Dependency Graph" {
 		mssql
 		mysql
 		postgresql
+		oracledb
 		label="level 8"
 	}
 	io -> log
@@ -139,4 +140,5 @@ digraph "Stdlib Dependency Graph" {
 	sql -> mssql
 	sql -> mysql
 	sql -> postgresql
+	sql -> oracledb
 }
