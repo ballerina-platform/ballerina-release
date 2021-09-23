@@ -597,8 +597,6 @@ int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
 - Introduced `queryConcat()` and `arrayFlattenQuery()` util functions to create a dynamic/constant complex query.
   - The `queryConcat()` creates a parameterized query by concatenating a set of parameterized queries.
     ```ballerina
-    int id = 10;
-    int age = 12;
     sql:ParameterizedQuery query = `SELECT * FROM students`;
     sql:ParameterizedQuery query1 = ` WHERE id < ${id} AND age > ${age}`;
     sql:ParameterizedQuery sqlQuery = sql:queryConcat(query, query1);
