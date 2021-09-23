@@ -589,10 +589,28 @@ service "HelloWorld" on new grpc:Listener(9090) {
     
 ##### SQL Package
 - Added support for `queryRow()` in the database connectors. This method allows retrieving a single row as a record, or a single value from the database.
-```ballerina
-record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id = 1`);
-int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
-```
+  ```ballerina
+  record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id = 1`);
+  int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
+  ```
+
+- Introduced `queryConcat()` and `arrayFlattenQuery()` util functions to create a dynamic/constant complex query.
+  - The `queryConcat()` creates a parameterized query by concatenating a set of parameterized queries.
+    ```ballerina
+    int id = 10;
+    int age = 12;
+    sql:ParameterizedQuery query = `SELECT * FROM students`;
+    sql:ParameterizedQuery query1 = ` WHERE id < ${id} AND age > ${age}`;
+    sql:ParameterizedQuery sqlQuery = sql:queryConcat(query, query1);
+    ```
+  - The `arrayFlattenQuery()` is introduced to make the array flatten easier. It makes the inclusion of 
+    varying array elements into the query easier by flattening the array to return a parameterized query.
+    ```ballerina
+    int[] ids = [1, 2];
+    sql:ParameterizedQuery sqlQuery =
+    sql:queryConcat(`SELECT * FROM DataTable WHERE id IN (`,
+    sql:arrayFlattenQuery(ids), `)`);
+    ```
 
 ##### WebSocket Package
 - Added OAuth2 JWT bearer grant type support for client
