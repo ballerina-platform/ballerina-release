@@ -589,10 +589,10 @@ service "HelloWorld" on new grpc:Listener(9090) {
     
 ##### SQL Package
 - Added support for `queryRow()` in the database connectors. This method allows retrieving a single row as a record, or a single value from the database.
-  ```ballerina
-  record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id = 1`);
-  int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
-  ```
+```ballerina
+record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id = 1`);
+int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
+```
 
 - Introduced `queryConcat()` and `arrayFlattenQuery()` util functions to create a dynamic/constant complex query.
   - The `queryConcat()` creates a parameterized query by concatenating a set of parameterized queries.
