@@ -594,7 +594,7 @@ record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id =
 int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
 ```
 
-- Introduced `queryConcat()` and `arrayFlattenQuery()` util functions to create a dynamic/constant complex query.
+- Introduced `queryConcat()` and `arrayFlattenQuery()` util functions to dynamically create a complex query.
   - The `queryConcat()` creates a parameterized query by concatenating a set of parameterized queries.
     ```ballerina
     sql:ParameterizedQuery query = `SELECT * FROM students`;
