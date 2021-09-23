@@ -38,7 +38,7 @@ PULL_REQUEST_TITLE = '[Automated] Update Dependencies (Ballerina Lang : '
 AUTO_MERGE_PULL_REQUEST_TITLE = '[AUTO MERGE] Update Dependencies (Ballerina Lang : '
 
 SLEEP_INTERVAL = 30  # 30s
-MAX_WAIT_CYCLES = 120  # Initial timeout is 1h, changed to 80 & 100 m in level 5 & 6 respectively
+MAX_WAIT_CYCLES = 120  # Initial timeout is 1h, changed to 80 & 140 m in level 5 & 6 respectively
 
 retrigger_dependency_bump = sys.argv[1]
 override_ballerina_version = sys.argv[2]
@@ -155,9 +155,9 @@ def wait_for_current_level_build(level, is_stdlib_module):
         MAX_WAIT_CYCLES = 140
 
     if level == 6:
-        # In level 6 c2c takes around 40 min for PR build and build each
-        # Changes timeout to 100 minutes
-        MAX_WAIT_CYCLES = 200
+        # In level 6 c2c takes around 52 min for PR build and build each
+        # Changes timeout to 140 minutes
+        MAX_WAIT_CYCLES = 280
 
     wait_cycles = 0
     status_completed_modules = 0
