@@ -605,9 +605,7 @@ int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
     varying array elements into the query easier by flattening the array to return a parameterized query.
     ```ballerina
     int[] ids = [1, 2];
-    sql:ParameterizedQuery sqlQuery =
-    sql:queryConcat(`SELECT * FROM DataTable WHERE id IN (`,
-    sql:arrayFlattenQuery(ids), `)`);
+    sql:ParameterizedQuery sqlQuery = sql:queryConcat(`SELECT * FROM DataTable WHERE id IN (`, sql:arrayFlattenQuery(ids), `)`);
     ```
 
 ##### WebSocket Package
