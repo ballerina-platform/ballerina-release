@@ -583,6 +583,7 @@ service "HelloWorld" on new grpc:Listener(9090) {
   
 ##### Log Package
 - Added observability span context values to the log messages when observability is enabled.
+- Introduced a function(`log:setOutputFile`) to write the log output to a file.
 
 ##### OAuth2 Package
 - Added JWT bearer grant type support
