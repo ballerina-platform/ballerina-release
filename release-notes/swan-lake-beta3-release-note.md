@@ -673,6 +673,19 @@ The following changes have been introduced.
 - Added the offline build configuration option
 Clients can set the `ls.compilation.online` system property to`true` or `false` in order to run the language server's compilations online or offline. By default, the compilations are running offline. 
 
+##### Debugger
+- Introduced log points support
+- Added debugger evaluation support for the following types:
+    - Query expressions
+    - Error constructor expressions
+    - Explicit new expressions
+    - XML attribute access expressions
+    - Annotation access expressions
+    - Range expressions
+    - Trap expressions
+    - Function, object method, and action invocations with rest arguments
+- Added evaluation support for expressions with import references
+    
 ##### Ballerina OpenAPI Tool
 - Introduced a new command-line option to generate all the record fields that are not specifically mentioned as 
   `nullable:false` in the OpenAPI schema property as nullable to reduce the type conversion errors in the OpenAPI to
@@ -685,17 +698,6 @@ Clients can set the `ls.compilation.online` system property to`true` or `false` 
   >`bal openapi -i <service-file> --json`
 - Added support to generate a boilerplate of test functions for each remote function implemented within a
   client connector  
-
-##### Debugger
-- Added debugger expression evaluation support for the following types:
-    - error constructor expressions
-    - explicit new expressions
-    - XML attribute access expressions
-    - annotation access expressions
-    - range expressions
-    - trap expressions
-    - function, object method and action invocations with rest arguments
-- Introduced log points support
 
 #### Improvements
 ##### Ballerina OpenAPI Tool
