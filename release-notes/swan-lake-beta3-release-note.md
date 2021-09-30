@@ -600,6 +600,10 @@ int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
 - Introduced retrying for the WebSocket client
 - Introduced the header annotation and query param binding support
 
+##### FTP Package
+- Add SFTP and related security
+- Add the support for an anonymous user
+
 #### Improvements
 
 ##### GraphQL Package
@@ -612,6 +616,15 @@ int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
 ##### WebSocket Package
 - Made the WebSocket caller isolated
 - Introduced a write timeout for the WebSocket client
+
+##### FTP Package
+- Introduce byte stream related functionality to FTP module
+- Rename `BasicAuth` record to `Credentials` in the configuration
+- Return an error once an error occurs while the FTP Client is initialized
+- Throw an error when file/directory does not exist in the `isDirectory` method
+- Remove `arraySize` parameter from the `get` method of the FTP Client API
+- Change `boolean` typed `compressInput` parameter of the `put` method of FTP Client to an `enum` type with the name, `compressionType`
+- Make the access to the `WatchEvent` as `readonly` in the FTP Listener
 
 ##### SQL Package
 - Improved the throughput performance with asynchronous database queries.
