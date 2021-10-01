@@ -609,7 +609,7 @@ int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
     ```
 
 ##### WebSocket Package
-- Added OAuth2 JWT bearer grant type support for client
+- Added OAuth2 JWT bearer grant type support for the client
 - Introduced retrying for the WebSocket client
 - Introduced the header annotation and query param binding support
 
