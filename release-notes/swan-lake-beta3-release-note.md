@@ -601,7 +601,7 @@ int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
     sql:ParameterizedQuery query1 = ` WHERE id < ${id} AND age > ${age}`;
     sql:ParameterizedQuery sqlQuery = sql:queryConcat(query, query1);
     ```
-  - The `arrayFlattenQuery()` is introduced to make the array flatten easier. It makes the inclusion of 
+  - The `arrayFlattenQuery()` is introduced to make the array flattening easier. It makes the inclusion of 
     varying array elements into the query easier by flattening the array to return a parameterized query.
     ```ballerina
     int[] ids = [1, 2];
