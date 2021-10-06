@@ -655,6 +655,16 @@ int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
     stream<RowType, error?> resultStream = sqlClient->query(``);
     ```
 - Improved Error Types in SQL module with the introduction of typed errors for data manipulation under `sql:ApplicationError`.
+- Removed support for the string query parameter.
+
+    **Previous syntax**
+    ```ballerina
+    stream<RowType, error?> resultStream = sqlClient->query("SELECT * FROM Students;");
+    ```
+    **New syntax**
+    ```ballerina
+    stream<RowType, error?> resultStream = sqlClient->query(`SELECT * FROM Students;`);
+    ```
 
 ##### IO Package
 - Changed the `io:readin` function input parameter to optional. In the previous API, it was required to pass a value to be printed before reading the user input as a string. Remove it due to the breaking change and made it optional. It is not recommended to pass a value to print it in the console.
