@@ -554,6 +554,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta3](https://github
 - Added typename introspection
 - Added input objects support
 - Added block string support
+- Added `graphql:Context` to support sharing meta-information between the resolvers
 
 ##### gRPC Package
 - Added declarative auth configurations
