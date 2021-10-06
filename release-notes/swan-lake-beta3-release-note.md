@@ -680,7 +680,6 @@ The following changes have been introduced.
 
 ##### Language Server
 
-- Added a code action to pull modules from the Ballerina Central
 - Added the completion extension API for TOML configuration files
 - Added completion support for the `Ballerina.toml` file
 - Added the offline build configuration option
