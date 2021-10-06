@@ -640,13 +640,13 @@ int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
     stream<RowType, error?> resultStream = sqlClient->query(``);
     ```
 - Improved Error Types in SQL module with the introduction of typed errors for data manipulation under `sql:ApplicationError`.
-- Removed support for string query parameter
+- Removed support for the string query parameter.
 
-    **Previous Syntax**
+    **Previous syntax**
     ```ballerina
     stream<RowType, error?> resultStream = sqlClient->query("SELECT * FROM Students;");
     ```
-    **New Syntax**
+    **New syntax**
     ```ballerina
     stream<RowType, error?> resultStream = sqlClient->query(`SELECT * FROM Students;`);
     ```
