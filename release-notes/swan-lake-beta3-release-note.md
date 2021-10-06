@@ -596,8 +596,22 @@ record{} queryResult = sqlClient->queryRow(`SELECT * FROM ExTable where row_id =
 int count = sqlClient->queryRow(`SELECT COUNT(*) FROM ExTable`);
 ```
 
+- Introduced `queryConcat()` and `arrayFlattenQuery()` util functions to create a complex query dynamically.
+  - The `queryConcat()` function creates a parameterized query by concatenating a set of parameterized queries.
+    ```ballerina
+    sql:ParameterizedQuery query = `SELECT * FROM students`;
+    sql:ParameterizedQuery query1 = ` WHERE id < ${id} AND age > ${age}`;
+    sql:ParameterizedQuery sqlQuery = sql:queryConcat(query, query1);
+    ```
+  - The `arrayFlattenQuery()` is introduced to make the array flattening easier. It makes the inclusion of 
+    varying array elements into the query easier by flattening the array to return a parameterized query.
+    ```ballerina
+    int[] ids = [1, 2];
+    sql:ParameterizedQuery sqlQuery = sql:queryConcat(`SELECT * FROM DataTable WHERE id IN (`, sql:arrayFlattenQuery(ids), `)`);
+    ```
+
 ##### WebSocket Package
-- Added OAuth2 JWT bearer grant type support for client
+- Added OAuth2 JWT bearer grant type support for the client
 - Introduced retrying for the WebSocket client
 - Introduced the header annotation and query param binding support
 
