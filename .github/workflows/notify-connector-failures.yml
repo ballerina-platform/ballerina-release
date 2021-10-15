@@ -32,7 +32,7 @@ jobs:
         run: |
           npm install
           wget https://raw.githubusercontent.com/ballerina-platform/${{ github.event.client_payload.repoName }}/master/.github/CODEOWNERS
-          python3 dependabot/notify_failure.py ${{ github.event.client_payload.repoName }}
+          python3 dependabot/notify_connector_failure.py ${{ github.event.client_payload.repoName }}
         env:
           ENV_NOTIFICATIONS_CHAT_ID: ${{secrets.NOTIFICATIONS_CHAT_ID}}
           ENV_NOTIFICATIONS_CHAT_KEY: ${{secrets.NOTIFICATIONS_CHAT_KEY}}
