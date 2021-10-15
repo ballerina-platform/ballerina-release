@@ -11,14 +11,14 @@ owner = code_owners.read().split("*")[1].split("@")[-1].strip()
 encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
 
 fernet = Fernet(encryption_key)
-with open('resources/github_users_encrypted.csv', 'rb') as enc_file:
+with open('dependabot/resources/github_users_encrypted.csv', 'rb') as enc_file:
     encrypted_csv = enc_file.read()
 
 decrypted = fernet.decrypt(encrypted_csv)
-with open('github_users_decrypted.csv', 'wb') as dec_file:
+with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
     dec_file.write(decrypted)
 
-with open('github_users_decrypted.csv', 'r') as read_obj:
+with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
     user_file = csv.DictReader(read_obj)
     for row in user_file:
         if row['gh-username'] == owner:
@@ -44,7 +44,7 @@ resp = http_obj.request(
     method='POST',
     headers=message_headers,
     body=dumps(chat_message)
-)
+)[0]
 
 if resp.status == 200:
     print("Successfully sent notification")
