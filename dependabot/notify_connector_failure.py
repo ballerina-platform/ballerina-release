@@ -44,7 +44,7 @@ resp = http_obj.request(
     method='POST',
     headers=message_headers,
     body=dumps(chat_message)
-)
+)[0]
 
 if resp.status == 200:
     print("Successfully sent notification")
