@@ -22,7 +22,7 @@ with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
     user_file = csv.DictReader(read_obj)
     for row in user_file:
         if row['gh-username'] == owner:
-            code_owner_id = row['wso2-id']
+            code_owner_id = row['user-id']
 
 build_chat_id = os.environ['ENV_NOTIFICATIONS_CHAT_ID']
 build_chat_key = os.environ['ENV_NOTIFICATIONS_CHAT_KEY']
