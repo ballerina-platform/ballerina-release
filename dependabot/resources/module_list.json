@@ -100,7 +100,7 @@
         {
             "name": "module-ballerinax-java.jdbc",
             "version_key": "stdlibJdbcVersion",
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "code_owner_id_env": "KANEEL_USER_ID"
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
@@ -125,7 +125,7 @@
         },
         {
             "name": "module-ballerinax-mysql",
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "code_owner_id_env": "NIVEATHIKA_USER_ID"
         },
         {
             "name": "module-ballerinax-nats",
@@ -175,7 +175,7 @@
         },
         {
             "name": "module-ballerina-sql",
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "code_owner_id_env": "NIVEATHIKA_USER_ID"
         },
         {
             "name": "module-ballerinax-stan",
@@ -240,7 +240,7 @@
         },
         {
             "name": "module-ballerinax-oracledb",
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "code_owner_id_env": "NIVEATHIKA_USER_ID"
         }
     ]
 }
