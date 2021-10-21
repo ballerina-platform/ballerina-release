@@ -648,7 +648,7 @@
             "auto_merge": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
-            "code_owner_id_env": "LAHIRU_USER_ID",
+            "code_owner_id_env": "NIVEATHIKA_USER_ID",
             "send_notification": true,
             "dependents": [
                 "module-ballerinax-java.jdbc",
@@ -783,7 +783,7 @@
             "auto_merge": true,
             "is_extended_library_module": true,
             "build_action_file": "build-timestamped-master",
-            "code_owner_id_env": "LAHIRU_USER_ID",
+            "code_owner_id_env": "KANEEL_USER_ID",
             "send_notification": true,
             "dependents": []
         },
@@ -811,7 +811,7 @@
             "auto_merge": true,
             "is_extended_library_module": true,
             "build_action_file": "build-timestamped-master",
-            "code_owner_id_env": "LAHIRU_USER_ID",
+            "code_owner_id_env": "NIVEATHIKA_USER_ID",
             "send_notification": true,
             "dependents": []
         },
@@ -825,7 +825,7 @@
             "auto_merge": true,
             "is_extended_library_module": true,
             "build_action_file": "build-timestamped-master",
-            "code_owner_id_env": "LAHIRU_USER_ID",
+            "code_owner_id_env": "NIVEATHIKA_USER_ID",
             "send_notification": true,
             "dependents": []
         },
