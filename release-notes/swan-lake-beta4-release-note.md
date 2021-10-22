@@ -83,6 +83,27 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### New Features
 
+##### Ballerina Pack command
+- Introduced a new command line option to that compiles and packages the current package into a .bala file after verifying that it can build with all its dependencies.
+
+Ballerina command
+> `bal pack <ballerina-package-path>`
+
+- The `-c` compile flag has been deprecated with this change.
+
+##### New `--with-tests` flag for Ballerina build and pack command
+- Introduced a new command line flag for the `build` and `pack` command that runs tests.
+The `build` and `pack` command will default to skipping test execution unless the `--with-tests` flag is provided
+- The `--skip-tests` flag has since been deprecated with this change.
+
+Ballerina command
+
+- Run test cases
+> `bal build --with-tests` 
+
+- Run test cases with code coverage
+> `bal build --with-tests --code-coverage`
+
 #### Improvements
 
 #### Bug Fixes
