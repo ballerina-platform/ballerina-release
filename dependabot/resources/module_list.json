@@ -149,8 +149,7 @@
         },
         {
             "name": "module-ballerina-protobuf",
-            "code_owner_id_env": "MADHUKA_USER_ID",
-            "is_extended_library_module": false
+            "code_owner_id_env": "MADHUKA_USER_ID"
         },
         {
             "name": "module-ballerinax-prometheus",
