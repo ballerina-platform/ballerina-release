@@ -124,6 +124,10 @@
             "code_owner_id_env": "CHAMIL_USER_ID"
         },
         {
+            "name": "module-ballerinax-mssql",
+            "code_owner_id_env": "KANEEL_USER_ID"
+        },
+        {
             "name": "module-ballerinax-mysql",
             "code_owner_id_env": "NIVEATHIKA_USER_ID"
         },
@@ -144,13 +148,16 @@
             "code_owner_id_env": "SUMUDU_USER_ID"
         },
         {
+            "name": "module-ballerinax-oracledb",
+            "code_owner_id_env": "NIVEATHIKA_USER_ID"
+        },
+        {
             "name": "module-ballerina-os",
             "code_owner_id_env": "MADHUKA_USER_ID"
         },
         {
-            "name": "module-ballerina-protobuf",
-            "code_owner_id_env": "MADHUKA_USER_ID",
-            "is_extended_library_module": false
+            "name": "module-ballerinax-postgresql",
+            "code_owner_id_env": "KALAIYARASI_USER_ID"
         },
         {
             "name": "module-ballerinax-prometheus",
@@ -160,6 +167,10 @@
             "auto_merge": false,
             "build_action_file": "build-main",
             "send_notification": false
+        },
+        {
+            "name": "module-ballerina-protobuf",
+            "code_owner_id_env": "MADHUKA_USER_ID"
         },
         {
             "name": "module-ballerinax-rabbitmq",
@@ -229,18 +240,6 @@
         {
             "name": "module-ballerina-xslt",
             "code_owner_id_env": "KALAIYARASI_USER_ID"
-        },
-        {
-            "name": "module-ballerinax-postgresql",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
-        },
-        {
-            "name": "module-ballerinax-mssql",
-            "code_owner_id_env": "KANEEL_USER_ID"
-        },
-        {
-            "name": "module-ballerinax-oracledb",
-            "code_owner_id_env": "NIVEATHIKA_USER_ID"
         }
     ]
 }

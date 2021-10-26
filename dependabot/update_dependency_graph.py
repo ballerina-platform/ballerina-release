@@ -253,6 +253,7 @@ def remove_modules_not_included_in_distribution(module_details_json):
     for module in module_details_json['standard_library']:
         module['is_extended_library_module'] = False
 
+    removed_modules.sort(key=lambda x: x['name'].split('-')[-1])
     module_details_json['extended_library'] = removed_modules
 
     return module_details_json
