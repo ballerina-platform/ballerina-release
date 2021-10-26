@@ -4,7 +4,7 @@
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
 <code>ballerina-distribution</code> repository has not been updated from the latest stable version and pending PR <a href='https://github.com/ballerina-platform/ballerina-distribution/pull/2244'>#2244</a>  is available.<br><br>
-<code>ballerina-lang</code> repository version <b>2.0.0-beta.4-20211023-093200-2b7a7a5c</b> (2.5 days) has been updated as follows
+<code>ballerina-lang</code> repository version <b>2.0.0-beta.4-20211023-093200-2b7a7a5c</b> (3 days) has been updated as follows
 </td>
 </tr></tbody></table> 
 
