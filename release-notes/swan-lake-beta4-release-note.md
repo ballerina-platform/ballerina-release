@@ -261,12 +261,12 @@ public function main() {
 
 ##### Change in Expected Return Statements in a Function with an Optional Type as the Return Type
 
-A function having an optional type as the return type is now expected to explicitly return a value. A warning is emitted when such a function does not explicitly return a value and falls off the end of the function body. 
+A function having an optional type that is not a subtype of `error?` as the return type is now expected to explicitly return a value. A warning is emitted when such a function does not explicitly return a value and falls off the end of the function body. 
 
 ```ballerina
-function foo() returns error? { // Now results in a warning. 
-    int|error a = int:fromString("123");
-    if a is error {
+function parse(string str) returns int? { // Now results in a warning. 
+    int|error a = int:fromString(str);
+    if a is int {
         return a;
     }
 }
