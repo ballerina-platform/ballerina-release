@@ -1,5 +1,5 @@
 {
-    "auto_bump": false,
+    "auto_bump": true,
     "modules": [
         {
             "name": "module-ballerinax-slack",
