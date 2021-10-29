@@ -15,7 +15,6 @@ ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 ballerina_bot_email = os.environ[constants.ENV_BALLERINA_BOT_EMAIL]
 ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
-encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
 
 github = Github(ballerina_bot_token)
 
@@ -46,6 +45,7 @@ def get_module_message(module, link):
     code_owner_content = repo.get_contents('.github/CODEOWNERS')
     code_owner_gh_username = code_owner_content.decoded_content.decode().split("@")[-1].strip()
 
+    encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
     fernet = Fernet(encryption_key)
     with open('dependabot/resources/github_users_encrypted.csv', 'rb') as enc_file:
         encrypted_csv = enc_file.read()
