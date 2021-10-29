@@ -32,6 +32,7 @@ jobs:
           pip install matplotlib
           pip install httplib2
           pip install Image
+          pip install cryptography
 
       - name: Update Status Dashboard
         run: |
