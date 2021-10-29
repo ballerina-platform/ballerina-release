@@ -5,7 +5,7 @@ import os
 import sys
 import csv
 
-def main()
+def main():
     code_owners = open("CODEOWNERS", "r")
     owners = code_owners.read().split("*")[1].split("@")
 
