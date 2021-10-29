@@ -25,6 +25,7 @@ jobs:
           sudo apt-get install graphviz
           pip install retry
           pip install PyGithub
+          pip install cryptography
 
       - name: Get Dependencies and Update Dependency Graph
         run: |
