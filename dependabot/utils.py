@@ -6,6 +6,7 @@ import urllib.request
 
 from github import Github, InputGitAuthor, GithubException
 from retry import retry
+from cryptography.fernet import Fernet
 
 import constants
 
@@ -13,6 +14,7 @@ ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 ballerina_bot_email = os.environ[constants.ENV_BALLERINA_BOT_EMAIL]
 ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
+encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
 
 github = Github(ballerina_bot_token)
 
@@ -39,12 +41,24 @@ def write_json_file(file_path, file_content):
 
 def get_module_message(module, link):
     module_message = "<" + link + "|" + module['name'] + ">" + "\t\t"
-    if module['code_owner_id_env'] != "":
-        code_owner_id = os.getenv(module['code_owner_id_env'])
-        if code_owner_id != "":
-            module_message += "<users/" + code_owner_id + ">"
-        else:
-            print("Code owner for module '" + module['name'] + "' is empty.")
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
+    code_owner_content = repo.get_contents('.github/CODEOWNERS')
+    code_owner_gh_username = code_owner_content.decoded_content.decode().split("@")[-1].strip()
+
+    fernet = Fernet(encryption_key)
+    with open('dependabot/resources/github_users_encrypted.csv', 'rb') as enc_file:
+        encrypted_csv = enc_file.read()
+
+    decrypted = fernet.decrypt(encrypted_csv)
+    with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
+        dec_file.write(decrypted)
+
+    with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
+        user_file = csv.DictReader(read_obj)
+        for row in user_file:
+            if row['gh-username'] == code_owner_gh_username:
+                module_message += "<users/" + row['user-id'] + ">"
+
     module_message += "\n"
     return module_message
 
