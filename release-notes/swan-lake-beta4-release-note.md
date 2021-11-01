@@ -83,6 +83,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### New Features
 
+##### Debugger
+- Added support for debug pause instructions. With this support, any running Ballerina programs can be suspended immediately at the current execution line of the program.
+- [Preview Feature] Introduced Ballerina code completion support in the VSCode debug console. Now, a context-aware completion list will be suggested automatically for Ballerina expressions in the VSCode evaluation window.
+- Added string template support for debug logpoints. Now, you can interpolate expressions within debug logpoint messages by using the `${}` syntax so that the debug logpoints can be used to log state variable information without suspending the program. 
+
 #### Improvements
 
 #### Bug Fixes
