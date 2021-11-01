@@ -7,6 +7,11 @@ on:
           description: 'Ballerina-lang branch'
           required: true
           default: 'master'
+        enable_tests:
+          description: 'Enable Tests (true or false)'
+          deprecationMessage: 'true or false'
+          required: true
+          default: 'true'
 
 jobs:
   build-stdlibs:
@@ -29,7 +34,7 @@ jobs:
 
       - name: Build Standard Libraries
         run: |
-          python dependabot/build_stdlibs_for_lang_updates.py ${{ github.event.inputs.ballerina_lang_branch }}
+          python dependabot/build_stdlibs_for_lang_updates.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }}
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}

@@ -10,6 +10,7 @@ stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform
                                'main/release/resources/stdlib_modules.json'
 stdlib_module_versions = dict()
 ballerina_lang_branch = "master"
+enable_tests = 'true'
 exit_code = 0
 
 ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
@@ -21,15 +22,17 @@ def main():
     global stdlib_modules_json_file
     global stdlib_module_versions
     global ballerina_lang_branch
+    global enable_tests
 
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
         ballerina_lang_branch = sys.argv[1]
+        enable_tests = sys.argv[2]
 
     read_stdlib_modules()
     if stdlib_modules_by_level:
         clone_repositories()
         change_version_to_snapshot()
-        build_stdlib_repositories(ballerina_lang_branch)
+        build_stdlib_repositories(ballerina_lang_branch, enable_tests)
     else:
         print('Could not find standard library dependency data from', stdlib_modules_json_file)
 
@@ -79,13 +82,18 @@ def clone_repositories():
         sys.exit(1)
 
 
-def build_stdlib_repositories(ballerina_lang_branch):
+def build_stdlib_repositories(ballerina_lang_branch, enable_tests):
     global exit_code
+
+    cmd_exclude_tests = ''
+    if enable_tests == 'false':
+        cmd_exclude_tests = ' -x test'
 
     # Build ballerina-lang repo
     os.system(f"cd ballerina-lang;git checkout {ballerina_lang_branch}")
     os.system("cd ballerina-lang;git status")
-    exit_code = os.system("cd ballerina-lang;./gradlew clean build publishToMavenLocal --stacktrace --scan")
+    exit_code = os.system(f"cd ballerina-lang;" +
+                          f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
     if exit_code != 0:
         print(f"Build failed for ballerina-lang")
         sys.exit(1)
@@ -98,16 +106,16 @@ def build_stdlib_repositories(ballerina_lang_branch):
             exit_code = os.system(f"cd {module};" +
                                   f"export packageUser={ballerina_bot_username};" +
                                   f"export packagePAT={ballerina_bot_token};" +
-                                  f"./gradlew clean build publishToMavenLocal --stacktrace --scan")
+                                  f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
             if exit_code != 0:
                 print(f"Build failed for {module}")
                 sys.exit(1)
 
     # Build ballerina-distribution repo
     exit_code = os.system(f"cd ballerina-distribution;" +
-                                      f"export packageUser={ballerina_bot_username};" +
-                                      f"export packagePAT={ballerina_bot_token};" +
-                                      f"./gradlew clean build publishToMavenLocal --stacktrace --scan")
+                    f"export packageUser={ballerina_bot_username};" +
+                    f"export packagePAT={ballerina_bot_token};" +
+                    f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
     if exit_code != 0:
         print(f"Build failed for ballerina-distribution")
         sys.exit(1)
@@ -146,20 +154,26 @@ def change_version_to_snapshot():
                 sys.exit(1)
 
     # Change dependent stdlib_module_versions & ballerina-lang version to SNAPSHOT in the ballerina-distribution
-        with open("ballerina-distribution/gradle.properties", 'r') as config_file:
-            for line in config_file:
-                try:
-                    name, value = line.split("=")
-                    if "stdlib" in name:
-                        version = value.split("-")[0]
-                        value = version + "-SNAPSHOT\n"
-                    elif "ballerinaLangVersion" in name:
-                        version = value.split("-")[0] + "-" + value.split("-")[1]
-                        value = version + "-SNAPSHOT\n"
-                    properties[name] = value
-                except ValueError:
-                    continue
-            config_file.close()
+    properties = dict()
+    with open("ballerina-distribution/gradle.properties", 'r') as config_file:
+        for line in config_file:
+            try:
+                name, value = line.split("=")
+                if "stdlib" in name:
+                    version = value.split("-")[0]
+                    value = version + "-SNAPSHOT\n"
+                elif "ballerinaLangVersion" in name:
+                    version = value.split("-")[0] + "-" + value.split("-")[1]
+                    value = version + "-SNAPSHOT\n"
+                properties[name] = value
+            except ValueError:
+                continue
+        config_file.close()
+
+    with open("ballerina-distribution/gradle.properties", 'w') as config_file:
+        for prop in properties:
+            config_file.write(prop + "=" + properties[prop])
+        config_file.close()
 
     print("Updated dependent standard library versions to SNAPSHOT successfully")
 
