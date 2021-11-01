@@ -298,7 +298,7 @@ float f13 = 0x1A.0;
 float f14 = 0x1A.0p4;
 ```
 
-- Intervening white spaces are disallowed in the qualified identifier to avoid parsing ambiguity between ternary conditional expression and qualified identifier.
+- Disallowed intervening white spaces in the qualified identifier to avoid parsing an ambiguity between the ternary conditional expression and qualified identifier.
   
 ```ballerina
 import ballerina/io;
@@ -310,7 +310,7 @@ io : print("Ballerina"); // compilation error: intervening whitespaces are not a
 }
 ```
 
-With this `x ? a : b:c` will be parsed as `x ? a : (b:c)` since colon with spaces is interpreted only as part of a conditional expression.
+With this, `x ? a : b:c` will be parsed now as `x ? a : (b:c)` since the colon with spaces is interpreted only as part of a conditional expression.
 
 - A bug that resulted in hash collisions not being handled correctly in `table` values has been fixed. 
 
