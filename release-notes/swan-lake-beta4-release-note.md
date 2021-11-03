@@ -350,6 +350,151 @@ class Employee {
 xml x = xml `</>`; // Will now result in an error.
 ```
 
+- `xml:createElement` now accepts the attribute map as the second argument.
+
+```ballerina
+xml:Element jo = xml:createElement("name", {id: "1234"}, xml `Jo`);
+```
+
+- The `xml:get` function’s return type has been updated to return the exact type `T` when the `xml` sequence is of type `xml<T>`.
+
+```ballerina
+xml<xml:Element> employees = xml `<e1><name>Jo</name></e1><e2><name>Mary</name></e2>`;
+xml:Element employee1 = employees.get(0);// Now allowed.
+```
+
+- The `table:map` function’s function argument `func` and the return type have been updated to work with subtypes of mapping types instead of any type.
+
+```ballerina
+table<record {int id; string name;}> tb = table [
+   {id: 1234, name: "Jo"},
+   {id: 2345, name: "May"}
+];
+
+var idTable = tb.map(function (record {int id; string name;} r) returns int { // No longer allowed.
+   return r.id;
+});
+```
+
+- Few deviations in the `lang.error` module have been corrected according to the language specification. The `CallStack` class and `CallStackElement` records have been removed. Now a stack frame is represented by an `error:StackFrame` object.
+	
+Prior to Swan Lake Beta4, the `error:stackTrace()` function returned an `error:CallStack` object which had the following structure, which was a deviation from the specification.
+
+```ballerina
+public class CallStack {
+   public CallStackElement[] callStack = [];
+}
+```
+
+This has now been fixed, and it is no longer possible to retrieve an `error:CallStack` object or directly access the `callStack` array as follows.
+
+```ballerina
+error:CallStack callStack = err.stackTrace(); // `CallStack` is undefined
+error:CallStackElement[] elements = err.stackTrace().callStack; // Not allowed, `CallStackElement` is undefined, no `callStack` field.
+```
+
+The `error:stackTrace` function now returns an array of StackFrame objects.
+
+```ballerina
+public type StackFrame readonly & object {
+   public function toString() returns string;
+};
+```
+
+```ballerina
+error:StackFrame[] stackTrace = e.stackTrace(); // Now returns `error:StackFrame[]`.
+```
+
+- The return type of the `error:detail` function in the lang.error module is now a subtype of `readonly`. It is the intersection of `readonly` and the detail type of the error.
+
+```ballerina
+type Detail record {|
+   int code;
+|};
+ 
+type Error error<Detail>;
+ 
+function fn(Error e) {
+   Detail & readonly detail = e.detail(); // Now allowed.
+}
+```
+
+- A deviation in the `stream:next` function’s stream argument name has been fixed. The name has been changed from `strm` to `stm`.
+
+- A bug in `array:sort` which was sorting the original list has been rectified. The function now returns a new sorted array. The original array remains unchanged.
+
+- The name of the argument to `transaction:setData()` has been changed from `e` to `data`. Moreover, the static type of the argument to `transaction:setData()` and the return type of `lang.transaction:getData()` have been changed to `readonly`. They were previously of type `(any|error) & readonly` and even this change would accept/return the same set of values.
+
+- The `float:min()` and `float:max()` functions now return `float:NaN` if an argument is `float:NaN`. 
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    float result = float:min(1, float:NaN);
+    io:println(result === float:NaN); // prints true
+
+    result = float:max(5, float:NaN);
+    io:println(result === float:NaN); // prints true
+}
+```
+
+- A bug in the `decimal:fromString()` function which allowed parsing a string that matched the `HexFloatingPointLiteral` has been fixed. It now returns an error.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+   decimal|error result = decimal:fromString("0xab12"); // Now returns an error.
+   io:println(result is error); // prints true
+}
+```
+
+- A bug in the `float:fromString()` function allowed parsing a string that had matched a `DecimalFloatingPointNumber` with `FloatingPointTypeSuffix` has been fixed. This will not return an error. 
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    float|error result = float:fromString("12.24f"); // Now returns an error
+    io:println(result is error); // prints true
+}
+```
+
+- The `float:fromHexString()` function now returns an error if the provided string argument does not match a `HexFloatingPointLiteral`. 
+
+```ballerina
+import ballerina/io;
+ 
+public function main() {
+   float|error result = float:fromHexString("12.3");
+   io:println(result is error); // prints true, error message - invalid hex string: ‘12.3’
+}
+```
+
+- A spec deviation was fixed in `int:toHexString` which was causing it to convert negative values to a positive number before converting to a hexadecimal string.
+
+- A deviation in the `lang.error` `RetryManager` and `DefaultRetryManager` objects' `shouldRetry` method argument type is fixed. The type has been changed from `error?` to `error`.
+	
+```ballerina
+public class CustomRetryManager {
+   private int count;
+
+   public function init(int count = 3) {
+       self.count = count;
+   }
+
+   public function shouldRetry(error e) returns boolean {
+       if e is CustomError && self.count > 0 {
+           self.count -= 1;
+           return true;
+       } else {
+           return false;
+       }
+   }
+}
+```
+
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
 ### Runtime Updates
