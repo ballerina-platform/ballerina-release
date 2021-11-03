@@ -57,4 +57,3 @@ jobs:
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
           CHAT_TOKEN: ${{ secrets.NOTIFICATIONS_CHAT_TOKEN }}
           ENV_USER_ENCRYPTION_KEY: ${{secrets.USER_ENCRYPTION_KEY}}
-          ALL_USER_ID: 'all'
