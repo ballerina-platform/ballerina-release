@@ -32,6 +32,7 @@ jobs:
           pip install requests
           pip install retry
           pip install PyGithub
+          pip install cryptography
 
       - name: Update Ballerina Language Version
         run: |
@@ -50,3 +51,4 @@ jobs:
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
           BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+          ENV_USER_ENCRYPTION_KEY: ${{secrets.USER_ENCRYPTION_KEY}}
