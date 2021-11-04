@@ -309,7 +309,7 @@ public function main() {
 }
 ```
 
-With this, `x ? a : b:c` will be parsed now as `x ? a : (b:c)` since the colon with spaces is interpreted only as part of a conditional expression.
+With this, `x ? a : b:c` will now be parsed as `x ? a : (b:c)` since the colon with spaces is interpreted only as part of a conditional expression.
 
 - A bug that resulted in hash collisions not being handled correctly in `table` values has been fixed. 
 
