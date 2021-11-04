@@ -9,7 +9,7 @@ import utils
 import constants
 encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
 
-main():
+def main():
     fernet = Fernet( encryption_key )
 
     with open('dependabot/resources/github_users_encrypted.csv', 'rb') as enc_file:
