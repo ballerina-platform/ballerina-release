@@ -311,18 +311,6 @@ public function main() {
 
 With this, `x ? a : b:c` will be parsed now as `x ? a : (b:c)` since the colon with spaces is interpreted only as part of a conditional expression.
 
-- Reserve set of identifiers as ballerina keywords
-
-Identifiers `where`, `join`, `order`, `by`, `equals`, `ascending`, `descending`, `limit`, `outer`, and `select` are now considered as the ballerina reserved keywords. Further, the keyword `join` is allowed to be used in the method call expression as the method name.
-
-```ballerina
-// Previously allowed, now disallowed. As an alternative quoted identifier (`'limit`) can be used.
-int limit = 5;
-// Previously allowed, now disallowed. As an alternative quoted identifier (`string:'join()`) can be used.
-string b = string:join(" ", "hello", "world!");
-// Continue to allow `join` in method call expression.
-myObject.join(obj); // Allowed.
-``` 
 - A bug that resulted in hash collisions not being handled correctly in `table` values has been fixed. 
 
 ```ballerina
