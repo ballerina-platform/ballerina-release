@@ -298,15 +298,14 @@ float f13 = 0x1A.0;
 float f14 = 0x1A.0p4;
 ```
 
-- Disallowed intervening white spaces in the qualified identifier to avoid parsing an ambiguity between the ternary conditional expression and qualified identifier.
+- Intervening white spaces have been disallowed in the qualified identifier to avoid a parsing ambiguity between the ternary conditional expression and qualified identifier.
   
 ```ballerina
 import ballerina/io;
 
 public function main() {
-io:print("Ballerina"); // valid
-
-io : print("Ballerina"); // compilation error: intervening whitespaces are not allowed in qualified identifier
+    io:print("Ballerina"); // Valid.
+    io : print("Ballerina"); // compilation error: intervening whitespaces are not allowed in a qualified identifier.
 }
 ```
 
@@ -321,8 +320,8 @@ Identifiers `where`, `join`, `order`, `by`, `equals`, `ascending`, `descending`,
 int limit = 5;
 // Previously allowed, now disallowed. As an alternative quoted identifier (`string:'join()`) can be used.
 string b = string:join(" ", "hello", "world!");
-// Continue to allow `join` in method call expression
-myObject.join(obj); // allowed
+// Continue to allow `join` in method call expression.
+myObject.join(obj); // Allowed.
 ``` 
 - A bug that resulted in hash collisions not being handled correctly in `table` values has been fixed. 
 
