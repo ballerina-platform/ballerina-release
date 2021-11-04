@@ -10,7 +10,7 @@ redirect_from:
 ---
 ### Overview of Ballerina Swan Lake Beta4
 
-<em>This is the fourth Alpha release in a series of planned Alpha and Beta releases leading up to the Ballerina Swan Lake GA release.</em> 
+<em>This is the fourth Beta release in a series of planned Alpha and Beta releases leading up to the Ballerina Swan Lake GA release.</em> 
 
 It introduces the new language features planned for the Swan Lake GA release and includes improvements and bug fixes done to the compiler, runtime, standard library, and developer tooling after the Swan Lake Beta3 release.
 
@@ -297,6 +297,19 @@ float f12 = 2.0F;
 float f13 = 0x1A.0;
 float f14 = 0x1A.0p4;
 ```
+
+- Intervening white spaces have been disallowed in the qualified identifier to avoid a parsing ambiguity between the ternary conditional expression and qualified identifier.
+  
+```ballerina
+import ballerina/io;
+
+public function main() {
+    io:print("Ballerina"); // Valid.
+    io : print("Ballerina"); // compilation error: intervening whitespaces are not allowed in a qualified identifier.
+}
+```
+
+With this, `x ? a : b:c` will now be parsed as `x ? a : (b:c)` since the colon with spaces is interpreted only as part of a conditional expression.
 
 - A bug that resulted in hash collisions not being handled correctly in `table` values has been fixed. 
 
