@@ -463,7 +463,7 @@ public function main() {
 }
 ```
 
-- A bug in the `float:fromString()` function allowed parsing a string that had matched a `DecimalFloatingPointNumber` with `FloatingPointTypeSuffix` has been fixed. This will not return an error. 
+- A bug in the `float:fromString()` function allowed parsing a string that had matched a `DecimalFloatingPointNumber` with `FloatingPointTypeSuffix` has been fixed. This will now return an error.
 
 ```ballerina
 import ballerina/io;
