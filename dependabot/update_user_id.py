@@ -88,7 +88,7 @@ def commit_notify_work():
     with open('file_to_commit.csv', 'rb') as enc_file:
         updated_file_content = enc_file.read()
     update = utils.commit_file('ballerina-release',
-                                'dependabot/resources/github_users_encrypted.csv'
+                                'dependabot/resources/github_users_encrypted.csv',
                                 updated_file_content,
                                 constants.USERID_UPDATE_BRANCH,
                                 "[Automated] Update userid file")[0]
