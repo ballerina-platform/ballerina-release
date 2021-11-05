@@ -1,4 +1,4 @@
-name: Standard library build test for ballerina-lang PRs
+name: Full Build Pipeline
 
 on:
   workflow_dispatch:
@@ -14,8 +14,8 @@ on:
           default: 'true'
 
 jobs:
-  build-stdlibs:
-    name: Build Standard Libraries
+  build-pipeline:
+    name: Build Pipeline
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -32,7 +32,7 @@ jobs:
           pip install retry
           pip install PyGithub
 
-      - name: Build Standard Libraries
+      - name: Build Modules
         run: |
           python dependabot/build_stdlibs_for_lang_updates.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }}
         env:
