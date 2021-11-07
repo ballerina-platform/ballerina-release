@@ -72,7 +72,7 @@ def remove_field( github_username, org_id ):
                 lines.remove(row)
 
     with open('dependabot/resources/updated.csv', 'w') as write_obj:
-        writer = csv.write(write_obj)
+        writer = csv.writer(write_obj)
         writer.writerows(lines)
 
     ## Encrypt the updated csv
