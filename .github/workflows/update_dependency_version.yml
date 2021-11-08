@@ -27,6 +27,9 @@ jobs:
     name: Update Ballerina Lang Version
     if: github.repository_owner == 'ballerina-platform'
     runs-on: ubuntu-latest
+    concurrency:
+        group: ${{ github.head_ref }}-dependency-update
+        cancel-in-progress: true
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
