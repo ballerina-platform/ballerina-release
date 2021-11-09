@@ -119,6 +119,7 @@ The following conditions are taken into consideration in the analysis of unreach
 
 ```ballerina
 import ballerina/io;
+
 function fn1() {
     if false {
         io:println("unreachable"); // this will now result in a compilation error: unreachable code
