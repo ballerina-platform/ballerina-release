@@ -299,7 +299,8 @@ def check_pending_pr_checks(index: int):
                 failed_pr_checks.append(failed_pr_check)
                 passing = False
         else:
-            if pr_check.status == 'completed':
+            # Distribution does not have codecov checks
+            if module['name'] == 'ballerina-distribution' or pr_check.status == 'completed':
                 codecov_complete = True
     if count < 1:
         # Here the checks have not been triggered yet.
