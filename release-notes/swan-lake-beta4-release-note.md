@@ -118,21 +118,22 @@ The following conditions are taken into consideration in the analysis of unreach
 4. Calling a function with a return type of `never` cannot complete normally, making subsequent code unreachable.
 
 ```ballerina
+import ballerina/io;
 function fn1() {
     if false {
-        int a = 10; // this will now result in a compilation error: unreachable code
+        io:println("unreachable"); // this will now result in a compilation error: unreachable code
     }
 
     while false {
-        int a = 10; // this will now result in a compilation error: unreachable code
+        io:println("unreachable"); // this will now result in a compilation error: unreachable code
     }
 }
 
 function fn2() {
     if true {
-        int a = 10;
+        io:println("reachable");
     } else {
-        int a = 20; // this will now result in a compilation error: unreachable code
+        io:println("unreachable"); // this will now result in a compilation error: unreachable code
     }
 }
 
@@ -140,14 +141,14 @@ function fn3() {
     if true {
         return;
     }
-    int a = 10; // this will now result in a compilation error: unreachable code
+    io:println("unreachable"); // this will now result in a compilation error: unreachable code
 }
 
 function fn4() {
     while true {
         return;
     }
-    int a = 10; // this will now result in a compilation error: unreachable code
+    io:println("unreachable"); // this will now result in a compilation error: unreachable code
 }
 ```
 
@@ -207,7 +208,6 @@ function populate(int[] arr, string str) returns error? {
     // The type of `res` is now narrowed to `int` here.
     // The variable `res` can be used as an `int` and can therefore be used in an `array:push` call with an `int[]`.
     arr.push(res);
-    return;
 }
 ```
 
@@ -225,9 +225,9 @@ function populate(int[] arr, string str) returns error? {
     int intRes = check res;
 
     arr.push(intRes);
-    return;
 }
 ```
+
 ##### Restrictions on Assignments to Narrowed Variables within Loops
 
 Within a `while` statement or a `foreach` statement, it is no longer possible to assign a value to a variable that was narrowed outside the statement, unless the loop terminates after the assignment. I.e., at the end of the loop body and at every `continue` statement there must be no possibility that a narrowed variable has been assigned to.
