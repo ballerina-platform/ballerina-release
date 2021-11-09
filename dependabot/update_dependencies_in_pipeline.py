@@ -272,6 +272,7 @@ def check_pending_pr_checks(index: int):
     print("[Info] Checking the status of the dependency update PR in module '" + module['name'] + "'")
     passing = True
     pending = False
+    codecov_complete = False
     count = 0
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
 
@@ -297,12 +298,18 @@ def check_pending_pr_checks(index: int):
                 }
                 failed_pr_checks.append(failed_pr_check)
                 passing = False
+        else:
+            if pr_check.status == 'completed':
+                codecov_complete = True
     if count < 1:
         # Here the checks have not been triggered yet.
         return
     if not pending:
         if passing:
             if module['auto_merge'] & ('AUTO MERGE' in pull_request.title):
+                if not codecov_complete:
+                    # Wait till the codecov checks pass before merge
+                    return
                 try:
                     pull_request.merge()
                     log_message = "[Info] Automated version update PR merged for module '" + module['name'] \
