@@ -77,17 +77,26 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 
 ### Developer Tools Updates
 
-#### Language Server 
-
-To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer).
-
 #### New Features
+
+##### Language Server
+- Add pull module code action to pull locally unavailable Ballerina packages from Ballerina Central
+- Add a new code action to add an explicit return statement where required
+- Add a new code action to create a readonly clone
+- Add "ignore unused variables" code action
+- Add "remove unreachable statement" code action
 
 ##### Debugger
 - Added support for debug pause instructions. With this support, any running Ballerina programs can be suspended immediately at the current execution line of the program.
 - [Preview Feature] Introduced Ballerina code completion support in the VSCode debug console. Now, a context-aware completion list will be suggested automatically for Ballerina expressions in the VSCode evaluation window.
 - Added string template support for debug logpoints. Now, you can interpolate expressions within debug logpoint messages by using the `${}` syntax so that the debug logpoints can be used to log state variable information without suspending the program. 
 
+#### Bug Fixes
+
+##### Language Server 
+
+To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer).
+ 
 #### Improvements
 
 #### Bug Fixes
