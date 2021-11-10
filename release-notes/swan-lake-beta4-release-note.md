@@ -56,7 +56,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 ##### MySQL Package
 - Introduced failover and retries support
-- Added noAccessToProcedureBodies options
+- Added `noAccessToProcedureBodies` options
 
 ##### Log Package
 - Introduced the `setOutputFile` function to write the log output to a file
