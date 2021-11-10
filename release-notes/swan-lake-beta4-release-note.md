@@ -54,7 +54,21 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### New Features
 
+##### MySQL Package
+- Introduced failover and retries support
+- Added `noAccessToProcedureBodies` options
+
+##### Log Package
+- Introduced the `setOutputFile` function to write the log output to a file
+
 #### Improvements
+
+##### SQL Package
+- Improved the `queryRow()` function to support union return types
+- Improved the parameterized query to support the escaped backtick as insertions
+
+##### Log Package
+- Added `error:StackFrame[]` as a key-value pair type
 
 #### Bug Fixes
 
