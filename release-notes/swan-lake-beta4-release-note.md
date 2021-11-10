@@ -65,7 +65,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 ##### SQL Package
 - Improved the `queryRow()` function to support union return types
-- Improved parameterised query to support escaped backtick as insertions.
+- Improved the parameterized query to support the escaped backtick as insertions
 
 ##### Log Package
 - Added `error:StackFrame[]` as a key-value pair type
