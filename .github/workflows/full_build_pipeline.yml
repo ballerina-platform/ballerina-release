@@ -47,10 +47,20 @@ jobs:
           RELEASE_VERSION=$((grep -w "version" | cut -d= -f2) < ballerina-distribution/gradle.properties)
           echo "::set-output name=version::$RELEASE_VERSION"
           echo "::set-output name=sversion::$SHORT_VERSION"
+      - name: Archive Ballerina ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: Ballerina ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-swan-lake-*.zip
+      - name: Archive Ballerina Short Name ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: Ballerina Short Name ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-sl*.zip
       - name: Archive MacOS Installer ZIP
         uses: actions/upload-artifact@v2
         with:
-          name: MacOS installer ZIP
+          name: MacOS Installer ZIP
           path: ballerina-distribution/ballerina/build/distributions/ballerina-macos-*.zip
       - name: Archive Windows Installer ZIP
         uses: actions/upload-artifact@v2
