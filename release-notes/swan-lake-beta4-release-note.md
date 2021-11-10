@@ -68,7 +68,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 - Improved parameterised query to support escaped backtick as insertions.
 
 ##### Log Package
-- Added `error:StackFrame[]` as a key-value pair type.
+- Added `error:StackFrame[]` as a key-value pair type
 
 #### Bug Fixes
 
