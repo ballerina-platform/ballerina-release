@@ -46,11 +46,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 
 #### Improvements
 
-##### Improved error messages given on a type conversion failure
+##### Improved Error Messages on a Type Conversion Failure
 
-Detailed error messages are now given on a type conversion failure narrowing down the specific location of errors in the structural types. Maximum no. of 20 errors are shown at a time to the user.
+Detailed error messages are now given on a type conversion failure narrowing down the specific location of errors in the structural types. A maximum number of 20 errors are shown at a time.
 
-Eg:
+E.g.,
 ```ballerina
 type Journey record {|
     map<int> destinations;
@@ -96,9 +96,9 @@ error: {ballerina/lang.value}ConversionError {"message":"'json[]' value cannot b
            errmsg:main(errmsg.bal:18)
 ```
 
-##### Improvement in Runtime Error Creator API 
+##### Improvement in the Runtime Error Creator API 
 
-Runtime Java error creator API has been improved to get a `BMap` as `details` parameter. 
+The runtime Java error creator API has been improved to get a `BMap` as the `details` parameter. 
 
 ```Java
 BError createError(Module module, String errorTypeName, BString message, BError cause, BMap<BString, Object> details)
@@ -106,17 +106,17 @@ BError createError(Module module, String errorTypeName, BString message, BError 
 
 #### New Runtime Java APIs
 
-##### API to access Information of Type Inclusions at the Runtime
+##### API to Access Information of Type Inclusions at the Runtime
 
-A new API is introduced to retrieve the type ids of given io.ballerina.runtime.api.types.ObjectType
+A new API is introduced to retrieve the type IDs of the given `io.ballerina.runtime.api.types.ObjectType`.
 
 ```Java
 TypeIdSet getTypeIdSet();
 ``` 
 
-##### API to retrieve the constituent types of an intersection type
+##### API to Retrieve the Constituent Types of an Intersection Type
 
-A new API is introduced to provide the list of constituent types of a given io.ballerina.runtime.api.types.IntersectionType.
+A new API is introduced to provide the list of constituent types of a given `io.ballerina.runtime.api.types.IntersectionType`.
 
 ```Java
 List<Type> getConstituentTypes();
@@ -124,7 +124,7 @@ List<Type> getConstituentTypes();
 
 #### Bug Fixes
 
-##### JSON should not support single-quote to mark the boundary of a string value 
+##### Removed Supporting the Single-Quote to Mark the Boundary of a JSON String Value 
 
 To comply with the JSON [specification](https://www.json.org/), the JSON parser is no longer supporting single quotes to mark the boundaries of a string. Only double quotes are supported.
 
