@@ -59,7 +59,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://gi
 - Added noAccessToProcedureBodies options
 
 ##### Log Package
-- Introduced `setOutputFile` function to write log output to a file.
+- Introduced the `setOutputFile` function to write the log output to a file
 
 #### Improvements
 
