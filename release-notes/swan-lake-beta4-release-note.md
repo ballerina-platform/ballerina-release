@@ -80,7 +80,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 #### New Features
 
 ##### Language Server
-- Add pull module code action to pull locally unavailable Ballerina packages from Ballerina Central
+- Add "pull module" code action to pull locally unavailable Ballerina packages from Ballerina Central
 - Add a new code action to add an explicit return statement where required
 - Add a new code action to create a readonly clone
 - Add "ignore unused variables" code action
