@@ -299,8 +299,7 @@ def check_pending_pr_checks(index: int):
                 failed_pr_checks.append(failed_pr_check)
                 passing = False
         else:
-            # Distribution does not have codecov checks
-            if module['name'] == 'ballerina-distribution' or pr_check.status == 'completed':
+            if pr_check.status == 'completed':
                 codecov_complete = True
     if count < 1:
         # Here the checks have not been triggered yet.
@@ -308,7 +307,8 @@ def check_pending_pr_checks(index: int):
     if not pending:
         if passing:
             if module['auto_merge'] & ('AUTO MERGE' in pull_request.title):
-                if not codecov_complete:
+                # Distribution does not have codecov checks
+                if not (module['name'] == 'ballerina-distribution' or codecov_complete):
                     # Wait till the codecov checks pass before merge
                     return
                 try:
