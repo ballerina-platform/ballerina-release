@@ -273,50 +273,68 @@ function parse(string str) returns int? { // Now results in a warning.
 }
 ```
 
-##### Allow to use field access for optional fields in Records
+##### Support for Accessing Optional Fields of a Record Using Field Access
 
-Now optional fields in Records can be accessed using Field Access expressions.
-
-- If a Record has an optional field and the type of the field does not include `nil`. It can be accessed using field access expression.
+Optional fields of records, that are of types that do not include nil, can now be accessed using field access expressions.
 
 ```ballerina
-type A record {
-   int a;
-   int b?;
-   int? c?;
+type Employee record {
+    string name;
+    int id?;
+    string? department?;
 };
 
 public function main() {
-   A a = {a:1, b:2, c:3};
-   int? b = a.b; // now this is allowed
+    Employee employee = {
+        name: "John",
+        department: "finance"
+    };
+    int? id = employee.id;
 }
 ```
-- If the static type of the Record is a union type that is a subtype of the mapping basic type then any field of that record can only be accessed if
-  - each member of the union has a required field of given field name or
-  - each member of the union has either a required field or an optional field of given field name, and the type of the field does not include `nil`
+
+But the following is still not allowed since the field's type includes nil.
 
 ```ballerina
-type Foo record {|
-    int i?;
-    int j?;
-    int k?;
-    int l?;
+string? department = employee.department; // error
+```
+ 
+If the static type of the expression on which the access is done is a non-lax union type, field access is allowed only if it is a union of record types and
+- each member of the union has a required field with the specific field name or
+- each member of the union has either a required field or an optional field with the specific field name, and the type of the field in each record type does not include nil
+
+```ballerina
+type Employee record {|
+    string name;
+    string? dob;
+    float salary?;
 |};
 
-type Bar record {|
-    int? i;
-    int j;
-    int? l;
+type Person record {|
+    string name?;
+    string dob?;
 |};
 
 public function main() {
-    Foo|Bar val = <Bar> {i: 1, j:3};
+    Employee|Person val = <Person> {
+        name: "Jo",
+        dob: "1990-01-10"
+    };
 
-    int? _ = val.i; // This is not allowed
-    int? _ = val.j; // Now this is allowed
-    int? _ = val.k; // This is not allowed
-    int? _ = val.l; // This is not allowed
-}   
+    // This is now allowed since `name` is an optional field in `Person`
+    // and a required field in `Employee`, and the type of the field is `string` 
+    // in both records and does not include nil.
+    string? _ = val.name;
+
+    // This is not allowed even though `dob` is an optional field in `Person`
+    // and a required field in `Employee`, since the type of `dob` in `Employee`, `string?`,
+    // includes nil.
+    string? _ = val.dob;
+
+    // This is not allowed since `salary` is neither a required field nor an optional 
+    // field in `Person`.
+    float? _ = val.salary;
+}
 ```
 
 #### Bug Fixes and Breaking Changes
