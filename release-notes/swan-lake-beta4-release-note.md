@@ -136,12 +136,12 @@ public function main() {
 }
 ```
 
-##### Unused configurable value warnings are now thrown as errors
+##### Throw Unused Configurable Value Warnings as Errors
 
 When there is a configuration value provided in the `Config.toml` file or a command line argument that does not match
 with the existing configurable variables, it will fail at runtime with an error instead of a warning.
 
-For example, if we have the following in `main.bal`,
+For example, if you have the following in the `main.bal` file,
 
 ```ballerina
 configurable int a = ?;
@@ -157,7 +157,7 @@ b = "invalid"
 d = 45
 ```
 
-Then, it will fail with following errors.
+then, it will fail with the following errors.
 
 ```
 error: [Config.toml:(2:1,2:14)] unused configuration value 'b'
