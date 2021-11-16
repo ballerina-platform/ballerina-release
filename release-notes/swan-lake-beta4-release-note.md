@@ -428,6 +428,11 @@ class Employee {
 xml x = xml `</>`; // Will now result in an error.
 ```
 
+- A bug that resulted in compilation errors not being emitted for duplicate fields written with escape sequences in the mapping constructor has been fixed.
+```ballerina
+map<any> x = {a\\: 454, "a\\": false}; // Will now result in an error.
+```
+
 - `xml:createElement` now accepts the attribute map as the second argument.
 
 ```ballerina
