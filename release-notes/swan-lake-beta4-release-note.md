@@ -273,6 +273,52 @@ function parse(string str) returns int? { // Now results in a warning.
 }
 ```
 
+##### Allow to use field access for optional fields in Records
+
+Now optional fields in Records can be accessed using Field Access expressions.
+
+- If a Record has an optional field and the type of the field does not include `nil`. It can be accessed using field access expression.
+
+```ballerina
+type A record {
+   int a;
+   int b?;
+   int? c?;
+};
+
+public function main() {
+   A a = {a:1, b:2, c:3};
+   int? b = a.b; // now this is allowed
+}
+```
+- If the static type of the Record is a union type that is a subtype of the mapping basic type then any field of that record can only be accessed if
+  - each member of the union has a required field of given field name or
+  - each member of the union has either a required field or an optional field of given field name, and the type of the field does not include `nil`
+
+```ballerina
+type Foo record {|
+    int i?;
+    int j?;
+    int k?;
+    int l?;
+|};
+
+type Bar record {|
+    int? i;
+    int j;
+    int? l;
+|};
+
+public function main() {
+    Foo|Bar val = <Bar> {i: 1, j:3};
+
+    int? _ = val.i; // This is not allowed
+    int? _ = val.j; // Now this is allowed
+    int? _ = val.k; // This is not allowed
+    int? _ = val.l; // This is not allowed
+}   
+```
+
 #### Bug Fixes and Breaking Changes
 
 - The trailing dot format of the floating point literal has been disallowed to avoid lexical ambiguity.
