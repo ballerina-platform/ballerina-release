@@ -136,6 +136,35 @@ public function main() {
 }
 ```
 
+##### Unused configurable value warnings are now thrown as errors
+
+When there is a configuration value provided in the `Config.toml` file or a command line argument that does not match
+with the existing configurable variables, it will fail at runtime with an error instead of a warning.
+
+For example, if we have the following in `main.bal`,
+
+```ballerina
+configurable int a = ?;
+```
+
+and the following in the `Config.toml` file,
+
+```toml
+a = 2
+b = "invalid"
+
+[c]
+d = 45
+```
+
+Then, it will fail with following errors.
+
+```
+error: [Config.toml:(2:1,2:14)] unused configuration value 'b'
+error: [Config.toml:(4:1,5:7)] unused configuration value 'c'
+error: [Config.toml:(5:1,5:7)] unused configuration value 'c.d'
+```
+
 To view bug fixes, see the [GitHub milestone for Swan Lake Beta4](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
 
 ### Standard Library Updates
