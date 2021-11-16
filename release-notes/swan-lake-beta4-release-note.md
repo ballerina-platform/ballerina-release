@@ -516,7 +516,7 @@ public class CustomRetryManager {
 If the numeric literal does not include the float type suffix or the decimal type suffix and it is not a hex floating point literal the type of the numeric literal will be based on following rules.
 
 1. If the literal is a floating point literal, then the possible basic types in order of preference are `[float, decimal]`; otherwise they are `[int, float, decimal]`.
-2. If there is a contextually expected type C and there is a possible basic type N such that N & C is non-empty, use the most preferred such type.
+2. If there is a contextually-expected type `C` and there is an intersection between `C` and the possible numeric basic types identified above, use the most preferred such type.
 3. Otherwise, use the most preferred possible basic type.
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
