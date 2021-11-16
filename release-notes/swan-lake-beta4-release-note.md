@@ -509,6 +509,16 @@ public class CustomRetryManager {
 }
 ```
 
+- A spec deviation was fixed when declaring out of range float value. With current behaviour this gives a compile time error.
+
+- Spec deviation related to numeric literal have been corrected according to the language specification. 
+
+If the numeric literal is not include float type suffix or  decimal type suffix and not a hex floating point literal the type of that numeric literal will be based on following rules.
+
+1. If the literal is floating point literal then the possible basic types in order of preference are float or decimal otherwise they are int, float or decimal.
+2. If there is contextual expected type and there is a basic type int, decimal or float in contextual expected type, Use the most perrered type in the order of int, float or decimal.
+3. Otherwise, use the most preferred possible basic type in the order of int, float or decimal.
+
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
 ### Runtime Updates
