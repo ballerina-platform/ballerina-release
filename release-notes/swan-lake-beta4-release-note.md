@@ -511,6 +511,12 @@ public class CustomRetryManager {
 
 - Attempting to use an out of range float value where the applicable contextually-expected type is `float` will now result in a compile-time error.
 
+```ballerina
+public function main() {
+    float x = 945e99876; // Will now result in an error.
+}
+```
+
 - Spec deviations related to identifying the types of numeric literals have been fixed. 
 
 If the numeric literal does not include the float type suffix or the decimal type suffix and it is not a hex floating point literal the type of the numeric literal will be based on following rules.
@@ -518,6 +524,30 @@ If the numeric literal does not include the float type suffix or the decimal typ
 1. If the literal is a floating point literal, then the possible basic types in order of preference are `[float, decimal]`; otherwise they are `[int, float, decimal]`.
 2. If there is a contextually-expected type `C` and there is an intersection between `C` and the possible numeric basic types identified above, use the most preferred such type.
 3. Otherwise, use the most preferred possible basic type.
+
+```ballerina
+import ballerina/io;
+
+type Foo 1f|1d|2d;
+
+public function main() {
+    int|float|decimal l = 10;
+    decimal|float m = 5.5;
+    int|decimal n = 5.5;
+    io:println(l is int); // prints true
+    io:println(m is float); // prints true
+    io:println(n is decimal); // prints true
+
+    Foo y = 1;
+    io:println(y is float); // prints true
+    io:println(y is decimal); // prints false
+
+    var q = 10;
+    var r = 5.5;
+    io:println(q is int); // prints true
+    io:println(r is float); // prints true
+}
+```
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
