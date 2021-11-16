@@ -64,6 +64,70 @@ public function main() {
 }
 ```
 
+##### Support for Accessing Optional Fields of a Record Using Field Access
+
+Optional fields of records, that are of types that do not include nil, can now be accessed using field access expressions.
+
+```ballerina
+type Employee record {
+    string name;
+    int id?;
+    string? department?;
+};
+
+public function main() {
+    Employee employee = {
+        name: "John",
+        department: "finance"
+    };
+    int? id = employee.id;
+}
+```
+
+But the following is still not allowed since the field's type includes nil.
+
+```ballerina
+string? department = employee.department; // error
+```
+
+If the static type of the expression on which the access is done is a non-lax union type, field access is allowed only if it is a union of record types and
+- each member of the union has a required field with the specific field name or
+- each member of the union has either a required field or an optional field with the specific field name, and the type of the field in each record type does not include nil
+
+```ballerina
+type Employee record {|
+    string name;
+    string? dob;
+    float salary?;
+|};
+
+type Person record {|
+    string name?;
+    string dob?;
+|};
+
+public function main() {
+    Employee|Person val = <Person> {
+        name: "Jo",
+        dob: "1990-01-10"
+    };
+
+    // This is now allowed since `name` is an optional field in `Person`
+    // and a required field in `Employee`, and the type of the field is `string` 
+    // in both records and does not include nil.
+    string? _ = val.name;
+
+    // This is not allowed even though `dob` is an optional field in `Person`
+    // and a required field in `Employee`, since the type of `dob` in `Employee`, `string?`,
+    // includes nil.
+    string? _ = val.dob;
+
+    // This is not allowed since `salary` is neither a required field nor an optional 
+    // field in `Person`.
+    float? _ = val.salary;
+}
+```
+
 #### Improvements
 
 ##### Restrictions When Calling a Function or a Method in a Match Guard
@@ -270,70 +334,6 @@ function parse(string str) returns int? { // Now results in a warning.
     if a is int {
         return a;
     }
-}
-```
-
-##### Support for Accessing Optional Fields of a Record Using Field Access
-
-Optional fields of records, that are of types that do not include nil, can now be accessed using field access expressions.
-
-```ballerina
-type Employee record {
-    string name;
-    int id?;
-    string? department?;
-};
-
-public function main() {
-    Employee employee = {
-        name: "John",
-        department: "finance"
-    };
-    int? id = employee.id;
-}
-```
-
-But the following is still not allowed since the field's type includes nil.
-
-```ballerina
-string? department = employee.department; // error
-```
- 
-If the static type of the expression on which the access is done is a non-lax union type, field access is allowed only if it is a union of record types and
-- each member of the union has a required field with the specific field name or
-- each member of the union has either a required field or an optional field with the specific field name, and the type of the field in each record type does not include nil
-
-```ballerina
-type Employee record {|
-    string name;
-    string? dob;
-    float salary?;
-|};
-
-type Person record {|
-    string name?;
-    string dob?;
-|};
-
-public function main() {
-    Employee|Person val = <Person> {
-        name: "Jo",
-        dob: "1990-01-10"
-    };
-
-    // This is now allowed since `name` is an optional field in `Person`
-    // and a required field in `Employee`, and the type of the field is `string` 
-    // in both records and does not include nil.
-    string? _ = val.name;
-
-    // This is not allowed even though `dob` is an optional field in `Person`
-    // and a required field in `Employee`, since the type of `dob` in `Employee`, `string?`,
-    // includes nil.
-    string? _ = val.dob;
-
-    // This is not allowed since `salary` is neither a required field nor an optional 
-    // field in `Person`.
-    float? _ = val.salary;
 }
 ```
 
