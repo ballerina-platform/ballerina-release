@@ -129,7 +129,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "ballerina-openapi"
+                "openapi-tools"
             ]
         },
         {
@@ -440,8 +440,8 @@
                 "module-ballerina-graphql",
                 "module-ballerina-grpc",
                 "module-ballerinax-jaeger",
-                "ballerina-openapi",
                 "module-ballerinax-prometheus",
+                "openapi-tools",
                 "module-ballerinai-transaction",
                 "module-ballerina-websocket",
                 "module-ballerina-websub",
@@ -510,7 +510,7 @@
             ]
         },
         {
-            "name": "ballerina-openapi",
+            "name": "openapi-tools",
             "level": 6,
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-openapi",
