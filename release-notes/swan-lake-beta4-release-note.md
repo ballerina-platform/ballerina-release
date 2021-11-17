@@ -578,6 +578,55 @@ public class CustomRetryManager {
 }
 ```
 
+- Attempting to use an out of range float value where the applicable contextually-expected type is `float` will now result in a compile-time error.
+
+```ballerina
+public function main() {
+    float x = 945e99876; // Will now result in an error.
+}
+```
+
+- Spec deviations related to identifying the types of numeric literals have been fixed. 
+
+If the numeric literal does not include the float type suffix or the decimal type suffix and if it is not a hex floating-point literal, the type of the numeric literal will be based on the following rules.
+
+1. If the literal is a floating point literal, then the possible basic types in order of preference are `[float, decimal]`; otherwise they are `[int, float, decimal]`.
+2. If there is a contextually-expected type `C` and there is an intersection between `C` and the possible numeric basic types identified above, use the most preferred such type.
+3. Otherwise, use the most preferred possible basic type.
+
+```ballerina
+import ballerina/io;
+
+type Foo 1f|1d|2d;
+
+public function main() {
+    int|float|decimal l = 10;
+    io:println(l is int); // Prints `true`.
+
+    decimal|float m = 5.5;
+    io:println(m is float); // Prints `true`.
+
+    int|decimal n = 5.5;
+    io:println(n is decimal); // Prints `true`.
+
+    Foo y = 1;
+    io:println(y is float); // Prints `true`.
+    io:println(y is decimal); // Prints `false`.
+
+    var q = 10;
+    io:println(q is int); // Prints `true`.
+
+    var r = 5.5;
+    io:println(r is float); // Prints `true`.
+}
+```
+
+The following now results in a compile-time error since the type of the literal is considered to be `float` and `Foo` does not contain `float` `2`.
+
+```ballerina
+Foo z = 2; // Now results in a compile-time error.
+```
+
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
 
 ### Runtime Updates
