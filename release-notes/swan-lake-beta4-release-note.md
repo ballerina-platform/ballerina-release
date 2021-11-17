@@ -210,6 +210,8 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 
 #### Language Server 
 
+- Added dynamic capability registration support for extended services
+
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer).
 
 #### New Features
