@@ -532,21 +532,30 @@ type Foo 1f|1d|2d;
 
 public function main() {
     int|float|decimal l = 10;
+    io:println(l is int); // Prints `true`.
+
     decimal|float m = 5.5;
+    io:println(m is float); // Prints `true`.
+
     int|decimal n = 5.5;
-    io:println(l is int); // prints true
-    io:println(m is float); // prints true
-    io:println(n is decimal); // prints true
+    io:println(n is decimal); // Prints `true`.
 
     Foo y = 1;
-    io:println(y is float); // prints true
-    io:println(y is decimal); // prints false
+    io:println(y is float); // Prints `true`.
+    io:println(y is decimal); // Prints `false`.
 
     var q = 10;
+    io:println(q is int); // Prints `true`.
+
     var r = 5.5;
-    io:println(q is int); // prints true
-    io:println(r is float); // prints true
+    io:println(r is float); // Prints `true`.
 }
+```
+
+The following now results in a compile-time error since the type of the literal is considered to be `float` and `Foo` does not contain `float` `2`.
+
+```ballerina
+Foo z = 2; // Now results in a compile-time error.
 ```
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
