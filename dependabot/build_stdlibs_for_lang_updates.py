@@ -68,6 +68,10 @@ def clone_repositories():
     if exit_code != 0:
         sys.exit(1)
 
+    # Change branch
+    os.system(f"cd ballerina-lang;git checkout {ballerina_lang_branch}")
+    os.system("cd ballerina-lang;git status")
+
     # Clone standard library repos
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
@@ -88,10 +92,11 @@ def build_stdlib_repositories(ballerina_lang_branch, enable_tests):
     cmd_exclude_tests = ''
     if enable_tests == 'false':
         cmd_exclude_tests = ' -x test'
+        print("Tests are disabled")
+    else:
+        print("Tests are enabled")
 
     # Build ballerina-lang repo
-    os.system(f"cd ballerina-lang;git checkout {ballerina_lang_branch}")
-    os.system("cd ballerina-lang;git status")
     exit_code = os.system(f"cd ballerina-lang;" +
                           f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
     if exit_code != 0:
@@ -122,7 +127,20 @@ def build_stdlib_repositories(ballerina_lang_branch, enable_tests):
 
 
 def change_version_to_snapshot():
-    print("Updating dependent standard library versions to SNAPSHOT...")
+    # Read ballerina-lang version
+    lang_version = ""
+    with open("ballerina-lang/gradle.properties", 'r') as config_file:
+        for line in config_file:
+            try:
+                name, value = line.split("=")
+                if name == "version":
+                    lang_version = value
+            except ValueError:
+                continue
+        config_file.close()
+
+    print("Lang Version:", lang_version)
+
     # Change dependent stdlib_module_versions & ballerina-lang version to SNAPSHOT in the stdlib modules
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
@@ -133,12 +151,11 @@ def change_version_to_snapshot():
                     for line in config_file:
                         try:
                             name, value = line.split("=")
-                            if "stdlib" in name:
+                            if name.startswith("stdlib"):
                                 version = value.split("-")[0]
                                 value = version + "-SNAPSHOT\n"
                             elif "ballerinaLangVersion" in name:
-                                version = value.split("-")[0] + "-" + value.split("-")[1]
-                                value = version + "-SNAPSHOT\n"
+                                value = lang_version
                             properties[name] = value
                         except ValueError:
                             continue
@@ -159,12 +176,11 @@ def change_version_to_snapshot():
         for line in config_file:
             try:
                 name, value = line.split("=")
-                if "stdlib" in name:
+                if name.startswith("stdlib"):
                     version = value.split("-")[0]
                     value = version + "-SNAPSHOT\n"
                 elif "ballerinaLangVersion" in name:
-                    version = value.split("-")[0] + "-" + value.split("-")[1]
-                    value = version + "-SNAPSHOT\n"
+                    value = lang_version
                 properties[name] = value
             except ValueError:
                 continue
@@ -174,8 +190,6 @@ def change_version_to_snapshot():
         for prop in properties:
             config_file.write(prop + "=" + properties[prop])
         config_file.close()
-
-    print("Updated dependent standard library versions to SNAPSHOT successfully")
 
 
 main()
