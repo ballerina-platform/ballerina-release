@@ -178,6 +178,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta4](https://github
 ##### Log Package
 - Introduced the `setOutputFile` function to write the log output to a file
 
+##### HTTP Package
+- Introduced request and request error interceptors
+
 ##### gRPC Package
 - Introduced Protobuf `Any` type support
 
@@ -189,6 +192,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta4](https://github
 
 ##### Log Package
 - Added `error:StackFrame[]` as a key-value pair type
+    
+##### HTTP Package
+- Marked the HTTP service type as distinct
+- Relaxed the data-binding restriction for status codes without content
+- Changed the `Listener.getConfig()` API to return an `InferredListenerConfiguration`
 
 #### Bug Fixes
 
