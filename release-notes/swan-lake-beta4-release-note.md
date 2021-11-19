@@ -810,10 +810,10 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 
 #### Language Server 
 - Added document symbol support
-- Add "pull module" code action to pull locally unavailable Ballerina packages from Ballerina Central
+- Add the `pull module` code action to pull locally unavailable Ballerina packages from Ballerina Central
 - Add a new code action to add an explicit return statement where required
 - Add a new code action to create a readonly clone
-- Add "ignore unused variables" code action
+- Add `ignore unused variables` code action
 - Add "remove unreachable statement" code action
 - Added dynamic capability registration support for extended services
 
