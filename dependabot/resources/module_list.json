@@ -117,7 +117,7 @@
             "version_key": "stdlibOAuth2Version"
         },
         {
-            "name": "ballerina-openapi",
+            "name": "openapi-tools",
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-openapi",
             "version_key": "openapiVersion"
