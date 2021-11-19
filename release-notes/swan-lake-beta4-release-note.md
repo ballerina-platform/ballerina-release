@@ -808,6 +808,8 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 
 ### Developer Tools Updates
 
+#### New Features
+	
 #### Language Server 
 - Added document symbol support
 - Add the `pull module` code action to pull locally unavailable Ballerina packages from Ballerina Central
@@ -818,11 +820,6 @@ To view bug fixes, see the GitHub milestone for Swan Lake <VERSION> of the repos
 - Added dynamic capability registration support for extended services
 
 To view bug fixes, see the [GitHub milestone for Swan Lake <VERSION>](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+Beta4%22+label%3AType%2FBug+label%3ATeam%2FLanguageServer).
-
-#### New Features
-
-##### Language Server
-
 
 ##### Debugger
 - Added support for debug pause instructions. With this support, any running Ballerina programs can be suspended immediately at the current execution line of the program.
