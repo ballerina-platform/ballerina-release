@@ -182,6 +182,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta4](https://github
 - Introduced request and request error interceptors
 - Added `noAccessToProcedureBodies` options
 
+- Introduced Protobuf `Any` type support
+
 #### Improvements
 
 ##### SQL Package
