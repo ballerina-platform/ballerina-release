@@ -178,6 +178,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta4](https://github
 ##### Log Package
 - Introduced the `setOutputFile` function to write the log output to a file
 
+##### gRPC Package
+- Introduce Protobuf `Any` type support
+
 #### Improvements
 
 ##### SQL Package
