@@ -179,7 +179,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta4](https://github
 - Introduced the `setOutputFile` function to write the log output to a file
 
 ##### HTTP Package
-- Introduce request and request error interceptors
+- Introduced request and request error interceptors
 - Added `noAccessToProcedureBodies` options
 
 #### Improvements
@@ -192,9 +192,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta4](https://github
 - Added `error:StackFrame[]` as a key-value pair type
     
 ##### HTTP Package
-- Mark HTTP Service type as distinct
-- Relax the data-binding restriction for no content status codes
-- Change the Listener.getConfig() API to return InferredListenerConfiguration
+- Marked the HTTP service type as distinct
+- Relaxed the data-binding restriction for status codes without content
+- Changed the `Listener.getConfig()` API to return an `InferredListenerConfiguration`
 
 #### Bug Fixes
 
