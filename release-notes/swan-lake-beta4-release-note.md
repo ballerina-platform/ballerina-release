@@ -180,7 +180,6 @@ To view bug fixes, see the [GitHub milestone for Swan Lake Beta4](https://github
 
 ##### HTTP Package
 - Introduced request and request error interceptors
-- Added `noAccessToProcedureBodies` options
 
 ##### gRPC Package
 - Introduced Protobuf `Any` type support
