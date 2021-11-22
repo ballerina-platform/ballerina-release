@@ -69,7 +69,7 @@ jobs:
           path: ballerina-distribution/ballerina/build/distributions/ballerina-windows-*.zip
       - name: Create linux-deb
         id: run_installers_deb
-        working-directory: ballerina-distributions/installers/linux-deb
+        working-directory: ballerina-distribution/installers/linux-deb
         run: ./build-ballerina-linux-deb-x64.sh -v ${{ steps.project-version.outputs.version }} -p ./../../ballerina/build/distributions
       - name: Create linux-rpm
         id: run_installers_rpm
