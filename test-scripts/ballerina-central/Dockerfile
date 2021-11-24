@@ -42,7 +42,7 @@ COPY --from=beta3-pack /ballerina/runtime /ballerina/beta3
 # COPY --from=beta4-pack /ballerina/runtime /ballerina/beta4
 
 ARG BALLERINA_CENTRAL_ACCESS_TOKEN=""
-ARG TEST_ORGANIZATION="bc2testorg"
+ARG TEST_ORGANIZATION="bctestorg"
 ARG BALLERINA_STAGE_CENTRAL="false"
 ARG BALLERINA_DEV_CENTRAL="false"
 
