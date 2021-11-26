@@ -157,7 +157,10 @@ VERSION=19.7.4 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
 VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 
 # Test pull with beta2
-VERSION=17.4.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
+VERSION=19.7.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
+
+# Test pull with beta3
+VERSION=19.7.4 ./libs/bats/bin/bats beta3/pull-latest-gh.bats
 
 # Test push with alpha5 and pull with beta1, beta2, beta3 and beta4
 VERSION=21.7.4 ./libs/bats/bin/bats alpha5/init-gh.bats
@@ -167,5 +170,11 @@ VERSION=14.9.5 ./libs/bats/bin/bats beta1/pull-latest-gh.bats
 VERSION=21.7.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 VERSION=21.7.4 ./libs/bats/bin/bats beta3/pull-latest-gh.bats
 VERSION=21.7.4 ./libs/bats/bin/bats beta4/pull-latest-gh.bats
+
+# Test push with beta3 and pull with beta4
+VERSION=22.7.4 ./libs/bats/bin/bats beta3/init-gh.bats
+VERSION=22.7.4 ./libs/bats/bin/bats beta3/push-gh.bats
+VERSION=22.7.4 ./libs/bats/bin/bats beta3/pull-latest-gh.bats
+VERSION=22.7.4 ./libs/bats/bin/bats beta4/pull-latest-gh.bats
 
 rm -rf bc*
