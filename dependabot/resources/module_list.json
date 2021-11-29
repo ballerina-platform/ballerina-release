@@ -1,6 +1,6 @@
 {
-    "auto_bump": false,
-    "lang_version_substring": "beta.5",
+    "auto_bump": true,
+    "lang_version_substring": "beta.6",
     "standard_library": [
         {
             "name": "module-ballerina-auth"
