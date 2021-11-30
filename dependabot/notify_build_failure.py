@@ -1,14 +1,19 @@
 from json import dumps
 from cryptography.fernet import Fernet
 from httplib2 import Http
+from github import Github
 import os
 import sys
 import csv
+import constants
+import notify_chat
 
 def main():
-    code_owners = open("CODEOWNERS", "r")
-    owners = code_owners.read().split("*")[1].split("@")
-
+    ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
+    github = Github(ballerina_bot_token)
+    repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + sys.argv[1])
+    code_owner_content = repo.get_contents('.github/CODEOWNERS')
+    owners = code_owner_content.decoded_content.decode().split("*")[1].split("@")
     encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
 
     fernet = Fernet(encryption_key)
@@ -30,29 +35,6 @@ def main():
                 if row['gh-username'] == owner:
                     message += "<users/" + row['user-id'] + ">" + "\n"
 
-    build_chat_id = os.environ['ENV_NOTIFICATIONS_CHAT_ID']
-    build_chat_key = os.environ['ENV_NOTIFICATIONS_CHAT_KEY']
-    build_chat_token = os.environ['ENV_NOTIFICATIONS_CHAT_TOKEN']
-
-    url = 'https://chat.googleapis.com/v1/spaces/' + build_chat_id + \
-              '/messages?key=' + build_chat_key + '&token=' + build_chat_token
-
-    chat_message = {"text": message}
-    message_headers = {'Content-Type': 'application/json; charset=UTF-8'}
-
-    http_obj = Http()
-
-    resp = http_obj.request(
-        uri=url,
-        method='POST',
-        headers=message_headers,
-        body=dumps(chat_message)
-    )[0]
-
-    if resp.status == 200:
-        print("Successfully sent notification")
-    else:
-        print("Failed to send notification, status code: " + str(resp.status))
-        sys.exit(1)
+    notify_chat.send_message(message)
 
 main()

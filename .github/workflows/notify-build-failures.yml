@@ -3,7 +3,6 @@ name: Notify Notifications chat
 on:
   repository_dispatch:
     types: [notify-build-failure]
-  workflow_dispatch:
 
 jobs:
   send-chat-message:
@@ -27,14 +26,14 @@ jobs:
         run: |
           pip install cryptography
           pip install httplib2
+          pip install PyGithub
 
       - name: Wget required files
         run: |
-          npm install
-          wget https://raw.githubusercontent.com/ballerina-platform/${{ github.event.client_payload.repoName }}/master/.github/CODEOWNERS
           python3 dependabot/notify_build_failure.py ${{ github.event.client_payload.repoName }}
         env:
-          ENV_NOTIFICATIONS_CHAT_ID: ${{secrets.NOTIFICATIONS_CHAT_ID}}
-          ENV_NOTIFICATIONS_CHAT_KEY: ${{secrets.NOTIFICATIONS_CHAT_KEY}}
-          ENV_NOTIFICATIONS_CHAT_TOKEN: ${{secrets.NOTIFICATIONS_CHAT_TOKEN}}
+          CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
+          CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
+          CHAT_TOKEN: ${{ secrets.NOTIFICATIONS_CHAT_TOKEN }}
           ENV_USER_ENCRYPTION_KEY: ${{secrets.USER_ENCRYPTION_KEY}}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
