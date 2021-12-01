@@ -26,7 +26,7 @@ To do this, first, execute the command below to get the update tool updated to i
 
 > `bal update`
 
-If you are using an **Update Tool version below 0.8.14**, execute the `ballerina update` command to update it. Next, execute the command below to update to Swan Lake Beta4.
+If you are using an **Update Tool version below 0.8.14**, execute the `ballerina update` command to update it. Next, execute the command below to update to Swan Lake Beta5.
 
 > `bal dist pull slbeta5`
 
