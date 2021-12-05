@@ -10,6 +10,12 @@ This will guide you through the process of using the `build-bbe.sh` tool to gene
 ##### Requirements
 1. Go installed in machine
 
+>**Tip:** The below are a few troubleshooting tips you may require when installing Go.
+
+- If you get the `no required module provides package github.com/russross/blackfriday: go.mod file not found in current directory or any parent directory; see 'go help modules'` error message, execute the `go mod init c/projects/go-projects/go-server` command.
+- If you get the `no required module provides package github.com/russross/blackfriday; to add it:
+	go get github.com/russross/blackfriday` error message, execute the `go get github.com/russross/blackfriday` command.
+
 ##### Steps
 1. Clone this repo.
 2. execute the build-bbe.sh 
