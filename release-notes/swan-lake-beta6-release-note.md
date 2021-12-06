@@ -31,5 +31,12 @@ If you are using an **Update Tool version below 0.8.14**, execute the `ballerina
 
 If you have not installed Ballerina, then download the [installers](/downloads/#swanlake) to install.
 
+### Standard Library Updates
+
+#### New Features
+
+##### GraphQL Package
+- added support for GraphQL list type inputs
+
 <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style>
  
