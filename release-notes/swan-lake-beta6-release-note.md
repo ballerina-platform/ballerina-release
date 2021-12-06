@@ -43,6 +43,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 ##### HTTP Package
 - Changed `RequestContext:add` function to `RequestContext:set`
 - Allowed listener level interceptors to have only the default path
+- Improve `parseHeader()` function to support multiple header values
 
 <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style>
  
