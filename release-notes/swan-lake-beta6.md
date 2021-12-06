@@ -13,7 +13,7 @@ redirect_from:
 
 <em>This is the sixth Beta release in a series of planned Alpha and Beta releases leading up to the Ballerina Swan Lake GA release.</em> 
 
-The Ballerina Swan Lake Beta6 release improves upon the Beta5 release by addressing a few [issues](https://github.com/ballerina-platform/ballerina-lang/milestone/119).
+The Ballerina Swan Lake Beta6 release improves upon the Beta5 release by addressing a few [Language issues](https://github.com/ballerina-platform/ballerina-lang/milestone/119).
 
 ### Updating Ballerina
 
