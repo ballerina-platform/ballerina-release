@@ -13,10 +13,7 @@ redirect_from:
 
 <em>This is the sixth Beta release in a series of planned Alpha and Beta releases leading up to the Ballerina Swan Lake GA release.</em> 
 
-The Ballerina Swan Lake Beta6 release improves upon the Beta5 release by addressing the two issues below.
-
-- [Conflict warning printed for usage of the same JAR](https://github.com/ballerina-platform/ballerina-distribution/issues/2367)
-- [`bal test` should not delete the previously-generated executable JAR](https://github.com/ballerina-platform/ballerina-lang/issues/33526)
+The Ballerina Swan Lake Beta6 release improves upon the Beta5 release by addressing a few [issues](https://github.com/ballerina-platform/ballerina-lang/milestone/119).
 
 ### Updating Ballerina
 
