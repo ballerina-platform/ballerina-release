@@ -31,5 +31,18 @@ If you are using an **Update Tool version below 0.8.14**, execute the `ballerina
 
 If you have not installed Ballerina, then download the [installers](/downloads/#swanlake) to install.
 
+### Standard Library Updates
+
+#### New Features
+
+##### HTTP Package
+- Introduced request and request error interceptors at service level
+
+#### Improvements
+
+##### HTTP Package
+- Changed `RequestContext:add` function to `RequestContext:set`
+- Allowed listener level interceptors to have only the default path
+
 <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style>
  
