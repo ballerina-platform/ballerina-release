@@ -31,6 +31,39 @@ If you are using an **Update Tool version below 0.8.14**, execute the `ballerina
 
 If you have not installed Ballerina, then download the [installers](/downloads/#swanlake) to install.
 
+### Language Updates
+
+#### Improvements
+
+- The static type of the unary plus expression has been updated to be the same as the static type of the operand.
+
+The following assignments are now allowed.
+
+```ballerina
+
+public function main() {
+    int:Unsigned8 a = 32;
+    int:Unsigned8 b = +a;
+
+    int:Unsigned16 c = 43;
+    int:Unsigned16 d = +c;
+
+    int:Unsigned32 e = 54;
+    int:Unsigned32 f = +e;
+
+    byte g = 127;
+    byte h = +g;
+
+    int:Signed8 i = -32;
+    int:Signed8 j = +i;
+
+    int:Signed16 k = -65;
+    int:Signed16 l = +k;
+
+    int:Signed32 m = -64;
+    int:Signed32 n = +m;
+}
+```
 ### Standard Library Updates
 
 #### New Features
