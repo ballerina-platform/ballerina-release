@@ -35,6 +35,9 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### New Features
 
+##### GraphQL Package
+- added support for GraphQL list type inputs
+
 ##### HTTP Package
 - Introduced request and request error interceptors at service level
 
