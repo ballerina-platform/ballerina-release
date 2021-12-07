@@ -33,40 +33,37 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ### Language Updates
 
-#### New Features
-
 #### Improvements
 
-#### Bug Fixes and Breaking Changes
+- The static type of the unary plus expression has been updated to be the same as the static type of the operand.
 
-- The resulting type of the `unary` plus expression has been changed to the same static type of the operand.
+The following assignments are now allowed.
+
 ```ballerina
-// the following are now allowed
 
 public function main() {
     int:Unsigned8 a = 32;
-    a = +a;
+    int:Unsigned8 b = +a;
 
-    int:Unsigned16 b = 43;
-    b = +b;
+    int:Unsigned16 c = 43;
+    int:Unsigned16 d = +c;
 
-    int:Unsigned32 c = 54;
-    c = +c;
+    int:Unsigned32 e = 54;
+    int:Unsigned32 f = +e;
 
-    byte d = 127;
-    d = +d;
+    byte g = 127;
+    byte h = +g;
 
-    int:Signed8 e = 32;
-    e = +e;
+    int:Signed8 i = -32;
+    int:Signed8 j = +i;
 
-    int:Signed16 f = 65;
-    f = +f;
+    int:Signed16 k = -65;
+    int:Signed16 l = +k;
 
-    int:Signed32 g = 64;
-    g = +g;
+    int:Signed32 m = -64;
+    int:Signed32 n = +m;
 }
 ```
-
 
 ### Standard Library Updates
 
