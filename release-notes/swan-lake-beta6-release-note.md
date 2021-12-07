@@ -31,6 +31,43 @@ If you are using an **Update Tool version below 0.8.14**, execute the `ballerina
 
 If you have not installed Ballerina, then download the [installers](/downloads/#swanlake) to install.
 
+### Language Updates
+
+#### New Features
+
+#### Improvements
+
+#### Bug Fixes and Breaking Changes
+
+- The resulting type of the `unary` plus expression has been changed to the same static type of the operand.
+```ballerina
+// the following are now allowed
+
+public function main() {
+    int:Unsigned8 a = 32;
+    a = +a;
+
+    int:Unsigned16 b = 43;
+    b = +b;
+
+    int:Unsigned32 c = 54;
+    c = +c;
+
+    byte d = 127;
+    d = +d;
+
+    int:Signed8 e = 32;
+    e = +e;
+
+    int:Signed16 f = 65;
+    f = +f;
+
+    int:Signed32 g = 64;
+    g = +g;
+}
+```
+
+
 ### Standard Library Updates
 
 #### New Features
