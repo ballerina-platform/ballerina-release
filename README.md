@@ -4,7 +4,7 @@
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
 <code>ballerina-distribution</code> repository has not been updated from the previous development version.<br><br>
-<code>ballerina-lang</code> repository version <b>2.0.0-beta.6-20211206-210300-a2c7104f</b> (13 h) has been updated as follows
+<code>ballerina-lang</code> repository version <b>2.0.0-beta.6-20211206-210300-a2c7104f</b> (15 h) has been updated as follows
 </td>
 </tr></tbody></table> 
 
