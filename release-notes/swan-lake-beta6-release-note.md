@@ -38,5 +38,26 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 ##### GraphQL Package
 - added support for GraphQL list type inputs
 
+##### HTTP Package
+- Introduced request and request error interceptors at service level
+
+#### Improvements
+
+##### HTTP Package
+- Changed `RequestContext:add` function to `RequestContext:set`
+- Allowed listener level interceptors to have only the default path
+- Improve `parseHeader()` function to support multiple header values
+
 <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style>
- 
+
+#### Improvements
+##### Ballerina OpenAPI Tools
+###### Ballerina OpenAPI client generation improvements for the OpenAPI to Ballerina command
+- Add the flag `--with-tests` for openAPI client generation command to generate test boiler plates file to relevant
+  remote functions.
+  > `bal openapi -i <openapi contract> --mode client --with-test`
+
+###### The Ballerina to OpenAPI command improvements
+- Add support to generate openAPI contract files for all the services in the current package by introducing 
+  new flag `--export-openapi` to `bal build` command.
+  > `bal build --export-openapi`
