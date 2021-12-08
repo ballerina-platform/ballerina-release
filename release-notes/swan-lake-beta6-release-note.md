@@ -94,7 +94,7 @@ service class DefaultRequestInterceptor {
 }
 ```
 
-- Improved `parseHeader()` function to support multiple header values
+- Changed `parseHeader()` function signature to support multiple header values
 ```ballerina
 http:HeaderValue[] values = check http:parseHeader("text/plain;level=1;q=0.6, application/xml;level=2");
 ```
