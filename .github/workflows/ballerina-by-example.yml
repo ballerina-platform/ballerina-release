@@ -1,4 +1,4 @@
-name: Generate ballerina by examples
+name: Generate ballerina by example
 
 on: workflow_dispatch
 
