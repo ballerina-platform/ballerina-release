@@ -182,7 +182,7 @@ echo "-----------------------------------------------------------"
 echo ">>>>>>>>>>>>>>>>>>>> Test with BETA6 <<<<<<<<<<<<<<<<<<<<<"
 echo "-----------------------------------------------------------"
 
-# Test push and pull with beta4
+# Test push and pull with beta6
 VERSION=23.8.2 ./libs/bats/bin/bats beta6/init-gh.bats
 VERSION=23.8.2 ./libs/bats/bin/bats beta6/push-gh.bats
 VERSION=23.8.2 ./libs/bats/bin/bats beta6/pull-gh.bats
@@ -209,7 +209,7 @@ VERSION=22.7.4 ./libs/bats/bin/bats beta3/pull-latest-gh.bats
 # Test pull with beta4
 VERSION=22.7.4 ./libs/bats/bin/bats beta4/pull-latest-gh.bats
 
-# Test push with alpha5 and pull with beta1, beta2, beta3 and beta4
+# Test push with alpha5 and pull with beta1, beta2, beta3, beta4 and beta6
 VERSION=24.8.4 ./libs/bats/bin/bats alpha5/init-gh.bats
 VERSION=24.8.4 ./libs/bats/bin/bats alpha5/push-gh.bats
 VERSION=24.8.4 ./libs/bats/bin/bats alpha5/pull-latest-gh.bats
