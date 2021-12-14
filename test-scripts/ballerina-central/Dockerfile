@@ -28,7 +28,7 @@ FROM ballerina/ballerina:swan-lake-beta1 AS beta1-pack
 FROM ballerina/ballerina:swan-lake-beta2 AS beta2-pack
 FROM ballerina/ballerina:swan-lake-beta3 AS beta3-pack
 FROM ballerina/ballerina:swan-lake-beta4 AS beta4-pack
-FROM ballerina/ballerina:swan-lake-beta6-rc2 AS beta6-pack
+FROM ballerina/ballerina:swan-lake-beta6 AS beta6-pack
 
 FROM adoptopenjdk/openjdk11:alpine
 
