@@ -97,7 +97,7 @@ def get_lang_latest_timestamp():
         sys.exit(1)
     lang_version = version_string.split("-")
     if len(lang_version) > 3:
-        timestamp = create_timestamp(lang_version[2], lang_version[3])
+        timestamp = create_timestamp(lang_version[1], lang_version[2])
     else:
         timestamp = 0
 
@@ -114,10 +114,10 @@ def update_lang_version():
     lang_version = ballerina_lang_version.split("-")
 
     if len(lang_version) > 3:
-        ballerina_timestamp = create_timestamp(lang_version[2], lang_version[3])
+        ballerina_timestamp = create_timestamp(lang_version[1], lang_version[2])
     else:
         ballerina_timestamp = -3
-    latest_ballerina_stable_version = '-'.join(ballerina_lang_version.split('-')[0:2])
+    latest_ballerina_stable_version = '-'.join(ballerina_lang_version.split('-')[0:1])
 
 
 def days_hours_minutes(td):
@@ -175,8 +175,8 @@ def get_lag_info(module_name):
             split_timestamp_string = current_version.split("-")
             if current_version == latest_ballerina_stable_version:
                 timestamp = -1
-            elif '-'.join(split_timestamp_string[0:2]) == latest_ballerina_stable_version:
-                timestamp = create_timestamp(split_timestamp_string[2], split_timestamp_string[3])
+            elif '-'.join(split_timestamp_string[0:1]) == latest_ballerina_stable_version:
+                timestamp = create_timestamp(split_timestamp_string[1], split_timestamp_string[2])
             else:
                 if len(split_timestamp_string) > 2:
                     timestamp = -2
