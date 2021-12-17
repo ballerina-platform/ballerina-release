@@ -440,7 +440,7 @@ def get_updated_properties_file(module_name, current_level, properties_file):
 
     split_lang_version = lang_version.split('-')
     if len(split_lang_version) > 3:
-        processed_lang_version = split_lang_version[2] + split_lang_version[3]
+        processed_lang_version = split_lang_version[1] + split_lang_version[2]
     else:
         processed_lang_version = split_lang_version[1]
 
