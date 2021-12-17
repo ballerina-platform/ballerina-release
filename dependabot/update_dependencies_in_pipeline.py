@@ -450,10 +450,18 @@ def get_updated_properties_file(module_name, current_level, properties_file):
 
             split_current_version = current_version.split('-')
 
-            if len(split_current_version) > 3:
+            if len(split_current_version) == 5:
+                # Prerelease version
                 processed_current_version = split_current_version[2] + split_current_version[3]
 
-                if len(split_current_version) < 3 or processed_current_version < processed_lang_version:
+                if processed_current_version < processed_lang_version:
+                    print("[Info] Updating the lang version in module: '" + module_name + "'")
+                    updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
+                else:
+                    updated_properties_file += line + '\n'
+            elif len(split_current_version) == 4:
+                processed_current_version = split_current_version[1] + split_current_version[2]
+                if processed_current_version < processed_lang_version:
                     print("[Info] Updating the lang version in module: '" + module_name + "'")
                     updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
                 else:
