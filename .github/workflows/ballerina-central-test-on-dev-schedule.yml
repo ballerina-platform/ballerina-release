@@ -1,6 +1,7 @@
 name: Scheduled Ballerina Central Tests on Dev 
 
 on:
+  workflow_dispatch:
   schedule:
     - cron:  '0 */6 * * *'
 
