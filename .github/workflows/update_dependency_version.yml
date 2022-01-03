@@ -28,7 +28,7 @@ jobs:
     if: github.repository_owner == 'ballerina-platform'
     runs-on: ubuntu-latest
     concurrency:
-        group: ${{ github.head_ref }}-dependency-update
+        group: ${{ github.ref }}-dependency-update
         cancel-in-progress: true
     steps:
       - name: Checkout Repository
