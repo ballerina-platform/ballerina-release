@@ -253,6 +253,8 @@ def update_modules(updated_readme, module_details_list, is_extended_library):
         for idx, module in enumerate(current_level_modules):
             if module[MODULE_NAME].startswith("module"):
                 name = module[MODULE_NAME].split("-")[2]
+                if module[MODULE_NAME].split("-")[1] == "ballerinai":
+                    name = name + "i"
             else:
                 name = module[MODULE_NAME]
 
