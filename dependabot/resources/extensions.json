@@ -646,7 +646,7 @@
             "auto_merge": false,
             "is_extended_library_module": true,
             "build_action_file": "build-main",
-            "send_notification": false,
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -659,7 +659,7 @@
             "auto_merge": false,
             "is_extended_library_module": true,
             "build_action_file": "build-main",
-            "send_notification": false,
+            "send_notification": true,
             "dependents": []
         },
         {
@@ -763,7 +763,7 @@
             "auto_merge": false,
             "is_extended_library_module": true,
             "build_action_file": "build-main",
-            "send_notification": false,
+            "send_notification": true,
             "dependents": []
         },
         {
