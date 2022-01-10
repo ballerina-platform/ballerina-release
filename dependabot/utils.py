@@ -41,9 +41,12 @@ def write_json_file(file_path, file_content):
 
 def get_module_message(module, link):
     module_message = "<" + link + "|" + module['name'] + ">" + "\t\t"
-    repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
-    code_owner_content = repo.get_contents('.github/CODEOWNERS')
-    code_owner_gh_username = code_owner_content.decoded_content.decode().split("@")[-1].strip()
+    try:
+        repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
+        code_owner_content = repo.get_contents('.github/CODEOWNERS')
+        code_owner_gh_username = code_owner_content.decoded_content.decode().split("@")[-1].strip()
+    except Exception as e:
+        code_owner_gh_username = ""
 
     encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
     fernet = Fernet(encryption_key)
