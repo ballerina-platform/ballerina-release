@@ -191,6 +191,15 @@
         },
         {
             "name": "module-ballerina-xslt"
+        },
+        {
+            "name": "module-ballerina-observe",
+            "version_key": "observeVersion"
+        },
+        {
+            "name": "module-ballerinai-observe",
+            "group_id": "io.ballerina",
+            "version_key": "observeInternalVersion"
         }
     ]
 }
