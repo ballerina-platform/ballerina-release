@@ -309,7 +309,7 @@ def check_pending_pr_checks(index: int):
             if module['auto_merge'] & ('AUTO MERGE' in pull_request.title):
                 # Distribution does not have codecov checks, nether does ballerinai/observe
                 if not (module['name'] == 'ballerina-distribution' or module['name'] == 'module-ballerinai-observe'
-                    or codecov_complete):
+                    or module['name'] == 'module-ballerina-observe' or codecov_complete):
                     # Wait till the codecov checks pass before merge
                     return
                 try:
