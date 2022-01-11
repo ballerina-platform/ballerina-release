@@ -78,7 +78,6 @@
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
             "version_key": "observeExtJaegerVersion",
-            "auto_merge": false,
             "build_action_file": "build-main"
         },
         {
@@ -134,7 +133,6 @@
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
             "version_key": "observeExtPrometheusVersion",
-            "auto_merge": false,
             "build_action_file": "build-main"
         },
         {
