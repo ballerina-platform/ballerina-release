@@ -7,10 +7,10 @@ on:
         description: 'Github username'
         required: true
       wso2Id:
-        description: 'Wso2 id'
+        description: 'Wso2 id (email id w/o postfix, ex : alice / harry)'
         required: true
       userId:
-        description: 'User id (required for add operation)'
+        description: 'Google chat id (required for add operation)'
       teamName:
         description: 'Team name (required for add operation, ex : ballerina / Ecosystem)'
       operation:
