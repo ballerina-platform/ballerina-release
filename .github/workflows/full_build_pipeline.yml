@@ -43,30 +43,32 @@ jobs:
       - name: Get project version
         id: project-version
         run: |
-          SHORT_VERSION=$((grep -w 'shortVersion' | cut -d= -f2) < ballerina-distribution/gradle.properties)
-          RELEASE_VERSION=$((grep -w "version" | cut -d= -f2) < ballerina-distribution/gradle.properties)
+          SHORT_VERSION=$((grep -w "version" | cut -d= -f2 | cut -d- -f1) < ballerina-distribution/gradle.properties)
+          DIST_VERSION=$((grep -w "version" | cut -d= -f2) < ballerina-distribution/gradle.properties)
+          CODE_NAME=$((grep -w 'codeName' | cut -d= -f2) < ballerina-distribution/gradle.properties)
+          RELEASE_VERSION=$DIST_VERSION-$CODE_NAME
           echo "::set-output name=version::$RELEASE_VERSION"
           echo "::set-output name=sversion::$SHORT_VERSION"
       - name: Archive Ballerina ZIP
         uses: actions/upload-artifact@v2
         with:
           name: Ballerina ZIP
-          path: ballerina-distribution/ballerina/build/distributions/ballerina-swan-lake-*.zip
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-swan-lake.zip
       - name: Archive Ballerina Short Name ZIP
         uses: actions/upload-artifact@v2
         with:
           name: Ballerina Short Name ZIP
-          path: ballerina-distribution/ballerina/build/distributions/ballerina-sl*.zip
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-22*.zip
       - name: Archive MacOS Installer ZIP
         uses: actions/upload-artifact@v2
         with:
           name: MacOS Installer ZIP
-          path: ballerina-distribution/ballerina/build/distributions/ballerina-macos-*.zip
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-macos.zip
       - name: Archive Windows Installer ZIP
         uses: actions/upload-artifact@v2
         with:
           name: Windows Installer ZIP
-          path: ballerina-distribution/ballerina/build/distributions/ballerina-windows-*.zip
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-windows.zip
       - name: Create linux-deb
         id: run_installers_deb
         working-directory: ballerina-distribution/installers/linux-deb
@@ -79,12 +81,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Linux Installer deb
-          path: ballerina-distribution/installers/linux-deb/target/ballerina-linux-installer-x64-*.deb
+          path: ballerina-distribution/installers/linux-deb/target/ballerina-*-linux-x64.deb
       - name: Archive Linux rpm
         uses: actions/upload-artifact@v2
         with:
           name: Linux Installer rpm
-          path: ballerina-distribution/installers/linux-rpm/rpmbuild/RPMS/x86_64/ballerina-linux-installer-x64-*.rpm
+          path: ballerina-distribution/installers/linux-rpm/rpmbuild/RPMS/x86_64/ballerina-*-linux-x64.rpm
     outputs:
       project-version: ${{ steps.project-version.outputs.version }}
 
@@ -104,12 +106,12 @@ jobs:
       - name: Create macos-pkg
         id: run_installers_pkg
         working-directory: ballerina-distribution/installers/mac
-        run: ./build-ballerina-macos-x64.sh -v ${{ needs.build-pipeline.outputs.project-version }} -p ./../../
+        run: ./build-ballerina-macos-x64.sh -v ${{ needs.build-pipeline.outputs.project-version }} -p ./../../../
       - name: Archive MacOS pkg
         uses: actions/upload-artifact@v2
         with:
           name: MacOS Installer pkg
-          path: ballerina-distribution/installers/mac/target/pkg/ballerina-macos-installer-x64-*.pkg
+          path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-x64.pkg
 
 
   windows-installer-build:
@@ -143,4 +145,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Windows Installer msi
-          path: w\target\msi\ballerina-windows-installer-x64-*.msi
+          path: w\target\msi\ballerina-*-windows-x64.msi
