@@ -11,11 +11,11 @@ encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
 fernet = Fernet( encryption_key )
 
 def main():
-    with open('dependabot/resources/github_users_encrypted.csv', 'r') as enc_file:
+    with open('dependabot/resources/github_users_encrypted.csv', 'rb') as enc_file:
         encrypted_csv = enc_file.read()
 
     decrypted = fernet.decrypt(encrypted_csv)
-    with open('dependabot/resources/github_users_decrypted.csv', 'w') as dec_file:
+    with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
         dec_file.write(decrypted)
 
     if str(sys.argv[5]) == "a":
@@ -53,7 +53,7 @@ def add_field( github_username, org_id, user_id, team_name):
         write_obj.close()
 
     ## Encrypt the updated csv
-    with open('dependabot/resources/github_users_decrypted.csv', 'r') as file:
+    with open('dependabot/resources/github_users_decrypted.csv', 'rb') as file:
         updated_csv_file = file.read()
     encrypted = fernet.encrypt(updated_csv_file)
 
@@ -75,7 +75,7 @@ def remove_field( github_username, org_id ):
         writer.writerows(lines)
 
     ## Encrypt the updated csv
-    with open('dependabot/resources/updated.csv', 'r') as file:
+    with open('dependabot/resources/updated.csv', 'rb') as file:
         updated_csv_file = file.read()
     encrypted = fernet.encrypt(updated_csv_file)
 
