@@ -46,7 +46,7 @@ def main():
 
 
 def add_field( github_username, org_id, user_id, team_name):
-    with open('dependabot/resources/github_users_decrypted.csv', 'w') as write_obj:
+    with open('dependabot/resources/github_users_decrypted.csv', 'a') as write_obj:
         field_names = ['gh-username','wso2-id','user-id','team']
         user_file = csv.DictWriter(write_obj , fieldnames = field_names)
         user_file.writerow({'gh-username': github_username, 'wso2-id': org_id, 'user-id': user_id, 'team': team_name})
@@ -57,20 +57,20 @@ def add_field( github_username, org_id, user_id, team_name):
         updated_csv_file = file.read()
     encrypted = fernet.encrypt(updated_csv_file)
 
-    with open('file_to_commit.csv', 'w') as encrypt_obj:
+    with open('file_to_commit.csv', 'wb') as encrypt_obj:
         encrypt_obj.write(encrypted)
 
 
 def remove_field( github_username, org_id ):
     lines = []
-    with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
+    with open('dependabot/resources/github_users_decrypted.csv', 'rb') as read_obj:
         user_file = csv.reader(read_obj)
         for row in user_file:
             lines.append(row)
             if row[0] == github_username and row[1] == org_id:
                 lines.remove(row)
 
-    with open('dependabot/resources/updated.csv', 'w') as write_obj:
+    with open('dependabot/resources/updated.csv', 'wb') as write_obj:
         writer = csv.writer(write_obj)
         writer.writerows(lines)
 
@@ -79,7 +79,7 @@ def remove_field( github_username, org_id ):
         updated_csv_file = file.read()
     encrypted = fernet.encrypt(updated_csv_file)
 
-    with open('file_to_commit.csv', 'w') as encrypt_obj:
+    with open('file_to_commit.csv', 'wb') as encrypt_obj:
         encrypt_obj.write(encrypted)
 
 
