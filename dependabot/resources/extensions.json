@@ -169,45 +169,6 @@
             ]
         },
         {
-            "name": "module-ballerinax-datamapper",
-            "level": 2,
-            "group_id": "org.ballerinax.datamapper",
-            "artifact_id": "datamapper-extension",
-            "version_key": "dataMapperVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "module-ballerina-log",
-            "level": 2,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "log-ballerina",
-            "version_key": "stdlibLogVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerina-auth",
-                "module-ballerina-file",
-                "module-ballerina-ftp",
-                "module-ballerina-jwt",
-                "module-ballerina-mime",
-                "module-ballerinax-nats",
-                "module-ballerina-oauth2",
-                "module-ballerinax-stan",
-                "module-ballerina-tcp",
-                "module-ballerina-udp"
-            ]
-        },
-        {
             "name": "module-ballerinai-observe",
             "level": 2,
             "group_id": "io.ballerina",
@@ -218,7 +179,10 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
-            "dependents": []
+            "dependents": [
+                "module-ballerinax-datamapper",
+                "module-ballerina-log"
+            ]
         },
         {
             "name": "module-ballerina-os",
@@ -300,80 +264,42 @@
             ]
         },
         {
-            "name": "module-ballerina-file",
+            "name": "module-ballerinax-datamapper",
             "level": 3,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "file-ballerina",
-            "version_key": "stdlibFileVersion",
+            "group_id": "org.ballerinax.datamapper",
+            "artifact_id": "datamapper-extension",
+            "version_key": "dataMapperVersion",
             "default_branch": "master",
             "auto_merge": true,
             "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerina-email",
-                "module-ballerina-http"
-            ]
-        },
-        {
-            "name": "module-ballerina-ftp",
-            "level": 3,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "ftp-ballerina",
-            "version_key": "stdlibFtpVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
+            "build_action_file": "build-master",
             "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
         },
         {
-            "name": "module-ballerina-mime",
+            "name": "module-ballerina-log",
             "level": 3,
             "group_id": "io.ballerina.stdlib",
-            "artifact_id": "mime-ballerina",
-            "version_key": "stdlibMimeVersion",
+            "artifact_id": "log-ballerina",
+            "version_key": "stdlibLogVersion",
             "default_branch": "master",
             "auto_merge": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-email",
-                "module-ballerina-http"
-            ]
-        },
-        {
-            "name": "module-ballerina-tcp",
-            "level": 3,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "tcp-ballerina",
-            "version_key": "stdlibTcpVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "module-ballerina-udp",
-            "level": 3,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "udp-ballerina",
-            "version_key": "stdlibUdpVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
+                "module-ballerina-auth",
+                "module-ballerina-file",
+                "module-ballerina-ftp",
+                "module-ballerina-jwt",
+                "module-ballerina-mime",
+                "module-ballerinax-nats",
+                "module-ballerina-oauth2",
+                "module-ballerinax-stan",
+                "module-ballerina-tcp",
+                "module-ballerina-udp"
             ]
         },
         {
@@ -407,11 +333,27 @@
             ]
         },
         {
-            "name": "module-ballerina-email",
+            "name": "module-ballerina-file",
             "level": 4,
             "group_id": "io.ballerina.stdlib",
-            "artifact_id": "email-ballerina",
-            "version_key": "stdlibEmailVersion",
+            "artifact_id": "file-ballerina",
+            "version_key": "stdlibFileVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-email",
+                "module-ballerina-http"
+            ]
+        },
+        {
+            "name": "module-ballerina-ftp",
+            "level": 4,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "ftp-ballerina",
+            "version_key": "stdlibFtpVersion",
             "default_branch": "master",
             "auto_merge": true,
             "is_extended_library_module": false,
@@ -437,6 +379,22 @@
             ]
         },
         {
+            "name": "module-ballerina-mime",
+            "level": 4,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mime-ballerina",
+            "version_key": "stdlibMimeVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-email",
+                "module-ballerina-http"
+            ]
+        },
+        {
             "name": "module-ballerina-oauth2",
             "level": 4,
             "group_id": "io.ballerina.stdlib",
@@ -449,6 +407,51 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerina-http"
+            ]
+        },
+        {
+            "name": "module-ballerina-tcp",
+            "level": 4,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "tcp-ballerina",
+            "version_key": "stdlibTcpVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "module-ballerina-udp",
+            "level": 4,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "udp-ballerina",
+            "version_key": "stdlibUdpVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "module-ballerina-email",
+            "level": 5,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "email-ballerina",
+            "version_key": "stdlibEmailVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
             ]
         },
         {
