@@ -3,7 +3,7 @@
 <table><tbody><tr>
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
-<code>ballerina-distribution</code> repository lags by 23 h.<br><br>
+<code>ballerina-distribution</code> repository lags by 23 h and pending PR <a href='https://github.com/ballerina-platform/ballerina-distribution/pull/2473'>#2473</a>  is available.<br><br>
 <code>ballerina-lang</code> repository version <b>2201.0.0-20220112-203600-3c0db19c</b> (23 h) has been updated as follows
 </td>
 </tr></tbody></table> 
@@ -51,7 +51,7 @@
 |  | [websubhub](https://github.com/ballerina-platform/module-ballerina-websubhub) | [![Build](https://github.com/ballerina-platform/module-ballerina-websubhub/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-websubhub/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-websubhub/blob/main/gradle.properties) | [#418](https://github.com/ballerina-platform/module-ballerina-websubhub/pull/418) | 
 | 7 | [c2c](https://github.com/ballerina-platform/module-ballerina-c2c) | [![Build](https://github.com/ballerina-platform/module-ballerina-c2c/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-c2c/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-c2c/blob/master/gradle.properties) | []() | 
 |  | [sql](https://github.com/ballerina-platform/module-ballerina-sql) | [![Build](https://github.com/ballerina-platform/module-ballerina-sql/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerina-sql/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerina-sql/blob/master/gradle.properties) | []() | 
-| 8 | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Build](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml/badge.svg)](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml) | [![Lag](https://img.shields.io/badge/lag-23%20h-yellow?label=)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | []() | 
+| 8 | [ballerina-distribution](https://github.com/ballerina-platform/ballerina-distribution) | [![Build](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml/badge.svg)](https://github.com/ballerina-platform/ballerina-distribution/actions/workflows/main.yml) | [![Lag](https://img.shields.io/badge/lag-23%20h-yellow?label=)](https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties) | [#2473](https://github.com/ballerina-platform/ballerina-distribution/pull/2473) | 
 ## Ballerina Extended Library
 | Level | Modules | Build | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|:---:|
