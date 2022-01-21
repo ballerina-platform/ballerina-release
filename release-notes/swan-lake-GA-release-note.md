@@ -47,6 +47,13 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 
 #### New Features
 
+##### HTTP Package
+
+- Implemented Typed `headers` for HTTP response
+- Added `map<string>` data binding support for `application/www-x-form-urlencoded`
+- Added support to provide inline request/response body with `x-form-urlencoded` content
+- Added compiler validation for payload annotation usage
+
 #### Improvements
 
 #### Bug Fixes
