@@ -50,7 +50,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 #### Improvements
 
 ##### gRPC Package
-- Change the `--proto_path` option of gRPC CLI to `--proto-path`
+- Changed the `--proto_path` option of the gRPC CLI to `--proto-path`
 
 #### Bug Fixes
 
