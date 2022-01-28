@@ -52,7 +52,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 ##### `grpc` Package
 - Changed the `--proto_path` option of the gRPC CLI to `--proto-path`
 
-##### Kafka Package
+##### `kafka` Package
 - Made the `kafka:Caller` optional in the `onConsumerRecord` method of the `kafka:Service`
 - Allow the `readonly & kafka:ConsumerRecord[]` parameter type in the `onConsumerRecord` method
 
