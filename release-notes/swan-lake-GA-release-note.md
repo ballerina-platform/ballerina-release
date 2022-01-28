@@ -79,7 +79,6 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the reposi
 - Added the import statement for a module, which has a reference without an import statement based on the user’s input
 
 ```ballerina
-For example, see below.
 
 =$ io:println("HelloWorld")
 |
