@@ -48,7 +48,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 #### New Features
 
 ##### GraphQL Package
-- Added CORS configuration support
+- Added CORS configuration support  
+
 #### Improvements
 
 ##### GraphQL Package
