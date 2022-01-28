@@ -77,7 +77,7 @@ function getCode(int id) returns string|error {
 - A bug which resulted in constants being resolved with incorrect types in certain scenarios has been fixed. The type of constants is now the intersection of readonly and the singleton type containing just the shape of the value named by the constant.
 
 ```ballerina
-// Previously the type of X was `int`, now it is singleton `2`.
+// Previously, the type of X was `int` and now it is singleton `2`.
 const int X = 1 + 1;
  
 public function main() {
@@ -92,7 +92,7 @@ public function main() {
 const map<int> X = {a: 1};
  
 public function main() {
-   // Now results in an error.
+   // Now, this results in an error.
    X y = {a: 2};
 }
 ```
@@ -115,7 +115,7 @@ type Student record {
 };
 ```
 
-Previously when a type test was used as follows, the type of `v` in the else block was narrowed to `Student`.
+Previously, when a type test was used as follows, the type of `v` in the else block was narrowed to `Student`.
 
 ```ballerina
 function fn(Employee|Student v) {
@@ -170,8 +170,8 @@ function bindEmployee(Employee emp) {
    {name: empName, age: empAge} = emp; // error for `age: empAge`
    var {name: empNameOne, age: empAgeOne} = emp; // error for `age: empAgeOne`
  
-   // Similarly since there is no required field `department` in the `Employee`
-   // record the following will also result in an error.
+   // Similarly, since there is no required `department` field in the `Employee`
+   // record, the following will also result in an error.
    var {name, department} = emp; // error for `department`
 }
  
@@ -182,7 +182,7 @@ function bindError(Error err) {
    // Therefore, attempting to bind it will now result in a compilation error.
    Error error(message1, code = code1, identifier = identifier1) = err; // error for 'code = code1'
  
-   // Similarly, attempting to bind an undefined (non-required) field `fatal` will
+   // Similarly, attempting to bind an undefined (non-required) `fatal` field will
    // also result in a compilation error.
    var error(message, fatal = fatal) = err; // error for 'fatal = fatal'
 }
@@ -193,7 +193,7 @@ function bindError(Error err) {
 function fn(int y, int z) returns int {
    function (int, int, int) returns int f = (x, y, z) => x + y + z; // error: redeclared symbols 'y' and 'z'
  
-   int x = 34; // This is not in an overlapping scope, so does not result in an error.
+   int x = 34; // This is not in an overlapping scope, so, it does not result in an error.
    return f(12, 32, 33);
 }
  
@@ -204,7 +204,6 @@ function createService(int age) returns
                return 5 + age;
            }
        };
- 
 }
 ```
 
@@ -228,7 +227,7 @@ class Person {
 public function main() {
    Person person = new ("May", ["Palm Grove", "Colombo 3"]);
   
-   // Previously allowed, results in an error now.
+   // This, which was allowed previously results in an error now.
    readonly readOnlyValue = person;
 }
 ```
