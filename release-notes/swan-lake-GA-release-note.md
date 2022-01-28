@@ -87,7 +87,7 @@ public function main() {
 ```
 
 ```ballerina
-// Previously the type of X was `map<int>`, now it is the intersection of readonly
+// Previously, the type of X was `map<int>` and now it is the intersection of readonly
 // and the singleton type containing just the mapping value `{a: 1}`.
 const map<int> X = {a: 1};
  
