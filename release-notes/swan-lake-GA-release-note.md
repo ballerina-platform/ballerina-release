@@ -51,7 +51,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 
 ##### Kafka Package
 - Make `kafka:Caller` optional in `onConsumerRecord` method in `kafka:Service`
-- Allow `readonly & kafka:ConsumerRecord[]` parameter type in `onConsumerRecord` method
+- Allow the `readonly & kafka:ConsumerRecord[]` parameter type in the `onConsumerRecord` method
 
 #### Bug Fixes
 
