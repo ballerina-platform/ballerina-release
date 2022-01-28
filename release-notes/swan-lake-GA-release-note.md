@@ -47,13 +47,13 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 
 #### New Features
 
-##### HTTP Package
-- Implement Typed `headers` for HTTP response
-- Add `map<string>` data binding support for `application/www-x-form-urlencoded`
-- Add compiler validation for payload annotation usage
-- Add support to provide inline request/response body with `x-form-urlencoded` content
-
 #### Improvements
+
+##### WebSub Package
+- Add support for `readonly` parameters for remote methods
+
+#### WebSubHub Package
+- Add support for `readonly` parameters for remote methods
 
 #### Bug Fixes
 
