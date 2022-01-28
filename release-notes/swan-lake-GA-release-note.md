@@ -49,11 +49,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 
 #### Improvements
 
-##### WebSub Package
-- Add support for `readonly` parameters for remote methods
+##### `websub` Package
+- Added the support for `readonly` parameters of remote methods
 
-#### WebSubHub Package
-- Add support for `readonly` parameters for remote methods
+#### `websubhub` Package
+- Added the support for `readonly` parameters of remote methods
 
 #### Bug Fixes
 
