@@ -59,11 +59,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 ##### `grpc` Package
 - Changed the `--proto_path` option of the gRPC CLI to `--proto-path`
 
-##### WebSub Package
-- Add support for `readonly` parameters for remote methods
+##### `websub` Package
+- Added the support for `readonly` parameters of remote methods
 
-#### WebSubHub Package
-- Add support for `readonly` parameters for remote methods
+#### `websubhub` Package
+- Added the support for `readonly` parameters of remote methods
 
 ##### `kafka` Package
 - Made the `kafka:Caller` optional in the `onConsumerRecord` method of the `kafka:Service`
