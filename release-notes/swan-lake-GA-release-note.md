@@ -79,15 +79,13 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 #### New Features
 
 #### Improvements
+- `awslambda` and `azure_functions` packages are no longer supported in single file projects
 
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
 
 - [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
-- [Docker](https://github.com/ballerina-platform/module-ballerina-docker/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
-- [AWS Lambda](https://github.com/ballerina-platform/module-ballerinax-aws.lambda/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
-- [Azure Functions](https://github.com/ballerina-platform/module-ballerinax-azure.functions/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22) 
 
 ### Developer Tools Updates
 
