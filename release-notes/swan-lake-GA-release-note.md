@@ -59,6 +59,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 ##### `grpc` Package
 - Changed the `--proto_path` option of the gRPC CLI to `--proto-path`
 
+##### `websub` Package
+- Added the support for `readonly` parameters of remote methods
+
+#### `websubhub` Package
+- Added the support for `readonly` parameters of remote methods
+
 ##### `kafka` Package
 - Made the `kafka:Caller` optional in the `onConsumerRecord` method of the `kafka:Service`
 - Allow the `readonly & kafka:ConsumerRecord[]` parameter type in the `onConsumerRecord` method
@@ -93,7 +99,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the reposi
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
 
-- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FLanguageServer+milestone%3A%22Ballerina+Swan+Lake+GA%22)
+- [Language](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22+label%3AType%2FBug+label%3ATeam%2FDevTools)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
 - [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
 
