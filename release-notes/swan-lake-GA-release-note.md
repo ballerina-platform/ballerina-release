@@ -52,7 +52,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 
 #### Improvements
 
-##### GraphQL Package
+##### `graphql` Package
 - Removed the deprecated `add` method in the `graphql:Context` object.
 
 #### Bug Fixes
