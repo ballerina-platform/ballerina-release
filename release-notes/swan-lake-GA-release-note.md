@@ -48,12 +48,32 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 #### New Features
 
 ##### `graphql` Package
-- Added the CORS configuration support  
+- Added the CORS configuration support
+
+##### `http` Package
+
+- Implemented typed `headers` for the HTTP response
+- Added the `map<string>` data binding support for `application/www-x-form-urlencoded`
+- Added support to provide an inline request/response body with `x-form-urlencoded` content
+- Added compiler validation for the payload annotation usage
 
 #### Improvements
 
 ##### `graphql` Package
 - Removed the deprecated `add` method in the `graphql:Context` object.
+
+##### `grpc` Package
+- Changed the `--proto_path` option of the gRPC CLI to `--proto-path`
+
+##### `websub` Package
+- Added the support for `readonly` parameters of remote methods
+
+#### `websubhub` Package
+- Added the support for `readonly` parameters of remote methods
+
+##### `kafka` Package
+- Made the `kafka:Caller` optional in the `onConsumerRecord` method of the `kafka:Service`
+- Allow the `readonly & kafka:ConsumerRecord[]` parameter type in the `onConsumerRecord` method
 
 #### Bug Fixes
 
@@ -65,15 +85,13 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 #### New Features
 
 #### Improvements
+- The `awslambda` and `azure_functions` packages are no longer supported in single file projects
 
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
 
 - [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
-- [Docker](https://github.com/ballerina-platform/module-ballerina-docker/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
-- [AWS Lambda](https://github.com/ballerina-platform/module-ballerinax-aws.lambda/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
-- [Azure Functions](https://github.com/ballerina-platform/module-ballerinax-azure.functions/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22) 
 
 ### Developer Tools Updates
 
@@ -85,7 +103,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the reposi
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
 
-- [Language](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22+label%3AType%2FBug+label%3ATeam%2FDevTools)
+- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FLanguageServer+milestone%3A%22Ballerina+Swan+Lake+GA%22)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
 - [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
 
