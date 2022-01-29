@@ -47,6 +47,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 
 #### New Features
 
+##### `graphql` Package
+- Added the CORS configuration support
+
 ##### `http` Package
 
 - Implemented typed `headers` for the HTTP response
@@ -55,6 +58,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 - Added compiler validation for the payload annotation usage
 
 #### Improvements
+
+##### `graphql` Package
+- Removed the deprecated `add` method in the `graphql:Context` object.
 
 ##### `grpc` Package
 - Changed the `--proto_path` option of the gRPC CLI to `--proto-path`
