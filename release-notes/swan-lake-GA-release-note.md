@@ -120,6 +120,16 @@ For example, see below.
 
 #### Improvements
 
+##### Ballerina OpenAPI Tool
+###### OpenAPI Contract Generation
+- Added the support for Ballerina HTTP headers with type `int`, `int[]`, `boolean`, and `boolean[]`
+- Added the support for Ballerina HTTP payloads with type `map<string>`
+- Improved the OAS response header mapping for contexts in which the header details are defined within the return type
+
+###### Ballerina Service Generation
+- Added the support for OAS query parameters with nested/optional/nullable types and default values
+- Added the support for OAS header parameters with optional/nullable types and default values
+
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
