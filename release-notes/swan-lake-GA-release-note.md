@@ -78,22 +78,21 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the reposi
 - Added the module auto-import feature to the Ballerina Shell
 - Added the import statement for a module, which has a reference without an import statement based on the user’s input
 For example, see below.
-```ballerina
-
-=$ io:println("HelloWorld")
-|
-| Found following undefined module(s).
-| io
-|
-| Following undefined modules can be imported.
-| 1. io
-Do you want to import mentioned modules (yes/y) (no/n)? y
-|
-| Adding import: import ballerina/io
-| Import added: import ballerina/io
-
-HelloWorld
-```
+    ```ballerina
+    =$ io:println("HelloWorld")
+    |
+    | Found following undefined module(s).
+    | io
+    |
+    | Following undefined modules can be imported.
+    | 1. io
+    Do you want to import mentioned modules (yes/y) (no/n)? y
+    |
+    | Adding import: import ballerina/io
+    | Import added: import ballerina/io
+    
+    HelloWorld
+    ```
 
 #### Improvements
 
