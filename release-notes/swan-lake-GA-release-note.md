@@ -74,7 +74,7 @@ function getCode(int id) returns string|error {
 
 #### Bug Fixes
 
-- A bug which resulted in constants being resolved with incorrect types in certain scenarios has been fixed. The type of constants is now the intersection of readonly and the singleton type containing just the shape of the value named by the constant.
+- Fixed a bug that caused constants to be resolved with incorrect types in certain scenarios. The type of constants is now the intersection of readonly and the singleton type containing just the shape of the value named by the constant.
 
   ```ballerina
   // Previously, the type of X was `int` and now it is singleton `2`.
@@ -97,7 +97,7 @@ function getCode(int id) returns string|error {
   }
   ```
 
-- A spec deviation in type narrowing has been fixed. This may result in types that were previously narrowed no longer being narrowed.
+- Fixed a spec deviation in type narrowing. This may result in types that were previously narrowed no longer being narrowed
 
 Consider the following records.
 
@@ -153,7 +153,7 @@ For example, one would be able to call `fn` with the following.
 
 Although it is not possible to call this function in this manner at the moment since jBallerina does not support semantic subtyping, the changes to narrowing have been introduced in this release to minimize future incompatibility issues.
 
-- A spec deviation which allowed non-required fields of records/maps and error detail records/maps to be bound using mapping and error binding patterns in variable declarations and destructuring assignment statements has been fixed. Attempting to bind a non-required field will now result in a compilation error.
+- Fixed a spec deviation that allowed non-required fields of records/maps and error detail records/maps to be bound using mapping and error binding patterns in variable declarations and destructuring assignment statements. Attempting to bind a non-required field will now result in a compilation error.
 
   ```ballerina
   type Employee record {
@@ -188,7 +188,7 @@ Although it is not possible to call this function in this manner at the moment s
   }
   ```
 
-- Ballerina allows shadowing only variables that belong to the module-scope. A bug in the compiler that resulted in some illegal variable shadowing scenarios not being detected has been fixed.
+- Fixed a bug in the compiler that resulted in some illegal variable shadowing scenarios not being detected. Ballerina allows shadowing only variables that belong to the module scope
 
   ```ballerina
   function fn(int y, int z) returns int {
@@ -208,7 +208,7 @@ Although it is not possible to call this function in this manner at the moment s
   }
   ```
 
-- A bug that caused classes with all `final` fields of immutable types to be considered a `readonly class` (i,e., a subtype of `readonly`) has been fixed.
+- Fixed a bug that caused classes with all `final` fields of immutable types to be considered a `readonly class` (i,e., a subtype of `readonly`).
 
 Such a class can no longer be used in a context that expects a subtype of `readonly`.
 
@@ -233,7 +233,7 @@ Such a class can no longer be used in a context that expects a subtype of `reado
   }
   ```
 
-- A bug that resulted in invalid table lookups due to not distinguishing between `int`, `float`, and `decimal` zero has been fixed.
+- Fixed a bug that resulted in invalid table lookups due to not distinguishing between `int`, `float`, and `decimal` zero.
 
   ```ballerina
   import ballerina/io;
