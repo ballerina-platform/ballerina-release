@@ -47,13 +47,27 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 
 #### New Features
 
+##### `http` Package
+
+- Implemented typed `headers` for the HTTP response
+- Added the `map<string>` data binding support for `application/www-x-form-urlencoded`
+- Added support to provide an inline request/response body with `x-form-urlencoded` content
+- Added compiler validation for the payload annotation usage
+
 #### Improvements
+
+##### `grpc` Package
+- Changed the `--proto_path` option of the gRPC CLI to `--proto-path`
 
 ##### WebSub Package
 - Add support for `readonly` parameters for remote methods
 
 #### WebSubHub Package
 - Add support for `readonly` parameters for remote methods
+
+##### `kafka` Package
+- Made the `kafka:Caller` optional in the `onConsumerRecord` method of the `kafka:Service`
+- Allow the `readonly & kafka:ConsumerRecord[]` parameter type in the `onConsumerRecord` method
 
 #### Bug Fixes
 
