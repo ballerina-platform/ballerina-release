@@ -79,7 +79,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 #### New Features
 
 #### Improvements
-- `awslambda` and `azure_functions` packages are no longer supported in single file projects
+- The `awslambda` and `azure_functions` packages are no longer supported in single file projects
 
 #### Bug Fixes
 
