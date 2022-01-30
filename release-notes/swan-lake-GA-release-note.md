@@ -259,7 +259,7 @@ Such a class can no longer be used in a context that expects a subtype of `reado
   }
   ```
 
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
+To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+label%3ATeam%2FCompilerFE+is%3Aclosed).
 
 ### Runtime Updates
 
@@ -269,7 +269,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 
 #### Bug Fixes
 
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22+label%3AType%2FBug+label%3ATeam%2FjBallerina).
+To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+is%3Aclosed+label%3ATeam%2FjBallerina).
 
 ### Standard Library Updates
 
@@ -362,7 +362,7 @@ For example, see below.
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
 
-- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FLanguageServer+milestone%3A%22Ballerina+Swan+Lake+GA%22)
+- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
 - [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
 
