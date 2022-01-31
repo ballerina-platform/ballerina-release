@@ -358,6 +358,10 @@ For example, see below.
 - Added the support for OAS query parameters with nested/optional/nullable types and default values
 - Added the support for OAS header parameters with optional/nullable types and default values
 
+##### Ballerina Update Tool
+- Improved view for `bal dist list` with `-a` flag.
+- Improved `bal dist use` command to check for the distribution availability prior to the download suggestion. 
+
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
