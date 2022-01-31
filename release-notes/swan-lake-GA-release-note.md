@@ -9,13 +9,13 @@ redirect_from:
     - /downloads/swan-lake-release-notes
 ---
 
-### Overview of Ballerina Swan Lake 2201.0.0
+### Overview of Ballerina 2201.0.0 (Swan Lake)
 
-<em>Swan Lake 2201.0.0 is the first major release of 2021 and it includes a new set of features and significant improvements to the compiler, runtime, standard library, and developer tooling. It is based on the 2021R1 version of the Language Specification.</em> 
+<em>2201.0.0 (Swan Lake) is the first major release of 2022 and it includes a new set of features and significant improvements to the compiler, runtime, standard library, and developer tooling. It is based on the 2022R1 version of the Language Specification.</em> 
 
 ### Updating Ballerina
 
-If you are already using Ballerina, use the [Ballerina Update Tool](/learn/tooling-guide/cli-tools/update-tool/) to directly update to Swan Lake Beta6 by running the command below.
+If you are already using Ballerina, use the [Ballerina Update Tool](/learn/tooling-guide/cli-tools/update-tool/) to directly update to 2201.0.0 (Swan Lake) by running the command below.
 
 > `bal dist pull 2201.0.0`
 
@@ -259,17 +259,13 @@ Such a class can no longer be used in a context that expects a subtype of `reado
   }
   ```
 
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+label%3ATeam%2FCompilerFE+is%3Aclosed).
+To view bug fixes, see the [GitHub milestone for 2201.0.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+label%3ATeam%2FCompilerFE+is%3Aclosed).
 
 ### Runtime Updates
 
-#### New Features
-
-#### Improvements
-
 #### Bug Fixes
 
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+is%3Aclosed+label%3ATeam%2FjBallerina).
+To view bug fixes, see the [GitHub milestone for 2201.0.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+is%3Aclosed+label%3ATeam%2FjBallerina).
 
 ### Standard Library Updates
 
@@ -303,23 +299,17 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://git
 - Made the `kafka:Caller` optional in the `onConsumerRecord` method of the `kafka:Service`
 - Allow the `readonly & kafka:ConsumerRecord[]` parameter type in the `onConsumerRecord` method
 
-#### Bug Fixes
-
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+2201.0.0%22+label%3AType%2FBug).
-
 
 ### Code to Cloud Updates
-
-#### New Features
 
 #### Improvements
 - The `awslambda` and `azure_functions` packages are no longer supported in single file projects
 
 #### Bug Fixes
 
-To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
+To view bug fixes, see the GitHub milestone for 2201.0.0 (Swan Lake) of the repositories below.
 
-- [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
+- [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+2201.0.0%22+label%3AType%2FBug)
 
 ### Developer Tools Updates
 
@@ -328,8 +318,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the reposi
 ##### Ballerina Shell
 
 - Added the module auto-import feature to the Ballerina Shell
-- Added the import statement for a module, which has a reference without an import statement based on the user’s input
-For example, see below.
+- Added an interactive prompt for adding imports for modules referred-to without importing them first.
     ```ballerina
     =$ io:println("HelloWorld")
     |
@@ -360,22 +349,17 @@ For example, see below.
 
 #### Bug Fixes
 
-To view bug fixes, see the GitHub milestone for Swan Lake 2201.0.0 of the repositories below.
+To view bug fixes, see the GitHub milestone for 2201.0.0 (Swan Lake) of the repositories below.
 
 - [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
-- [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22)
+- [Open API](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.0.0%22+is%3Aclosed+label%3AType%2FBug)
+- [Ballerina Shell](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3AArea%2FShell+is%3Aclosed+milestone%3A%22Ballerina+2201.0.0%22+label%3AType%2FBug)
 
 #### Ballerina Packages Updates
 
-#### New Features
-
-#### Improvements
-
 #### Bug Fixes
 
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.0.0](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+2201.0.0%22+label%3AType%2FBug).
-
-### Breaking Changes
+To view bug fixes, see the [GitHub milestone for 2201.0.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+2201.0.0%22+label%3AType%2FBug).
 
 <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style>
