@@ -213,13 +213,22 @@ def switch_to_branches_from_updated_stages():
         for module in stdlib_modules:
             try:
                 version = properties[module['version_key']]
-                updated_commit_id = version.split("-")[-1]
+                if len(version.split("-")) > 1:
+                    updated_commit_id = version.split("-")[-1]
 
-                exit_code = os.system(f"cd {module['name']};git checkout -b full-build {updated_commit_id}")
+                    exit_code = os.system(f"cd {module['name']};git checkout -b full-build {updated_commit_id}")
 
-                if exit_code != 0:
-                    print(f"Failed to build new branch from last updated commit id for {module['name']}")
-                    sys.exit(1)
+                    if exit_code != 0:
+                        print(f"Failed to create new branch from last updated commit id '{updated_commit_id}' for " +
+                              f"{module['name']}")
+                        sys.exit(1)
+                else:
+                    exit_code = os.system(f"cd {module['name']};git checkout v{version}")
+
+                    if exit_code != 0:
+                        print(f"Failed to switch to branch 'v{version}' from last updated commit id for " +
+                              f"{module['name']}")
+                        sys.exit(1)
 
             except KeyError:
                 continue
