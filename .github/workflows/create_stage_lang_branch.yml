@@ -1,0 +1,54 @@
+name: Create Lang Branch For Updated Stage
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_lang_branch:
+        description: 'New ballerina-lang branch'
+        required: true
+        default: 'updated-stage-branch'
+
+jobs:
+  create_branch:
+    name: Create New Lang Branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Get Stage Version Of Ballerina Language
+        id: stage-version
+        run: |
+          wget https://raw.githubusercontent.com/ballerina-platform/ballerina-distribution/master/gradle.properties
+          STAGE_LANG_VERSION=$((grep -w "ballerinaLangVersion" | cut -d= -f2) < gradle.properties)
+          LANG_VERSION=$((cut -d'-' -f1) <<< $STAGE_LANG_VERSION)
+          COMMIT_ID=${STAGE_LANG_VERSION##*-}
+          isStableVersion=
+          if [[ $LANG_VERSION == $COMMIT_ID ]]; then isStableVersion=true; else isStableVersion=false; fi
+          echo "::set-output name=langVersion::$LANG_VERSION"
+          echo "::set-output name=commitId::$COMMIT_ID"
+          echo "::set-output name=isStableVersion::$isStableVersion"
+
+      - name: Clone Ballerina Lang Repository
+        run: |
+           git clone https://github.com/${{ github.actor }}/ballerina-lang.git || echo "please fork ballerina-lang repository to your github account"
+
+      - name: Create New Lang Branch
+        working-directory: ballerina-lang
+        run:
+          if ( ( ${{steps.stage-version.outputs.isStableVersion}} ) );
+          then git fetch https://github.com/ballerina-platform/ballerina-lang.git release-${{steps.stage-version.outputs.langVersion}}:${{ github.event.inputs.new_lang_branch }} &&
+          git checkout ${{ github.event.inputs.new_lang_branch }};
+          else git fetch https://github.com/ballerina-platform/ballerina-lang.git stage-swan-lake:temporary-lang-branch &&
+          git checkout temporary-lang-branch &&
+          git checkout -b ${{ github.event.inputs.new_lang_branch }} ${{steps.stage-version.outputs.commitId}};
+          fi
+
+      - name: Push New Lang Branch
+        working-directory: ballerina-lang
+        run: |
+          git config remote.origin.url "https://${BALLERINA_BOT_TOKEN}@github.com/${BALLERINA_BOT_USERNAME}/ballerina-lang.git"
+          git push --set-upstream origin ${{ github.event.inputs.new_lang_branch }}
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
