@@ -21,6 +21,7 @@ jobs:
       - name: Install Python Packages
         run: |
           pip install requests
+          pip install retry
           pip install httplib2
           pip install PyGithub
 
