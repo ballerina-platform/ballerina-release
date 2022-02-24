@@ -1,6 +1,6 @@
 {
     "auto_bump": true,
-    "lang_version_substring": "2201.0.0",
+    "lang_version_substring": "2201.0.1",
     "standard_library": [
         {
             "name": "module-ballerina-docker",
