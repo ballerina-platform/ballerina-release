@@ -117,7 +117,7 @@ def update_lang_version():
         ballerina_timestamp = create_timestamp(lang_version[1], lang_version[2])
     else:
         ballerina_timestamp = -3
-    latest_ballerina_stable_version = '-'.join(ballerina_lang_version.split('-')[0:1])
+    latest_ballerina_stable_version = '-'.join(ballerina_lang_version.split('-')[0:2])
 
 
 def days_hours_minutes(td):
@@ -136,7 +136,7 @@ def create_timestamp(date, time):
 
 def format_lag(timestamp):
     global ballerina_timestamp
-    if timestamp == -1 or timestamp == -2:
+    if timestamp == -1 or timestamp == -2 or timestamp == -3:
         return timestamp, 0
     if ballerina_timestamp == -3:
         return -2, 0
@@ -182,7 +182,7 @@ def get_lag_info(module_name):
                     timestamp = -2
                 else:
                     # This is in stable version
-                    timestamp = -1
+                    timestamp = -3
 
     days, hrs = format_lag(timestamp)
 
@@ -211,6 +211,9 @@ def get_lag_button(module):
         else:
             lag_status = "Latest%20Stable%20Version"
             lag = True
+    elif days == -3:
+        lag_status = "Latest%20Stable%20Version"
+        lag = True
     elif days == -2:
         lag_status = "Previous%20Development%20Version"
         lag = True
