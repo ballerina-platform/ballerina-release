@@ -651,19 +651,6 @@
                 "module-ballerinax-postgresql",
                 "ballerina-distribution"
             ]
-        },
-        {
-            "name": "ballerina-distribution",
-            "level": 8,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "distribution-ballerina",
-            "version_key": "stdlibDistributionVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "main",
-            "send_notification": true,
-            "dependents": []
         }
     ],
     "extended_library": [
