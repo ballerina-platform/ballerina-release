@@ -541,21 +541,6 @@
             ]
         },
         {
-            "name": "openapi-tools",
-            "level": 6,
-            "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-openapi",
-            "version_key": "openapiVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
             "name": "module-ballerinai-transaction",
             "level": 6,
             "group_id": "org.ballerinalang",
