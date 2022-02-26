@@ -8,9 +8,13 @@ on:
           required: true
           default: 'master'
         enable_tests:
-          description: 'Enable Tests (true or false)'
+          type: choice
+          description: 'Enable Tests'
           deprecationMessage: 'true or false'
           required: true
+          options:
+            - 'true'
+            - 'false'
           default: 'true'
 
 jobs:
@@ -34,7 +38,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/build_stdlibs_for_lang_updates.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }}
+          python dependabot/build_stdlibs_for_lang_updates.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }} ${{ github.actor }}
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}

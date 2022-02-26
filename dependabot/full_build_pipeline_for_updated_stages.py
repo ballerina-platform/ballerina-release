@@ -11,6 +11,7 @@ stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform
 stdlib_module_versions = dict()
 ballerina_lang_branch = "master"
 enable_tests = 'true'
+github_user = 'ballerina-platform'
 exit_code = 0
 
 ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
@@ -22,6 +23,7 @@ def main():
     global stdlib_modules_json_file
     global stdlib_module_versions
     global ballerina_lang_branch
+    global github_user
     global enable_tests
 
     if len(sys.argv) > 2:
@@ -67,7 +69,8 @@ def clone_repositories():
     global exit_code
 
     # Clone ballerina-lang repo
-    exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}ballerina-lang.git")
+    exit_code = os.system(f"git clone https://github.com/{github_user}/ballerina-lang.git || " +
+                          "echo 'please fork ballerina-lang repository to your github account'")
     if exit_code != 0:
         sys.exit(1)
 
@@ -120,10 +123,12 @@ def build_stdlib_repositories(enable_tests):
                 sys.exit(1)
 
     # Build ballerina-distribution repo
+    os.system("echo Building ballerina-distribution")
     exit_code = os.system(f"cd ballerina-distribution;" +
                     f"export packageUser={ballerina_bot_username};" +
                     f"export packagePAT={ballerina_bot_token};" +
-                    f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
+                    f"./gradlew clean build{cmd_exclude_tests} -x :ballerina:testExamples " +
+                    f"publishToMavenLocal --stacktrace --scan")
     if exit_code != 0:
         print(f"Build failed for ballerina-distribution")
         sys.exit(1)
