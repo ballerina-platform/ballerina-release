@@ -37,41 +37,45 @@ def main():
         unmerged_pr.closed_at(time.localtime())
 
     pr = create_pull_request(repo, patch_branch)
-    pending = True
-    wait_cycles = 0
-    while pending:
-        if wait_cycles < MAX_WAIT_CYCLES:
-            time.sleep(30)
-            pending, passing, failed_checks = check_pending_pr_checks(repo, pr)
-            if not pending:
-                if passing:
-                    try:
-                        pr.merge()
-                        log_message = "[Info] Automated master update PR merged. PR: " + pr.html_url
-                        print(log_message)
-                    except Exception as e:
-                        print("[Error] Error occurred while merging master update PR " , e)
+
+    if (pr.mergeable):
+        pending = True
+        wait_cycles = 0
+        while pending:
+            if wait_cycles < MAX_WAIT_CYCLES:
+                time.sleep(SLEEP_INTERVAL)
+                pending, passing, failed_checks = check_pending_pr_checks(repo, pr)
+                if not pending:
+                    if passing:
+                        try:
+                            pr.merge()
+                            log_message = "[Info] Automated master update PR merged. PR: " + pr.html_url
+                            print(log_message)
+                        except Exception as e:
+                            print("[Error] Error occurred while merging master update PR " , e)
+                    else:
+                        notify_chat.send_message("[Info] Automated ballerina-lang master update PR has failed checks." + "\n" +\
+                         "Please visit <" + pr.html_url + "|the build page> for more information")
                 else:
-                    notify_chat.send_message("[Info] Automated ballerina-lang master update PR has failed checks." + "\n" +\
-                     "Please visit <" + pr.html_url + "|the build page> for more information"
+                    wait_cycles += 1
             else:
-                wait_cycles+=1
-        else:
-            notify_chat.send_message("[Info] Automated ballerina-lang master update PR is unmerged due to pr checks timeout." + "\n" +\
-             "Please visit <" + pr.html_url + "|the build page> for more information"
-            break
+                notify_chat.send_message("[Info] Automated ballerina-lang master update PR is unmerged due to pr checks timeout." + "\n" +\
+                 "Please visit <" + pr.html_url + "|the build page> for more information")
+                break
+    else:
+        notify_chat.send_message("[Info] Automated ballerina-lang master update PR is unmerged due to conflicts with the master." + "\n" +\
+        "Please visit <" + pr.html_url + "|the build page> for more information")
 
 def create_pull_request(repo, patch_branch):
     try:
         pull_request_title = PULL_REQUEST_TITLE
         created_pr = repo.create_pull(
             title=pull_request_title,
-            body='Daily syncing of patch branch content with the master'
+            body='Daily syncing of patch branch content with the master',
             head=patch_branch,
             base=repo.default_branch
         )
-        log_message = "[Info] Automated PR created for ballerina-lang repo at "
-                       + created_pr.html_url
+        log_message = "[Info] Automated PR created for ballerina-lang repo at " + created_pr.html_url
         print(log_message)
     except Exception as e:
         print("[Error] Error occurred while creating pull request ", e)
