@@ -41,4 +41,4 @@ jobs:
       - name: Delete selected package
         if: steps.setUname.outputs.foundUname != '' && steps.setid.outputs.versionId != ''
         run: |
-          curl -X DELETE -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ github.event.inputs.owner }}/packages/maven/${{ github.event.inputs.package }}/versions/${{ steps.setid.outputs.versionId }}
+          curl -X DELETE -H "Authorization: bearer ${{ secrets.DELETE_PACKAGE_PAT }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ github.event.inputs.owner }}/packages/maven/${{ github.event.inputs.package }}/versions/${{ steps.setid.outputs.versionId }}
