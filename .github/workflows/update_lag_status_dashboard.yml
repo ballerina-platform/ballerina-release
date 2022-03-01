@@ -1,8 +1,8 @@
 name: Update Status Dashboard
 
 on:
-  schedule:
-    - cron: '30 3 * * *'
+  # schedule:
+  #   - cron: '30 3 * * *'
   repository_dispatch:
     types: [ dashboard-update ]
   workflow_dispatch:
@@ -14,6 +14,7 @@ on:
 
 jobs:
   update-lag-status:
+    if: github.repository_owner == 'ballerina-platform'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository

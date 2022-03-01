@@ -19,8 +19,8 @@ on:
         description: 'Send failure notification to Google Chat'
         required: false
         default: 'true'
-  schedule:
-    - cron: '30 6 * * *'
+  # schedule:
+  #   - cron: '30 6 * * *'
 
 jobs:
   update-lang-version:
