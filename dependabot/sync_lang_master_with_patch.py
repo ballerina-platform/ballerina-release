@@ -34,7 +34,7 @@ def main():
 
     if (pr_exists):
         print ("Master branch already has an open pull request from " + patch_branch)
-        unmerged_pr.closed_at(time.localtime())
+        unmerged_pr.edit(state = 'closed')
 
     pr = create_pull_request(repo, patch_branch)
 
