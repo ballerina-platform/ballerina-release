@@ -13,6 +13,7 @@ SLEEP_INTERVAL = 30 # 30s
 MAX_WAIT_CYCLES = 180 # script timeout is 90 minutes
 
 ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
+ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_TOKEN]
 github = Github(ballerina_bot_token)
 
 def main():
@@ -82,13 +83,15 @@ def create_pull_request(repo, patch_branch):
         sys.exit(1)
 
     try:
-        approve_pr(repo, created_pr.number)
+        approve_pr(created_pr.number)
     except Exception as e:
         print("[Error] Error occurred while approving the PR ", e)
     return created_pr
 
-def approve_pr(repo, pr_number):
+def approve_pr(pr_number):
     time.sleep(5)
+    r_github = Github(ballerina_reviewer_bot_token)
+    repo = r_github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-lang')
     pr = repo.get_pull(pr_number)
     try:
         pr.create_review(event='APPROVE')
