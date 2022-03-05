@@ -44,7 +44,7 @@ def main():
     while pending:
         if wait_cycles < MAX_WAIT_CYCLES:
             time.sleep(SLEEP_INTERVAL)
-            pending, passing, failed_checks = check_pending_pr_checks(repo, pr)
+            pending, passing = check_pending_pr_checks(repo, pr)
             if not pending:
                 if passing:
                     if(pr.mergeable):
@@ -104,8 +104,8 @@ def check_pending_pr_checks(repo, pr):
     print("[Info] Checking the status of the dependency master syncing PR ")
     passing = True
     pending = False
-    pull_request = pr.number
-    sha = pull_request.sha
+    pull_request = repo.get_pull(pr.number)
+    sha = pull_request.head.sha
     for pr_check in repo.get_commit(sha=sha).get_check_runs():
         if pr_check.status != 'completed':
             pending = True
@@ -113,12 +113,7 @@ def check_pending_pr_checks(repo, pr):
         elif pr_check.conclusion == 'success':
             continue
         else:
-            failed_pr_check = {
-                'name': pr_check.name,
-                'html_url': pr_check.html_url
-            }
-            failed_pr_checks.append(failed_pr_check)
             passing = False
-    return pending, passing, failed_pr_checks
+    return pending, passing
 
 main()
