@@ -38,7 +38,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/full_build_pipeline_for_updated_stages.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }} ${{ github.actor }}
+          python dependabot/full_build_pipeline_for_updated_stages.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }} ${{ github.repository_owner }}
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
