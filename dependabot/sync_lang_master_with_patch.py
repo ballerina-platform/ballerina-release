@@ -44,10 +44,12 @@ def main():
     while pending:
         if wait_cycles < MAX_WAIT_CYCLES:
             time.sleep(SLEEP_INTERVAL)
-            pending, passing = check_pending_pr_checks(repo, pr)
+            pending, passing, failing_pr_checks = check_pending_pr_checks(repo, pr)
             if not pending:
+                if len(failing_pr_checks) > 0:
+                    passing = all(check.startswith('codecov') for check in failing_pr_checks)
                 if passing:
-                    if(pr.mergeable):
+                    if(pr.mergeable_state != 'dirty'):
                         try:
                             pr.merge()
                             log_message = "[Info] Automated master update PR merged. PR: " + pr.html_url
@@ -104,6 +106,8 @@ def check_pending_pr_checks(repo, pr):
     print("[Info] Checking the status of the dependency master syncing PR ")
     passing = True
     pending = False
+
+    failed_pr_checks = []
     pull_request = repo.get_pull(pr.number)
     sha = pull_request.head.sha
     for pr_check in repo.get_commit(sha=sha).get_check_runs():
@@ -113,7 +117,8 @@ def check_pending_pr_checks(repo, pr):
         elif pr_check.conclusion == 'success':
             continue
         else:
+            failed_pr_checks.append(pr_check.name)
             passing = False
-    return pending, passing
+    return pending, passing, failed_pr_checks
 
 main()
