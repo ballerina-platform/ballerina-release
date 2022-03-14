@@ -127,7 +127,7 @@ def build_stdlib_repositories(enable_tests):
     exit_code = os.system(f"cd ballerina-distribution;" +
                     f"export packageUser={ballerina_bot_username};" +
                     f"export packagePAT={ballerina_bot_token};" +
-                    f"./gradlew clean build{cmd_exclude_tests} -x :ballerina:testExamples " +
+                    f"./gradlew clean build -x test " +
                     f"publishToMavenLocal --stacktrace --scan --console=plain --no-daemon --continue")
     if exit_code != 0:
         print(f"Build failed for ballerina-distribution")
