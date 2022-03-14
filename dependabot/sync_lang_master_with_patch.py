@@ -19,25 +19,32 @@ github = Github(ballerina_bot_token)
 def main():
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + 'ballerina-lang')
     branches = repo.get_branches()
+    temp_branch = 'sync-2201.0.x'
 
     for branch in branches:
         if (branch.name == '2201.0.x'):
-            patch_branch = branch.name
+            patch_branch = branch
             break
 
-    # Check whether master branch already has an unmerged PR from patch branch
-    pr_exists = False
+    # Check whether master branch already has an unmerged PR from temporary branch, delete if exists
     pulls = repo.get_pulls(state='open')
     for pull in pulls:
-        if (pull.head.ref == patch_branch):
-            pr_exists = True
-            unmerged_pr = pull
+        if (pull.head.ref == temp_branch):
+            print ("Master branch already has an open pull request from " + temp_branch)
+            pull.edit(state = 'closed')
+            break
 
-    if (pr_exists):
-        print ("Master branch already has an open pull request from " + patch_branch)
-        unmerged_pr.edit(state = 'closed')
+    # if temporary branch exists, delete it
+    for branch in branches:
+        if branch.name == temp_branch:
+            ref = repo.get_git_ref('heads/' + temp_branch)
+            ref.delete()
+            break
 
-    pr = create_pull_request(repo, patch_branch)
+    # create the temporary branch from patch branch
+    repo.create_git_ref(ref='refs/heads/' + temp_branch, sha=patch_branch.commit.sha)
+
+    pr = create_pull_request(repo, temp_branch)
 
     pending = True
     wait_cycles = 0
@@ -69,13 +76,13 @@ def main():
              "Please visit <" + pr.html_url + "|the build page> for more information")
             break
 
-def create_pull_request(repo, patch_branch):
+def create_pull_request(repo, temp_branch):
     try:
         pull_request_title = PULL_REQUEST_TITLE
         created_pr = repo.create_pull(
             title=pull_request_title,
             body='Daily syncing of patch branch content with the master',
-            head=patch_branch,
+            head=temp_branch,
             base=repo.default_branch
         )
         log_message = "[Info] Automated PR created for ballerina-lang repo at " + created_pr.html_url
