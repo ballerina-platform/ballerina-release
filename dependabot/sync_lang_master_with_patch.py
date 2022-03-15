@@ -43,6 +43,7 @@ def main():
 
     # create the temporary branch from patch branch
     repo.create_git_ref(ref='refs/heads/' + temp_branch, sha=patch_branch.commit.sha)
+    ref = repo.get_git_ref('heads/' + temp_branch)
 
     pr = create_pull_request(repo, temp_branch)
 
@@ -59,6 +60,7 @@ def main():
                     if(pr.mergeable_state != 'dirty'):
                         try:
                             pr.merge()
+                            ref.delete()
                             log_message = "[Info] Automated master update PR merged. PR: " + pr.html_url
                             print(log_message)
                         except Exception as e:
@@ -69,6 +71,8 @@ def main():
                 else:
                     notify_chat.send_message("[Info] Automated ballerina-lang master update PR has failed checks." + "\n" +\
                      "Please visit <" + pr.html_url + "|the build page> for more information")
+                    pr.edit(state = 'closed')
+                    ref.delete()
             else:
                 wait_cycles += 1
         else:
