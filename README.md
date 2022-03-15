@@ -4,7 +4,7 @@
 <td align='center'><img src='dependabot/resources/repo_status_graph.jpeg'/></td>
 <td align='center'>
 <code>ballerina-distribution</code> repository has not been updated from the latest stable version.<br><br>
-<code>ballerina-lang</code> repository version <b>2201.0.1-rc3.1</b> has been updated as follows
+<code>ballerina-lang</code> repository version <b>2201.0.0</b> has been updated as follows
 </td>
 </tr></tbody></table> 
 
@@ -55,7 +55,7 @@
 ## Ballerina Extended Library
 | Level | Modules | Build | Lag Status | Pending Automated PR |
 |:---:|:---:|:---:|:---:|:---:|
-| 9 | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Build](https://github.com/ballerina-platform/module-ballerinax-choreo/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-choreo/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-Previous%20Development%20Version-red?label=)](https://github.com/ballerina-platform/module-ballerinax-choreo/blob/main/gradle.properties) | [#156](https://github.com/ballerina-platform/module-ballerinax-choreo/pull/156) | 
+| 9 | [choreo](https://github.com/ballerina-platform/module-ballerinax-choreo) | [![Build](https://github.com/ballerina-platform/module-ballerinax-choreo/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-choreo/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-choreo/blob/main/gradle.properties) | []() | 
 |  | [jaeger](https://github.com/ballerina-platform/module-ballerinax-jaeger) | [![Build](https://github.com/ballerina-platform/module-ballerinax-jaeger/actions/workflows/build-main.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-jaeger/actions/workflows/build-main.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-jaeger/blob/main/gradle.properties) | []() | 
 |  | [java.jdbc](https://github.com/ballerina-platform/module-ballerinax-java.jdbc) | [![Build](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-java.jdbc/blob/master/gradle.properties) | []() | 
 |  | [kafka](https://github.com/ballerina-platform/module-ballerinax-kafka) | [![Build](https://github.com/ballerina-platform/module-ballerinax-kafka/actions/workflows/build-timestamped-master.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-kafka/actions/workflows/build-timestamped-master.yml) | [![Lag](https://img.shields.io/badge/lag-no%20lag-brightgreen?label=)](https://github.com/ballerina-platform/module-ballerinax-kafka/blob/master/gradle.properties) | []() | 
