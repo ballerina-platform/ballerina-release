@@ -23,6 +23,8 @@ jobs:
           pip install requests
           pip install retry
           pip install PyGithub
+          pip install cryptography
+          pip install httplib2
 
       - name: Build Modules
         run: |
@@ -32,6 +34,24 @@ jobs:
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
           BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+
+      - name: Set Env Variable
+        if: ${{ failure() }}
+        id: set-module
+        run: |
+          echo "::set-output name=module::$(cat failed_module.txt)"
+
+      - name: Notify Build Failure
+        if: ${{ failure() }}
+        run: |
+          python3 dependabot/notify_build_failure.py ${{ steps.set-module.outputs.module }}
+        env:
+          CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
+          CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
+          CHAT_TOKEN: ${{ secrets.NOTIFICATIONS_CHAT_TOKEN }}
+          ENV_USER_ENCRYPTION_KEY: ${{secrets.USER_ENCRYPTION_KEY}}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+
       - name: Get project version
         id: project-version
         run: |

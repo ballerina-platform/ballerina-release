@@ -105,6 +105,7 @@ def build_stdlib_repositories(enable_tests):
                           f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan")
     if exit_code != 0:
         print(f"Build failed for ballerina-lang")
+        write_failed_module("ballerina-lang")
         sys.exit(1)
 
     # Build standard library repos
@@ -117,6 +118,7 @@ def build_stdlib_repositories(enable_tests):
                                   f"export packagePAT={ballerina_bot_token};" +
                                   f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
             if exit_code != 0:
+                write_failed_module(module)
                 print(f"Build failed for {module}")
                 sys.exit(1)
 
@@ -128,6 +130,7 @@ def build_stdlib_repositories(enable_tests):
                     f"./gradlew clean build -x test " +
                     f"publishToMavenLocal --stacktrace --scan --console=plain --no-daemon --continue")
     if exit_code != 0:
+        write_failed_module("ballerina-distribution")
         print(f"Build failed for ballerina-distribution")
         sys.exit(1)
 
@@ -196,6 +199,12 @@ def change_version_to_snapshot():
         for prop in properties:
             config_file.write(prop + "=" + properties[prop])
         config_file.close()
+
+
+def write_failed_module(module_name):
+    with open("failed_module.txt", "w") as file:
+        file.writelines(module_name)
+        f.close()
 
 
 main()
