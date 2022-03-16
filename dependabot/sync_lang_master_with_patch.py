@@ -19,37 +19,48 @@ github = Github(ballerina_bot_token)
 def main():
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + 'ballerina-lang')
     branches = repo.get_branches()
+    temp_branch = 'sync-2201.0.x'
 
     for branch in branches:
         if (branch.name == '2201.0.x'):
-            patch_branch = branch.name
+            patch_branch = branch
             break
 
-    # Check whether master branch already has an unmerged PR from patch branch
-    pr_exists = False
+    # Check whether master branch already has an unmerged PR from temporary branch, delete if exists
     pulls = repo.get_pulls(state='open')
     for pull in pulls:
-        if (pull.head.ref == patch_branch):
-            pr_exists = True
-            unmerged_pr = pull
+        if (pull.head.ref == temp_branch):
+            print ("Master branch already has an open pull request from " + temp_branch)
+            pull.edit(state = 'closed')
+            break
 
-    if (pr_exists):
-        print ("Master branch already has an open pull request from " + patch_branch)
-        unmerged_pr.edit(state = 'closed')
+    # if temporary branch exists, delete it
+    for branch in branches:
+        if branch.name == temp_branch:
+            ref = repo.get_git_ref('heads/' + temp_branch)
+            ref.delete()
+            break
 
-    pr = create_pull_request(repo, patch_branch)
+    # create the temporary branch from patch branch
+    repo.create_git_ref(ref='refs/heads/' + temp_branch, sha=patch_branch.commit.sha)
+    ref = repo.get_git_ref('heads/' + temp_branch)
+
+    pr = create_pull_request(repo, temp_branch)
 
     pending = True
     wait_cycles = 0
     while pending:
         if wait_cycles < MAX_WAIT_CYCLES:
             time.sleep(SLEEP_INTERVAL)
-            pending, passing = check_pending_pr_checks(repo, pr)
+            pending, passing, failing_pr_checks = check_pending_pr_checks(repo, pr)
             if not pending:
+                if len(failing_pr_checks) > 0:
+                    passing = all(check.startswith('codecov') for check in failing_pr_checks)
                 if passing:
-                    if(pr.mergeable):
+                    if(pr.mergeable_state != 'dirty'):
                         try:
                             pr.merge()
+                            ref.delete()
                             log_message = "[Info] Automated master update PR merged. PR: " + pr.html_url
                             print(log_message)
                         except Exception as e:
@@ -60,6 +71,8 @@ def main():
                 else:
                     notify_chat.send_message("[Info] Automated ballerina-lang master update PR has failed checks." + "\n" +\
                      "Please visit <" + pr.html_url + "|the build page> for more information")
+                    pr.edit(state = 'closed')
+                    ref.delete()
             else:
                 wait_cycles += 1
         else:
@@ -67,13 +80,13 @@ def main():
              "Please visit <" + pr.html_url + "|the build page> for more information")
             break
 
-def create_pull_request(repo, patch_branch):
+def create_pull_request(repo, temp_branch):
     try:
         pull_request_title = PULL_REQUEST_TITLE
         created_pr = repo.create_pull(
             title=pull_request_title,
             body='Daily syncing of patch branch content with the master',
-            head=patch_branch,
+            head=temp_branch,
             base=repo.default_branch
         )
         log_message = "[Info] Automated PR created for ballerina-lang repo at " + created_pr.html_url
@@ -104,6 +117,8 @@ def check_pending_pr_checks(repo, pr):
     print("[Info] Checking the status of the dependency master syncing PR ")
     passing = True
     pending = False
+
+    failed_pr_checks = []
     pull_request = repo.get_pull(pr.number)
     sha = pull_request.head.sha
     for pr_check in repo.get_commit(sha=sha).get_check_runs():
@@ -113,7 +128,8 @@ def check_pending_pr_checks(repo, pr):
         elif pr_check.conclusion == 'success':
             continue
         else:
+            failed_pr_checks.append(pr_check.name)
             passing = False
-    return pending, passing
+    return pending, passing, failed_pr_checks
 
 main()
