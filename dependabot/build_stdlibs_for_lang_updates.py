@@ -60,7 +60,10 @@ def read_dependency_data(stdlib_modules_data):
     for module in stdlib_modules_data['modules']:
         parent = module['name']
         level = module['level']
+        version = module['version']
+        version_key = module['version_key']
         stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [parent]
+        stdlib_module_versions[version_key] = version
 
 
 def clone_repositories():
@@ -161,8 +164,7 @@ def change_version_to_snapshot():
                         try:
                             name, value = line.split("=")
                             if name.startswith("stdlib"):
-                                version = value.split("-")[0]
-                                value = version + "-SNAPSHOT\n"
+                                value = stdlib_module_versions[name] + "\n"
                             elif "ballerinaLangVersion" in name:
                                 value = lang_version
                             properties[name] = value
@@ -204,7 +206,7 @@ def change_version_to_snapshot():
 def write_failed_module(module_name):
     with open("failed_module.txt", "w") as file:
         file.writelines(module_name)
-        f.close()
+        file.close()
 
 
 main()
