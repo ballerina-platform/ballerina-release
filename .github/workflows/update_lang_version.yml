@@ -1,6 +1,7 @@
 name: Nightly update lang version in distribution
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
 
