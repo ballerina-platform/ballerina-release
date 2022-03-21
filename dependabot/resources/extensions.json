@@ -1,6 +1,6 @@
 {
     "auto_bump": true,
-    "lang_version_substring": "2201.0.0",
+    "lang_version_substring": "2201.0.2",
     "standard_library": [
         {
             "name": "module-ballerina-docker",
@@ -66,24 +66,6 @@
             ]
         },
         {
-            "name": "module-ballerina-random",
-            "level": 1,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "random-ballerina",
-            "version_key": "stdlibRandomVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerina-grpc",
-                "module-ballerinax-kafka",
-                "module-ballerina-websub",
-                "module-ballerina-websubhub"
-            ]
-        },
-        {
             "name": "module-ballerina-regex",
             "level": 1,
             "group_id": "io.ballerina.stdlib",
@@ -114,6 +96,7 @@
                 "module-ballerina-crypto",
                 "module-ballerina-file",
                 "module-ballerina-protobuf",
+                "module-ballerina-random",
                 "module-ballerina-task"
             ]
         },
@@ -212,6 +195,24 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerina-grpc"
+            ]
+        },
+        {
+            "name": "module-ballerina-random",
+            "level": 2,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "random-ballerina",
+            "version_key": "stdlibRandomVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-grpc",
+                "module-ballerinax-kafka",
+                "module-ballerina-websub",
+                "module-ballerina-websubhub"
             ]
         },
         {
