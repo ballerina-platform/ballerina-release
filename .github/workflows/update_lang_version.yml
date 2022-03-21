@@ -1,9 +1,8 @@
 name: Nightly update lang version in distribution
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
+  repository_dispatch:
+    types: [update_timestamped_version]
 
 jobs:
   Update_ballerina_lang_version_in_distribution:
@@ -28,7 +27,7 @@ jobs:
 
       - name: Send pull request
         run: |
-          python3 dependabot/update_lang_version.py
+          python3 dependabot/update_lang_version.py ${{ github.event.client_payload.timestamped_version }}
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
