@@ -21,12 +21,7 @@ ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_T
 github = Github(ballerina_bot_token)
 
 def main():
-    lang_repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-lang')
-    properties_content = lang_repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
-    properties_content = properties_content.decoded_content.decode(constants.ENCODING)
-    for line in properties_content.splitlines():
-            if line.startswith('version'):
-                lang_version = line.split("=")[1]
+    lang_version = sys.argv[1]
 
     update_lang_version('master', lang_version)
     update_lang_version('2201.0.x', lang_version)
@@ -96,7 +91,6 @@ def update_lang_version(branch_name, lang_version):
 
 def commit_file(repo, file_path, updated_file_content, branch_name, commit_message)
     try:
-        # check whether pr receiving branch has a pr from temporary branch, delete if exists
         temp_branch = branch_name + "_temp"
         author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
         pulls = repo.get_pulls(state='open')
