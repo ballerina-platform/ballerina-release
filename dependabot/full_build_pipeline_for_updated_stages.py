@@ -114,7 +114,7 @@ def build_stdlib_repositories(enable_tests):
 
     # Build ballerina-lang repo
     exit_code = os.system(f"cd ballerina-lang;" +
-                          f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
+                          f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan")
     if exit_code != 0:
         print(f"Build failed for ballerina-lang")
         sys.exit(1)
