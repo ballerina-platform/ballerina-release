@@ -5,10 +5,12 @@ import os
 import sys
 
 
+DIST_REPO_PATCH_BRANCH = '2201.0.x'
+
 stdlib_modules_by_level = dict()
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-standard-library/' \
                                'main/release/resources/stdlib_modules.json'
-stdlib_module_versions = dict()
+
 ballerina_lang_branch = "master"
 enable_tests = 'true'
 github_user = 'ballerina-platform'
@@ -21,7 +23,6 @@ ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 def main():
     global stdlib_modules_by_level
     global stdlib_modules_json_file
-    global stdlib_module_versions
     global ballerina_lang_branch
     global github_user
     global enable_tests
@@ -29,6 +30,7 @@ def main():
     if len(sys.argv) > 2:
         ballerina_lang_branch = sys.argv[1]
         enable_tests = sys.argv[2]
+        github_user = sys.argv[3]
 
     read_stdlib_modules()
     if stdlib_modules_by_level:
@@ -70,13 +72,15 @@ def clone_repositories():
 
     # Clone ballerina-lang repo
     exit_code = os.system(f"git clone https://github.com/{github_user}/ballerina-lang.git || " +
-                          "echo 'please fork ballerina-lang repository to your github account'")
+                          "echo 'Please fork ballerina-lang repository to your github account'")
     if exit_code != 0:
         sys.exit(1)
 
     # Change branch
-    os.system(f"cd ballerina-lang;git checkout {ballerina_lang_branch}")
+    exit_code = os.system(f"cd ballerina-lang;git checkout {ballerina_lang_branch}")
     os.system("cd ballerina-lang;git status")
+    if exit_code != 0:
+        sys.exit(1)
 
     # Clone standard library repos
     for level in stdlib_modules_by_level:
@@ -88,6 +92,12 @@ def clone_repositories():
 
     # Clone ballerina-distribution repo
     exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}ballerina-distribution.git")
+    if exit_code != 0:
+        sys.exit(1)
+
+    # Change branch
+    exit_code = os.system(f"cd ballerina-distribution;git checkout {DIST_REPO_PATCH_BRANCH}")
+    os.system("cd ballerina-distribution;git status")
     if exit_code != 0:
         sys.exit(1)
 
@@ -143,11 +153,34 @@ def change_version_to_snapshot():
                 name, value = line.split("=")
                 if name == "version":
                     lang_version = value
+                    break
             except ValueError:
                 continue
         config_file.close()
 
     print("Lang Version:", lang_version)
+
+    # Read standard library module versions
+    stdlib_module_versions = dict()
+    for level in stdlib_modules_by_level:
+        stdlib_modules = stdlib_modules_by_level[level]
+        for module in stdlib_modules:
+            with open(f"{module['name']}/gradle.properties", 'r') as config_file:
+                for line in config_file:
+                    try:
+                        name, value = line.split("=")
+                        if name == "version":
+                            if "SNAPSHOT" not in value:
+                                value = value[:-1] + "-SNAPSHOT\n"
+                            stdlib_module_versions[module['version_key']] = value[:-1]
+                            break
+                    except ValueError:
+                        continue
+                config_file.close()
+
+    # Print used module versions
+    for module_key in stdlib_module_versions:
+        print(module_key + " : " + stdlib_module_versions[module_key])
 
     # Change dependent stdlib_module_versions & ballerina-lang version to SNAPSHOT in the stdlib modules
     for level in stdlib_modules_by_level:
@@ -159,9 +192,11 @@ def change_version_to_snapshot():
                     for line in config_file:
                         try:
                             name, value = line.split("=")
+                            if name == "version":
+                                if "SNAPSHOT" not in value:
+                                    value = value[:-1] + "-SNAPSHOT\n"
                             if name.startswith("stdlib"):
-                                version = value.split("-")[0]
-                                value = version + "-SNAPSHOT\n"
+                                value = stdlib_module_versions[name] + "\n"
                             elif "ballerinaLangVersion" in name:
                                 value = lang_version
                             properties[name] = value
@@ -201,6 +236,8 @@ def change_version_to_snapshot():
 
 
 def switch_to_branches_from_updated_stages():
+    global exit_code
+
     properties = dict()
 
     with open("ballerina-distribution/gradle.properties", 'r') as config_file:

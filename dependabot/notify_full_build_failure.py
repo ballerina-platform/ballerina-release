@@ -8,6 +8,7 @@ import csv
 import constants
 import notify_chat
 
+
 def main():
     ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
     github = Github(ballerina_bot_token)
@@ -24,9 +25,14 @@ def main():
     with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
         dec_file.write(decrypted)
 
-    message = "Daily full build pipeline failure for *" + str(sys.argv[1]) + "*" + "\n" + \
+    if sys.argv[2] == "master":
+        message = "Daily full build pipeline failure for *" + str(sys.argv[1]) + "*" + "\n" + \
               "Please visit <https://github.com/ballerina-platform/ballerina-release/actions/workflows/" + \
               "daily-full-build.yml|the daily full build pipeline page> for more information" + "\n"
+    else:
+        message = "Daily full build pipeline failure for *" + str(sys.argv[1]) + "*" + "\n" + \
+                  "Please visit <https://github.com/ballerina-platform/ballerina-release/actions/workflows/" + \
+                  "daily-full-build-patch.yml|the daily full build pipeline page> for more information" + "\n"
 
     for owner in owners:
         with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
@@ -37,5 +43,6 @@ def main():
                     message += "<users/" + row['user-id'] + ">" + "\n"
 
     notify_chat.send_message(message)
+
 
 main()
