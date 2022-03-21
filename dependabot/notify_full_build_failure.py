@@ -8,7 +8,6 @@ import csv
 import constants
 import notify_chat
 
-
 def main():
     ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
     github = Github(ballerina_bot_token)
@@ -38,6 +37,5 @@ def main():
                     message += "<users/" + row['user-id'] + ">" + "\n"
 
     notify_chat.send_message(message)
-
 
 main()
