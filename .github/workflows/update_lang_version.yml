@@ -27,7 +27,7 @@ jobs:
 
       - name: Send pull request
         run: |
-          python3 dependabot/update_lang_version.py ${{ github.event.client_payload.timestamped_version }}
+          python3 dependabot/update_lang_version.py ${{ github.event.client_payload.branch }} ${{ github.event.client_payload.timestamped_version }}
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
