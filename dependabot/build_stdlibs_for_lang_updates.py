@@ -62,8 +62,9 @@ def read_dependency_data(stdlib_modules_data):
         level = module['level']
         version = module['version']
         version_key = module['version_key']
-        stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [parent]
-        stdlib_module_versions[version_key] = version
+        if level < 8:
+            stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [parent]
+            stdlib_module_versions[version_key] = version
 
 
 def clone_repositories():
