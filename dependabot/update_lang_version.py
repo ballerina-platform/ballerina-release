@@ -21,10 +21,9 @@ ballerina_reviewer_bot_token = os.environ[constants.ENV_BALLERINA_REVIEWER_BOT_T
 github = Github(ballerina_bot_token)
 
 def main():
-    lang_version = sys.argv[1]
-
-    update_lang_version('master', lang_version)
-    update_lang_version('2201.0.x', lang_version)
+    branch_name = sys.argv[1]
+    lang_version = sys.argv[2]
+    update_lang_version(branch_name, lang_version)
 
 def update_lang_version(branch_name, lang_version):
     dist_repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-distribution', ref=branch_name)
