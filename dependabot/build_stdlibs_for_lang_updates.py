@@ -153,7 +153,11 @@ def change_version_to_snapshot():
 
     print("Lang Version:", lang_version)
 
-    # Change dependent stdlib_module_versions & ballerina-lang version to SNAPSHOT in the stdlib modules
+    # Print used module versions
+    for module_key in stdlib_module_versions:
+        print(module_key + " : " + stdlib_module_versions[module_key])
+
+    # Change dependent stdlib module versions & ballerina-lang version to SNAPSHOT in the stdlib modules
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:

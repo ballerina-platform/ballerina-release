@@ -24,7 +24,7 @@ def main():
     with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
         dec_file.write(decrypted)
 
-    message = "Daily full build pipeline failure for *" + str(sys.argv[1]) + "*" + "\n" + \
+    message = "Daily full build pipeline (" + str(sys.argv[2]) + " branch) failure for *" + str(sys.argv[1]) + "*\n" + \
               "Please visit <https://github.com/ballerina-platform/ballerina-release/actions/workflows/" + \
               "daily-full-build-" + str(sys.argv[2]) + ".yml|the daily full build pipeline page> for more information\n"
 
