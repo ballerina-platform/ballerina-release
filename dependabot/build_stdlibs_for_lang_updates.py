@@ -6,8 +6,8 @@ import sys
 
 
 stdlib_modules_by_level = dict()
-stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-standard-library/' \
-                               'main/release/resources/stdlib_modules.json'
+stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
+                           'dependabot/resources/extensions.json'
 stdlib_module_versions = dict()
 ballerina_lang_branch = "master"
 enable_tests = 'true'
@@ -75,9 +75,11 @@ def clone_repositories():
     if exit_code != 0:
         sys.exit(1)
 
-    # Change branch
-    os.system(f"cd ballerina-lang;git checkout {ballerina_lang_branch}")
+    # Change ballerina-lang branch
+    exit_code = os.system(f"cd ballerina-lang;git checkout {ballerina_lang_branch}")
     os.system("cd ballerina-lang;git status")
+    if exit_code != 0:
+        sys.exit(1)
 
     # Clone standard library repos
     for level in stdlib_modules_by_level:
@@ -192,8 +194,7 @@ def change_version_to_snapshot():
             try:
                 name, value = line.split("=")
                 if name.startswith("stdlib"):
-                    version = value.split("-")[0]
-                    value = version + "-SNAPSHOT\n"
+                    value = stdlib_module_versions[name] + "\n"
                 elif "ballerinaLangVersion" in name:
                     value = lang_version
                 properties[name] = value
