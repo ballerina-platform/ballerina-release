@@ -26,7 +26,7 @@ def main():
 
     message = "Daily full build pipeline failure for *" + str(sys.argv[1]) + "*" + "\n" + \
               "Please visit <https://github.com/ballerina-platform/ballerina-release/actions/workflows/" + \
-              "daily-full-build.yml|the daily full build pipeline page> for more information" + "\n"
+              "daily-full-build-" + str(sys.argv[2]) + ".yml|the daily full build pipeline page> for more information\n"
 
     for owner in owners:
         with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:

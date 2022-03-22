@@ -1,4 +1,4 @@
-name: Daily Full Build
+name: Daily Full Build Pipeline (patch branch)
 
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/build_stdlibs_for_lang_updates.py 2201.0.x false ballerina-platform
+          python dependabot/full_build_pipeline_for_updated_stages.py 2201.0.x false ballerina-platform
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
       - name: Notify Build Failure
         if: ${{ failure() }}
         run: |
-          python3 dependabot/notify_full_build_failure.py ${{ steps.set-module.outputs.module }}
+          python3 dependabot/notify_full_build_failure.py ${{ steps.set-module.outputs.module }} patch
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
