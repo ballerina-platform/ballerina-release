@@ -44,6 +44,10 @@
         {
             "name": "module-ballerinax-twitter",
             "auto_merge": true
+        },
+        {
+            "name": "module-ballerinax-azure-cosmosdb",
+            "auto_merge": true
         }
     ]
 }
