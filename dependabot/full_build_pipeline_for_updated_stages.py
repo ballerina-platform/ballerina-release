@@ -58,7 +58,7 @@ def read_stdlib_modules():
 
 
 def read_dependency_data(stdlib_modules_data):
-    for module in stdlib_modules_data['modules']:
+    for module in stdlib_modules_data['standard_library']:
         name = module['name']
         level = module['level']
         version_key = module['version_key']
