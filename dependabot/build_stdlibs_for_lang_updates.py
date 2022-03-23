@@ -122,7 +122,7 @@ def build_stdlib_repositories(enable_tests):
                                   f"export packagePAT={ballerina_bot_token};" +
                                   f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
             if exit_code != 0:
-                write_failed_module(module)
+                write_failed_module(module['name'])
                 print(f"Build failed for {module['name']}")
                 sys.exit(1)
 

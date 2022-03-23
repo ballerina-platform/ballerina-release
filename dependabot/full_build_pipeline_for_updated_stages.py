@@ -129,6 +129,7 @@ def build_stdlib_repositories(enable_tests):
                                   f"export packagePAT={ballerina_bot_token};" +
                                   f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
             if exit_code != 0:
+                write_failed_module(module['name'])
                 print(f"Build failed for {module['name']}")
                 sys.exit(1)
 
@@ -140,6 +141,7 @@ def build_stdlib_repositories(enable_tests):
                           f"./gradlew clean build -x test " +
                           f"publishToMavenLocal --stacktrace --scan --console=plain --no-daemon --continue")
     if exit_code != 0:
+        write_failed_module("ballerina-distribution")
         print(f"Build failed for ballerina-distribution")
         sys.exit(1)
 
@@ -244,6 +246,12 @@ def switch_to_branches_from_updated_stages():
 
             except KeyError:
                 continue
+
+
+def write_failed_module(module_name):
+    with open("failed_module.txt", "w") as file:
+        file.writelines(module_name)
+        file.close()
 
 
 main()
