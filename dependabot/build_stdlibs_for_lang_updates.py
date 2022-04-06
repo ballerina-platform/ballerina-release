@@ -118,6 +118,7 @@ def build_stdlib_repositories(enable_tests):
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
             exit_code = os.system(f"cd {module['name']};" +
+                                  "find . -name \"Dependencies.toml\" -delete" +
                                   f"export packageUser={ballerina_bot_username};" +
                                   f"export packagePAT={ballerina_bot_token};" +
                                   f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
