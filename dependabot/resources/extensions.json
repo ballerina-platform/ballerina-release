@@ -619,6 +619,22 @@
             ]
         },
         {
+            "name": "graphql-tools",
+            "level": 7,
+            "group_id": "io.ballerina",
+            "artifact_id": "graphql-tools",
+            "version_key": "graphqlVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-graphql",
+                "ballerina-distribution"
+            ]
+        },
+        {
             "name": "module-ballerina-c2c",
             "level": 7,
             "group_id": "io.ballerina",
