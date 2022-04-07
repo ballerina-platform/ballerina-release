@@ -4,7 +4,6 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		io
 		"jballerina.java.arrays"
-		random
 		regex
 		time
 		url
@@ -18,6 +17,7 @@ digraph "Stdlib Dependency Graph" {
 		log
 		os
 		protobuf
+		random
 		task
 		xslt
 		label="level 2"
@@ -83,15 +83,12 @@ digraph "Stdlib Dependency Graph" {
 	io -> log
 	io -> os
 	io -> xslt
-	random -> grpc
-	random -> kafka
-	random -> websub
-	random -> websubhub
 	regex -> log
 	regex -> uuid
 	time -> crypto
 	time -> file
 	time -> protobuf
+	time -> random
 	time -> task
 	url -> http
 	crypto -> auth
@@ -113,6 +110,10 @@ digraph "Stdlib Dependency Graph" {
 	log -> udp
 	os -> file
 	protobuf -> grpc
+	random -> grpc
+	random -> kafka
+	random -> websub
+	random -> websubhub
 	task -> cache
 	task -> email
 	task -> ftp
