@@ -3,6 +3,7 @@ import requests
 import constants
 import os
 import sys
+from pathlib import Path
 
 
 stdlib_modules_by_level = dict()
@@ -117,11 +118,25 @@ def build_stdlib_repositories(enable_tests):
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
+
+            if Path(module['name'] + "/ballerina/Dependencies.toml").is_file():
+                os.system(f"cd {module['name']}/ballerina;" +
+                          "find . -name \"Dependencies.toml\" -delete;")
+
+            elif module['name'] == "module-ballerinai-transaction" and \
+                    Path(module['name'] + "/transaction-ballerina/Dependencies.toml").is_file():
+                os.system(f"cd {module['name']}/transaction-ballerina;" +
+                          "find . -name \"Dependencies.toml\" -delete;")
+
+            if Path(module['name'] + "/ballerina-tests/Dependencies.toml").is_file():
+                os.system(f"cd {module['name']}/ballerina-tests;" +
+                          "find . -name \"Dependencies.toml\" -delete;")
+
             exit_code = os.system(f"cd {module['name']};" +
-                                  "find . -name \"Dependencies.toml\" -delete;" +
                                   f"export packageUser={ballerina_bot_username};" +
                                   f"export packagePAT={ballerina_bot_token};" +
                                   f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
+
             if exit_code != 0:
                 write_failed_module(module['name'])
                 print(f"Build failed for {module['name']}")
