@@ -228,10 +228,10 @@ def change_version_to_snapshot():
         for line in config_file:
             try:
                 name, value = line.split("=")
-                if name.startswith("stdlib"):
+                if name in stdlib_module_versions.keys():
                     value = stdlib_module_versions[name] + "\n"
                 elif "ballerinaLangVersion" in name:
-                    value = lang_version
+                    value = lang_version + "\n"
                 properties[name] = value
             except ValueError:
                 continue
