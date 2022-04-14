@@ -203,12 +203,15 @@ def change_version_to_snapshot():
                 with open(f"{module['name']}/gradle.properties", 'r') as config_file:
                     for line in config_file:
                         try:
-                            name, value = line.split("=")
-                            if name in stdlib_module_versions.keys():
-                                value = stdlib_module_versions[name] + "\n"
-                            elif "ballerinaLangVersion" in name:
-                                value = lang_version + "\n"
-                            properties[name] = value
+                            fields = line.split("=")
+                            if len(fields) > 1:
+                                name = fields[0]
+                                value = "=".join(fields[1:])
+                                if name in stdlib_module_versions.keys():
+                                    value = stdlib_module_versions[name] + "\n"
+                                elif "ballerinaLangVersion" in name:
+                                    value = lang_version + "\n"
+                                properties[name] = value
                         except ValueError:
                             continue
                     config_file.close()
@@ -227,12 +230,15 @@ def change_version_to_snapshot():
     with open("ballerina-distribution/gradle.properties", 'r') as config_file:
         for line in config_file:
             try:
-                name, value = line.split("=")
-                if name in stdlib_module_versions.keys():
-                    value = stdlib_module_versions[name] + "\n"
-                elif "ballerinaLangVersion" in name:
-                    value = lang_version + "\n"
-                properties[name] = value
+                fields = line.split("=")
+                if len(fields) > 1:
+                    name = fields[0]
+                    value = "=".join(fields[1:])
+                    if name in stdlib_module_versions.keys():
+                        value = stdlib_module_versions[name] + "\n"
+                    elif "ballerinaLangVersion" in name:
+                        value = lang_version + "\n"
+                    properties[name] = value
             except ValueError:
                 continue
         config_file.close()
