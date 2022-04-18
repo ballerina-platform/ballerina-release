@@ -120,6 +120,12 @@
             "version_key": "openapiVersion"
         },
         {
+            "name": "asyncapi-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-asyncapi",
+            "version_key": "asyncapiVersion"
+        },
+        {
             "name": "module-ballerinax-oracledb"
         },
         {
