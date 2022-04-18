@@ -225,6 +225,8 @@ def switch_to_branches_from_updated_stages():
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
+            if module['name'] == "module-ballerinai-transaction":
+                continue
             try:
                 version = properties[module['version_key']]
                 if len(version.split("-")) > 1:
