@@ -127,7 +127,8 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "openapi-tools"
+                "openapi-tools",
+                "asyncapi-tools"
             ]
         },
         {
@@ -474,6 +475,7 @@
                 "module-ballerinax-jaeger",
                 "module-ballerinax-prometheus",
                 "openapi-tools",
+                "asyncapi-tools",
                 "module-ballerinai-transaction",
                 "module-ballerina-websocket",
                 "module-ballerina-websub",
@@ -594,21 +596,6 @@
             "group_id": "io.ballerina",
             "artifact_id": "c2c-ballerina",
             "version_key": "c2cVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "asyncapi-tools",
-            "level": 7,
-            "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-asyncapi",
-            "version_key": "asyncapiVersion",
             "default_branch": "master",
             "auto_merge": true,
             "is_extended_library_module": false,
@@ -828,6 +815,19 @@
             "group_id": "io.ballerina.stdlib",
             "artifact_id": "stan-ballerina",
             "version_key": "stdlibStanVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "asyncapi-tools",
+            "level": 9,
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-asyncapi",
+            "version_key": "asyncapiVersion",
             "default_branch": "main",
             "auto_merge": true,
             "is_extended_library_module": true,
