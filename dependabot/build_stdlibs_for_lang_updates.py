@@ -148,7 +148,7 @@ def build_stdlib_repositories(enable_tests):
                     f"export packageUser={ballerina_bot_username};" +
                     f"export packagePAT={ballerina_bot_token};" +
                     f"./gradlew clean build -x test " +
-                    f"publishToMavenLocal --stacktrace --scan --console=plain --no-daemon --continue")
+                    f"--stacktrace --scan --console=plain --no-daemon --continue")
     if exit_code != 0:
         write_failed_module("ballerina-distribution")
         print(f"Build failed for ballerina-distribution")
