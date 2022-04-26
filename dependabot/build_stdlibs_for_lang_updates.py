@@ -132,10 +132,16 @@ def build_stdlib_repositories(enable_tests):
                 os.system(f"cd {module['name']}/ballerina-tests;" +
                           "find . -name \"Dependencies.toml\" -delete;")
 
-            exit_code = os.system(f"cd {module['name']};" +
-                                  f"export packageUser={ballerina_bot_username};" +
-                                  f"export packagePAT={ballerina_bot_token};" +
-                                  f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
+            if module['name'] == "module-ballerina-graphql":
+                exit_code = os.system(f"cd {module['name']};" +
+                                      f"export packageUser={ballerina_bot_username};" +
+                                      f"export packagePAT={ballerina_bot_token};" +
+                                      f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan")
+            else:
+                exit_code = os.system(f"cd {module['name']};" +
+                                      f"export packageUser={ballerina_bot_username};" +
+                                      f"export packagePAT={ballerina_bot_token};" +
+                                      f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
 
             if exit_code != 0:
                 write_failed_module(module['name'])
