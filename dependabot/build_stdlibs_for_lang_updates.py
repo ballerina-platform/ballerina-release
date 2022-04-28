@@ -65,6 +65,12 @@ def read_dependency_data(stdlib_modules_data):
             stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
                                                                                         "version_key": version_key}]
 
+    for module in stdlib_modules_data['extended_library']:
+        name = module['name']
+        level = module['level']
+        version_key = module['version_key']
+        stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
+                                                                                        "version_key": version_key}]
 
 def clone_repositories():
     global exit_code
