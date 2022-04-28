@@ -222,6 +222,9 @@ def change_version_to_snapshot():
                             continue
                     config_file.close()
 
+                if module['name'] == "module-ballerina-c2c":
+                    properties["org.gradle.jvmargs"] = "-Xmx4096m"
+
                 with open(f"{module['name']}/gradle.properties", 'w') as config_file:
                     for prop in properties:
                         config_file.write(prop + "=" + properties[prop])
