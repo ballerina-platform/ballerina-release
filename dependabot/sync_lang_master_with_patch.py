@@ -19,10 +19,10 @@ github = Github(ballerina_bot_token)
 def main():
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + 'ballerina-lang')
     branches = repo.get_branches()
-    temp_branch = 'sync-2201.0.x'
+    temp_branch = 'sync-2201.1.x'
 
     for branch in branches:
-        if (branch.name == '2201.0.x'):
+        if (branch.name == '2201.1.x'):
             patch_branch = branch
             break
 
