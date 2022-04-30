@@ -124,10 +124,16 @@ def build_stdlib_repositories(enable_tests):
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
-            exit_code = os.system(f"cd {module['name']};" +
-                                  f"export packageUser={ballerina_bot_username};" +
-                                  f"export packagePAT={ballerina_bot_token};" +
-                                  f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
+            if module['name'] == "module-ballerina-c2c":
+                exit_code = os.system(f"cd {module['name']};" +
+                                      f"export packageUser={ballerina_bot_username};" +
+                                      f"export packagePAT={ballerina_bot_token};" +
+                                      f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan")
+            else:
+                exit_code = os.system(f"cd {module['name']};" +
+                                      f"export packageUser={ballerina_bot_username};" +
+                                      f"export packagePAT={ballerina_bot_token};" +
+                                      f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
             if exit_code != 0:
                 write_failed_module(module['name'])
                 print(f"Build failed for {module['name']}")
