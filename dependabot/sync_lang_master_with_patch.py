@@ -3,6 +3,7 @@ import sys
 import time
 
 from github import Github
+from datetime import date
 
 import constants
 import notify_chat
@@ -19,7 +20,7 @@ github = Github(ballerina_bot_token)
 def main():
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + 'ballerina-lang')
     branches = repo.get_branches()
-    temp_branch = 'sync-2201.1.x'
+    temp_branch = 'sync-2201.1.x-' + date.today().strftime("%d-%m-%Y")
 
     for branch in branches:
         if (branch.name == '2201.1.x'):
