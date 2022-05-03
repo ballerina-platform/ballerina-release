@@ -65,6 +65,13 @@ def read_dependency_data(stdlib_modules_data):
             stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
                                                                                         "version_key": version_key}]
 
+    for module in stdlib_modules_data['extended_library']:
+        name = module['name']
+        level = module['level']
+        version_key = module['version_key']
+        stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
+                                                                                    "version_key": version_key}]
+
 
 def clone_repositories():
     global exit_code
@@ -132,7 +139,7 @@ def build_stdlib_repositories(enable_tests):
                 os.system(f"cd {module['name']}/ballerina-tests;" +
                           "find . -name \"Dependencies.toml\" -delete;")
 
-            if module['name'] == "module-ballerina-graphql":
+            if module['name'] == "module-ballerina-graphql" or module['name'] == "module-ballerina-c2c":
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
