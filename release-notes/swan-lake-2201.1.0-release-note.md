@@ -52,7 +52,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 - Introduced `ResponseInterceptor` and `ResponseErrorInterceptor`
 - Introduced `DefaultErrorInterceptor`
-- Added code-actions to generate interceptor method template
+- Added code-actions to generate the interceptor method template
 - Allowed records to be annotated with `@http:Header`
 - Added basic type support for header parameters in addition to `string` and `string[]`
 - Added `anydata` support for service and client data binding
@@ -62,10 +62,10 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ##### `http` Package
 
-- Allowed `Caller` to respond `error` or `StatusCodeResponse`
+- Allowed `Caller` to respond an `error` or a `StatusCodeResponse`
 - Appended the scheme of the HTTP client URL based on the client configurations
-- Refactored auth-desugar respond with `DefaultErrorInterceptor`
-- Hid the subtypes of http:Client
+- Refactored the auth-desugar response with a `DefaultErrorInterceptor`
+- Hid the subtypes of the `http:Client`
 
 #### Bug Fixes
 
