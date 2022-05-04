@@ -87,7 +87,7 @@ def create_pull_request(repo, temp_branch):
         pull_request_title = PULL_REQUEST_TITLE
         created_pr = repo.create_pull(
             title=pull_request_title,
-            body='Daily syncing of patch branch content with the master',
+            body='[Automated] Daily syncing of patch branch content with the master',
             head=temp_branch,
             base=repo.default_branch
         )
