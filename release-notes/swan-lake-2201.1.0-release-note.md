@@ -48,11 +48,28 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 #### New Features
 
+##### `http` Package
+
+- Introduced `ResponseInterceptor` and `ResponseErrorInterceptor`
+- Introduced `DefaultErrorInterceptor`
+- Added code-actions to generate the interceptor method template
+- Allowed records to be annotated with `@http:Header`
+- Added basic type support for header parameters in addition to `string` and `string[]`
+- Added `anydata` support for service and client data binding
+- Added common constants for HTTP status-code responses
+
 #### Improvements
+
+##### `http` Package
+
+- Allowed `Caller` to respond an `error` or a `StatusCodeResponse`
+- Appended the scheme of the HTTP client URL based on the client configurations
+- Refactored the auth-desugar response with a `DefaultErrorInterceptor`
+- Hid the subtypes of the `http:Client`
 
 #### Bug Fixes
 
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%22Swan+Lake+2201.1.0%22+label%3AType%2FBug).
+To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%222201.1.0%22+label%3AType%2FBug).
 
 ### Code to Cloud Updates
 
