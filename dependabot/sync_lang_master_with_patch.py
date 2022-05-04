@@ -50,15 +50,15 @@ def main():
 
     pending = True
     wait_cycles = 0
-    while pending:
-        if wait_cycles < MAX_WAIT_CYCLES:
-            time.sleep(SLEEP_INTERVAL)
-            pending, passing, failing_pr_checks = check_pending_pr_checks(repo, pr)
-            if not pending:
-                if len(failing_pr_checks) > 0:
-                    passing = all(check.startswith('codecov') for check in failing_pr_checks)
-                if passing:
-                    if(pr.mergeable_state != 'dirty'):
+    if(pr.mergeable_state != 'dirty'):
+        while pending:
+            if wait_cycles < MAX_WAIT_CYCLES:
+                time.sleep(SLEEP_INTERVAL)
+                pending, passing, failing_pr_checks = check_pending_pr_checks(repo, pr)
+                if not pending:
+                    if len(failing_pr_checks) > 0:
+                        passing = all(check.startswith('codecov') for check in failing_pr_checks)
+                    if passing:
                         try:
                             pr.merge()
                             ref.delete()
@@ -67,19 +67,19 @@ def main():
                         except Exception as e:
                             print("[Error] Error occurred while merging master update PR " , e)
                     else:
-                        notify_chat.send_message("[Info] Automated ballerina-lang master update PR is unmerged due to conflicts with the master." + "\n" +\
-                                "Please visit <" + pr.html_url + "|the build page> for more information")
+                        notify_chat.send_message("[Info] Automated ballerina-lang master update PR has failed checks." + "\n" +\
+                         "Please visit <" + pr.html_url + "|the build page> for more information")
+                        pr.edit(state = 'closed')
+                        ref.delete()
                 else:
-                    notify_chat.send_message("[Info] Automated ballerina-lang master update PR has failed checks." + "\n" +\
-                     "Please visit <" + pr.html_url + "|the build page> for more information")
-                    pr.edit(state = 'closed')
-                    ref.delete()
+                    wait_cycles += 1
             else:
-                wait_cycles += 1
-        else:
-            notify_chat.send_message("[Info] Automated ballerina-lang master update PR is unmerged due to pr checks timeout." + "\n" +\
-             "Please visit <" + pr.html_url + "|the build page> for more information")
-            break
+                notify_chat.send_message("[Info] Automated ballerina-lang master update PR is unmerged due to pr checks timeout." + "\n" +\
+                 "Please visit <" + pr.html_url + "|the build page> for more information")
+                break
+    else:
+        notify_chat.send_message("[Info] Automated ballerina-lang master update PR is unmerged due to conflicts with the master." + "\n" +\
+                "Please visit <" + pr.html_url + "|the build page> for more information")
 
 def create_pull_request(repo, temp_branch):
     try:
