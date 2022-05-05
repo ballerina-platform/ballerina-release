@@ -58,6 +58,13 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 - Added `anydata` support for service and client data binding
 - Added common constants for HTTP status-code responses
 
+##### `graphql` Package
+
+- Added the support for GraphQL `Subscriptions`
+- Added the support for GraphQL `Interfaces`
+- Added the support for GraphQL `Documentation`
+- Added the `GraphiQL Client` support for GraphQL services
+
 #### Improvements
 
 ##### `http` Package
