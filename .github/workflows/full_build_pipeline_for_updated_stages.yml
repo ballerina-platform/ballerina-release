@@ -1,6 +1,8 @@
 name: Full Build Pipeline For Updated Stages
 
 on:
+  repository_dispatch:
+    types: [pr-check-full-build]
   workflow_dispatch:
       inputs:
         ballerina_lang_branch:
@@ -38,7 +40,10 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/full_build_pipeline_for_updated_stages.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }} ${{ github.repository_owner }}
+          if ( ${{ github.event_name}} == "repository_dispatch" ); \
+          then echo "${{ github.event.client_payload.repository_owner }}" && python dependabot/full_build_pipeline_for_updated_stages.py ${{ github.event.client_payload.ballerina_lang_branch }} ${{ github.event.client_payload.enable_tests }} ${{ github.event.client_payload.repository_owner }}; \
+          else python dependabot/full_build_pipeline_for_updated_stages.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }} ${{ github.repository_owner }}; \
+          fi
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
