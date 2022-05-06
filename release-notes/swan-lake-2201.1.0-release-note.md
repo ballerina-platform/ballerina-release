@@ -63,9 +63,17 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 ##### `http` Package
 
 - Allowed `Caller` to respond an `error` or a `StatusCodeResponse`
-- Appended the scheme of the HTTP client URL based on the client configurations
+- Appended the https scheme (`https://`) to the client URL if security is enabled
 - Refactored the auth-desugar response with a `DefaultErrorInterceptor`
 - Hid the subtypes of the `http:Client`
+
+##### `jwt` Package
+
+- Appended the https scheme (`https://`) to the client URL (of JWKs endpoint) if security is enabled
+
+##### `oauth2` Package
+
+- Appended the https scheme (`https://`) to the client URL (of token endpoint or introspection endpoint) if security is enabled
 
 #### Bug Fixes
 
