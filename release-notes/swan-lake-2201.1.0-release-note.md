@@ -60,9 +60,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ##### `websocket` Package
 
-- Introduced `writeMessage` client and caller APIs.
-- Introduced `onMessage` remote function in services.
-- Added `anydata` data binding support for `writeMessage` API and `onMessage` remote function.
+- Introduced the `writeMessage` client and caller APIs
+- Introduced the `onMessage` remote function for services
+- Added `anydata` data binding support for the `writeMessage` API and `onMessage` remote function
 
 #### Improvements
 
