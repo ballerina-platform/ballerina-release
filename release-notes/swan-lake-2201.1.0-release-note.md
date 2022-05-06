@@ -58,6 +58,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 - Added `anydata` support for service and client data binding
 - Added common constants for HTTP status-code responses
 
+##### `websocket` Package
+
+- Introduced the `writeMessage` client and caller APIs
+- Introduced the `onMessage` remote function for services
+- Added `anydata` data binding support for the `writeMessage` API and `onMessage` remote function
+
 ##### `graphql` Package
 
 - Added the support for GraphQL `subscriptions`
