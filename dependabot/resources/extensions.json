@@ -831,6 +831,19 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": []
+        },
+        {
+            "name": "graphql-tools",
+            "level": 9,
+            "group_id": "io.ballerina",
+            "artifact_id": "graphql-tools",
+            "version_key": "graphqlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
         }
     ]
 }
