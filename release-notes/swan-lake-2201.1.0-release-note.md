@@ -64,6 +64,13 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 - Introduced the `onMessage` remote function for services
 - Added `anydata` data binding support for the `writeMessage` API and `onMessage` remote function
 
+##### `graphql` Package
+
+- Added the support for GraphQL `subscriptions`
+- Added the support for GraphQL `interfaces`
+- Added the support for GraphQL `documentation`
+- Added the `GraphiQL client` support for GraphQL services
+
 #### Improvements
 
 ##### `http` Package
