@@ -60,10 +60,10 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ##### `graphql` Package
 
-- Added the support for GraphQL `Subscriptions`
-- Added the support for GraphQL `Interfaces`
-- Added the support for GraphQL `Documentation`
-- Added the `GraphiQL Client` support for GraphQL services
+- Added the support for GraphQL `subscriptions`
+- Added the support for GraphQL `interfaces`
+- Added the support for GraphQL `documentation`
+- Added the `GraphiQL client` support for GraphQL services
 
 #### Improvements
 
