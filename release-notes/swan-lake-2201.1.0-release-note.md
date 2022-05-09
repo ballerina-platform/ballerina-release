@@ -63,6 +63,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 - Added basic type support for header parameters in addition to `string` and `string[]`
 - Added `anydata` support for service and client data binding
 - Added common constants for HTTP status-code responses
+- Added union type support for service and client data binding
+- Added OpenAPI definition field in the service config
 
 ##### `websocket` Package
 
