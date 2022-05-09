@@ -260,7 +260,7 @@ function fn() returns string {
 #### Bug Fixes
 
 ##### Invalid subtype relation in table and anydata
-Fix subtype relation between table and anydata
+Fixed the subtype relation between table and anydata
 
 ```ballerina
 type TANY table<map<any>>;
