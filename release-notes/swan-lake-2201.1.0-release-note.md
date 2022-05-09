@@ -132,6 +132,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 #### Bug Fixes
 
+##### `grpc` Package
+
+- Fix incorrect stub generation for repeated values of any, struct, timestamp, and duration messages
+- Fix incorrect caller type name validation in the gRPC compiler plugin
+- Fix passing protobuf predefined types as repeated values and values in messages
+
 To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%222201.1.0%22+label%3AType%2FBug).
 
 ### Code to Cloud Updates
