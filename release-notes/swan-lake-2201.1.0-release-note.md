@@ -136,15 +136,25 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ### Code to Cloud Updates
 
-#### New Features
-
 #### Improvements
+- Reduced the package size
+- Docker image generation now relies on the user's docker client
 
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the repositories below.
 
 - [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.1.0%22)
+
+### AWS Lambda
+
+#### Improvements
+- Removed from the ballerina distribution. For existing projects with Dependencies.toml change the version into 2.1.0.
+
+### Azure Functions
+
+#### Improvements
+- Removed from the ballerina distribution. For existing projects with Dependencies.toml change the version into 2.1.0.
 
 ### Developer Tools Updates
 
