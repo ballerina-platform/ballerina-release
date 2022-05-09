@@ -155,7 +155,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 - Improve the `Document this code` action to support module-level variables
 - Added signature help for included record params
 - Revamp the code action utilities introducing a new API to find the top-level node for a given code action context
-- Improve completion item sorting in several contexts.
+- Improved completion item sorting in several contexts
 - Improve create function code action to handle named arguments.
 - Improve create function code action to add isolated qualifier.
 - Add signature help for union typed expressions.
