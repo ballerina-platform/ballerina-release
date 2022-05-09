@@ -149,12 +149,12 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 ### AWS Lambda
 
 #### Improvements
-- Removed from the ballerina distribution. For existing projects with Dependencies.toml change the version into 2.1.0.
+- Removed the package from the Ballerina distribution. For existing projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
 ### Azure Functions
 
 #### Improvements
-- Removed from the ballerina distribution. For existing projects with Dependencies.toml change the version into 2.1.0.
+- Removed the package from the Ballerina distribution. For existing projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
 ### Developer Tools Updates
 
