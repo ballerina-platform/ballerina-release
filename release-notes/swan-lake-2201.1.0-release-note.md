@@ -89,9 +89,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
   - `file:pathListSeparator`: It is a character commonly used by the operating system to separate paths in the path list. For windows, it’s `;` and for UNIX it’s `:`
 
 ##### `os` Package
-- Introduced the `setEnv()` function to set an environment variable.
-- Introduced the `unsetEnv()` function to remove an environment variable from the system.
-- Introduced the `listEnv()` function to list the existing environment variables of the system.
+- Introduced the `setEnv()` function to set an environment variable
+- Introduced the `unsetEnv()` function to remove an environment variable from the system
+- Introduced the `listEnv()` function to list the existing environment variables of the system
 
 #### Improvements
 
