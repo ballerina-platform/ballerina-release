@@ -48,6 +48,12 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 #### New Features
 
+#### `ftp` Package
+
+- Introduced the `ftp:Caller` API and added it as an optional parameter in the `onFileChange` method
+- Added compiler plugin validation support for the `ftp:Service`
+- Added code-actions to generate a `ftp:Service` template
+
 ##### `http` Package
 
 - Introduced `ResponseInterceptor` and `ResponseErrorInterceptor`
@@ -74,6 +80,20 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 ##### `websub` Package
 
 - Add code-actions to generate a `websub:SubscriberService` template
+
+##### `kafka` Package
+
+- Added data binding support for `kafka` producer and consumer
+
+##### `rabbitmq` Package
+
+- Added data binding support for `rabbitmq` clients and services
+- Added code-actions to generate a `rabbitmq:Service` template
+
+##### `nats` Package
+
+- Added data binding support for `nats` clients and services
+- Added code-actions to generate a `nats:Service` template
 
 #### Improvements
 
