@@ -50,7 +50,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 #### `ftp` Package
 
-- Introduced `ftp:Caller` API and added as an optional parameter in `onFileChange` method
+- Introduced the `ftp:Caller` API and added it as an optional parameter in the `onFileChange` method
 - Added compiler plugin validation support for the `ftp:Service`
 - Added code-actions to generate a `ftp:Service` template
 
