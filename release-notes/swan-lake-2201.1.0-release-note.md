@@ -140,10 +140,25 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 
 - Introduced the Ballerina GraphQL tool, which will make it easy for you to generate a client in Ballerina given the GraphQL schema (SDL) and GraphQL queries. Ballerina Swan Lake supports the GraphQL specification [October 2021 edition](https://spec.graphql.org/October2021/). For more information, see [Ballerina GraphQL support](http://ballerina.io/learn/ballerina-graphql-support/) and [Graphql CLI documentation](http://ballerina.io/learn/cli-documentation/graphql/#graphql-to-ballerina).
 
+##### Language Server
+
+- Add completion and code action support for already imported modules in Ballerina user home.
+- Implement file operation events in Language server.
+
 #### Improvements
 
 ##### Debugger
 - Added rutime breakpoint verification support. With this improvement, the debugger is expected to verify all the valid breakpoint locations in the current debug source. All the breakpoints that are set on non-executable lines of code (i.e., Ballerina line comments, documentation , blank lines, declarations, etc.) will be marked as `unverified` in the editor.
+
+##### Language Server
+
+- Improve the document this code action to support module-level variables.
+- Add signature help for included record params.
+- Revamp Code action utilities introducing a new API to find the top-level node for a given code action context.
+- Improve completion item sorting in several contexts.
+- Improve create function code action to handle named arguments.
+- Improve create function code action to add isolated qualifier.
+- Add signature help for union typed expressions.
 
 #### Bug Fixes
 
