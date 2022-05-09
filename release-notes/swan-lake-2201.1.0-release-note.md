@@ -85,8 +85,8 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 ##### File Package
 
 - Introduced the constants for path and path list separators.
-  - `file:pathSeparator`: It is a character used to separate the parent directories that make up the path to a specific location. For windows, it’s ‘\’ and for UNIX it’s ‘/’
-  - `file:pathListSeparator`: It is a character commonly used by the operating system to separate paths in the path list. For windows, it’s ‘;‘ and for UNIX it’s ‘:’
+  - `file:pathSeparator`: It is a character used to separate the parent directories that make up the path to a specific location. For windows, it’s `\` and for UNIX it’s `/`
+  - `file:pathListSeparator`: It is a character commonly used by the operating system to separate paths in the path list. For windows, it’s `;` and for UNIX it’s `:`
 
 ##### OS Package
 - Introduced `setEnv()` function to set an environment variable.
