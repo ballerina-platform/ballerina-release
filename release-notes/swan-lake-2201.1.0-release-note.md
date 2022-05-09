@@ -75,23 +75,23 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 - Add code-actions to generate a `websub:SubscriberService` template
 
-##### Regex Package
+##### `regex` Package
 
-- Introduced the API to extract the first substring from the start index in the given string that matches the regex.
-- Introduced the API to extract all substrings in the given string that match the given regex.
-- Introduced the API to replace the first substring from the start index in the given string that matches the given regex with the provided replacement string or string returned by the provided function. The `replaceFirst()` API has been deprecated by introducing this API.
-- Allowed passing a replacer function to `replace` and `replaceAll` APIs. Now the regex matches can be replaced with a new string value or the value returned by the specified replacer Function.
+- Introduced the API to extract the first substring from the start index in the given string that matches the regex
+- Introduced the API to extract all substrings in the given string that match the given regex
+- Introduced the API to replace the first substring from the start index in the given string that matches the given regex with the provided replacement string or the string returned by the provided function. The `replaceFirst()` API is being deprecated by introducing this API
+- Allowed passing a replacer function to `replace` and `replaceAll` APIs. Now the regex matches can be replaced with a new string value or the value returned by the specified replacer function
 
-##### File Package
+##### `file` Package
 
 - Introduced the constants for path and path list separators.
-  - `file:pathSeparator`: It is a character used to separate the parent directories that make up the path to a specific location. For windows, it’s `\` and for UNIX it’s `/`
+  - `file:pathSeparator`: It is a character used to separate the parent directories, which make up the path to a specific location. For windows, it’s `\` and for UNIX it’s `/`
   - `file:pathListSeparator`: It is a character commonly used by the operating system to separate paths in the path list. For windows, it’s `;` and for UNIX it’s `:`
 
-##### OS Package
-- Introduced `setEnv()` function to set an environment variable.
-- Introduced `unsetEnv()` function to remove an environment variable from the system.
-- Introduced `listEnv()` function to list the existing environment variables of the system.
+##### `os` Package
+- Introduced the `setEnv()` function to set an environment variable.
+- Introduced the `unsetEnv()` function to remove an environment variable from the system.
+- Introduced the `listEnv()` function to list the existing environment variables of the system.
 
 #### Improvements
 
