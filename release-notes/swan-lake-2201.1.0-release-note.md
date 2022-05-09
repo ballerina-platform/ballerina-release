@@ -143,7 +143,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 ##### Language Server
 
 - Added completion and code action support for already-imported modules in the Ballerina user home
-- Implement file operation events in Language server.
+- Implemented file operation events in the Language Server
 
 #### Improvements
 
