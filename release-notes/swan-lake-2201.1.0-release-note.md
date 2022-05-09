@@ -71,6 +71,10 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 - Added the support for GraphQL `documentation`
 - Added the `GraphiQL client` support for GraphQL services
 
+##### `websub` Package
+
+- Add code-actions to generate a `websub:SubscriberService` template
+
 #### Improvements
 
 ##### `http` Package
