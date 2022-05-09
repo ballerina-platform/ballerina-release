@@ -151,7 +151,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 #### Improvements
 - Removed the package from the Ballerina distribution. For existing projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
-### `ballerinax/azure_functions` Package
+### `ballerinax/azure_functions` package
 
 #### Improvements
 - Removed the package from the Ballerina distribution. For existing projects, change the version to `2.1.0` in the `Dependencies.toml` file.
