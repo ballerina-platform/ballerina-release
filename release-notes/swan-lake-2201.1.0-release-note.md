@@ -178,17 +178,15 @@ public function main() {
 `padStart()`, `padEnd()`, and `padZero()` functions have been introduced to add padding in strings. `padStart` adds padding to the start of a string. `padEnd` adds padding to the end of a string. `padZero` pads a string with zeros.
 
 ```ballerina
-import ballerina/io;
-
 public function main() {
-	io:println("abc".padStart(5, "#")); // "##abc"
-	io:println("abc".padStart(5)); // "  abc"
+    io:println("abc".padStart(5, "#")); // "##abc"
+    io:println("abc".padStart(5)); // "  abc"
 
-	io:println("abc".padEnd(5, "#")); // "abc##"
-	io:println("abc".padEnd(5)); // "abc  "
+    io:println("abc".padEnd(5, "#")); // "abc##"
+    io:println("abc".padEnd(5)); // "abc  "
 
-	io:println("123".padZero(5)); // "00123"
-	io:println("123".padZero(5, "#")); // "##123"
+    io:println("123".padZero(5)); // "00123"
+    io:println("123".padZero(5, "#")); // "##123"
 }
 ```
 
