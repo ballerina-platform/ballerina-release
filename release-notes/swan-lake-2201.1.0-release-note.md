@@ -87,7 +87,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ##### `rabbitmq` Package
 
-- Added data binding support for `rabbitmq` client and services
+- Added data binding support for `rabbitmq` clients and services
 - Added code-actions to generate `rabbitmq:Service` template
 
 ##### `nats` Package
