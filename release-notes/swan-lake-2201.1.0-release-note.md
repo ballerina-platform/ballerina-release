@@ -92,7 +92,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ##### `nats` Package
 
-- Added data binding support for `nats` client and services
+- Added data binding support for `nats` clients and services
 - Added code-actions to generate `nats:Service` template
 
 #### Improvements
