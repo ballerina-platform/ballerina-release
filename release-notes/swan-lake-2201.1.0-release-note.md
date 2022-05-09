@@ -158,7 +158,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 - Improved completion item sorting in several contexts
 - Improved the `Create function` code action to handle named arguments
 - Improved the `Create function` code action to add an isolated qualifier
-- Add signature help for union typed expressions.
+- Added signature help for union-typed expressions
 
 #### Bug Fixes
 
