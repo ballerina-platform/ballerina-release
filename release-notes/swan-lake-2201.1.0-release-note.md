@@ -73,7 +73,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ##### `websub` Package
 
-- Add code-actions to generate `websub:SubscriberService` template
+- Add code-actions to generate a `websub:SubscriberService` template
 
 #### Improvements
 
