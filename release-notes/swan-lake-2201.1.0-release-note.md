@@ -286,7 +286,7 @@ public function main() {
 
 ##### Fix issue in enum member value when member name is a quoted identifier
 
-Fix quote is included in enum member value when member name is a quoted identifier.
+Fixed the quote is included in enum member value when member name is a quoted identifier.
 
 ```ballerina
 import ballerina/io;
