@@ -83,31 +83,31 @@ For division and modulo, only the floating-point operand as the dividend is supp
 
 ```ballerina
 import ballerina/io;
- 
+
 public function main() {
-	int a = 5;
-	float b = 2.5;
-	decimal c = 1.25;
- 
-	float e = a * b;
-	io:println(e); // 12.5
-	float f = b * a;
-	io:println(f); // 12.5
- 
-	decimal g = a * c;
-	io:println(g); // 6.250
-	decimal h = c * a;
-	io:println(h); // 6.250
- 
-	float j = b / a;
-	io:println(j); // 0.5
-	decimal k = c / a;
-	io:println(k); // 0.25
- 
-	float m = b % a;
-	io:println(m); // 2.5
-	decimal n = c % a;
-	io:println(n); // 1.25
+    int a = 5;
+    float b = 2.5;
+    decimal c = 1.25;
+
+    float e = a * b;
+    io:println(e); // 12.5
+    float f = b * a;
+    io:println(f); // 12.5
+
+    decimal g = a * c;
+    io:println(g); // 6.250
+    decimal h = c * a;
+    io:println(h); // 6.250
+
+    float j = b / a;
+    io:println(j); // 0.5
+    decimal k = c / a;
+    io:println(k); // 0.25
+
+    float m = b % a;
+    io:println(m); // 2.5
+    decimal n = c % a;
+    io:println(n); // 1.25
 }
 ```
 
@@ -266,8 +266,8 @@ Fix subtype relation between table and anydata
 type TANY table<map<any>>;
 
 public function main() {
-    	TANY tany = table [{"a": 2}];
-    	anydata _ = tany; // This is a compile error
+    TANY tany = table [{"a": 2}];
+    anydata _ = tany; // This is a compile error
 }
 ```
 
@@ -290,12 +290,13 @@ Fix quote is included in enum member value when member name is a quoted identifi
 
 ```ballerina
 import ballerina/io;
+
 public enum MyEnum {
-	'new
+    'new
 }
 
 public function main() {
-	io:println('new); // Previously prints `'new` now prints `new`
+    io:println('new); // Previously prints `'new` now prints `new`
 }
 ```
 
@@ -323,13 +324,13 @@ function fn(MyRecord r1) {
 
 ```ballerina
 function fn(any x) {
-   match x {
-       int:MAX_VALUE => { // Match pattern is now allowed
-       }
- 
-       [int:MAX_VALUE, int:MIN_VALUE] => { // Match pattern is now allowed
-       }
-   }
+    match x {
+        int:MAX_VALUE => { // Match pattern is now allowed
+        }
+
+        [int:MAX_VALUE, int:MIN_VALUE] => { // Match pattern is now allowed
+        }
+    }
 }
 ```
 
@@ -337,11 +338,11 @@ function fn(any x) {
 
 ```ballerina
 function fn(error e) {
-   match e {
-       error (myError:MSG_1) => { // Match pattern is now allowed
-  
-       }
-   }
+    match e {
+        error(myError:MSG_1) => { // Match pattern is now allowed
+
+        }
+    }
 }
 ```
 
@@ -351,7 +352,7 @@ function fn(error e) {
 function verifyCheck() returns error? {
     return error("custom error");
 }
- 
+
 public function main() {
     do {
         _ = from int v in 1 ... 3
@@ -381,11 +382,11 @@ Fixed a spec deviation that allowed the operands of additive expression with a u
 
 ```ballerina
 function fn() {
-	int|float a = 4;
-	int|float b = 4.5;
-	// Now, this results in an error.
-	int _ = a + b;
-	int _ = a + a;
+    int|float a = 4;
+    int|float b = 4.5;
+    // Now, this results in an error.
+    int _ = a + b;
+    int _ = a + a;
 }
 ```
 
@@ -395,14 +396,14 @@ Fixed a spec deviation that disallowed the operands of additive expression with 
 
 ```ballerina
 import ballerina/io;
- 
+
 type Strings "A"|"B";
- 
+
 public function main() {
-	string:Char|Strings a = "A";
-	string b = "B";
-	// This, which was disallowed previously results `AB` now.
-	io:println(a + b);
+    string:Char|Strings a = "A";
+    string b = "B";
+    // This, which was disallowed previously results `AB` now.
+    io:println(a + b);
 }
 ```
 
