@@ -139,9 +139,9 @@ public function fn() {
 import ballerina/io;
 
 public function main() {
-	io:println(decimal:quantize(123.123, 1.0)); // 123.1
-	io:println(decimal:quantize(123.123, 1.00)); // 123.12
-	io:println(decimal:quantize(123.123, 1.000)); // 123.123
+    io:println(decimal:quantize(123.123, 1.0)); // 123.1
+    io:println(decimal:quantize(123.123, 1.00)); // 123.12
+    io:println(decimal:quantize(123.123, 1.000)); // 123.123
 }
 ```
 If the length of the coefficient after the quantize operation would be greater than precision, then an `InvalidOperation` is signaled.
