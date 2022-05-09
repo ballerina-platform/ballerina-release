@@ -64,6 +64,23 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 - Added `anydata` support for service and client data binding
 - Added common constants for HTTP status-code responses
 
+##### `websocket` Package
+
+- Introduced the `writeMessage` client and caller APIs
+- Introduced the `onMessage` remote function for services
+- Added `anydata` data binding support for the `writeMessage` API and `onMessage` remote function
+
+##### `graphql` Package
+
+- Added the support for GraphQL `subscriptions`
+- Added the support for GraphQL `interfaces`
+- Added the support for GraphQL `documentation`
+- Added the `GraphiQL client` support for GraphQL services
+
+##### `websub` Package
+
+- Add code-actions to generate a `websub:SubscriberService` template
+
 ##### `kafka` Package
 
 - Added data binding support for `kafka` producer and consumer
@@ -83,9 +100,17 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 ##### `http` Package
 
 - Allowed `Caller` to respond an `error` or a `StatusCodeResponse`
-- Appended the scheme of the HTTP client URL based on the client configurations
+- Appended the HTTPS scheme (`https://`) to the client URL if security is enabled
 - Refactored the auth-desugar response with a `DefaultErrorInterceptor`
 - Hid the subtypes of the `http:Client`
+
+##### `jwt` Package
+
+- Appended the HTTPS scheme (`https://`) to the client URL (of JWKs endpoint) if security is enabled
+
+##### `oauth2` Package
+
+- Appended the HTTPS scheme (`https://`) to the client URL (of token endpoint or introspection endpoint) if security is enabled
 
 #### Bug Fixes
 
@@ -107,13 +132,21 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 
 #### New Features
 
+##### GraphQL Tool
+
+- Introduced the Ballerina GraphQL tool, which will make it easy for you to generate a client in Ballerina given the GraphQL schema (SDL) and GraphQL queries. Ballerina Swan Lake supports the GraphQL specification [October 2021 edition](https://spec.graphql.org/October2021/). For more details, see [graphql-tools](https://github.com/ballerina-platform/graphql-tools/blob/main/README.md).
+
 #### Improvements
+
+##### Debugger
+- Added rutime breakpoint verification support. With this improvement, the debugger is expected to verify all the valid breakpoint locations in the current debug source. All the breakpoints that are set on non-executable lines of code (i.e., Ballerina line comments, documentation , blank lines, declarations, etc.) will be marked as `unverified` in the editor.
 
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the repositories below.
 
 - [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FLanguageServer+milestone%3A%22Ballerina+Swan+Lake+2201.1.0%22)
+- [Debugger](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AArea%2FDebugger+milestone%3A%22Ballerina+2201.1.0%22)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+project%3Aballerina-platform%2F32)
 - [OpenAPI](https://github.com/ballerina-platform/ballerina-openapi/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.1.0%22)
 
