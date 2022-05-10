@@ -30,11 +30,11 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### New Features
 
-##### Spread Operator Support for List Constructor
+##### Spread operator support for list constructor expressions
 
-The spread operator support for the list constructor expression has been introduced.
+Spread operator support for the list constructor expression has been introduced.
 
-If the list member with spread operator is ...x, then the static type of x is expected to be a list. i.e. static type of x is expected to be a subtype of [(any|error)...]. All the member values of the list that results from evaluating x are included in the list value being constructed.
+If the spread operator in a list constructor expression is `...x`, then `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
 
 ```ballerina
 import ballerina/io;
@@ -42,44 +42,44 @@ import ballerina/io;
 public function fn() {
     int[] a1 = [3, 4];
     int[] v1 = [1, 2, ... a1];
-    io:println(v1); // value of v1 will be [1, 2, 3, 4]
+    io:println(v1); // [1, 2, 3, 4]
 
     int[2] a2 = [6, 7];
     int[] v2 = [1, 2, ... a1, 5, ... a2];
-    io:println(v2); // value of v2 will be  [1, 2, 3, 4, 5, 6, 7]
+    io:println(v2); // [1, 2, 3, 4, 5, 6, 7]
 
     [int, string] t1 = [5, "s"];
     any[] v3 = [ ... t1, "x"];
-    io:println(v3); // value of v3 will be  [5, "s", "x"]
+    io:println(v3); // [5, "s", "x"]
 
     [boolean, int...] t2 = [false, 4, 7];
     [string, int, string, boolean, int...] v4 = ["x", ... t1, ... t2];
-    io:println(v4); // value of v4 will be  ["x", 5, "s", false, 4, 7];
+    io:println(v4); // ["x", 5, "s", false, 4, 7];
 
     var v5 = [4, ... t1, ... a2];
-    io:println(v5); // value of v5 will be [4, 5, "s", 6, 7];
+    io:println(v5); // [4, 5, "s", 6, 7];
 }
 ```
 
-The spread operator with a varying-length list is not allowed if the inherent type of the list being constructed has required members that are not guaranteed to have a value.
+The spread operator is not allowed with a varying-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
 
 ```ballerina
 public function fn() {
     [int, string...] t1 = [5, "s"];
-    [int, string, string...] v1 = [ ... t1]; // results in an error as second tuple member is not guaranteed to have a value
+    [int, string, string...] v1 = [ ... t1]; // results in an error since a value is not guaranteed to have been provided for the second tuple member
 
     [int, boolean, string, int...] t2 = [5, false, "w"];
-    [int, boolean, anydata...] v2 = [ ... t2, "x", "y"]; // works as all fixed tuple members are guaranteed to have values
+    [int, boolean, anydata...] v2 = [ ... t2, "x", "y"]; // works as all fixed tuple members are guaranteed to have been provided values
 }
 ```
 
 ##### Allow int*float, float*int, int* decimal, decimal*int, float/int, decimal/int, float%int and decimal%int.
 
-Multiplicative expression is now allowed with `int`, `float` and `int`, `decimal` operands.  The resulting type of expression will be the fractional type.
+Multiplicative expressions are now allowed with `int` and `float` or `int` and `decimal` operands.  The type of the result will be the fractional type.
 
-With this, we have allowed
-For multiplication we support both `int*float` and `float*int` similarly for `decimal*float` and `decimal*int`.
-For division and modulo, only the floating-point operand as the dividend is supported ie: `float/int`, `decimal/int`, `float%int`, `decimal%int` are supported.
+The following have been allowed.
+- for multiplication we support both `int*float` and `float*int` and similarly `int*decimal` and `decimal*int`.
+- for division and modulo, only the floating-point operand as the dividend is supported i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported.
 
 ```ballerina
 import ballerina/io;
@@ -115,7 +115,7 @@ public function main() {
 
 ###### New `lang.array:some()` and `lang.array:every()` functions
 
-The function `some()` tests whether a function returns true for some member of an array. The function `every` tests whether a function returns true for every member of an array. 
+The `lang.array:some()` function tests whether a function returns `true` for some member of an array. The function `lang.array:every` function tests whether a function returns `true` for every member of an array. 
 
 ```ballerina
 import ballerina/io;
@@ -133,7 +133,7 @@ public function fn() {
 ```
 ###### New `lang.decimal:quantize()` function
 
-`quantize()` function has been introduced to control the precision of decimal values which returns a value equal to the first operand after rounding and having the exponent of the second operand.
+The `lang.decimal:quantize()` function has been introduced to control the precision of decimal values. This results in a value equal to the first operand after rounding it to have the exponent of the second operand.
 
 ```ballerina
 import ballerina/io;
@@ -144,17 +144,17 @@ public function main() {
     io:println(decimal:quantize(123.123, 1.000)); // 123.123
 }
 ```
-If the length of the coefficient after the quantize operation would be greater than precision, then an `InvalidOperation` is signaled.
+If the length of the coefficient after the quantize operation would be greater than the precision, the function results in a panic.
 
 ```ballerina
 public function main() {
-	decimal _ = decimal:quantize(123.1233, 1E-36); // results in an error
+    decimal _ = decimal:quantize(123.1233, 1E-36); // results in a panic
 }
 ```
 
 ###### New `lang.float:toFixedString()` and `lang.float:toExpString()` functions
 
-Two new functions namely `toFixedString()` and `toExpString()` have been introduced to get the string representation of a `float` value in fixed-point notation and scientific notation respectively. Both the functions facilitate you to specify the number of digits required to be followed by the decimal point.
+Two new functions namely `lang.float:toFixedString()` and `lang.float:toExpString()` have been introduced to get the string representation of a `float` value in fixed-point notation and scientific notation respectively. Both the functions allow you to specify the number of digits required after the decimal point.
 
 ```ballerina
 import ballerina/io;
@@ -175,7 +175,7 @@ public function main() {
 
 ###### New `lang.string:padStart()`, `lang.string:padEnd()`, and `lang.string:padZero()` functions
 
-`padStart()`, `padEnd()`, and `padZero()` functions have been introduced to add padding in strings. `padStart` adds padding to the start of a string. `padEnd` adds padding to the end of a string. `padZero` pads a string with zeros.
+The `lang.string:padStart()`, `lang.string:padEnd()`, and `lang.string:padZero()` functions have been introduced to add padding in strings. `lang.string:padStart()` adds padding to the start of a string. `lang.string:padEnd()` adds padding to the end of a string. `lang.string:padZero()` pads a string with zeros.
 
 ```ballerina
 public function main() {
@@ -192,27 +192,27 @@ public function main() {
 
 #### Improvements
 
-##### Disallow inferring array sizes from contexts that are not permitted
+##### Disallow inferring array length in contexts that are not permitted
 
-Inferring array length from the context is restricted to support only with list constructors. Further, only the first dimension can be inferred from the context in multidimensional arrays.
+Inferring array length has been restricted to list constructors in variable and constant declarations. Moreover, only the first dimension can be inferred in multidimensional arrays.
 
 ```ballerina
 int[*] x1 = [1, 2]; // Supported.
 
 int[2] y = [1, 2];
-int[*] x2 = y; // Not supported. Required a list constructor to infer            the array length.
+int[*] x2 = y; // Not supported. Requires a list constructor to infer the array length.
 
 int[*][2] x3 = [[1, 2], [1, 2]]; // Supported.
-int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can be inferred from the context.
+int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can be inferred.
 ```
 
 ##### Add annotation attachments to the BIR
 
 
 
-##### Revamp round langlib function for float
+##### Revamped `lang.float:round` langlib function
 
-The method signature is changed to have an extra argument `fractionDigits`, where the user can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the method rounds to an integer.
+The function signature has been changed to have an extra argument `fractionDigits`, where the user can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
 ```ballerina
 import ballerina/io;
@@ -235,7 +235,7 @@ public function main() {
 
 ##### `lang.decimal:round` method signature is improved
 
-The method signature is changed to have an extra argument `fractionDigits`, where the user can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the method rounds to an integer.
+The function signature has been changed to have an extra argument `fractionDigits`, where the user can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
 ```ballerina
 import ballerina/io;
@@ -255,7 +255,7 @@ public function main() {
 }
 ```
 
-##### An unreachable panic statement now does not result in a compilation error.
+##### An unreachable panic statement no longer results in a compilation error
 
 ```ballerina
 function fn() returns string {
@@ -273,51 +273,42 @@ function fn() returns string {
 
 #### Bug Fixes
 
-##### Invalid subtype relation in table and anydata
-Fixed the subtype relation between table and anydata
+- An invalid sub-typing relationship between `table` and `anydata` has been fixed.
 
 ```ballerina
-type TANY table<map<any>>;
-
 public function main() {
-    TANY tany = table [{"a": 2}];
-    anydata _ = tany; // This is a compile error
+    table<map<any>> tany = table [{"a": 2}];
+    anydata ad = tany; // Results in a compilation error.
 }
 ```
 
-
-##### Fix Invalid value space when a union of singletons contains the null literal
-The value of null literal should be set as `null`.
+- A union containing the `null` literal allowing `"null"` as a valid value has been fixed.
 
 ```ballerina
 type Foo boolean|null;
 
 public function main() {
-    Foo _ = "null"; // compilation error
-    boolean|null _ = "null"; // compilation error
+    Foo a = "null"; // compilation error
+    "string"|null b = "null"; // compilation error
 }
 ```
 
-##### Fix issue in enum member value when member name is a quoted identifier
-
-Fixed the quote is included in enum member value when member name is a quoted identifier.
+- An issue that caused the value of enum members defined with quoted identifiers to include the quote has been fixed.
 
 ```ballerina
 import ballerina/io;
 
-public enum MyEnum {
-    'new
+public enum Status {
+    'new,
+    old
 }
-
 public function main() {
-    io:println('new); // Previously prints `'new` now prints `new`
+    io:println('new); // Previously printed `'new`, now prints `new`.
 }
 ```
 
 
-##### Fix few issues related match pattern parsing
-
-- No syntax error when there is an extra comma inside mapping match pattern has been fixed.
+- A compilation error is now logged when there is an extra comma inside a mapping match pattern.
 
 ```ballerina
 type MyRecord record {
@@ -327,14 +318,14 @@ type MyRecord record {
 
 function fn(MyRecord r1) {
     match r1 {
-        {field1: 0} => { // A syntax error is now given for the comma.
+        {field1: 0,} => { // A syntax error is now given for the comma.
 
         }
     }
 }
 ```
 
-- An issue parsing qualified identifier with predeclared prefix as const match pattern has been fixed.
+- An issue in the parser that disallowed qualified identifiers with a pre-declared prefix as a const match pattern has been fixed.
 
 ```ballerina
 function fn(any x) {
@@ -348,12 +339,12 @@ function fn(any x) {
 }
 ```
 
-- Qualified identifiers being not allowed in error match pattern has been fixed.
+- Qualified identifiers not being allowed in error match patterns has been fixed.
 
 ```ballerina
 function fn(error e) {
     match e {
-        error(myError:MSG_1) => { // Match pattern is now allowed
+        error(errors:MESSAGE) => { // Match pattern is now allowed
 
         }
     }
@@ -377,30 +368,25 @@ public function main() {
 }
 ```
 
-##### The inherent type for any arr = [1]; should be (any|error)[]
-
-For any arr = []; Earlier, the inherent type is any[] but it is now corrected to be (any|error)[]
+- The inherent type of a list constructed using a list constructor with `any` as the contextually-expected type has been fixed to be `(any|error)[]` instead of `any[]`.
 
 ```ballerina
 public function main() {
     any x = [1, 3, 4];
     if x is (any|error)[] {
-        x.push(error("error..")); // Now this is allowed, earlier it failed in runtime
+        x.push(error("invalid!")); // Now allowed, previously failed at runtime.
     }
 }
 ```
 
-##### Disallow additive expression  with operands that contain a union of basic types
-
-Fixed a spec deviation that allowed the operands of additive expression with a union of basic types. This will now result in a compilation error.
+- A bug that allowed additive expressions with operands of types that are union types of different basic types has been fixed.
 
 ```ballerina
-function fn() {
+public function main() {
     int|float a = 4;
     int|float b = 4.5;
-    // Now, this results in an error.
-    int _ = a + b;
-    int _ = a + a;
+
+    int _ = a + b; // Now result in a compilation error.
 }
 ```
 
