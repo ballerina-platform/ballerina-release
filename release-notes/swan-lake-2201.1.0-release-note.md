@@ -30,11 +30,11 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### New Features
 
-##### Spread operator support for list constructor expressions
+##### The `spread` operator support for `list` constructor
 
-Spread operator support for the list constructor expression has been introduced.
+Introduced the `spread` operator support for the `list` constructor expression.
 
-If the spread operator in a list constructor expression is `...x`, then `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
+If the list member with the `spread` operator is `...x`, then, the static type of `x` is expected to be a list (i.e., the static type of `x` is expected to be a subtype of `[(any|error)...]`. All the member values of the list that results from evaluating `x` are included in the list value being constructed.
 
 ```ballerina
 import ballerina/io;
@@ -61,7 +61,7 @@ public function fn() {
 }
 ```
 
-The spread operator is not allowed with a varying-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
+The `spread` operator with a varying-length list is not allowed if the inherent type of the list being constructed with required members that are not guaranteed to have a value.
 
 ```ballerina
 public function fn() {
@@ -75,11 +75,11 @@ public function fn() {
 
 ##### Allow `int*float`, `float*int`,` int* decimal`, `decimal*int`, `float/int`, `decimal/int`, `float%int`, and `decimal%int`.
 
-Multiplicative expressions are now allowed with `int` and `float` or `int` and `decimal` operands.  The type of the result will be the fractional type.
+Multiplicative expression is now allowed with `int`, `float` and `int`, and `decimal` operands.  The resulting type of the expression will be the fractional type.
 
-The following have been allowed.
-- for multiplication we support both `int*float` and `float*int` and similarly `int*decimal` and `decimal*int`.
-- for division and modulo, only the floating-point operand as the dividend is supported i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported.
+This allows the below.
+Multiplication supports both `int*float` and ``float*int` similar to `decimal*float` and `decimal*int`.
+For division and modulo, only the `floating-point` operand as the dividend is supported (i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported.
 
 ```ballerina
 import ballerina/io;
@@ -115,7 +115,7 @@ public function main() {
 
 ###### New `lang.array:some()` function
 
-The `some()` function tests whether a function returns `true` for some member of an array.
+The `lang.array:some()` function tests whether a function returns `true` for some member of an array. 
 
 ```ballerina
 import ballerina/io;
@@ -131,7 +131,7 @@ public function main() {
 ```
 ###### New `lang.array:every()` function
 
-The `every()` function tests whether a function returns `true` for every member of an array. 
+The function `lang.array:every` function tests whether a function returns `true` for every member of an array.
 
 ```ballerina
 import ballerina/io;
@@ -147,7 +147,7 @@ public function main() {
 ```
 ###### New `lang.decimal:quantize()` function
 
-The `lang.decimal:quantize()` function has been introduced to control the precision of decimal values. This results in a value equal to the first operand after rounding it to have the exponent of the second operand.
+The `lang.decimal:quantize()` function has been introduced to control the precision of decimal values, which returns a value equal to the first operand after rounding and having the exponent of the second operand.
 
 ```ballerina
 import ballerina/io;
@@ -230,7 +230,6 @@ The function signature has been changed to have an extra argument `fractionDigit
 
 ```ballerina
 import ballerina/io;
-import ballerina/lang.'float as floats;
 
 public function main() {
     float x = 555.545;
@@ -239,9 +238,9 @@ public function main() {
 
     io:println(555.545.round(1));                     // 555.5
     io:println(555.545.round(2));                     // 555.54
-    io:println(floats:round(x));                      // 556.0
-    io:println(floats:round(x, fractionDigits = 0));  // 556.0
-    io:println(floats:round(x, 1));                   // 555.5
+    io:println(float:round(x));                      // 556.0
+    io:println(float:round(x, fractionDigits = 0));  // 556.0
+    io:println(float:round(x, 1));                   // 555.5
     io:println(y.round(2));                           // 5.56
     io:println(y.round(fractionDigits));              // 5.556
 }
@@ -253,19 +252,13 @@ The function signature has been changed to have an extra argument `fractionDigit
 
 ```ballerina
 import ballerina/io;
-import ballerina/lang.'decimal as decimals;
 
 public function main() {
-    decimal x = 555.545;
-    decimal y = 5.5565;
-    int fractionDigits = 3;
-
-    io:println(555.545.round(1));                      // 555.6
-    io:println(decimals:round(x));                     // 556
-    io:println(decimals:round(x, fractionDigits = 0)); // 556
-    io:println(decimals:round(x, 1));                  // 555.6
-    io:println(y.round(2));                            // 5.56
-    io:println(y.round(fractionDigits));               // 5.556
+    io:println(5.55.round(1)); // 5.6
+    decimal x = 5.55;
+    io:println(decimal:round(x)); // 6
+    io:println(decimal:round(5.55, fractionDigits = 0)); // 6
+    io:println(decimal:round(5.5565, fractionDigits = 3)); // 5.556
 }
 ```
 
@@ -375,23 +368,6 @@ function fn(error e) {
         error(errors:MESSAGE) => { // Match pattern is now allowed
 
         }
-    }
-}
-```
-
-##### Fix compiler crashing when a query expression that throws an error is enclosed within a statement with on-fail. 
-
-```ballerina
-function verifyCheck() returns error? {
-    return error("custom error");
-}
-
-public function main() {
-    do {
-        _ = from int v in 1 ... 3
-            select check verifyCheck();
-    } on fail error err {
-        io:println("error caught", err);
     }
 }
 ```
