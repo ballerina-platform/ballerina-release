@@ -30,11 +30,11 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### New Features
 
-##### The `spread` operator support for `list` constructor
+##### Support for the spread operator in the list constructor
 
-Introduced the `spread` operator support for the `list` constructor expression.
+Introduced the spread operator support for the list constructor expression.
 
-If the list member with the `spread` operator is `...x`, then, the static type of `x` is expected to be a list (i.e., the static type of `x` is expected to be a subtype of `[(any|error)...]`. All the member values of the list that results from evaluating `x` are included in the list value being constructed.
+If the spread operator in a list constructor expression is `...x`, then, `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
 
 ```ballerina
 import ballerina/io;
@@ -61,7 +61,7 @@ public function fn() {
 }
 ```
 
-The `spread` operator with a varying-length list is not allowed if the inherent type of the list being constructed with required members that are not guaranteed to have a value.
+The spread operator is not allowed with a varying-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
 
 ```ballerina
 public function fn() {
@@ -231,13 +231,13 @@ public function main() {
     float y = 5.5565;
     int fractionDigits = 3;
 
-    io:println(555.545.round(1));                     // 555.5
-    io:println(555.545.round(2));                     // 555.54
-    io:println(float:round(x));                      // 556.0
-    io:println(float:round(x, fractionDigits = 0));  // 556.0
-    io:println(float:round(x, 1));                   // 555.5
-    io:println(y.round(2));                           // 5.56
-    io:println(y.round(fractionDigits));              // 5.556
+    io:println(555.545.round(1)); // 555.5
+    io:println(555.545.round(2)); // 555.54
+    io:println(float:round(x)); // 556.0
+    io:println(float:round(x, fractionDigits = 0)); // 556.0
+    io:println(float:round(x, 1));  // 555.5
+    io:println(y.round(2)); // 5.56
+    io:println(y.round(fractionDigits)); // 5.556
 }
 ```
 
@@ -273,9 +273,9 @@ function fn() returns string {
 }
 ```
 
-#### `error:Clonable` Cloneable definition in error module is now public
+##### `error:Clonable` Cloneable definition in error module is now public
 
-```
+```ballerina
 import ballerina/io;
 
 public function main() {
