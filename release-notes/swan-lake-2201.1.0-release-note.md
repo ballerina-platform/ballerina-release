@@ -215,9 +215,6 @@ int[*][2] x3 = [[1, 2], [1, 2]]; // Supported.
 int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can be inferred.
 ```
 
-##### Add annotation attachments to the BIR
-
-
 
 ##### Revamped `lang.float:round` langlib function
 
