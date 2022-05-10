@@ -85,29 +85,24 @@ The following have been allowed.
 import ballerina/io;
 
 public function main() {
-    int a = 5;
-    float b = 2.5;
-    decimal c = 1.25;
+    int quantity = 5;
+    float weight = 2.5;
+    decimal unitPrice = 10.55;
 
-    float e = a * b;
-    io:println(e); // 12.5
-    float f = b * a;
-    io:println(f); // 12.5
+    float totalWeight = weight * quantity;
+    io:println(totalWeight); // 12.5
+    decimal totalPrice = unitPrice * quantity;
+    io:println(totalPrice); // 52.750
 
-    decimal g = a * c;
-    io:println(g); // 6.250
-    decimal h = c * a;
-    io:println(h); // 6.250
+    float weightInGrams = 2456;
+    int gramsPerKG = 1000;
+    float weightInKG = weightInGrams / gramsPerKG;
+    io:println(weightInKG); // 2.456
 
-    float j = b / a;
-    io:println(j); // 0.5
-    decimal k = c / a;
-    io:println(k); // 0.25
-
-    float m = b % a;
-    io:println(m); // 2.5
-    decimal n = c % a;
-    io:println(n); // 1.25
+    decimal totalAmount = 1000.5;
+    int numberOfPersons = 3;
+    decimal remainingAmount = totalAmount % numberOfPersons;
+    io:println(remainingAmount); // 1.5
 }
 ```
 
