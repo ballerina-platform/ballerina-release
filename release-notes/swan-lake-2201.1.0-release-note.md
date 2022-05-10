@@ -73,7 +73,7 @@ public function fn() {
 }
 ```
 
-##### Allow int*float, float*int, int* decimal, decimal*int, float/int, decimal/int, float%int and decimal%int.
+##### Allow `int*float`, `float*int`,` int* decimal`, `decimal*int`, `float/int`, `decimal/int`, `float%int`, and `decimal%int`.
 
 Multiplicative expressions are now allowed with `int` and `float` or `int` and `decimal` operands.  The type of the result will be the fractional type.
 
