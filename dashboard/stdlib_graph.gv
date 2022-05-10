@@ -54,7 +54,6 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_6 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
-		graphql
 		grpc
 		transaction
 		websocket
@@ -65,6 +64,7 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_7 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
+		graphql
 		kafka
 		rabbitmq
 		sql
@@ -128,7 +128,6 @@ digraph "Stdlib Dependency Graph" {
 	auth -> http
 	jwt -> http
 	oauth2 -> http
-	http -> graphql
 	http -> grpc
 	http -> transaction
 	http -> websocket
@@ -137,6 +136,7 @@ digraph "Stdlib Dependency Graph" {
 	transaction -> kafka
 	transaction -> rabbitmq
 	transaction -> sql
+	websocket -> graphql
 	sql -> "java.jdbc"
 	sql -> mssql
 	sql -> mysql

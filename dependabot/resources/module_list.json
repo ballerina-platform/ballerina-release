@@ -114,6 +114,12 @@
             "version_key": "stdlibOAuth2Version"
         },
         {
+            "name": "graphql-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "graphql-tools",
+            "version_key": "graphqlVersion"
+        },
+        {
             "name": "openapi-tools",
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-openapi",
