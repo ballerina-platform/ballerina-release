@@ -146,7 +146,7 @@ public function main() {
 ```
 If the length of the coefficient after the quantize operation would be greater than precision, then an `InvalidOperation` is signaled.
 
-```
+```ballerina
 public function main() {
 	decimal _ = decimal:quantize(123.1233, 1E-36); // results in an error
 }
