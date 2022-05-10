@@ -233,7 +233,7 @@ public function main() {
 }
 ```
 
-Revamped `lang.decimal:round` langlib function
+##### Revamped `lang.decimal:round` langlib function
 
 The function signature has been changed to have an extra argument `fractionDigits`, where the user can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
