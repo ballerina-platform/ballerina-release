@@ -113,9 +113,9 @@ public function main() {
 
 ##### New lang library functions
 
-###### New `lang.array:some()` and `lang.array:every()` functions
+###### New `lang.array:some()` function
 
-The `lang.array:some()` function tests whether a function returns `true` for some member of an array. The function `lang.array:every` function tests whether a function returns `true` for every member of an array. 
+The `some()` function tests whether a function returns `true` for some member of an array.
 
 ```ballerina
 import ballerina/io;
@@ -124,9 +124,23 @@ function func1(int i) returns boolean {
     return i > 2;
 }
 
-public function fn() {
+public function main() {
     io:println([1, 3].some(func1)); // true
     io:println([1, -3].some(func1)); // false
+}
+```
+###### New `lang.array:every()` function
+
+The `every()` function tests whether a function returns `true` for every member of an array. 
+
+```ballerina
+import ballerina/io;
+
+function func1(int i) returns boolean {
+    return i > 2;
+}
+
+public function main() {
     io:println([5, 3].every(func1)); // true
     io:println([1, 3].every(func1)); // false
 }
