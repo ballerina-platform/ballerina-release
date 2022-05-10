@@ -78,8 +78,8 @@ public function fn() {
 Multiplicative expression is now allowed with `int`, `float` and `int`, and `decimal` operands.  The resulting type of the expression will be the fractional type.
 
 This allows the below.
-Multiplication supports both `int*float` and ``float*int` similar to `decimal*float` and `decimal*int`.
-For division and modulo, only the `floating-point` operand as the dividend is supported (i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported.
+- Multiplication supports both `int*float` and ``float*int` similar to `decimal*float` and `decimal*int`.
+- For division and modulo, only the `floating-point` operand as the dividend is supported (i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported.
 
 ```ballerina
 import ballerina/io;
