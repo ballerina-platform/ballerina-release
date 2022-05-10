@@ -405,23 +405,6 @@ public function main() {
 }
 ```
 
-##### Allow additive expression with operands of a union type containing builtin subtypes of `string` and `XML`
-
-Fixed a spec deviation that disallowed the operands of additive expression with a union type containing builtin subtypes of `string` and `XML`
-
-```ballerina
-import ballerina/io;
-
-type Strings "A"|"B";
-
-public function main() {
-    string:Char|Strings a = "A";
-    string b = "B";
-    // This, which was disallowed previously results `AB` now.
-    io:println(a + b);
-}
-```
-
 #### Bug Fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.1.0%22).
