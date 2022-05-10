@@ -139,7 +139,7 @@ def build_stdlib_repositories(enable_tests):
                 os.system(f"cd {module['name']}/ballerina-tests;" +
                           "find . -name \"Dependencies.toml\" -delete;")
 
-            if module['name'] == "module-ballerina-graphql" or module['name'] == "module-ballerinax-kafka":
+            if module['name'] == "module-ballerinax-oracledb" or module['name'] == "module-ballerinax-kafka":
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
