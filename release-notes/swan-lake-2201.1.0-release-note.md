@@ -322,7 +322,6 @@ public function main() {
 }
 ```
 
-
 - A compilation error is now logged when there is an extra comma inside a mapping match pattern.
 
 ```ballerina
