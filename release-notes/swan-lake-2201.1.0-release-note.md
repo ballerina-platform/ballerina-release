@@ -216,11 +216,20 @@ The method signature is changed to have an extra argument `fractionDigits`, wher
 
 ```ballerina
 import ballerina/io;
+import ballerina/lang.'float as floats;
 
 public function main() {
-    io:println(555.545.round(2)); // 555.54
-    io:println(555.545.round(3)); // 555.545
-    io:println(555.545.round(4)); // 555.545
+    float x = 555.545;
+    float y = 5.5565;
+    int fractionDigits = 3;
+
+    io:println(555.545.round(1));                     // 555.5
+    io:println(555.545.round(2));                     // 555.54
+    io:println(floats:round(x));                      // 556.0
+    io:println(floats:round(x, fractionDigits = 0));  // 556.0
+    io:println(floats:round(x, 1));                   // 555.5
+    io:println(y.round(2));                           // 5.56
+    io:println(y.round(fractionDigits));              // 5.556
 }
 ```
 
@@ -233,11 +242,16 @@ import ballerina/io;
 import ballerina/lang.'decimal as decimals;
 
 public function main() {
-    io:println(5.55.round(1));	// 5.6
-    decimal x = 5.55;
-    io:println(decimals:round(x));	// 6
-    io:println(decimals:round(5.55, fractionDigits = 0));	// 6
-    io:println(decimals:round(5.5565, fractionDigits = 3));	// 5.556
+    decimal x = 555.545;
+    decimal y = 5.5565;
+    int fractionDigits = 3;
+
+    io:println(555.545.round(1));                      // 555.6
+    io:println(decimals:round(x));                     // 556
+    io:println(decimals:round(x, fractionDigits = 0)); // 556
+    io:println(decimals:round(x, 1));                  // 555.6
+    io:println(y.round(2));                            // 5.56
+    io:println(y.round(fractionDigits));               // 5.556
 }
 ```
 
