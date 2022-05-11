@@ -38,11 +38,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 #### Improvements
 
-##### Support to Provide Values for Configurable Variables through TOML In-line Tables
+##### Support to provide values for configurable variables through TOML In-line tables
 
 The configurable feature is improved to support TOML in-line tables through the TOML syntax.
-The values for configurable variables of types `map` and `record` can be now provided using TOML in-line tables.
-Similarly, the values for configurable variables of types array of `map`, array of `record`, and `table` can be now provided using the TOML array of TOML in-line tables.
+The values for configurable variables of types `map` and `record` can now beprovided using TOML in-line tables.
+Similarly, the values for configurable variables of types array of `map`, array of `record`, and `table` can now be provided using the TOML array of TOML in-line tables.
 
 For example, if the configurable variables are defined in the following way,
 
@@ -67,7 +67,7 @@ recordArrayVar = [{name = "Tom"}, {name = "Harry"}]
 
 ```
 
-##### Improved Configurable Variables to Support Tuple Types Through TOML Syntax
+##### Improved configurable variables to support tuple types through TOML syntax
 
 The configurable feature is improved to support variables of tuple types through the TOML syntax.
 
@@ -89,7 +89,7 @@ complexTuple = [[1, 3, 5, 7, 9], ["apple", 2], {name = "Baz Qux", age = 22}, [{a
 restTuple = [1, "foo", 2, 3, 4, 5]
 ```
 
-##### Improved Configurable Variables to Support Union Types Through CLI Arguments
+##### Improved configurable variables to support union types through CLI arguments
 
 The configurable feature is improved to support variables of union types with simple basic typed members through the CLI arguments.
 
@@ -105,11 +105,11 @@ the values can be provided via CLI arguments in the following way.
 bal run -- -Cval=5.0
 ```
 
-##### Improved Runtime Error Creator and Value Creator API input validations
+##### Improved runtime error creator and value creator API input validations
 
 In order to handle Java Exceptions due to the invalid use of Ballerina runtime error creator and value 
-creator APIs, input validations has been improved to provide proper ballerina runtime errors.
-For example, the following invalid use of `ValueCreator.createRecordValue` API to create a record value with Java ArrayList as a field of it will result in panic.
+creator APIs, input validations have been improved to provide proper ballerina runtime errors.
+For example, the following invalid use of the `ValueCreator.createRecordValue` API to create a record value with a Java ArrayList as a field of it will result in a panic.
 
 ```java
  public class App {
@@ -146,14 +146,14 @@ public function main() {
     records:Foo foo =  <records:Foo> records:getRecord("Foo");
 }
 ```
-Runtime Error:
+Runtime error:
 ```
 'class java.util.ArrayList' is not from a valid java runtime class. " +
         "It should be a subclass of one of the following: java.lang.Number, java.lang.Boolean or " +
         "from the package 'io.ballerina.runtime.api.values'
 ```
 
-#### New Runtime Java APIs
+#### New runtime Java APIs
 ##### Runtime API to create an enum type
 New runtime Java API can be used to create enum types from native code.
 
