@@ -28,7 +28,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ### Language Updates
 
-#### New Features
+#### New features
 
 ##### Support for the spread operator in the list constructor
 
@@ -78,8 +78,8 @@ public function fn() {
 Multiplicative expression is now allowed with `int`, `float` and `int`, and `decimal` operands.  The resulting type of the expression will be the fractional type.
 
 This allows the below.
-- Multiplication supports both `int*float` and ``float*int` similar to `decimal*float` and `decimal*int`.
-- For division and modulo, only the `floating-point` operand as the dividend is supported (i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported.
+- Multiplication supports both `int*float` and `float*int` similar to `decimal*float` and `decimal*int`
+- For division and modulo, only the `floating-point` operand is supported as the dividend (i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported
 
 ```ballerina
 import ballerina/io;
@@ -126,7 +126,7 @@ public function main() {
 ```
 ###### New `lang.array:every()` function
 
-The function `lang.array:every` function tests whether a function returns `true` for every member of an array.
+The `lang.array:every` function tests whether a function returns `true` for every member of an array.
 
 ```ballerina
 import ballerina/io;
@@ -142,7 +142,7 @@ public function main() {
 ```
 ###### New `lang.decimal:quantize()` function
 
-The `lang.decimal:quantize()` function has been introduced to control the precision of decimal values, which returns a value equal to the first operand after rounding and having the exponent of the second operand.
+The `lang.decimal:quantize()` function has been introduced to control the precision of decimal values, which return a value equal to the first operand after rounding and having the exponent of the second operand.
 
 ```ballerina
 import ballerina/io;
@@ -153,7 +153,7 @@ public function main() {
     io:println(decimal:quantize(123.123, 1.000)); // 123.123
 }
 ```
-If the length of the coefficient after the quantize operation would be greater than the precision, the function results in a panic.
+If the length of the coefficient after the quantize operation is greater than the precision, the function results in a panic.
 
 ```ballerina
 public function main() {
@@ -163,7 +163,7 @@ public function main() {
 
 ###### New `lang.float:toFixedString()` and `lang.float:toExpString()` functions
 
-Two new functions namely `lang.float:toFixedString()` and `lang.float:toExpString()` have been introduced to get the string representation of a `float` value in fixed-point notation and scientific notation respectively. Both the functions allow you to specify the number of digits required after the decimal point.
+Two new `lang.float:toFixedString()` and `lang.float:toExpString()` functions have been introduced to get the string representation of a `float` value in fixed-point notation and scientific notation respectively. Both the functions allow you to specify the number of digits required after the decimal point.
 
 ```ballerina
 import ballerina/io;
@@ -217,7 +217,7 @@ int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can 
 
 ##### Revamped `lang.float:round` langlib function
 
-The function signature has been changed to have an extra argument `fractionDigits`, where the user can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
+The function signature has been changed to have an extra argument `fractionDigits`, by which, you can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
 ```ballerina
 import ballerina/io;
@@ -239,7 +239,7 @@ public function main() {
 
 ##### Revamped `lang.decimal:round` langlib function
 
-The function signature has been changed to have an extra argument `fractionDigits`, where the user can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
+The function signature has been changed to have an extra `fractionDigits` argument  by which, you can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
 ```ballerina
 import ballerina/io;
@@ -284,9 +284,9 @@ public function main() {
 }
 ```
 
-#### Bug Fixes
+#### Bug fixes
 
-- An invalid sub-typing relationship between `table` and `anydata` has been fixed.
+- Fixed an invalid sub-typing relationship between `table` and `anydata` 
 
 ```ballerina
 public function main() {
@@ -306,7 +306,7 @@ public function main() {
 }
 ```
 
-- An issue that caused the value of enum members defined with quoted identifiers to include the quote has been fixed.
+- Fixed an issue that caused the value of enum members defined with quoted identifiers to include the quote
 
 ```ballerina
 import ballerina/io;
@@ -320,7 +320,7 @@ public function main() {
 }
 ```
 
-- A compilation error is now logged when there is an extra comma inside a mapping match pattern.
+- Updated to log a compilation error when there is an extra comma inside a mapping match pattern
 
 ```ballerina
 type MyRecord record {
@@ -337,7 +337,7 @@ function fn(MyRecord r1) {
 }
 ```
 
-- An issue in the parser that disallowed qualified identifiers with a pre-declared prefix as a const match pattern has been fixed.
+- Fixed an issue in the parser that disallowed qualified identifiers with a pre-declared prefix as a const match pattern
 
 ```ballerina
 function fn(any x) {
@@ -351,7 +351,7 @@ function fn(any x) {
 }
 ```
 
-- Qualified identifiers not being allowed in error match patterns has been fixed.
+- Fixed qualified identifiers not being allowed in error match patterns 
 
 ```ballerina
 function fn(error e) {
@@ -363,7 +363,7 @@ function fn(error e) {
 }
 ```
 
-- The inherent type of a list constructed using a list constructor with `any` as the contextually-expected type has been fixed to be `(any|error)[]` instead of `any[]`.
+- Fixed the inherent type of a list constructed using a list constructor with `any` as the contextually-expected type to be `(any|error)[]` instead of `any[]`
 
 ```ballerina
 public function main() {
@@ -374,22 +374,22 @@ public function main() {
 }
 ```
 
-- A bug that allowed additive expressions with operands of types that are union types of different basic types has been fixed.
+- Fixed a bug that allowed additive expressions with operands of types that are union types of different basic types 
 
 ```ballerina
 public function main() {
     int|float a = 4;
     int|float b = 4.5;
 
-    int _ = a + b; // Now result in a compilation error.
+    int _ = a + b; // Now, this results in a compilation error.
 }
 ```
 
-#### Bug Fixes
+#### Bug fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.1.0%22).
 
-### Runtime Updates
+### Runtime updates
 
 #### New Features
 
