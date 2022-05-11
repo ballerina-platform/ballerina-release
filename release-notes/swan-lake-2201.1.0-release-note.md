@@ -36,9 +36,131 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ### Runtime Updates
 
-#### New Features
-
 #### Improvements
+
+##### Support to Provide Values for Configurable Variables through TOML In-line Tables
+
+The configurable feature is improved to support TOML in-line tables through the TOML syntax.
+The values for configurable variables of types `map` and `record` can be now provided using TOML in-line tables.
+Similarly, the values for configurable variables of types array of `map`, array of `record`, and `table` can be now provided using the TOML array of TOML in-line tables.
+
+For example, if the configurable variables are defined in the following way,
+
+```ballerina
+configurable map<anydata> mapVar = ?;
+configurable Person recordVar = ?;
+configurable table<map<int>> tableVar = ?;
+configurable Person[] recordArrayVar = ?;
+
+```
+
+the values can be provided in the `Config.toml` file as follows.
+
+```
+mapVar = {a = "a", b = 2, c = 3.4, d = [1, 2, 3]}
+
+recordVar = {name = "Jane"}
+
+tableVar = [{a = 1, b = 2}, {c = 3}, {d = 4, e = 5, f = 6}]
+
+recordArrayVar = [{name = "Tom"}, {name = "Harry"}]
+
+```
+
+##### Improved Configurable Variables to Support Tuple Types Through TOML Syntax
+
+The configurable feature is improved to support variables of tuple types through the TOML syntax.
+
+For example, if the tuple-typed configurable variables are defined in the following way,
+
+```ballerina
+configurable [int, string, float, decimal, byte, boolean] simpleTuple = ?;
+configurable [int[], [string, int], map<anydata>, table<map<string>>] complexTuple = ?;
+configurable [int, string, int...] restTuple = ?;
+```
+
+the values can be provided in the `Config.toml` file as follows.
+
+```
+simpleTuple = [278, "string", 2.3, 4.5, 2, true]
+
+complexTuple = [[1, 3, 5, 7, 9], ["apple", 2], {name = "Baz Qux", age = 22}, [{a = "a"}, {b = "b", c = "c"}]]
+
+restTuple = [1, "foo", 2, 3, 4, 5]
+```
+
+##### Improved Configurable Variables to Support Union Types Through CLI Arguments
+
+The configurable feature is improved to support variables of union types with simple basic typed members through the CLI arguments.
+
+For example, if the configurable variables are defined in the following way,
+
+```ballerina
+configurable float|int|string unionVar = ?; 
+```
+
+the values can be provided via CLI arguments in the following way.
+
+```
+bal run -- -Cval=5.0
+```
+
+##### Improved Runtime Error Creator and Value Creator API input validations
+
+In order to handle Java Exceptions due to the invalid use of Ballerina runtime error creator and value 
+creator APIs, input validations has been improved to provide proper ballerina runtime errors.
+For example, the following invalid use of `ValueCreator.createRecordValue` API to create a record value with Java ArrayList as a field of it will result in panic.
+
+```java
+ public class App {
+
+    private static Module module = new Module("org", "interop_project.records", "1");
+
+    public static BMap<BString, Object> getRecord(BString recordName) {
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        Map<String, Object> map = Map.ofEntries(
+                Map.entry("arrList", arrayList)
+        );
+        return ValueCreator.createRecordValue(module, recordName.getValue(), map);
+    }
+}
+```
+
+in modules/records
+```ballerina
+import ballerina/jballerina.java;
+
+public type Foo record {
+    int[] x;    
+};
+
+public function getRecord(string recordName) returns record{} = @java:Method {
+    'class: "javalibs.app.App"
+} external;
+```
+main.bal
+```ballerina
+import interop_project.records;
+
+public function main() {
+    records:Foo foo =  <records:Foo> records:getRecord("Foo");
+}
+```
+Runtime Error:
+```
+'class java.util.ArrayList' is not from a valid java runtime class. " +
+        "It should be a subclass of one of the following: java.lang.Number, java.lang.Boolean or " +
+        "from the package 'io.ballerina.runtime.api.values'
+```
+
+#### New Runtime Java APIs
+##### Runtime API to create an enum type
+New runtime Java API can be used to create enum types from native code.
+
+
+```java
+public static UnionType createUnionType(List<Type> memberTypes, String name, Module pkg, int typeFlags, boolean isCyclic, long flags)
+```
 
 #### Bug Fixes
 
