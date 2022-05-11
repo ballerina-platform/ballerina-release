@@ -142,27 +142,23 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%222201.1.0%22+label%3AType%2FBug).
 
-### Code to Cloud Updates
+### Deployment Updates
 
 #### Improvements
-- Reduced the package size
+- Reduced the package size of `ballerina/cloud`
 - Docker image generation now relies on the user's docker client
+- The `ballerinax/awslambda package` is now available at central
+- The `ballerinax/azure_functions package` is now available at central
+
+#### Breaking Changes
+- For existing `ballerinax/awslambda` projects, change the version to `2.1.0` in the `Dependencies.toml` file.
+- For existing `ballerinax/azure_functions` projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the repositories below.
 
 - [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.1.0%22)
-
-### `ballerinax/awslambda` package
-
-#### Improvements
-- Removed the package from the Ballerina distribution. For existing projects, change the version to `2.1.0` in the `Dependencies.toml` file.
-
-### `ballerinax/azure_functions` package
-
-#### Improvements
-- Removed the package from the Ballerina distribution. For existing projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
 ### Developer Tools Updates
 
