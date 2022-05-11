@@ -150,7 +150,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 - The `ballerinax/awslambda package` is now available at central
 - The `ballerinax/azure_functions package` is now available at central
 
-#### Breaking Changes
+#### Breaking changes
 - For existing `ballerinax/awslambda` projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 - For existing `ballerinax/azure_functions` projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
