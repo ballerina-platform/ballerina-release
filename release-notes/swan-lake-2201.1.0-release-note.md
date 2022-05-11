@@ -30,11 +30,11 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### New features
 
-##### Support for the spread operator in the list constructor
+##### Support for the `spread` operator in the `list` constructor
 
-Introduced the spread operator support for the list constructor expression.
+Introduced the `spread` operator support for the `list` constructor expression.
 
-If the spread operator in a list constructor expression is `...x`, then, `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
+If the `spread` operator in a `list` constructor expression is `...x`, then, `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
 
 ```ballerina
 import ballerina/io;
@@ -61,7 +61,7 @@ public function fn() {
 }
 ```
 
-The spread operator is not allowed with a varying-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
+The `spread` operator is not allowed with a varying-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
 
 ```ballerina
 public function fn() {
@@ -240,7 +240,7 @@ public function main() {
 }
 ```
 
-##### Revamped `lang.decimal:round` langlib function
+##### Revamped `lang.decimal:round` function
 
 The function signature has been changed to have an extra `fractionDigits` argument  by which, you can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
@@ -256,7 +256,9 @@ public function main() {
 }
 ```
 
-##### An unreachable panic statement no longer results in a compilation error
+##### Added compile error for an unreachable panic statement
+
+An unreachable panic statement no longer results in a compilation error.
 
 ```ballerina
 function fn() returns string {
@@ -272,7 +274,9 @@ function fn() returns string {
 }
 ```
 
-##### `error:Clonable` Cloneable definition in error module is now public
+##### Updated `error:Cloneable` to be public in error module
+
+The `error:Clonable` cloneable definition in the error module is now public.
 
 ```ballerina
 import ballerina/io;
@@ -298,7 +302,7 @@ public function main() {
 }
 ```
 
-- A union containing the `null` literal allowing `"null"` as a valid value has been fixed.
+- Fixed the issue of a union containing the null literal allowing `null` as a valid value.
 
 ```ballerina
 type Foo boolean|null;
