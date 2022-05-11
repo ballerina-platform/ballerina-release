@@ -147,12 +147,11 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 #### Improvements
 - Reduced the package size of `ballerina/cloud`
 - Docker image generation now relies on the user's docker client
-- The `ballerinax/awslambda package` is now available at central
-- The `ballerinax/azure_functions package` is now available at central
+- The `ballerinax/awslambda` package is now available in [Ballerina Central](https://central.ballerina.io/ballerinax/awslambda)
+- The `ballerinax/azure_functions` package is now available in [Ballerina Central](https://central.ballerina.io/ballerinax/azure.functions)
 
 #### Breaking Changes
-- For existing `ballerinax/awslambda` projects, change the version to `2.1.0` in the `Dependencies.toml` file.
-- For existing `ballerinax/azure_functions` projects, change the version to `2.1.0` in the `Dependencies.toml` file.
+- For existing `ballerinax/awslambda` and `ballerinax/azure_functions` projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
 #### Bug Fixes
 
