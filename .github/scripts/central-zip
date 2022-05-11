@@ -1,0 +1,9 @@
+for d in $1/*; do
+  if [ -d "$d" ]; then
+    cd $d/*/*
+    module_name=$(basename -- "$d")
+    echo "$module_name"
+    zip -r ${module_name}.zip *
+    cd ../../..
+  fi
+done

@@ -1,0 +1,4 @@
+cd $1/*/*
+bala_name=${1}.zip
+echo $bala_name
+curl -X POST --http1.1 -H "Content-Type:application/octet-stream" -H "Authorization: Bearer <TOKEN>" --data-binary @"$bala_name" https://api.dev-central.ballerina.io/2.0/registry/packages
