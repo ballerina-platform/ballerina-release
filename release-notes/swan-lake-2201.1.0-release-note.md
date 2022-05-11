@@ -184,7 +184,10 @@ public function main() {
 
 ###### New `lang.string:padStart()`, `lang.string:padEnd()`, and `lang.string:padZero()` functions
 
-The `lang.string:padStart()`, `lang.string:padEnd()`, and `lang.string:padZero()` functions have been introduced to add padding in strings. `lang.string:padStart()` adds padding to the start of a string. `lang.string:padEnd()` adds padding to the end of a string. `lang.string:padZero()` pads a string with zeros.
+The `lang.string:padStart()`, `lang.string:padEnd()`, and `lang.string:padZero()` functions have been introduced to add padding in strings. 
+- `lang.string:padStart()` adds padding to the start of a string. 
+- `lang.string:padEnd()` adds padding to the end of a string. 
+- `lang.string:padZero()` pads a string with zeros.
 
 ```ballerina
 public function main() {
