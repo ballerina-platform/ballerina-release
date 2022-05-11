@@ -218,7 +218,7 @@ int[*][2] x3 = [[1, 2], [1, 2]]; // Supported.
 int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can be inferred.
 ```
 
-##### Revamped `lang.float:round` langlib function
+##### Revamped `lang.float:round` function
 
 The function signature has been changed to have an extra argument `fractionDigits`, by which, you can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
