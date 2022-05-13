@@ -212,20 +212,6 @@ public function main() {
 
 #### Improvements
 
-##### Disallow inferring array length in contexts that are not permitted
-
-Inferring array length has been restricted to list constructors in variable and constant declarations. Moreover, only the first dimension can be inferred in multidimensional arrays.
-
-```ballerina
-int[*] x1 = [1, 2]; // Supported.
-
-int[2] y = [1, 2];
-int[*] x2 = y; // Not supported. Requires a list constructor to infer the array length.
-
-int[*][2] x3 = [[1, 2], [1, 2]]; // Supported.
-int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can be inferred.
-```
-
 ##### Revamped `lang.float:round` function
 
 The function signature has been changed to have an extra argument `fractionDigits`, by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
@@ -299,6 +285,20 @@ public function main() {
 }
 ```
 
+##### Disallow inferring array length in contexts that are not permitted
+
+Inferring array length has been restricted to list constructors in variable and constant declarations. Moreover, only the first dimension can be inferred in multidimensional arrays.
+
+```ballerina
+int[*] x1 = [1, 2]; // Supported.
+
+int[2] y = [1, 2];
+int[*] x2 = y; // Not supported. Requires a list constructor to infer the array length.
+
+int[*][2] x3 = [[1, 2], [1, 2]]; // Supported.
+int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can be inferred.
+```
+
 #### Bug fixes
 
 - Fixed an invalid sub-typing relationship between `table` and `anydata` 
@@ -347,20 +347,6 @@ function fn(MyRecord r1) {
     match r1 {
         {field1: 0,} => { // A syntax error is now given for the comma.
 
-        }
-    }
-}
-```
-
-- Fixed an issue in the parser that disallowed qualified identifiers with a pre-declared prefix as a const match pattern
-
-```ballerina
-function fn(any x) {
-    match x {
-        int:MAX_VALUE => { // Match pattern is now allowed
-        }
-
-        [int:MAX_VALUE, int:MIN_VALUE] => { // Match pattern is now allowed
         }
     }
 }
