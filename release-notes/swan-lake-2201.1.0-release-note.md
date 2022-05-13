@@ -32,7 +32,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ##### Support for the spread operator in the list constructor
 
-Introduced the `spread` operator support for the `list` constructor expression.
+Introduced spread operator support for the list constructor expression.
 
 If the spread operator in a list constructor expression is `...x`, then, `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
 
