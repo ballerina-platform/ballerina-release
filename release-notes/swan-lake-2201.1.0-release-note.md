@@ -30,56 +30,56 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 #### New features
 
-##### Support for the `spread` operator in the `list` constructor
+##### Support for the spread operator in the list constructor
 
 Introduced the `spread` operator support for the `list` constructor expression.
 
-If the `spread` operator in a `list` constructor expression is `...x`, then, `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
+If the spread operator in a list constructor expression is `...x`, then, `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
 
 ```ballerina
 import ballerina/io;
 
 public function fn() {
     int[] a1 = [3, 4];
-    int[] v1 = [1, 2, ... a1];
-    io:println(v1); // [1, 2, 3, 4]
+    int[] v1 = [1, 2, ...a1];
+    io:println(v1); // [1,2,3,4]
 
     int[2] a2 = [6, 7];
-    int[] v2 = [1, 2, ... a1, 5, ... a2];
-    io:println(v2); // [1, 2, 3, 4, 5, 6, 7]
+    int[] v2 = [1, 2, ...a1, 5, ...a2];
+    io:println(v2); // [1,2,3,4,5,6,7]
 
     [int, string] t1 = [5, "s"];
-    any[] v3 = [ ... t1, "x"];
-    io:println(v3); // [5, "s", "x"]
+    any[] v3 = [...t1, "x"];
+    io:println(v3); // [5,"s","x"]
 
     [boolean, int...] t2 = [false, 4, 7];
-    [string, int, string, boolean, int...] v4 = ["x", ... t1, ... t2];
-    io:println(v4); // ["x", 5, "s", false, 4, 7];
+    [string, int, string, boolean, int...] v4 = ["x", ...t1, ...t2];
+    io:println(v4); // ["x",5,"s",false,4,7];
 
-    var v5 = [4, ... t1, ... a2];
-    io:println(v5); // [4, 5, "s", 6, 7];
+    var v5 = [4, ...t1, ...a2];
+    io:println(v5); // [4,5,"s",6,7];
 }
 ```
 
-The `spread` operator is not allowed with a varying-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
+The spread operator is not allowed with a variable-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
 
 ```ballerina
 public function fn() {
     [int, string...] t1 = [5, "s"];
-    [int, string, string...] v1 = [ ... t1]; // results in an error since a value is not guaranteed to have been provided for the second tuple member
+    [int, string, string...] v1 = [...t1]; // results in an error since a value is not guaranteed to have been provided for the second tuple member
 
     [int, boolean, string, int...] t2 = [5, false, "w"];
-    [int, boolean, anydata...] v2 = [ ... t2, "x", "y"]; // works as all fixed tuple members are guaranteed to have been provided values
+    [int, boolean, anydata...] v2 = [...t2, "x", "y"]; // works as all fixed tuple members are guaranteed to have been provided values
 }
 ```
 
 ##### Allow `int*float`, `float*int`,` int* decimal`, `decimal*int`, `float/int`, `decimal/int`, `float%int`, and `decimal%int`.
 
-Multiplicative expression is now allowed with `int`, `float` and `int`, and `decimal` operands.  The resulting type of the expression will be the fractional type.
+Multiplicative expressions are now allowed with `int` and `float` operands and `int` and `decimal` operands. The type of the resulting expression will be the fractional type.
 
 This allows the below.
-- Multiplication supports both `int*float` and `float*int` similar to `decimal*float` and `decimal*int`
-- For division and modulo, only the `floating-point` operand is supported as the dividend (i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported
+- Multiplication supports `int*float`, `float*int`, `int*decimal`, and `decimal*int`
+- For division and modulo, only the floating-point operand is supported as the dividend (i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported)
 
 ```ballerina
 import ballerina/io;
@@ -110,39 +110,46 @@ public function main() {
 
 ###### New `lang.array:some()` function
 
-The `lang.array:some()` function tests whether a function returns `true` for some member of an array. 
+The `lang.array:some()` function tests whether a function returns `true` for some member of a list. 
 
 ```ballerina
 import ballerina/io;
 
-function func1(int i) returns boolean {
+function greaterThanTwo(int i) returns boolean {
     return i > 2;
 }
 
 public function main() {
-    io:println([1, 3].some(func1)); // true
-    io:println([1, -3].some(func1)); // false
+    int[] arr = [1, 3];
+    io:println(arr.some(greaterThanTwo)); // true
+
+    [string, string...] tup = ["hello", "world"];
+    io:println(tup.some(x => x.length() == 0)); // false
 }
 ```
 ###### New `lang.array:every()` function
 
-The `lang.array:every` function tests whether a function returns `true` for every member of an array.
+The `lang.array:every` function tests whether a function returns `true` for every member of a list.
 
 ```ballerina
 import ballerina/io;
 
-function func1(int i) returns boolean {
+function greaterThanTwo(int i) returns boolean {
     return i > 2;
 }
 
 public function main() {
-    io:println([5, 3].every(func1)); // true
-    io:println([1, 3].every(func1)); // false
+    int[] arr = [5, 3, 45];
+    io:println(arr.every(greaterThanTwo)); // true
+
+    [string, string] tup = ["", "ballerina"];
+    io:println(tup.every(x => x.length() == 0)); // false
 }
 ```
+
 ###### New `lang.decimal:quantize()` function
 
-The `lang.decimal:quantize()` function has been introduced to control the precision of decimal values, which return a value equal to the first operand after rounding and having the exponent of the second operand.
+The `lang.decimal:quantize()` function has been introduced to control the precision of decimal values. This returns a value equal to the first operand after rounding, with the exponent of the second operand.
 
 ```ballerina
 import ballerina/io;
@@ -153,6 +160,7 @@ public function main() {
     io:println(decimal:quantize(123.123, 1.000)); // 123.123
 }
 ```
+
 If the length of the coefficient after the quantize operation is greater than the precision, the function results in a panic.
 
 ```ballerina
@@ -163,7 +171,7 @@ public function main() {
 
 ###### New `lang.float:toFixedString()` and `lang.float:toExpString()` functions
 
-Two new `lang.float:toFixedString()` and `lang.float:toExpString()` functions have been introduced to get the string representation of a `float` value in fixed-point notation and scientific notation respectively. Both the functions allow you to specify the number of digits required after the decimal point.
+Two new functions, `lang.float:toFixedString()` and `lang.float:toExpString()`, have been introduced to get the string representation of a `float` value in fixed-point notation and scientific notation respectively. Both the functions allow you to specify the number of digits required after the decimal point.
 
 ```ballerina
 import ballerina/io;
@@ -220,7 +228,7 @@ int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can 
 
 ##### Revamped `lang.float:round` function
 
-The function signature has been changed to have an extra argument `fractionDigits`, by which, you can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
+The function signature has been changed to have an extra argument `fractionDigits`, by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
 ```ballerina
 import ballerina/io;
@@ -242,7 +250,7 @@ public function main() {
 
 ##### Revamped `lang.decimal:round` function
 
-The function signature has been changed to have an extra `fractionDigits` argument  by which, you can choose the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
+The function signature has been changed to have an extra `fractionDigits` argument  by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
 ```ballerina
 import ballerina/io;
@@ -274,9 +282,9 @@ function fn() returns string {
 }
 ```
 
-##### Updated `error:Cloneable` to be public in error module
+##### Updated `lang.error:Cloneable` to be `public`
 
-The `error:Clonable` cloneable definition in the error module is now public.
+The `Cloneable` type in the `lang.error` module is now `public`.
 
 ```ballerina
 import ballerina/io;
@@ -298,18 +306,18 @@ public function main() {
 ```ballerina
 public function main() {
     table<map<any>> tany = table [{"a": 2}];
-    anydata ad = tany; // Results in a compilation error.
+    anydata ad = tany; // Results in a compilation error now.
 }
 ```
 
-- Fixed the issue of a union containing the null literal allowing `null` as a valid value.
+- Fixed the issue of a union containing the null literal allowing `"null"` as a valid value
 
 ```ballerina
 type Foo boolean|null;
 
 public function main() {
-    Foo a = "null"; // compilation error
-    "string"|null b = "null"; // compilation error
+    Foo a = "null"; // Results in a compilation error now.
+    "string"|null b = "null"; // Results in a compilation error now.
 }
 ```
 
@@ -327,7 +335,7 @@ public function main() {
 }
 ```
 
-- Updated to log a compilation error when there is an extra comma inside a mapping match pattern
+- Fixed a bug that resulted in a compilation error not being logged for an extra comma in a mapping match pattern
 
 ```ballerina
 type MyRecord record {
