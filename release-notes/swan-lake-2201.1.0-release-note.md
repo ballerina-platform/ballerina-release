@@ -264,7 +264,7 @@ public function main() {
 }
 ```
 
-##### Added compile error for an unreachable panic statement
+##### Removed compile error for an unreachable panic statement
 
 An unreachable panic statement no longer results in a compilation error.
 
