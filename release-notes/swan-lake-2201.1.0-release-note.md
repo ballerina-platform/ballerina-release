@@ -357,7 +357,7 @@ function fn(MyRecord r1) {
 ```ballerina
 function fn(error e) {
     match e {
-        error(errors:MESSAGE) => { // Match pattern is now allowed
+        error(errors:MESSAGE) => { // Match pattern is now allowed.
 
         }
     }
