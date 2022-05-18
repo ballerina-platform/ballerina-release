@@ -266,6 +266,9 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 ### Deployment updates
 
+#### New Features
+- Added the `name` field for the `cloud.config.files` property in the `Cloud.toml` file to change the name of the generated config map 
+
 #### Improvements
 - Reduced the package size of `ballerina/cloud`
 - Docker image generation now relies on the user's docker client
