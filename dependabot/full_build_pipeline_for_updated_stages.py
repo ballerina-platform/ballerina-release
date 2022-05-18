@@ -124,7 +124,7 @@ def build_stdlib_repositories(enable_tests):
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
-            if module['name'] == "module-ballerina-c2c":
+            if module['name'] == "module-ballerina-c2c" or module['name'] == "module-ballerina-http":
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
