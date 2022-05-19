@@ -112,6 +112,7 @@ jobs:
 
   ubuntu-rpm-installer-test:
     needs: build-pipeline
+    name: Ubuntu rpm Installer
     runs-on: ubuntu-latest
     container: centos:latest
 
