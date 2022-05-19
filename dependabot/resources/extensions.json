@@ -36,21 +36,6 @@
             ]
         },
         {
-            "name": "module-ballerina-observe",
-            "level": 1,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "observe-ballerina",
-            "version_key": "observeVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerinai-observe"
-            ]
-        },
-        {
             "name": "module-ballerina-regex",
             "level": 1,
             "group_id": "io.ballerina.stdlib",
@@ -153,22 +138,6 @@
             ]
         },
         {
-            "name": "module-ballerinai-observe",
-            "level": 2,
-            "group_id": "io.ballerina",
-            "artifact_id": "observe-ballerina",
-            "version_key": "observeInternalVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerinax-datamapper",
-                "module-ballerina-log"
-            ]
-        },
-        {
             "name": "module-ballerina-os",
             "level": 2,
             "group_id": "io.ballerina.stdlib",
@@ -263,21 +232,6 @@
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
                 "module-ballerina-oauth2"
-            ]
-        },
-        {
-            "name": "module-ballerinax-datamapper",
-            "level": 3,
-            "group_id": "org.ballerinax.datamapper",
-            "artifact_id": "datamapper-extension",
-            "version_key": "dataMapperVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
             ]
         },
         {
