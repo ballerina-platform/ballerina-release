@@ -114,22 +114,14 @@
             "version_key": "stdlibOAuth2Version"
         },
         {
-            "name": "graphql-tools",
-            "group_id": "io.ballerina",
-            "artifact_id": "graphql-tools",
-            "version_key": "graphqlVersion"
+            "name": "module-ballerina-observe",
+            "version_key": "observeVersion"
         },
         {
-            "name": "openapi-tools",
+            "name": "module-ballerinai-observe",
             "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-openapi",
-            "version_key": "openapiVersion"
-        },
-        {
-            "name": "asyncapi-tools",
-            "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-asyncapi",
-            "version_key": "asyncapiVersion"
+            "version_key": "observeInternalVersion",
+            "is_extended_library_module": false
         },
         {
             "name": "module-ballerinax-oracledb"
@@ -175,6 +167,24 @@
             "name": "module-ballerina-time"
         },
         {
+            "name": "graphql-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "graphql-tools",
+            "version_key": "graphqlVersion"
+        },
+        {
+            "name": "openapi-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-openapi",
+            "version_key": "openapiVersion"
+        },
+        {
+            "name": "asyncapi-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-asyncapi",
+            "version_key": "asyncapiVersion"
+        },
+        {
             "name": "module-ballerinai-transaction",
             "group_id": "org.ballerinalang"
         },
@@ -201,16 +211,6 @@
         },
         {
             "name": "module-ballerina-xslt"
-        },
-        {
-            "name": "module-ballerina-observe",
-            "version_key": "observeVersion"
-        },
-        {
-            "name": "module-ballerinai-observe",
-            "group_id": "io.ballerina",
-            "version_key": "observeInternalVersion",
-            "is_extended_library_module": false
         }
     ]
 }
