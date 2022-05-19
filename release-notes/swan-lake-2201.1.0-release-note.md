@@ -39,7 +39,7 @@ If the spread operator in a list constructor expression is `...x`, then, `x` is 
 ```ballerina
 import ballerina/io;
 
-public function fn() {
+public function main() {
     int[] a1 = [3, 4];
     int[] v1 = [1, 2, ...a1];
     io:println(v1); // [1,2,3,4]
@@ -64,7 +64,7 @@ public function fn() {
 The spread operator is not allowed with a variable-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
 
 ```ballerina
-public function fn() {
+public function main() {
     [int, string...] t1 = [5, "s"];
     [int, string, string...] v1 = [...t1]; // results in an error since a value is not guaranteed to have been provided for the second tuple member
 
@@ -73,7 +73,7 @@ public function fn() {
 }
 ```
 
-##### Allow `int*float`, `float*int`,` int* decimal`, `decimal*int`, `float/int`, `decimal/int`, `float%int`, and `decimal%int`.
+##### Allow `int*float`, `float*int`,` int* decimal`, `decimal*int`, `float/int`, `decimal/int`, `float%int`, and `decimal%int` multiplicative expressions
 
 Multiplicative expressions are now allowed with `int` and `float` operands and `int` and `decimal` operands. The type of the resulting expression will be the fractional type.
 
@@ -161,7 +161,7 @@ public function main() {
 }
 ```
 
-If the length of the coefficient after the quantize operation is greater than the precision, the function results in a panic.
+If the length of the coefficient after the quantize operation is greater than the precision, the function call results in a panic.
 
 ```ballerina
 public function main() {
@@ -198,15 +198,15 @@ The `lang.string:padStart()`, `lang.string:padEnd()`, and `lang.string:padZero()
 - `lang.string:padZero()` pads a string with zeros.
 
 ```ballerina
+import ballerina/io;
+
 public function main() {
-    io:println("abc".padStart(5, "#")); // "##abc"
-    io:println("abc".padStart(5)); // "  abc"
-
-    io:println("abc".padEnd(5, "#")); // "abc##"
-    io:println("abc".padEnd(5)); // "abc  "
-
-    io:println("123".padZero(5)); // "00123"
-    io:println("123".padZero(5, "#")); // "##123"
+    io:println("abc".padStart(5, "#").toBalString()); // "##abc"
+    io:println("abc".padStart(5).toBalString()); // "  abc"
+    io:println("abc".padEnd(5, "#").toBalString()); // "abc##"
+    io:println("abc".padEnd(5).toBalString()); // "abc  "
+    io:println("123".padZero(5).toBalString()); // "00123"
+    io:println("123".padZero(5, "#").toBalString()); // "##123"
 }
 ```
 
@@ -214,7 +214,7 @@ public function main() {
 
 ##### Revamped `lang.float:round` function
 
-The function signature has been changed to have an extra argument `fractionDigits`, by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
+The function signature has been changed to have an extra `fractionDigits` parameter, by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
 ```ballerina
 import ballerina/io;
@@ -236,7 +236,7 @@ public function main() {
 
 ##### Revamped `lang.decimal:round` function
 
-The function signature has been changed to have an extra `fractionDigits` argument  by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
+The function signature has been changed to have an extra `fractionDigits` parameter, by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
 
 ```ballerina
 import ballerina/io;
@@ -250,7 +250,7 @@ public function main() {
 }
 ```
 
-##### Removed compile error for an unreachable panic statement
+##### Removed the compilation error for an unreachable panic statement
 
 An unreachable panic statement no longer results in a compilation error.
 
@@ -310,7 +310,7 @@ public function main() {
 }
 ```
 
-- Fixed the issue of a union containing the null literal allowing `"null"` as a valid value
+- Fixed an issue that caused a union containing the `null` literal allowing `"null"` as a valid value
 
 ```ballerina
 type Foo boolean|null;
@@ -330,6 +330,7 @@ public enum Status {
     'new,
     old
 }
+
 public function main() {
     io:println('new); // Previously printed `'new`, now prints `new`.
 }
