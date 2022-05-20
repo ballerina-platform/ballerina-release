@@ -25,7 +25,8 @@ def main():
         dec_file.write(decrypted)
 
     message = "*" + str(sys.argv[1]) + "* daily build failure" + "\n" +\
-              "Please visit <https://github.com/ballerina-platform/" + str(sys.argv[1]) + "/actions?query=workflow%3A%22Daily+build%22|the daily build page> for more information" +"\n"
+              "Please visit <https://github.com/ballerina-platform/" + str(sys.argv[1]) +\
+              "/actions?query=workflow%3A" + str(sys.argv[2]) + "> for more information" +"\n"
 
     for owner in owners :
         with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
