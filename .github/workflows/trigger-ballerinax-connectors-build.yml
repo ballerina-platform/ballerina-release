@@ -1,0 +1,24 @@
+name: Trigger ballerinax connectors build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  trigger_repository_disptach:
+    name: Trigger repository dispatch in ballerinax connector repos
+    strategy:
+      fail-fast: false
+      matrix:
+        modules: [twitter]
+    runs-on: ubuntu-latest
+    steps:
+      - name: dispatch build request
+        run: |
+          curl --request \
+          POST 'https://api.github.com/repos/ballerina-platform/module-ballerinax-${{matrix.modules}}/dispatches' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --header 'Content-Type: application/json' \
+          --header 'Authorization: token ${{secrets.BALLERINA_BOT_TOKEN}}' \
+          --data-raw '{
+              "event_type":"check_connector_for_breaking_changes"
+          }'
