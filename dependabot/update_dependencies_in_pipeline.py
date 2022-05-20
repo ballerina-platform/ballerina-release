@@ -431,13 +431,13 @@ def update_module(idx: int, current_level):
         pulls = repo.get_pulls(state='closed')
         sha_of_lang = lang_version.split('-')[-1]
 
-        for pull in pulls:
-            if sha_of_lang in pull.title:
-                current_level_modules[idx][MODULE_CREATED_PR] = pull
-                break
-
-        if current_level_modules[idx][MODULE_CREATED_PR] is None:
+        if skip_lang_update:
             current_level_modules[idx][MODULE_CREATED_PR] = pulls[0]
+        else:
+            for pull in pulls:
+                if sha_of_lang in pull.title:
+                    current_level_modules[idx][MODULE_CREATED_PR] = pull
+                    break
 
 
 def get_updated_properties_file(module_name, current_level, properties_file):
