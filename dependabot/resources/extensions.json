@@ -620,45 +620,6 @@
             "dependents": []
         },
         {
-            "name": "module-ballerinax-choreo",
-            "level": 10,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "choreo-extension-ballerina",
-            "version_key": "observeExtChoreoVersion",
-            "default_branch": "main",
-            "auto_merge": false,
-            "is_extended_library_module": true,
-            "build_action_file": "build-main",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerina-docker",
-            "level": 10,
-            "group_id": "org.ballerinax.docker",
-            "artifact_id": "docker-generator",
-            "version_key": "dockerVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-jaeger",
-            "level": 10,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "jaeger-extension-ballerina",
-            "version_key": "observeExtJaegerVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-main",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
             "name": "module-ballerinax-java.jdbc",
             "level": 10,
             "group_id": "io.ballerina.stdlib",
@@ -746,19 +707,6 @@
             "auto_merge": true,
             "is_extended_library_module": true,
             "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-prometheus",
-            "level": 10,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "prometheus-extension-ballerina",
-            "version_key": "observeExtPrometheusVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-main",
             "send_notification": true,
             "dependents": []
         },
