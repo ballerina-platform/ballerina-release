@@ -113,8 +113,15 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
+      - name: Setup Files
+        run: |
+          cd /etc/yum.repos.d/
+          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
       - name: Install Git
-        run: sudo dnf install git -y
+        run: |
+          yum install sudo -y
+          sudo dnf install git -y
       - name: Download Ballerina Distribution
         run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
       - name: Download Ballerina rpm Installer
