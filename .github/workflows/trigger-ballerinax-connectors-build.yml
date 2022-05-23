@@ -9,7 +9,45 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        modules: [twitter]
+        modules:
+          - aws.dynamodb
+          - aws.s3
+          - aws.ses
+          - aws.simpledb
+          - aws.sns
+          - aws.sqs
+          - azure-cosmosdb
+          - azure-service-bus
+          - azure-storage-service
+          - azure.ad
+          - azure.eventhub
+          - cdata.connect
+          - cdata.connect.driver
+          - github
+          - googleapis.calendar
+          - googleapis.drive
+          - googleapis.gmail
+          - googleapis.people
+          - googleapis.sheets
+          - microsoft.excel
+          - microsoft.onedrive
+          - microsoft.onenote
+          - microsoft.outlook.calendar
+          - microsoft.outlook.mail
+          - microsoft.teams
+          - mongodb
+          - mssql.driver
+          - mysql.driver
+          - netsuite
+          - oracledb.driver
+          - peoplehr
+          - postgresql.driver
+          - sfdc
+          - slack
+          - snowflake
+          - snowflake.driver
+          - twilio
+          - twitter
     runs-on: ubuntu-latest
     steps:
       - name: dispatch build request
