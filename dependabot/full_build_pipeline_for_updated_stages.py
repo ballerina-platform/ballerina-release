@@ -235,12 +235,19 @@ def switch_to_branches_from_updated_stages():
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             if module['name'] == "module-ballerinai-transaction":
+                os.system(f"echo {module['name']}")
+                exit_code = os.system(f"cd {module['name']};git checkout 1.0.x")
+
+                if exit_code != 0:
+                    print(f"Failed to switch to branch 'v1.0.x' from last updated commit id for " +
+                          f"{module['name']}")
+                    sys.exit(1)
                 continue
             try:
                 version = properties[module['version_key']]
                 if len(version.split("-")) > 1:
                     updated_commit_id = version.split("-")[-1]
-
+                    os.system(f"echo {module['name']}")
                     exit_code = os.system(f"cd {module['name']};git checkout -b full-build {updated_commit_id}")
 
                     if exit_code != 0:
@@ -248,6 +255,7 @@ def switch_to_branches_from_updated_stages():
                               f"{module['name']}")
                         sys.exit(1)
                 else:
+                    os.system(f"echo {module['name']}")
                     exit_code = os.system(f"cd {module['name']};git checkout v{version}")
 
                     if exit_code != 0:
