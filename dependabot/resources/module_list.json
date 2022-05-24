@@ -10,14 +10,16 @@
             "group_id": "org.ballerinax.awslambda",
             "artifact_id": "awslambda-extension-bala",
             "version_key": "awslambdaVersion",
-            "build_action_file": "build-master"
+            "build_action_file": "build-master",
+            "push_to_central": false
         },
         {
             "name": "module-ballerinax-azure.functions",
             "group_id": "org.ballerinax.azurefunctions",
             "artifact_id": "azurefunctions-extension",
             "version_key": "azFunctionsVersion",
-            "build_action_file": "build-master"
+            "build_action_file": "build-master",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-c2c",
@@ -34,7 +36,8 @@
             "artifact_id": "choreo-extension-ballerina",
             "version_key": "observeExtChoreoVersion",
             "auto_merge": false,
-            "build_action_file": "build-main"
+            "build_action_file": "build-main",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-crypto"
@@ -44,13 +47,15 @@
             "group_id": "org.ballerinax.datamapper",
             "artifact_id": "datamapper-extension",
             "version_key": "dataMapperVersion",
-            "build_action_file": "build-master"
+            "build_action_file": "build-master",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-docker",
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
-            "version_key": "dockerVersion"
+            "version_key": "dockerVersion",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-email"
@@ -78,11 +83,13 @@
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
             "version_key": "observeExtJaegerVersion",
-            "build_action_file": "build-main"
+            "build_action_file": "build-main",
+            "push_to_central": false
         },
         {
             "name": "module-ballerinax-java.jdbc",
-            "version_key": "stdlibJdbcVersion"
+            "version_key": "stdlibJdbcVersion",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
@@ -92,7 +99,8 @@
             "name": "module-ballerina-jwt"
         },
         {
-            "name": "module-ballerinax-kafka"
+            "name": "module-ballerinax-kafka",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-log"
@@ -101,13 +109,16 @@
             "name": "module-ballerina-mime"
         },
         {
-            "name": "module-ballerinax-mssql"
+            "name": "module-ballerinax-mssql",
+            "push_to_central": false
         },
         {
-            "name": "module-ballerinax-mysql"
+            "name": "module-ballerinax-mysql",
+            "push_to_central": false
         },
         {
-            "name": "module-ballerinax-nats"
+            "name": "module-ballerinax-nats",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-oauth2",
@@ -121,29 +132,34 @@
             "name": "module-ballerinai-observe",
             "group_id": "io.ballerina",
             "version_key": "observeInternalVersion",
-            "is_extended_library_module": false
+            "is_extended_library_module": false,
+            "push_to_central": false
         },
         {
-            "name": "module-ballerinax-oracledb"
+            "name": "module-ballerinax-oracledb",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-os"
         },
         {
-            "name": "module-ballerinax-postgresql"
+            "name": "module-ballerinax-postgresql",
+            "push_to_central": false
         },
         {
             "name": "module-ballerinax-prometheus",
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
             "version_key": "observeExtPrometheusVersion",
-            "build_action_file": "build-main"
+            "build_action_file": "build-main",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-protobuf"
         },
         {
-            "name": "module-ballerinax-rabbitmq"
+            "name": "module-ballerinax-rabbitmq",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-random"
@@ -155,7 +171,8 @@
             "name": "module-ballerina-sql"
         },
         {
-            "name": "module-ballerinax-stan"
+            "name": "module-ballerinax-stan",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-task"
@@ -170,7 +187,8 @@
             "name": "graphql-tools",
             "group_id": "io.ballerina",
             "artifact_id": "graphql-tools",
-            "version_key": "graphqlVersion"
+            "version_key": "graphqlVersion",
+            "push_to_central": false
         },
         {
             "name": "openapi-tools",
@@ -182,11 +200,13 @@
             "name": "asyncapi-tools",
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-asyncapi",
-            "version_key": "asyncapiVersion"
+            "version_key": "asyncapiVersion",
+            "push_to_central": false
         },
         {
             "name": "module-ballerinai-transaction",
-            "group_id": "org.ballerinalang"
+            "group_id": "org.ballerinalang",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-udp"
