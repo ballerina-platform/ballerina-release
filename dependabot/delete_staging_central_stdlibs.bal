@@ -28,9 +28,9 @@ public function main() returns error? {
 
 // Retrieves and maps the respective X.X.X versions corresponding to the stdlib version keys
 function retrieveModuleVersions() returns error? {
-    string[] properties_content = check io:fileReadLines(GRADLE_PROPERTIES_FILE_PATH);
+    string[] propertiesContent = check io:fileReadLines(GRADLE_PROPERTIES_FILE_PATH);
 
-    foreach string property in properties_content {
+    foreach string property in propertiesContent {
         if property.includes("Version") {
             int splitVersionKeyIndex = <int>property.indexOf("=");
             int splitVersionIndex = property.includes("-") ? <int>property.indexOf("-") : property.length();
