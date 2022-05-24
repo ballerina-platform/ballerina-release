@@ -30,10 +30,10 @@ jobs:
           args: run ./dependabot/delete_staging_central_stdlibs.bal
       - name: Delete stdlibs from staging central
         run: |
+          echo "$STAGE_KEY" > bc-stage-admin-client.key ;
+          echo "$STAGE_CERT" > bc-stage-admin-client.crt ;
           while IFS=, read -r level package version
           do
-            echo "$STAGE_KEY" > bc-stage-admin-client.key ;
-            echo "$STAGE_CERT" > bc-stage-admin-client.crt ;
             curl -v -X DELETE --key bc-stage-admin-client.key --cert bc-stage-admin-client.crt \
              https://admin.staging-central.ballerina.io/2.0/admin/packages/ballerina/$package/$version\?force\=true ;
           done < ModuleDetails.csv
