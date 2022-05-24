@@ -655,8 +655,8 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 
 ##### Language Server
 
-- Added completion and code action support for already-imported modules in the Ballerina user home
-- Implemented file operation events in the Language Server
+- Introduced a new code action called `Make construct public` to make a construct public
+- Added completion and code action support to suggest packages pulled from the Ballerina central
 
 #### Improvements
 
@@ -665,7 +665,7 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the reposi
 
 ##### Language Server
 
-- Improve the `Document this code` action to support module-level variables
+- Improve the `Document this` code action to support module-level variables
 - Added signature help for included record params
 - Revamp the code action utilities introducing a new API to find the top-level node for a given code action context
 - Improved completion item sorting in several contexts
