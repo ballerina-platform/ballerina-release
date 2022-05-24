@@ -22,7 +22,6 @@ jobs:
           - azure.ad
           - azure.eventhub
           - cdata.connect
-          - cdata.connect.driver
           - github
           - googleapis.calendar
           - googleapis.drive
@@ -41,7 +40,6 @@ jobs:
           - sfdc
           - slack
           - snowflake
-          - snowflake.driver
           - twilio
           - twitter
     runs-on: ubuntu-latest
