@@ -12,13 +12,13 @@ map<string> versionProperties = {};
 public function main() returns error? {
     error? retrieveModuleVersionsResult = retrieveModuleVersions();
     if retrieveModuleVersionsResult is error {
-        log:printError("Could not retrieve module versions due to ", retrieveModuleVersionsResult);
+        log:printError("Could not retrieve module versions due to " + retrieveModuleVersionsResult.message());
         return ;
     } 
 
     string[][]|error gatherModuleDetailsResult = check gatherModuleDetails();
     if gatherModuleDetailsResult is error {
-        log:printError("Could not gather Balas due to ", gatherModuleDetailsResult);
+        log:printError("Could not gather details due to " + gatherModuleDetailsResult.message());
         return ;
     } else {
         check io:fileWriteCsvFromStream(MODULE_DETAILS_CSV_PATH,

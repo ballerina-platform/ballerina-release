@@ -8,13 +8,13 @@ const BALA_ARCHIVE_PATH = "bala/";
 const EXTENSIONS_FILE_PATH = "dependabot/resources/extensions.json";
 
 string VERSION = os:getEnv("BAL_VERSION_ID");
-string DIST_VERSION = BAL_PREFIX + VERSION + "-" + os:getEnv("BAL_VERSION_CODE_NAME");
-string DIST_BALA_PATH = DIST_VERSION + "/distributions/" + BAL_PREFIX + VERSION +"/repo/bala/ballerina/";
+string DIST_VERSION = string `${BAL_PREFIX}${VERSION}-${os:getEnv("BAL_VERSION_CODE_NAME")}`;
+string DIST_BALA_PATH = string `${DIST_VERSION}/distributions/${BAL_PREFIX}${VERSION}/repo/bala/ballerina/`;
 
 public function main() returns error? {
     error? gatherModuleBalasResult = gatherModuleBalas();
     if gatherModuleBalasResult is error {
-        log:printError("Could not gather the module Balas due to: ", gatherModuleBalasResult);
+        log:printError("Could not gather the module Balas due to " + gatherModuleBalasResult.message());
         return ;
     }
 }
@@ -41,7 +41,7 @@ function gatherModuleBalas() returns error? {
             
             // Verifies the existence of the particular module bala in the distribution
             if check file:test(DIST_BALA_PATH + moduleName, file:EXISTS) {
-                string moduleRootDist = DIST_BALA_PATH + moduleName;
+                string moduleRootDist = string `${DIST_BALA_PATH}${moduleName}`;
                 string moduleLevel = (check  module.level).toString();
 
                 // Iterate the sub directories (named version and platform) to arrive at module root
@@ -53,7 +53,9 @@ function gatherModuleBalas() returns error? {
                 }
                 
                 // Copies the respective stdlib bala to the archive of balas to be pushed
-                check file:copy(moduleRootDist,  BALA_ARCHIVE_PATH + moduleLevel + moduleName, file:REPLACE_EXISTING);
+                check file:copy(moduleRootDist,
+                                string `${BALA_ARCHIVE_PATH}${moduleLevel}${moduleName}`,
+                                file:REPLACE_EXISTING);
             } else {
                 log:printWarn("Module " + moduleName + " was not found.");
             }
