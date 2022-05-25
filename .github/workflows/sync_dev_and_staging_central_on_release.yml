@@ -1,0 +1,56 @@
+name: Sync dev and staging central after release
+
+on:
+  workflow_dispatch: 
+    inputs:
+      version:
+        description: Ballerina version ID
+        required: true
+        default: 2201.0.3
+
+      code_name:
+        description: Ballerina version code name
+        required: true
+        default: swan-lake
+
+jobs:
+  update-staging-and-dev-central:
+    runs-on: ubuntu-latest
+    env:
+      BAL_VERSION_ID: ${{github.event.inputs.version}}
+      BAL_VERSION_CODE_NAME: ${{github.event.inputs.code_name}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Download Ballerina distribution zip
+        uses: wei/wget@v1
+        with:
+          args: https://dist.ballerina.io/downloads/${{env.BAL_VERSION_ID}}/ballerina-${{env.BAL_VERSION_ID}}-${{env.BAL_VERSION_CODE_NAME}}.zip
+      - name: Extract Ballerina distribution
+        run: unzip -qq ./ballerina-${{env.BAL_VERSION_ID}}-${{env.BAL_VERSION_CODE_NAME}}.zip -d .
+      - run: rm ballerina-${{env.BAL_VERSION_ID}}-${{env.BAL_VERSION_CODE_NAME}}.zip
+      - name: Execute Ballerina script
+        uses: ballerina-platform/ballerina-action@2201.0.3
+        with:
+          args: run ./dependabot/sync_dev_and_staging_central.bal
+      - name: Iterate through modules and compress to .bala
+        run: |
+            mkdir ./bala-archive
+            cd ./bala ;
+            for dir in */; do
+              cd ./$dir ; zip -r ../../bala-archive/${dir::-1}.bala . ; cd ..
+            done
+      - name: Push to staging central
+        run : |
+            cd ./bala-archive ;
+            for dir in *; do
+              curl -X POST -H "Content-Type:application/octet-stream" -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_STAGE_ACCESS_TOKEN}}" \
+               --data-binary @"$dir" -v https://api.staging-central.ballerina.io/2.0/registry/packages ;
+            done
+      - name: Push to dev central
+        run : |
+            cd ./bala-archive ;
+            for dir in *; do
+              curl -X POST -H "Content-Type:application/octet-stream" -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_DEV_ACCESS_TOKEN}}" \
+               --data-binary @"$dir" -v https://api.dev-central.ballerina.io/2.0/registry/packages ;
+            done
