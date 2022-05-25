@@ -63,14 +63,16 @@ jobs:
         run: |
           cd ./bala-archive ;
           for dir in *; do
-            curl --silent --output -X POST -H "Content-Type:application/octet-stream" -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_STAGE_ACCESS_TOKEN}}" \
-              --data-binary @"$dir" -v https://api.staging-central.ballerina.io/2.0/registry/packages ;
+            curl -X POST -H "Content-Type:application/octet-stream" \
+            -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_STAGE_ACCESS_TOKEN}}" \
+            --data-binary @"$dir" https://api.staging-central.ballerina.io/2.0/registry/packages ;
           done
       - name: Push to dev central
         if: ${{github.event.inputs.update_env == 'dev'}}
         run: |
           cd ./bala-archive ;
           for dir in *; do
-            curl --silent --output -X POST -H "Content-Type:application/octet-stream" -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_DEV_ACCESS_TOKEN}}" \
-              --data-binary @"$dir" -v https://api.dev-central.ballerina.io/2.0/registry/packages ;
+            curl -X POST -H "Content-Type:application/octet-stream" \ 
+            -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_DEV_ACCESS_TOKEN}}" \
+            --data-binary @"$dir" https://api.dev-central.ballerina.io/2.0/registry/packages ;
           done
