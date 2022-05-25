@@ -1,7 +1,7 @@
 name: Delete stdlibs in staging central
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
     inputs:
       tag:
         description: Release tag
@@ -11,9 +11,7 @@ on:
 jobs:
   delete-from-staging-central:
     runs-on: ubuntu-latest
-    env:
-      STAGE_KEY: ${{secrets.STAGE_KEY}}
-      STAGE_CERT: ${{secrets.STAGE_CERT}}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -28,12 +26,15 @@ jobs:
         uses: ballerina-platform/ballerina-action@2201.0.3
         with:
           args: run ./dependabot/delete_staging_central_stdlibs.bal
-      - name: Delete stdlibs from staging central
+      - name: Archive module details
+        uses: actions/upload-artifact@v3
+        with:
+          name: ModuleDetails
+          path: ModuleDetails.csv
+      - name: Trigger workflow to delete stdlibs
         run: |
-          echo "$STAGE_KEY" > bc-stage-admin-client.key ;
-          echo "$STAGE_CERT" > bc-stage-admin-client.crt ;
-          while IFS=, read -r level package version
-          do
-            curl -v -X DELETE --key bc-stage-admin-client.key --cert bc-stage-admin-client.crt \
-             https://admin.staging-central.ballerina.io/2.0/admin/packages/ballerina/$package/$version\?force\=true ;
-          done < ModuleDetails.csv
+          curl -d "{\"event_type\": \"trigger_delete_stdlibs_from_staging\"}" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          "https://api.github.com/repos/wso2-enterprise/ballerina-registry/dispatches"
