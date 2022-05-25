@@ -6,7 +6,7 @@ on:
       release_tag:
         description: Release version
         required: true
-        default: 2201.1.0-rc4
+        default: 2201.0.3
 
       code_name:
         description: Version code name
