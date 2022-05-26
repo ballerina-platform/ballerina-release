@@ -54,7 +54,7 @@ function gatherModuleBalas() returns error? {
                 
                 // Copies the respective stdlib bala to the archive of balas to be pushed
                 check file:copy(moduleRootDist,
-                                string `${BALA_ARCHIVE_PATH}${moduleLevel}${moduleName}`,
+                                string `${BALA_ARCHIVE_PATH}L${moduleLevel}-${moduleName}`,
                                 file:REPLACE_EXISTING);
             } else {
                 log:printWarn("Module " + moduleName + " was not found.");

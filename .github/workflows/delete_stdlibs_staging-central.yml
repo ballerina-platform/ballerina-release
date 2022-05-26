@@ -1,7 +1,7 @@
 name: Delete stdlibs in staging central
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
     inputs:
       tag:
         description: Release tag
@@ -11,9 +11,6 @@ on:
 jobs:
   delete-from-staging-central:
     runs-on: ubuntu-latest
-    env:
-      STAGE_KEY: ${{secrets.STAGE_KEY}}
-      STAGE_CERT: ${{secrets.STAGE_CERT}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,18 +19,20 @@ jobs:
         with:
           args: https://raw.githubusercontent.com/ballerina-platform/ballerina-distribution/${{github.event.inputs.tag}}/gradle.properties
              -P ./dependabot/resources
-      - name: Create CSV to store module details
-        run: touch ModuleDetails.csv
+      - name: Create JSON file to store module details
+        run: touch ModuleDetails.json
       - name: Execute Ballerina script
         uses: ballerina-platform/ballerina-action@2201.0.3
         with:
           args: run ./dependabot/delete_staging_central_stdlibs.bal
-      - name: Delete stdlibs from staging central
+      - name: Store module details in a JSON
+        id: store_module_details
+        run: echo "::set-output name=module_details::`cat ModuleDetails.json`"
+      - name: Trigger workflow to delete stdlibs
         run: |
-          echo "$STAGE_KEY" > bc-stage-admin-client.key ;
-          echo "$STAGE_CERT" > bc-stage-admin-client.crt ;
-          while IFS=, read -r level package version
-          do
-            curl -v -X DELETE --key bc-stage-admin-client.key --cert bc-stage-admin-client.crt \
-             https://admin.staging-central.ballerina.io/2.0/admin/packages/ballerina/$package/$version\?force\=true ;
-          done < ModuleDetails.csv
+          curl -d \
+          '{"event_type": "trigger_delete_stdlibs_from_staging", "client_payload": ${{steps.store_module_details.outputs.module_details}}}' \
+          -H 'Content-Type: application/json' \
+          -H 'Authorization: token ${{secrets.GITHUB_TOKEN}}' \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          'https://api.github.com/repos/wso2-enterprise/ballerina-registry/dispatches'
