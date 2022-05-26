@@ -11,7 +11,6 @@ on:
 jobs:
   delete-from-staging-central:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,20 +20,19 @@ jobs:
           args: https://raw.githubusercontent.com/ballerina-platform/ballerina-distribution/${{github.event.inputs.tag}}/gradle.properties
              -P ./dependabot/resources
       - name: Create CSV to store module details
-        run: touch ModuleDetails.csv
+        run: touch ModuleDetails.json
       - name: Execute Ballerina script
         uses: ballerina-platform/ballerina-action@2201.0.3
         with:
           args: run ./dependabot/delete_staging_central_stdlibs.bal
-      - name: Archive module details
-        uses: actions/upload-artifact@v3
-        with:
-          name: ModuleDetails
-          path: ModuleDetails.csv
+      - name: Store module details in a JSON
+        id: store_module_details
+        run: echo "::set-output name=module_details::`cat ModuleDetails.json`"
       - name: Trigger workflow to delete stdlibs
         run: |
-          curl -d "{\"event_type\": \"trigger_delete_stdlibs_from_staging\"}" \
-          -H "Content-Type: application/json" \
-          -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" \
-          -H "Accept: application/vnd.github.everest-preview+json" \
-          "https://api.github.com/repos/wso2-enterprise/ballerina-registry/dispatches"
+          curl -d \
+          '{"event_type": "trigger_delete_stdlibs_from_staging", "client_payload": ${{steps.store_module_details.outputs.module_details}}}' \
+          -H 'Content-Type: application/json' \
+          -H 'Authorization: token ${{secrets.GITHUB_TOKEN}}' \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          'https://api.github.com/repos/wso2-enterprise/ballerina-registry/dispatches'

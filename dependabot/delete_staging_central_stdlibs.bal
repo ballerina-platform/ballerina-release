@@ -3,11 +3,17 @@ import ballerina/log;
 
 const EXTENSIONS_FILE_PATH = "dependabot/resources/extensions.json";
 const GRADLE_PROPERTIES_FILE_PATH = "dependabot/resources/gradle.properties";
-const MODULE_DETAILS_CSV_PATH = "ModuleDetails.csv";
+const MODULE_DETAILS_JSON_PATH = "ModuleDetails.json";
 
 const BAL_PREFIX = "ballerina-";
 
 map<string> versionProperties = {};
+
+type Module record {
+    string level;
+    string packageName;
+    string packageVersion;
+};
 
 public function main() returns error? {
     error? retrieveModuleVersionsResult = retrieveModuleVersions();
@@ -16,14 +22,18 @@ public function main() returns error? {
         return ;
     } 
 
-    string[][]|error gatherModuleDetailsResult = check gatherModuleDetails();
+    json|error gatherModuleDetailsResult = gatherModuleDetails();
     if gatherModuleDetailsResult is error {
         log:printError("Could not gather details due to " + gatherModuleDetailsResult.message());
         return ;
-    } else {
-        check io:fileWriteCsvFromStream(MODULE_DETAILS_CSV_PATH,
-                                        gatherModuleDetailsResult.sort("descending").toStream());
-    }
+    } 
+
+    // Create response JSON object to be passed
+    json responseObject = {
+        standard_library: gatherModuleDetailsResult
+    };
+
+    check io:fileWriteJson(MODULE_DETAILS_JSON_PATH, responseObject);
 }
 
 // Retrieves and maps the respective X.X.X versions corresponding to the stdlib version keys
@@ -41,8 +51,8 @@ function retrieveModuleVersions() returns error? {
 }
 
 // Maps each stdlib module name to its corresponding X.X.X version using the map created in retrieveModuleVersions()
-function gatherModuleDetails() returns string[][]|error {
-    string[][] moduleDetails = [];
+function gatherModuleDetails() returns json|error {
+    Module[] moduleDetails = [];
     json extensionJson = check io:fileReadJson(EXTENSIONS_FILE_PATH);
     json[] modules = <json[]> check extensionJson.standard_library;
     
@@ -60,11 +70,18 @@ function gatherModuleDetails() returns string[][]|error {
                     moduleName.substring(splitNameIndex + BAL_PREFIX.length(), moduleName.length());
             }
 
-            moduleDetails.push([(check module.level).toString(),
-                                moduleName, 
-                                <string>versionProperties[check module.version_key]]);
+            moduleDetails.push({
+                level: (check module.level).toString(),
+                packageName: moduleName,
+                packageVersion: <string>versionProperties[check module.version_key]
+            });
         }
     }
 
-    return moduleDetails;
+    // Sort modules based on their levels
+    moduleDetails = from Module module in moduleDetails
+                        order by module.level descending
+                    select module;
+
+    return moduleDetails.toJsonString();
 }
