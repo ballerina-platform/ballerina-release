@@ -42,6 +42,7 @@ jobs:
           - snowflake
           - twilio
           - twitter
+          - rabbitmq
     runs-on: ubuntu-latest
     steps:
       - name: dispatch build request
