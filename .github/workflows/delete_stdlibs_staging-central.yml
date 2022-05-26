@@ -19,7 +19,7 @@ jobs:
         with:
           args: https://raw.githubusercontent.com/ballerina-platform/ballerina-distribution/${{github.event.inputs.tag}}/gradle.properties
              -P ./dependabot/resources
-      - name: Create CSV to store module details
+      - name: Create JSON file to store module details
         run: touch ModuleDetails.json
       - name: Execute Ballerina script
         uses: ballerina-platform/ballerina-action@2201.0.3
