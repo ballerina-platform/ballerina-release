@@ -84,28 +84,30 @@ def main():
     bal_version = {
         'version': lang_version
     }
-    try:
-        utils.write_json_file(constants.LANG_VERSION_FILE, bal_version)
-    except Exception as e:
-        print('Failed to write to file latest_ballerina_lang_version.json', e)
-        sys.exit()
 
-    try:
-        updated_file_content = open(constants.LANG_VERSION_FILE, 'r').read()
-        update = utils.commit_file('ballerina-release',
-                                   constants.LANG_VERSION_FILE, updated_file_content,
-                                   constants.EXTENSIONS_UPDATE_BRANCH,
-                                   '[Automated] Update Workflow Lang Version')[0]
-        if update:
-            utils.open_pr_and_merge('ballerina-release',
-                                    '[Automated] Update Workflow Triggered Ballerina Version',
-                                    'Update workflow triggered ballerina lang version',
-                                    constants.EXTENSIONS_UPDATE_BRANCH)
-        else:
-            print('No changes to ' + constants.LANG_VERSION_FILE + ' file')
-    except GithubException as e:
-        print('Error occurred while committing latest_ballerinalang_version.md', e)
-        sys.exit(1)
+    if not skip_lang_update:
+        try:
+            utils.write_json_file(constants.LANG_VERSION_FILE, bal_version)
+        except Exception as e:
+            print('Failed to write to file latest_ballerina_lang_version.json', e)
+            sys.exit()
+
+        try:
+            updated_file_content = open(constants.LANG_VERSION_FILE, 'r').read()
+            update = utils.commit_file('ballerina-release',
+                                       constants.LANG_VERSION_FILE, updated_file_content,
+                                       constants.EXTENSIONS_UPDATE_BRANCH,
+                                       '[Automated] Update Workflow Lang Version')[0]
+            if update:
+                utils.open_pr_and_merge('ballerina-release',
+                                        '[Automated] Update Workflow Triggered Ballerina Version',
+                                        'Update workflow triggered ballerina lang version',
+                                        constants.EXTENSIONS_UPDATE_BRANCH)
+            else:
+                print('No changes to ' + constants.LANG_VERSION_FILE + ' file')
+        except GithubException as e:
+            print('Error occurred while committing latest_ballerinalang_version.md', e)
+            sys.exit(1)
 
     print('Workflow started with Ballerina Lang version : ' + lang_version)
 
