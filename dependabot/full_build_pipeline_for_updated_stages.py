@@ -239,7 +239,7 @@ def switch_to_branches_from_updated_stages():
                 exit_code = os.system(f"cd {module['name']};git checkout 1.0.x")
 
                 if exit_code != 0:
-                    print(f"Failed to switch to branch 'v1.0.x' from last updated commit id for " +
+                    print(f"Failed to switch to branch '1.0.x' from last updated commit id for " +
                           f"{module['name']}")
                     sys.exit(1)
                 continue
@@ -248,7 +248,7 @@ def switch_to_branches_from_updated_stages():
                 exit_code = os.system(f"cd {module['name']};git checkout 2201.0.x")
 
                 if exit_code != 0:
-                    print(f"Failed to switch to branch 'v1.0.x' from last updated commit id for " +
+                    print(f"Failed to switch to branch '2201.0.x' from last updated commit id for " +
                           f"{module['name']}")
                     sys.exit(1)
                 continue
