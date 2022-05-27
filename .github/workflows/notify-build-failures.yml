@@ -12,11 +12,13 @@ jobs:
         id: vars
         run: |
           echo ::set-output name=work_flow_page::'\"Daily+build\"|the daily build page'
+          echo ::set-output name=message_body::"daily build failure"
           workflow="${{github.event.client_payload.workflow}}"
           workflow=$(echo "${workflow// /+}")
           
           if [[ "${{ github.event.action }}" == "notify-ballerinax-connector-build-failure" ]]; then
             echo ::set-output name=work_flow_page::"\\\"$workflow\\\"|the ${{github.event.client_payload.workflow}} page"
+            echo ::set-output name=message_body::"daily full build failure"
           fi
         
       - name: Checkout Repository
@@ -41,7 +43,7 @@ jobs:
           
       - name: Wget required files
         run: |
-          python3 dependabot/notify_build_failure.py ${{ github.event.client_payload.repoName }} "${{steps.vars.outputs.work_flow_page}}"
+          python3 dependabot/notify_build_failure.py ${{ github.event.client_payload.repoName }} "${{steps.vars.outputs.work_flow_page}}" "${{steps.vars.outputs.message_body}}"
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
