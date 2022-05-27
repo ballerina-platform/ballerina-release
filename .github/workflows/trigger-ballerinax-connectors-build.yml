@@ -42,7 +42,17 @@ jobs:
           - snowflake
           - twilio
           - twitter
+          - aws.lambda
+          - azure.functions
+          - java.jdbc
+          - kafka
+          - mssql
+          - mysql
+          - nats
+          - oracledb
+          - postgresql
           - rabbitmq
+          - stan
     runs-on: ubuntu-latest
     steps:
       - name: dispatch build request
