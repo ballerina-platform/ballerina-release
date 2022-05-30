@@ -15,8 +15,7 @@ redirect_from:
 
 ## Updating Ballerina
 
->**info:** With this release, new updates of standard libraries and extensions are not available with previous releases. Update the current
->version to `2201.0.4` as soon as possible.
+>**Info:** It is recommended to update your active Ballerina distribution to 2201.0.4 as soon as possible because from now onwards, new updates of standard libraries and extensions will not be available for the previous releases.
 
 **If you are already using Ballerina 2201.0.0 (Swan Lake)**, run either of the commands below to directly update to 2201.0.4 (Swan Lake) using the [Ballerina Update Tool](/learn/cli-documentation/update-tool/).
 
