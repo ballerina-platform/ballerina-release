@@ -1,0 +1,10 @@
+{
+  "full_build_master": [
+  ],
+  "full_build_2201.0.x": [
+    "module-ballerina-c2c",
+    "module-ballerina-http"
+  ],
+  "full_build_2201.1.x": [
+  ]
+}
