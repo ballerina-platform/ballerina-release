@@ -7,8 +7,10 @@ from pathlib import Path
 
 
 stdlib_modules_by_level = dict()
+test_ignore_modules = []
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
                            'dependabot/resources/extensions.json'
+test_ignore_modules_file = 'dependabot/resources/full_build_ignore_modules.json'
 
 ballerina_lang_branch = "master"
 enable_tests = 'true'
@@ -22,6 +24,8 @@ ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 def main():
     global stdlib_modules_by_level
     global stdlib_modules_json_file
+    global test_ignore_modules_file
+    global test_ignore_modules
     global ballerina_lang_branch
     global github_user
     global enable_tests
@@ -32,6 +36,7 @@ def main():
         github_user = sys.argv[3]
 
     read_stdlib_modules()
+    read_test_ignore_modules()
     if stdlib_modules_by_level:
         clone_repositories()
         change_version_to_snapshot()
@@ -53,6 +58,17 @@ def read_stdlib_modules():
 
     except json.decoder.JSONDecodeError:
         print('Failed to load standard library dependency data')
+        sys.exit(1)
+
+
+def read_test_ignore_modules():
+    try:
+        file = open(test_ignore_modules_file)
+        data = json.load(file)
+        test_ignore_modules = data['full_build_master']
+
+    except json.decoder.JSONDecodeError:
+        print('Failed to load test ignore modules')
         sys.exit(1)
 
 
@@ -126,20 +142,9 @@ def build_stdlib_repositories(enable_tests):
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
 
-            if Path(module['name'] + "/ballerina/Dependencies.toml").is_file():
-                os.system(f"cd {module['name']}/ballerina;" +
-                          "find . -name \"Dependencies.toml\" -delete;")
+            remove_dependency_files(module['name'])
 
-            elif module['name'] == "module-ballerinai-transaction" and \
-                    Path(module['name'] + "/transaction-ballerina/Dependencies.toml").is_file():
-                os.system(f"cd {module['name']}/transaction-ballerina;" +
-                          "find . -name \"Dependencies.toml\" -delete;")
-
-            if Path(module['name'] + "/ballerina-tests/Dependencies.toml").is_file():
-                os.system(f"cd {module['name']}/ballerina-tests;" +
-                          "find . -name \"Dependencies.toml\" -delete;")
-
-            if module['name'] == "module-ballerina-graphql" or module['name'] == "module-ballerinax-kafka":
+            if module['name'] in test_ignore_modules:
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
@@ -266,6 +271,21 @@ def write_failed_module(module_name):
     with open("failed_module.txt", "w") as file:
         file.writelines(module_name)
         file.close()
+
+
+def remove_dependency_files(module_name):
+    if Path(module_name + "/ballerina/Dependencies.toml").is_file():
+        os.system(f"cd {module_name}/ballerina;" +
+                  "find . -name \"Dependencies.toml\" -delete;")
+
+    elif module_name == "module-ballerinai-transaction" and \
+            Path(module_name + "/transaction-ballerina/Dependencies.toml").is_file():
+        os.system(f"cd {module_name}/transaction-ballerina;" +
+                  "find . -name \"Dependencies.toml\" -delete;")
+
+    if Path(module_name + "/ballerina-tests/Dependencies.toml").is_file():
+        os.system(f"cd {module_name}/ballerina-tests;" +
+                  "find . -name \"Dependencies.toml\" -delete;")
 
 
 main()

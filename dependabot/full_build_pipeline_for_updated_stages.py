@@ -7,8 +7,10 @@ import sys
 DIST_REPO_PATCH_BRANCH = '2201.0.x'
 
 stdlib_modules_by_level = dict()
+test_ignore_modules = []
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
                            'dependabot/resources/extensions.json'
+test_ignore_modules_file = 'dependabot/resources/full_build_ignore_modules.json'
 
 ballerina_lang_branch = "master"
 enable_tests = 'true'
@@ -32,6 +34,7 @@ def main():
         github_user = sys.argv[3]
 
     read_stdlib_modules()
+    read_test_ignore_modules()
     if stdlib_modules_by_level:
         clone_repositories()
         switch_to_branches_from_updated_stages()
@@ -39,6 +42,17 @@ def main():
         build_stdlib_repositories(enable_tests)
     else:
         print('Could not find standard library dependency data from', stdlib_modules_json_file)
+
+
+def read_test_ignore_modules():
+    try:
+        file = open(test_ignore_modules_file)
+        data = json.load(file)
+        test_ignore_modules = data['full_build_2201.0.x']
+
+    except json.decoder.JSONDecodeError:
+        print('Failed to load test ignore modules')
+        sys.exit(1)
 
 
 def read_stdlib_modules():
@@ -124,7 +138,7 @@ def build_stdlib_repositories(enable_tests):
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
-            if module['name'] == "module-ballerina-c2c":
+            if module['name'] in test_ignore_modules:
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
