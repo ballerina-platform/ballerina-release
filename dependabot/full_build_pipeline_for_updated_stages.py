@@ -24,6 +24,8 @@ ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 def main():
     global stdlib_modules_by_level
     global stdlib_modules_json_file
+    global test_ignore_modules_file
+    global test_ignore_modules
     global ballerina_lang_branch
     global github_user
     global enable_tests
