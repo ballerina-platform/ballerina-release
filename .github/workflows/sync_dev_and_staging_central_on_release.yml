@@ -74,7 +74,7 @@ jobs:
           cd ./bala-archive ;
           for dir in *; do
             echo -e "\n" $dir ;
-            curl -X POST -w "\n" -H "Content-Type:application/octet-stream" \ 
+            curl -X POST -w "\n" -H "Content-Type:application/octet-stream" \
             -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_DEV_ACCESS_TOKEN}}" \
             --data-binary @"$dir" https://api.dev-central.ballerina.io/2.0/registry/packages ;
           done
