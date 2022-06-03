@@ -63,7 +63,8 @@ jobs:
         run: |
           cd ./bala-archive ;
           for dir in *; do
-            curl -X POST -H "Content-Type:application/octet-stream" \
+            echo -e "\n" $dir ;
+            curl -X POST -w "\n" -H "Content-Type:application/octet-stream" \
             -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_STAGE_ACCESS_TOKEN}}" \
             --data-binary @"$dir" https://api.staging-central.ballerina.io/2.0/registry/packages ;
           done
@@ -72,7 +73,8 @@ jobs:
         run: |
           cd ./bala-archive ;
           for dir in *; do
-            curl -X POST -H "Content-Type:application/octet-stream" \ 
+            echo -e "\n" $dir ;
+            curl -X POST -w "\n" -H "Content-Type:application/octet-stream" \ 
             -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_DEV_ACCESS_TOKEN}}" \
             --data-binary @"$dir" https://api.dev-central.ballerina.io/2.0/registry/packages ;
           done
