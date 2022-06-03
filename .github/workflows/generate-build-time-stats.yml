@@ -1,0 +1,64 @@
+name: Generate build time statistics 
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 0' 
+
+jobs: 
+  build-examples:
+    name: Build Examples and Push statistics back to the repo
+    runs-on: ubuntu-latest
+    steps:         
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: build-time-data
+
+      - name: Get the Ballerina examples 
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout bbe-refactor
+          cd ..
+          git clone https://github.com/ballerina-platform/nballerina.git
+
+      - name: Build nBallerina sample
+        uses: ballerina-platform/ballerina-action/@nightly
+        with:
+          args:
+            build --dump-build-time --offline ./nballerina/compiler
+
+      - name: Copy nBallerina build-time.json file to build-time-data
+        run: |
+          cp ./nballerina/compiler/target/build-time.json ./build-time-data/nballerina.json
+
+      - name: Build hello_world sample
+        uses: ballerina-platform/ballerina-action/@nightly
+        with:
+          args:
+            build --dump-build-time --offline ./ballerina-distribution/examples/hello-world/hello_world.bal
+
+      - name: Copy hello_world build-time.json file to build-time-data
+        run: |
+          cp build-time.json ./build-time-data/hello_world.json
+
+      - name: Build hello_world_service sample
+        uses: ballerina-platform/ballerina-action/@nightly
+        with:
+          args:
+            build --dump-build-time --offline ./ballerina-distribution/examples/hello-world-service/hello_world_service.bal
+
+      - name: Copy hello_world_service build-time.json file to build-time-data
+        run: |
+          cp build-time.json ./build-time-data/hello_world_service.json
+
+      - name: Push changes to remote
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add build-time-data
+          git commit -m "Update build time stats"
+          git push
+          
