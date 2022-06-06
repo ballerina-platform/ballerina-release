@@ -4,7 +4,7 @@ import constants
 import os
 import sys
 
-DIST_REPO_PATCH_BRANCH = '2201.0.x'
+dist_repo_patch_branch = '2201.0.x'
 
 stdlib_modules_by_level = dict()
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
@@ -24,12 +24,14 @@ def main():
     global stdlib_modules_json_file
     global ballerina_lang_branch
     global github_user
+    global dist_repo_patch_branch
     global enable_tests
 
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
         ballerina_lang_branch = sys.argv[1]
         enable_tests = sys.argv[2]
         github_user = sys.argv[3]
+        dist_repo_patch_branch = sys.argv[4]
 
     read_stdlib_modules()
     if stdlib_modules_by_level:
@@ -96,7 +98,7 @@ def clone_repositories():
         sys.exit(1)
 
     # Change branch
-    exit_code = os.system(f"cd ballerina-distribution;git checkout {DIST_REPO_PATCH_BRANCH}")
+    exit_code = os.system(f"cd ballerina-distribution;git checkout {dist_repo_patch_branch}")
     os.system("cd ballerina-distribution;git status")
     if exit_code != 0:
         sys.exit(1)
