@@ -1,4 +1,4 @@
-name: Daily Full Build Pipeline (master)
+name: Daily Full Build Pipeline (2201.1.x)
 
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/build_stdlibs_for_lang_updates.py master true ballerina-platform
+          python dependabot/full_build_pipeline_for_updated_stages.py 2201.1.x true ballerina-platform
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
       - name: Notify Build Failure
         if: ${{ failure() }}
         run: |
-          python3 dependabot/notify_full_build_failure.py ${{ steps.set-module.outputs.module }} master
+          python3 dependabot/notify_full_build_failure.py ${{ steps.set-module.outputs.module }} 2201.1.x
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
@@ -100,52 +100,8 @@ jobs:
         with:
           name: Linux Installer rpm
           path: ballerina-distribution/installers/linux-rpm/rpmbuild/RPMS/x86_64/ballerina-*-linux-x64.rpm
-      - name: Install Ballerina DEB
-        run: sudo dpkg -i ballerina-distribution/installers/linux-deb/target/ballerina-*-linux-x64.deb
-      - name: Run Installer Tests
-        working-directory: ./ballerina-distribution/ballerina-test-automation/installer-test
-        run: ./../gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
-        env:
-          TEST_MODE_ACTIVE: true
     outputs:
       project-version: ${{ steps.project-version.outputs.version }}
-
-  ubuntu-rpm-installer-test:
-    needs: build-pipeline
-    name: Ubuntu rpm Installer
-    runs-on: ubuntu-latest
-    container: centos:latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
-      - name: Setup Files
-        run: |
-          cd /etc/yum.repos.d/
-          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-      - name: Install Git
-        run: |
-          yum install sudo -y
-          sudo dnf install git -y
-      - name: Download Ballerina Distribution
-        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
-      - name: Download Ballerina rpm Installer
-        uses: actions/download-artifact@v2
-        with:
-          name: Linux Installer rpm
-      - name: Install Ballerina RPM
-        run: rpm -ivh ballerina-*-linux-x64.rpm
-      - name: Run Installer Tests
-        working-directory: ./ballerina-distribution/ballerina-test-automation/installer-test
-        run: ./../gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
-        env:
-          TEST_MODE_ACTIVE: true
 
   macos-installer-build:
     needs: build-pipeline
@@ -169,13 +125,6 @@ jobs:
         with:
           name: MacOS Installer pkg
           path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-x64.pkg
-      - name: Install Ballerina PKG
-        run: sudo installer -pkg ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-x64.pkg -target /
-      - name: Run Installer Tests
-        working-directory: ./ballerina-distribution/ballerina-test-automation/installer-test
-        run: ./../gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
-        env:
-          TEST_MODE_ACTIVE: true
 
   windows-installer-build:
     needs: build-pipeline
@@ -203,18 +152,9 @@ jobs:
           ren windows w
           cd w
           .\build-ballerina-windows-x64.bat --version ${{ needs.build-pipeline.outputs.project-version }} --path .\..\
+          echo "Created windows-msi successfully"
       - name: Archive Windows msi
         uses: actions/upload-artifact@v2
         with:
           name: Windows Installer msi
           path: w\target\msi\ballerina-*-windows-x64.msi
-      - name: Install Ballerina msi
-        run: msiexec /i w\target\msi\ballerina-${{ needs.build-pipeline.outputs.project-version }}-windows-x64.msi /quiet /qr
-        shell: cmd
-      - name: Run Installer Tests
-        working-directory: .\ballerina-distribution\ballerina-test-automation\installer-test
-        run: |
-          $env:Path += ";C:\Program Files\Ballerina\bin"
-          .\..\gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
-        env:
-          TEST_MODE_ACTIVE: true
