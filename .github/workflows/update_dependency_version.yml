@@ -7,6 +7,10 @@ on:
         description: 'Re-trigger a failed dependency bump workflow'
         required: false
         default: 'false'
+      skipLang:
+        description: 'Skip lang version update'
+        required: false
+        default: 'false'
       ballerinaVersion:
         description: 'Ballerina Version (Mandatory only when re-triggering failed workflow)'
         required: false
@@ -51,10 +55,11 @@ jobs:
         run: |
           if ${IS_SCHEDULE_WORKFLOW} == true; then
             echo "Schedule Workflow Triggered"
-            python dependabot/update_dependencies_in_pipeline.py "false" "" "true" "true" "schedule"
+            python dependabot/update_dependencies_in_pipeline.py "false" "false" "" "true" "true" "schedule"
            else
              echo "Manual Trigger"
              python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.isRetrigger }}" \
+                                                            "${{ github.event.inputs.skipLang }}" \
                                                             "${{ github.event.inputs.ballerinaVersion }}" \
                                                             "${{ github.event.inputs.autoMergePRs }}" \
                                                             "${{ github.event.inputs.sendNotification }}"

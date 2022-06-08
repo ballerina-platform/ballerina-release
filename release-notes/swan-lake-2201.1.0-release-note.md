@@ -28,17 +28,496 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ### Language Updates
 
-#### New Features
+#### New features
 
-#### Bug Fixes
+##### Support for the spread operator in the list constructor
 
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+Swan+Lake+-+2201.0.0%22+label%3AType%2FBug+label%3ATeam%2FCompilerFE).
+Introduced spread operator support for the list constructor expression.
 
-### Runtime Updates
+If the spread operator in a list constructor expression is `...x`, then, `x` is expected to be a list (i.e., an array or a tuple). All the member values of the list that result from evaluating `x` are included in the list value being constructed.
 
-#### New Features
+```ballerina
+import ballerina/io;
+
+public function main() {
+    int[] a1 = [3, 4];
+    int[] v1 = [1, 2, ...a1];
+    io:println(v1); // [1,2,3,4]
+
+    int[2] a2 = [6, 7];
+    int[] v2 = [1, 2, ...a1, 5, ...a2];
+    io:println(v2); // [1,2,3,4,5,6,7]
+
+    [int, string] t1 = [5, "s"];
+    any[] v3 = [...t1, "x"];
+    io:println(v3); // [5,"s","x"]
+
+    [boolean, int...] t2 = [false, 4, 7];
+    [string, int, string, boolean, int...] v4 = ["x", ...t1, ...t2];
+    io:println(v4); // ["x",5,"s",false,4,7];
+
+    var v5 = [4, ...t1, ...a2];
+    io:println(v5); // [4,5,"s",6,7];
+}
+```
+
+The spread operator is not allowed with a variable-length list if the inherent type of the list being constructed has required members that are not guaranteed to have been provided a value.
+
+```ballerina
+public function main() {
+    [int, string...] t1 = [5, "s"];
+    [int, string, string...] v1 = [...t1]; // results in an error since a value is not guaranteed to have been provided for the second tuple member
+
+    [int, boolean, string, int...] t2 = [5, false, "w"];
+    [int, boolean, anydata...] v2 = [...t2, "x", "y"]; // works as all fixed tuple members are guaranteed to have been provided values
+}
+```
+
+##### Allow `int*float`, `float*int`,` int* decimal`, `decimal*int`, `float/int`, `decimal/int`, `float%int`, and `decimal%int` multiplicative expressions
+
+Multiplicative expressions are now allowed with `int` and `float` operands and `int` and `decimal` operands. The type of the resulting expression will be the fractional type.
+
+This allows the below.
+- Multiplication supports `int*float`, `float*int`, `int*decimal`, and `decimal*int`
+- For division and modulo, only the floating-point operand is supported as the dividend (i.e., `float/int`, `decimal/int`, `float%int`, and `decimal%int` are supported)
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    int quantity = 5;
+    float weight = 2.5;
+    decimal unitPrice = 10.55;
+
+    float totalWeight = weight * quantity;
+    io:println(totalWeight); // 12.5
+    decimal totalPrice = unitPrice * quantity;
+    io:println(totalPrice); // 52.750
+
+    float weightInGrams = 2456;
+    int gramsPerKG = 1000;
+    float weightInKG = weightInGrams / gramsPerKG;
+    io:println(weightInKG); // 2.456
+
+    decimal totalAmount = 1000.5;
+    int numberOfPersons = 3;
+    decimal remainingAmount = totalAmount % numberOfPersons;
+    io:println(remainingAmount); // 1.5
+}
+```
+
+##### New lang library functions
+
+###### New `lang.array:some()` function
+
+The `lang.array:some()` function tests whether a function returns `true` for some member of a list. 
+
+```ballerina
+import ballerina/io;
+
+function greaterThanTwo(int i) returns boolean {
+    return i > 2;
+}
+
+public function main() {
+    int[] arr = [1, 3];
+    io:println(arr.some(greaterThanTwo)); // true
+
+    [string, string...] tup = ["hello", "world"];
+    io:println(tup.some(x => x.length() == 0)); // false
+}
+```
+###### New `lang.array:every()` function
+
+The `lang.array:every` function tests whether a function returns `true` for every member of a list.
+
+```ballerina
+import ballerina/io;
+
+function greaterThanTwo(int i) returns boolean {
+    return i > 2;
+}
+
+public function main() {
+    int[] arr = [5, 3, 45];
+    io:println(arr.every(greaterThanTwo)); // true
+
+    [string, string] tup = ["", "ballerina"];
+    io:println(tup.every(x => x.length() == 0)); // false
+}
+```
+
+###### New `lang.decimal:quantize()` function
+
+The `lang.decimal:quantize()` function has been introduced to control the precision of decimal values. This returns a value equal to the first operand after rounding, with the exponent of the second operand.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    io:println(decimal:quantize(123.123, 1.0)); // 123.1
+    io:println(decimal:quantize(123.123, 1.00)); // 123.12
+    io:println(decimal:quantize(123.123, 1.000)); // 123.123
+}
+```
+
+If the length of the coefficient after the quantize operation is greater than the precision, the function call results in a panic.
+
+```ballerina
+public function main() {
+    decimal _ = decimal:quantize(123.1233, 1E-36); // results in a panic
+}
+```
+
+###### New `lang.float:toFixedString()` and `lang.float:toExpString()` functions
+
+Two new functions, `lang.float:toFixedString()` and `lang.float:toExpString()`, have been introduced to get the string representation of a `float` value in fixed-point notation and scientific notation respectively. Both the functions allow you to specify the number of digits required after the decimal point.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    string a = float:toFixedString(5.7, 16); 
+    io:println(a); // 5.7000000000000002
+    string b = float:toFixedString(5.7, 2); 
+    io:println(b); // 5.70
+    
+    float f1 = -45362.12334;
+    string c = float:toExpString(f1, 16); 
+    io:println(c); // -4.5362123339999998e+4
+    string d = float:toExpString(f1, 2); 
+    io:println(d); // -4.54e+4
+}
+```
+
+###### New `lang.string:padStart()`, `lang.string:padEnd()`, and `lang.string:padZero()` functions
+
+The `lang.string:padStart()`, `lang.string:padEnd()`, and `lang.string:padZero()` functions have been introduced to add padding in strings. 
+- `lang.string:padStart()` adds padding to the start of a string. 
+- `lang.string:padEnd()` adds padding to the end of a string. 
+- `lang.string:padZero()` pads a string with zeros.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    io:println("abc".padStart(5, "#").toBalString()); // "##abc"
+    io:println("abc".padStart(5).toBalString()); // "  abc"
+    io:println("abc".padEnd(5, "#").toBalString()); // "abc##"
+    io:println("abc".padEnd(5).toBalString()); // "abc  "
+    io:println("123".padZero(5).toBalString()); // "00123"
+    io:println("123".padZero(5, "#").toBalString()); // "##123"
+}
+```
 
 #### Improvements
+
+##### Revamped `lang.float:round` function
+
+The function signature has been changed to have an extra `fractionDigits` parameter, by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    float x = 555.545;
+    float y = 5.5565;
+    int fractionDigits = 3;
+
+    io:println(555.545.round(1)); // 555.5
+    io:println(555.545.round(2)); // 555.54
+    io:println(float:round(x)); // 556.0
+    io:println(float:round(x, fractionDigits = 0)); // 556.0
+    io:println(float:round(x, 1));  // 555.5
+    io:println(y.round(2)); // 5.56
+    io:println(y.round(fractionDigits)); // 5.556
+}
+```
+
+##### Revamped `lang.decimal:round` function
+
+The function signature has been changed to have an extra `fractionDigits` parameter, by which, you can specify the number of fraction digits of the rounded result. When `fractionDigits` is zero, the function rounds to an integer.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    io:println(5.55.round(1)); // 5.6
+    decimal x = 5.55;
+    io:println(decimal:round(x)); // 6
+    io:println(decimal:round(5.55, fractionDigits = 0)); // 6
+    io:println(decimal:round(5.5565, fractionDigits = 3)); // 5.556
+}
+```
+
+##### Removed the compilation error for an unreachable panic statement
+
+An unreachable panic statement no longer results in a compilation error.
+
+```ballerina
+function fn() returns string {
+    int|string a = 10;
+
+    if a is int {
+        return "INT";
+    } else {
+        return "STRING";
+    }
+
+    panic error("Not Reached!"); // unreachable, but not an error.
+}
+```
+
+##### Updated `lang.error:Cloneable` to be `public`
+
+The `Cloneable` type in the `lang.error` module is now `public`.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    error:Cloneable x = 4;
+    error e1 = error("reason 1", message = "My Detail");
+    map<error:Cloneable> m1 = e1.detail();
+
+    io:println(x);  // 4
+    io:println(m1); // {"message":"My Detail"}
+}
+```
+
+##### Disallow inferring array length in contexts that are not permitted
+
+Inferring array length has been restricted to list constructors in variable and constant declarations. Moreover, only the first dimension can be inferred in multidimensional arrays.
+
+```ballerina
+int[*] x1 = [1, 2]; // Supported.
+
+int[2] y = [1, 2];
+int[*] x2 = y; // Not supported. Requires a list constructor to infer the array length.
+
+int[*][2] x3 = [[1, 2], [1, 2]]; // Supported.
+int[*][*] x4 = [[1, 2], [1, 2]]; // Not supported. Only the first dimension can be inferred.
+```
+
+#### Bug fixes
+
+- Fixed an invalid sub-typing relationship between `table` and `anydata` 
+
+```ballerina
+public function main() {
+    table<map<any>> tany = table [{"a": 2}];
+    anydata ad = tany; // Results in a compilation error now.
+}
+```
+
+- Fixed an issue that caused a union containing the `null` literal allowing `"null"` as a valid value
+
+```ballerina
+type Foo boolean|null;
+
+public function main() {
+    Foo a = "null"; // Results in a compilation error now.
+    "string"|null b = "null"; // Results in a compilation error now.
+}
+```
+
+- Fixed an issue that caused the value of enum members defined with quoted identifiers to include the quote
+
+```ballerina
+import ballerina/io;
+
+public enum Status {
+    'new,
+    old
+}
+
+public function main() {
+    io:println('new); // Previously printed `'new`, now prints `new`.
+}
+```
+
+- Fixed a bug that resulted in a compilation error not being logged for an extra comma in a mapping match pattern
+
+```ballerina
+type MyRecord record {
+    int field1;
+    int field2;
+};
+
+function fn(MyRecord r1) {
+    match r1 {
+        {field1: 0,} => { // A syntax error is now given for the comma.
+
+        }
+    }
+}
+```
+
+- Fixed qualified identifiers not being allowed in error match patterns 
+
+```ballerina
+function fn(error e) {
+    match e {
+        error(errors:MESSAGE) => { // Match pattern is now allowed.
+
+        }
+    }
+}
+```
+
+- Fixed the inherent type of a list constructed using a list constructor with `any` as the contextually-expected type to be `(any|error)[]` instead of `any[]`
+
+```ballerina
+public function main() {
+    any x = [1, 3, 4];
+    if x is (any|error)[] {
+        x.push(error("invalid!")); // Now allowed, previously failed at runtime.
+    }
+}
+```
+
+- Fixed a bug that allowed additive expressions with operands of types that are union types of different basic types 
+
+```ballerina
+public function main() {
+    int|float a = 4;
+    int|float b = 4.5;
+
+    int _ = a + b; // Now, this results in a compilation error.
+}
+```
+
+#### Bug fixes
+
+To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.1.0%22).
+
+### Runtime updates
+
+#### Improvements
+
+##### Support to provide values for configurable variables through TOML In-line tables
+
+The configurable feature is improved to support TOML in-line tables through the TOML syntax.
+The values for configurable variables of types `map` and `record` can now beprovided using TOML in-line tables.
+Similarly, the values for configurable variables of types array of `map`, array of `record`, and `table` can now be provided using the TOML array of TOML in-line tables.
+
+For example, if the configurable variables are defined in the following way,
+
+```ballerina
+configurable map<anydata> mapVar = ?;
+configurable Person recordVar = ?;
+configurable table<map<int>> tableVar = ?;
+configurable Person[] recordArrayVar = ?;
+
+```
+
+the values can be provided in the `Config.toml` file as follows.
+
+```
+mapVar = {a = "a", b = 2, c = 3.4, d = [1, 2, 3]}
+
+recordVar = {name = "Jane"}
+
+tableVar = [{a = 1, b = 2}, {c = 3}, {d = 4, e = 5, f = 6}]
+
+recordArrayVar = [{name = "Tom"}, {name = "Harry"}]
+
+```
+
+##### Improved configurable variables to support tuple types through TOML syntax
+
+The configurable feature is improved to support variables of tuple types through the TOML syntax.
+
+For example, if the tuple-typed configurable variables are defined in the following way,
+
+```ballerina
+configurable [int, string, float, decimal, byte, boolean] simpleTuple = ?;
+configurable [int[], [string, int], map<anydata>, table<map<string>>] complexTuple = ?;
+configurable [int, string, int...] restTuple = ?;
+```
+
+the values can be provided in the `Config.toml` file as follows.
+
+```
+simpleTuple = [278, "string", 2.3, 4.5, 2, true]
+
+complexTuple = [[1, 3, 5, 7, 9], ["apple", 2], {name = "Baz Qux", age = 22}, [{a = "a"}, {b = "b", c = "c"}]]
+
+restTuple = [1, "foo", 2, 3, 4, 5]
+```
+
+##### Improved configurable variables to support union types through CLI arguments
+
+The configurable feature is improved to support variables of union types with simple basic typed members through the CLI arguments.
+
+For example, if the configurable variables are defined in the following way,
+
+```ballerina
+configurable float|int|string unionVar = ?; 
+```
+
+the values can be provided via CLI arguments in the following way.
+
+```
+bal run -- -Cval=5.0
+```
+
+##### Improved runtime error creator and value creator API input validations
+
+In order to handle Java Exceptions due to the invalid use of Ballerina runtime error creator and value 
+creator APIs, input validations have been improved to provide proper ballerina runtime errors.
+For example, the following invalid use of the `ValueCreator.createRecordValue` API to create a record value with a Java ArrayList as a field of it will result in a panic.
+
+```java
+ public class App {
+
+    private static Module module = new Module("org", "interop_project.records", "1");
+
+    public static BMap<BString, Object> getRecord(BString recordName) {
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        Map<String, Object> map = Map.ofEntries(
+                Map.entry("arrList", arrayList)
+        );
+        return ValueCreator.createRecordValue(module, recordName.getValue(), map);
+    }
+}
+```
+
+in modules/records
+```ballerina
+import ballerina/jballerina.java;
+
+public type Foo record {
+    int[] x;    
+};
+
+public function getRecord(string recordName) returns record{} = @java:Method {
+    'class: "javalibs.app.App"
+} external;
+```
+main.bal
+```ballerina
+import interop_project.records;
+
+public function main() {
+    records:Foo foo =  <records:Foo> records:getRecord("Foo");
+}
+```
+Runtime error:
+```
+'class java.util.ArrayList' is not from a valid java runtime class. " +
+        "It should be a subclass of one of the following: java.lang.Number, java.lang.Boolean or " +
+        "from the package 'io.ballerina.runtime.api.values'
+```
+
+#### New runtime Java APIs
+##### Runtime API to create an enum type
+New runtime Java API can be used to create enum types from native code.
+
+
+```java
+public static UnionType createUnionType(List<Type> memberTypes, String name, Module pkg, int typeFlags, boolean isCyclic, long flags)
+```
 
 #### Bug Fixes
 
@@ -142,27 +621,25 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://git
 
 To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.0](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%222201.1.0%22+label%3AType%2FBug).
 
-### Code to Cloud Updates
+### Deployment updates
+
+#### New Features
+- Added the `name` field for the `cloud.config.files` property in the `Cloud.toml` file to change the name of the generated config map 
 
 #### Improvements
-- Reduced the package size
+- Reduced the package size of `ballerina/cloud`
 - Docker image generation now relies on the user's docker client
+- The `ballerinax/awslambda` package is now available in [Ballerina Central](https://central.ballerina.io/ballerinax/awslambda)
+- The `ballerinax/azure_functions` package is now available in [Ballerina Central](https://central.ballerina.io/ballerinax/azure.functions)
+
+#### Breaking Changes
+- For existing `ballerinax/awslambda` and `ballerinax/azure_functions` projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
 #### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the repositories below.
 
 - [C2C](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+milestone%3A%22Ballerina+Swan+Lake+-+2201.1.0%22)
-
-### `ballerinax/awslambda` package
-
-#### Improvements
-- Removed the package from the Ballerina distribution. For existing projects, change the version to `2.1.0` in the `Dependencies.toml` file.
-
-### `ballerinax/azure_functions` package
-
-#### Improvements
-- Removed the package from the Ballerina distribution. For existing projects, change the version to `2.1.0` in the `Dependencies.toml` file.
 
 ### Developer Tools Updates
 

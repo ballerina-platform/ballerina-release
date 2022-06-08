@@ -206,6 +206,7 @@ def initialize_module_details(modules_list):
             'version_key': module.get('version_key', default_version_key),
             'default_branch': default_branch,
             'auto_merge': module.get('auto_merge', True),
+            'push_to_central': False if module['name'] == 'ballerina-distribution' else module.get('push_to_central', True),
             'is_extended_library_module': module.get('is_extended_library_module', True),
             'build_action_file': module.get('build_action_file', get_default_build_file(module['name'])),
             'send_notification': module.get('send_notification', True),

@@ -81,12 +81,12 @@ def read_dependency_data(stdlib_modules_data):
             stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
                                                                                         "version_key": version_key}]
 
-    for module in stdlib_modules_data['extended_library']:
-        name = module['name']
-        level = module['level']
-        version_key = module['version_key']
-        stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
-                                                                                    "version_key": version_key}]
+    # for module in stdlib_modules_data['extended_library']:
+    #     name = module['name']
+    #     level = module['level']
+    #     version_key = module['version_key']
+    #     stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
+    #                                                                                 "version_key": version_key}]
 
 
 def clone_repositories():
@@ -165,7 +165,7 @@ def build_stdlib_repositories(enable_tests):
     exit_code = os.system(f"cd ballerina-distribution;" +
                     f"export packageUser={ballerina_bot_username};" +
                     f"export packagePAT={ballerina_bot_token};" +
-                    f"./gradlew clean build -x test " +
+                    f"./gradlew clean build{cmd_exclude_tests} " +
                     f"publishToMavenLocal --stacktrace --scan --console=plain --no-daemon --continue")
     if exit_code != 0:
         write_failed_module("ballerina-distribution")

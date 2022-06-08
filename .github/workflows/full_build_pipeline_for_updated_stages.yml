@@ -16,6 +16,14 @@ on:
             - 'true'
             - 'false'
           default: 'true'
+        patch_level:
+          type: choice
+          description: 'Patch Level'
+          required: true
+          options:
+            - '2201.1.x'
+            - '2201.0.x'
+          default: '2201.1.x'
 
 jobs:
   build-pipeline:
@@ -38,7 +46,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/full_build_pipeline_for_updated_stages.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }} ${{ github.repository_owner }}
+          python dependabot/full_build_pipeline_for_updated_stages.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }} ${{ github.repository_owner }} ${{ github.event.inputs.patch_level }}
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}

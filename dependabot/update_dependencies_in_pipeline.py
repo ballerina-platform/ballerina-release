@@ -41,13 +41,14 @@ SLEEP_INTERVAL = 30  # 30s
 MAX_WAIT_CYCLES = 120  # Initial timeout is 1h, changed to 80 & 140 m in level 5 & 6 respectively
 
 retrigger_dependency_bump = sys.argv[1]
-override_ballerina_version = sys.argv[2]
-auto_merge_pull_requests = sys.argv[3]
-send_notification = sys.argv[4]
+skip_lang_update = sys.argv[2]
+override_ballerina_version = sys.argv[3]
+auto_merge_pull_requests = sys.argv[4]
+send_notification = sys.argv[5]
 
 event_type = 'workflow_dispatch'
-if len(sys.argv) > 5:
-    event_type = sys.argv[5]
+if len(sys.argv) > 6:
+    event_type = sys.argv[6]
 
 github = Github(ballerina_bot_token)
 
@@ -83,28 +84,30 @@ def main():
     bal_version = {
         'version': lang_version
     }
-    try:
-        utils.write_json_file(constants.LANG_VERSION_FILE, bal_version)
-    except Exception as e:
-        print('Failed to write to file latest_ballerina_lang_version.json', e)
-        sys.exit()
 
-    try:
-        updated_file_content = open(constants.LANG_VERSION_FILE, 'r').read()
-        update = utils.commit_file('ballerina-release',
-                                   constants.LANG_VERSION_FILE, updated_file_content,
-                                   constants.EXTENSIONS_UPDATE_BRANCH,
-                                   '[Automated] Update Workflow Lang Version')[0]
-        if update:
-            utils.open_pr_and_merge('ballerina-release',
-                                    '[Automated] Update Workflow Triggered Ballerina Version',
-                                    'Update workflow triggered ballerina lang version',
-                                    constants.EXTENSIONS_UPDATE_BRANCH)
-        else:
-            print('No changes to ' + constants.LANG_VERSION_FILE + ' file')
-    except GithubException as e:
-        print('Error occurred while committing latest_ballerinalang_version.md', e)
-        sys.exit(1)
+    if not skip_lang_update:
+        try:
+            utils.write_json_file(constants.LANG_VERSION_FILE, bal_version)
+        except Exception as e:
+            print('Failed to write to file latest_ballerina_lang_version.json', e)
+            sys.exit()
+
+        try:
+            updated_file_content = open(constants.LANG_VERSION_FILE, 'r').read()
+            update = utils.commit_file('ballerina-release',
+                                       constants.LANG_VERSION_FILE, updated_file_content,
+                                       constants.EXTENSIONS_UPDATE_BRANCH,
+                                       '[Automated] Update Workflow Lang Version')[0]
+            if update:
+                utils.open_pr_and_merge('ballerina-release',
+                                        '[Automated] Update Workflow Triggered Ballerina Version',
+                                        'Update workflow triggered ballerina lang version',
+                                        constants.EXTENSIONS_UPDATE_BRANCH)
+            else:
+                print('No changes to ' + constants.LANG_VERSION_FILE + ' file')
+        except GithubException as e:
+            print('Error occurred while committing latest_ballerinalang_version.md', e)
+            sys.exit(1)
 
     print('Workflow started with Ballerina Lang version : ' + lang_version)
 
@@ -430,10 +433,13 @@ def update_module(idx: int, current_level):
         pulls = repo.get_pulls(state='closed')
         sha_of_lang = lang_version.split('-')[-1]
 
-        for pull in pulls:
-            if sha_of_lang in pull.title:
-                current_level_modules[idx][MODULE_CREATED_PR] = pull
-                break
+        if skip_lang_update:
+            current_level_modules[idx][MODULE_CREATED_PR] = pulls[0]
+        else:
+            for pull in pulls:
+                if sha_of_lang in pull.title:
+                    current_level_modules[idx][MODULE_CREATED_PR] = pull
+                    break
 
 
 def get_updated_properties_file(module_name, current_level, properties_file):
@@ -447,30 +453,33 @@ def get_updated_properties_file(module_name, current_level, properties_file):
 
     for line in properties_file.splitlines():
         if line.startswith(constants.LANG_VERSION_KEY):
-            current_version = line.split('=')[-1]
+            if skip_lang_update.lower() == 'false':
+                current_version = line.split('=')[-1]
 
-            split_current_version = current_version.split('-')
+                split_current_version = current_version.split('-')
 
-            if len(split_current_version) == 5:
-                # Prerelease version
-                processed_current_version = split_current_version[2] + split_current_version[3]
+                if len(split_current_version) == 5:
+                    # Prerelease version
+                    processed_current_version = split_current_version[2] + split_current_version[3]
 
-                if processed_current_version < processed_lang_version:
+                    if processed_current_version < processed_lang_version:
+                        print("[Info] Updating the lang version in module: '" + module_name + "'")
+                        updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
+                    else:
+                        updated_properties_file += line + '\n'
+                elif len(split_current_version) == 4:
+                    processed_current_version = split_current_version[1] + split_current_version[2]
+                    if processed_current_version < processed_lang_version:
+                        print("[Info] Updating the lang version in module: '" + module_name + "'")
+                        updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
+                    else:
+                        updated_properties_file += line + '\n'
+                else:
+                    # Stable dependency & SNAPSHOT
                     print("[Info] Updating the lang version in module: '" + module_name + "'")
                     updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
-                else:
-                    updated_properties_file += line + '\n'
-            elif len(split_current_version) == 4:
-                processed_current_version = split_current_version[1] + split_current_version[2]
-                if processed_current_version < processed_lang_version:
-                    print("[Info] Updating the lang version in module: '" + module_name + "'")
-                    updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
-                else:
-                    updated_properties_file += line + '\n'
             else:
-                # Stable dependency & SNAPSHOT
-                print("[Info] Updating the lang version in module: '" + module_name + "'")
-                updated_properties_file += constants.LANG_VERSION_KEY + '=' + lang_version + '\n'
+                updated_properties_file += line + '\n'
         else:
             key_found = False
             possible_dependency_modules = list(filter(lambda s: s['level'] < current_level, all_modules))
