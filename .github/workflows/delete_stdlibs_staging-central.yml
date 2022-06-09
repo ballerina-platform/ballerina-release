@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag
+        description: Release tag (v220x.x.x)
         required: true
         default: master
 
@@ -30,8 +30,8 @@ jobs:
         run: echo "::set-output name=module_details::`cat ModuleDetails.json`"
       - name: Trigger workflow to delete stdlibs
         run: |
-          curl -d \
-          '{"event_type": "trigger_delete_stdlibs_from_staging", "client_payload": ${{steps.store_module_details.outputs.module_details}}}' \
+          curl -X POST \
+          -d '{"event_type": "trigger_delete_stdlibs_from_staging", "client_payload": ${{steps.store_module_details.outputs.module_details}}}' \
           -H 'Content-Type: application/json' \
           -H 'Authorization: token ${{secrets.GITHUB_TOKEN}}' \
           -H 'Accept: application/vnd.github.everest-preview+json' \
