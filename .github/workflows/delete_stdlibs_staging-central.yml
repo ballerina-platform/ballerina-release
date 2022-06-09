@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag (v220x.x.x)
+        description: Release tag (v220x.x.x) / Branch (master)
         required: true
         default: master
 
