@@ -236,7 +236,7 @@ def switch_to_branches_from_updated_stages():
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
-            if module['name'] == "module-ballerinai-transaction":
+            if module['name'] == "module-ballerinai-transaction" and dist_repo_patch_branch == "2201.0.x":
                 os.system(f"echo {module['name']}")
                 exit_code = os.system(f"cd {module['name']};git checkout 1.0.x")
 
@@ -245,7 +245,7 @@ def switch_to_branches_from_updated_stages():
                           f"{module['name']}")
                     sys.exit(1)
                 continue
-            elif module['name'] == "module-ballerina-websubhub":
+            elif module['name'] == "module-ballerina-websubhub" and dist_repo_patch_branch == "2201.0.x":
                 os.system(f"echo {module['name']}")
                 exit_code = os.system(f"cd {module['name']};git checkout 2201.0.x")
 
@@ -255,6 +255,15 @@ def switch_to_branches_from_updated_stages():
                     sys.exit(1)
                 continue
             elif module['name'] == "module-ballerina-mime" and dist_repo_patch_branch == "2201.1.x":
+                os.system(f"echo {module['name']}")
+                exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
+
+                if exit_code != 0:
+                    print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
+                          f"{module['name']}")
+                    sys.exit(1)
+                continue
+            elif module['name'] == "module-ballerina-http" and dist_repo_patch_branch == "2201.1.x":
                 os.system(f"echo {module['name']}")
                 exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
 
