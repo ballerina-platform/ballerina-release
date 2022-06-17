@@ -6,7 +6,7 @@ on:
     - cron:  '0 0 * * *'
 jobs:
   send_pr_from_patch_branch:
-    name: Send a nightly PR to master
+    if: github.repository_owner == 'ballerina-platform'
     runs-on: ubuntu-latest
 
     steps:
