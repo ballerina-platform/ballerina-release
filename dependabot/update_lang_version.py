@@ -54,49 +54,50 @@ def update_lang_version(branch_name, lang_version):
             utils.approve_pr(module, 'TRUE', pr.number)
             ref = dist_repo.get_git_ref('heads/' + branch_name + "_temp")
             pending = True
-                wait_cycles = 0
-                while pending:
-                    if wait_cycles < MAX_WAIT_CYCLES:
-                        time.sleep(SLEEP_INTERVAL)
-                        pending, passing, failing_pr_checks = check_pending_pr_checks(dist_repo, pr)
-                        if not pending:
-                            if len(failing_pr_checks) > 0:
-                                passing = all(check.startswith('codecov') for check in failing_pr_checks)
-                            if passing:
-                                if(pr.mergeable_state != 'dirty'):
-                                    try:
-                                        pr.merge()
-                                        ref.delete()
-                                        log_message = "[Info] Automated lang version update PR merged. PR: " + pr.html_url
-                                        print(log_message)
-                                    except Exception as e:
-                                        print("[Error] Error occurred while merging version update PR " , e)
-                                else:
-                                    notify_chat.send_message("[Info] Automated ballerina-distribution version update PR is unmerged due to conflicts." + "\n" +\
-                                            "Please visit <" + pr.html_url + "|the build page> for more information")
+            wait_cycles = 0
+            while pending:
+                if wait_cycles < MAX_WAIT_CYCLES:
+                    time.sleep(SLEEP_INTERVAL)
+                    pending, passing, failing_pr_checks = check_pending_pr_checks(dist_repo, pr)
+                    if not pending:
+                        if len(failing_pr_checks) > 0:
+                            passing = all(check.startswith('codecov') for check in failing_pr_checks)
+                        if passing:
+                            if(pr.mergeable_state != 'dirty'):
+                                try:
+                                    pr.merge()
+                                    ref.delete()
+                                    log_message = "[Info] Automated lang version update PR merged. PR: " + pr.html_url
+                                    print(log_message)
+                                except Exception as e:
+                                    print("[Error] Error occurred while merging version update PR " , e)
                             else:
-                                notify_chat.send_message("[Info] Automated ballerina-distribution version update PR has failed checks." + "\n" +\
-                                 "Please visit <" + pr.html_url + "|the build page> for more information")
-                                pr.edit(state = 'closed')
-                                ref.delete()
+                                notify_chat.send_message("[Info] Automated ballerina-distribution version update PR is unmerged due to conflicts." + "\n" +\
+                                        "Please visit <" + pr.html_url + "|the build page> for more information")
                         else:
-                            wait_cycles += 1
+                            notify_chat.send_message("[Info] Automated ballerina-distribution version update PR has failed checks." + "\n" +\
+                             "Please visit <" + pr.html_url + "|the build page> for more information")
+                            pr.edit(state = 'closed')
+                            ref.delete()
                     else:
-                        notify_chat.send_message("[Info] Automated ballerina-distribution version update PR is unmerged due to pr checks timeout." + "\n" +\
-                         "Please visit <" + pr.html_url + "|the build page> for more information")
-                        break
+                        wait_cycles += 1
+                else:
+                    notify_chat.send_message("[Info] Automated ballerina-distribution version update PR is unmerged due to pr checks timeout." + "\n" +\
+                     "Please visit <" + pr.html_url + "|the build page> for more information")
+                    break
     else:
         print("[Info] Lang version is already synced")
 
-def commit_file(repo, file_path, updated_file_content, branch_name, commit_message)
+
+def commit_file(repo, file_path, updated_file_content, branch_name, commit_message):
     try:
         temp_branch = branch_name + "_temp"
         author = InputGitAuthor(ballerina_bot_username, ballerina_bot_email)
         pulls = repo.get_pulls(state='open')
-            for pull in pulls:
-                if (pull.head.ref == temp_branch):
-                    print( "[info] " + branch_name + " has a pull request from " + temp_branch)
-                    pull.edit(state = 'closed')
+        for pull in pulls:
+            if (pull.head.ref == temp_branch):
+                print( "[info] " + branch_name + " has a pull request from " + temp_branch)
+                pull.edit(state = 'closed')
 
         branches = repo.get_branches()
         for branch in branches:
