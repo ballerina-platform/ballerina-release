@@ -47,7 +47,7 @@ def main():
     ref = repo.get_git_ref('heads/' + temp_branch)
 
     pr = create_pull_request(repo, temp_branch)
-    time.sleep(10)
+    time.sleep(60)
 
     pending = True
     wait_cycles = 0
