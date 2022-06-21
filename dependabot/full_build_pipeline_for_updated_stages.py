@@ -4,11 +4,13 @@ import constants
 import os
 import sys
 
-DIST_REPO_PATCH_BRANCH = '2201.0.x'
+dist_repo_patch_branch = '2201.0.x'
 
 stdlib_modules_by_level = dict()
+test_ignore_modules = []
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
                            'dependabot/resources/extensions.json'
+test_ignore_modules_file = 'dependabot/resources/full_build_ignore_modules.json'
 
 ballerina_lang_branch = "master"
 enable_tests = 'true'
@@ -22,16 +24,21 @@ ballerina_bot_token = os.environ[constants.ENV_BALLERINA_BOT_TOKEN]
 def main():
     global stdlib_modules_by_level
     global stdlib_modules_json_file
+    global test_ignore_modules_file
+    global test_ignore_modules
     global ballerina_lang_branch
     global github_user
+    global dist_repo_patch_branch
     global enable_tests
 
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
         ballerina_lang_branch = sys.argv[1]
         enable_tests = sys.argv[2]
         github_user = sys.argv[3]
+        dist_repo_patch_branch = sys.argv[4]
 
     read_stdlib_modules()
+    read_test_ignore_modules()
     if stdlib_modules_by_level:
         clone_repositories()
         switch_to_branches_from_updated_stages()
@@ -39,6 +46,17 @@ def main():
         build_stdlib_repositories(enable_tests)
     else:
         print('Could not find standard library dependency data from', stdlib_modules_json_file)
+
+
+def read_test_ignore_modules():
+    try:
+        file = open(test_ignore_modules_file)
+        data = json.load(file)
+        test_ignore_modules = data['full_build_2201.0.x']
+
+    except json.decoder.JSONDecodeError:
+        print('Failed to load test ignore modules')
+        sys.exit(1)
 
 
 def read_stdlib_modules():
@@ -96,7 +114,7 @@ def clone_repositories():
         sys.exit(1)
 
     # Change branch
-    exit_code = os.system(f"cd ballerina-distribution;git checkout {DIST_REPO_PATCH_BRANCH}")
+    exit_code = os.system(f"cd ballerina-distribution;git checkout {dist_repo_patch_branch}")
     os.system("cd ballerina-distribution;git status")
     if exit_code != 0:
         sys.exit(1)
@@ -124,7 +142,8 @@ def build_stdlib_repositories(enable_tests):
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
-            if module['name'] == "module-ballerina-c2c" or module['name'] == "module-ballerina-http":
+
+            if module['name'] in test_ignore_modules:
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
@@ -234,12 +253,39 @@ def switch_to_branches_from_updated_stages():
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
-            if module['name'] == "module-ballerinai-transaction":
+            if module['name'] == "module-ballerinai-transaction" and dist_repo_patch_branch == "2201.0.x":
                 os.system(f"echo {module['name']}")
                 exit_code = os.system(f"cd {module['name']};git checkout 1.0.x")
 
                 if exit_code != 0:
-                    print(f"Failed to switch to branch 'v1.0.x' from last updated commit id for " +
+                    print(f"Failed to switch to branch '1.0.x' from last updated commit id for " +
+                          f"{module['name']}")
+                    sys.exit(1)
+                continue
+            elif module['name'] == "module-ballerina-websubhub" and dist_repo_patch_branch == "2201.0.x":
+                os.system(f"echo {module['name']}")
+                exit_code = os.system(f"cd {module['name']};git checkout 2201.0.x")
+
+                if exit_code != 0:
+                    print(f"Failed to switch to branch '2201.0.x' from last updated commit id for " +
+                          f"{module['name']}")
+                    sys.exit(1)
+                continue
+            elif module['name'] == "module-ballerina-mime" and dist_repo_patch_branch == "2201.1.x":
+                os.system(f"echo {module['name']}")
+                exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
+
+                if exit_code != 0:
+                    print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
+                          f"{module['name']}")
+                    sys.exit(1)
+                continue
+            elif module['name'] == "module-ballerina-http" and dist_repo_patch_branch == "2201.1.x":
+                os.system(f"echo {module['name']}")
+                exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
+
+                if exit_code != 0:
+                    print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
                           f"{module['name']}")
                     sys.exit(1)
                 continue
