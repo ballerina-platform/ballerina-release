@@ -68,6 +68,8 @@ function gatherModuleDetails() returns json|error {
                 int splitNameIndex = <int>moduleName.lastIndexOf(BAL_PREFIX);
                 moduleName = moduleName == "module-ballerina-c2c" ? "cloud" :
                     moduleName.substring(splitNameIndex + BAL_PREFIX.length(), moduleName.length());
+            } else if moduleName == "openapi-tools" {
+                moduleName = "openapi";
             }
 
             moduleDetails.push({
