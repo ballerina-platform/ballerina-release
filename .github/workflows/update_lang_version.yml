@@ -24,7 +24,7 @@ jobs:
           pip install retry
           pip install httplib2
           pip install PyGithub
-         pip install cryptography
+          pip install cryptography
 
       - name: Send pull request
         run: |
