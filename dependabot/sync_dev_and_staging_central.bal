@@ -37,6 +37,8 @@ function gatherModuleBalas() returns error? {
                 int splitIndex = <int>moduleName.lastIndexOf(BAL_PREFIX);
                 moduleName = moduleName == "module-ballerina-c2c" ? "cloud" :
                     moduleName.substring(splitIndex + BAL_PREFIX.length(), moduleName.length());
+            } else if moduleName == "openapi-tools" {
+                moduleName = "openapi";
             }
             
             // Verifies the existence of the particular module bala in the distribution
