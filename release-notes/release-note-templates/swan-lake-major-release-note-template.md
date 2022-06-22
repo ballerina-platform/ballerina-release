@@ -80,7 +80,7 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 To view bug fixes, see the [GitHub milestone for 2201.0.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FjBallerina+milestone%3A%22Ballerina+2201.x.0%22).
 
-### Standard Library updates
+### Standard library updates
 
 #### New features
 
@@ -109,9 +109,9 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 #### Improvements
 
-##### Ballerina Shell
+##### Ballerina shell
 
-##### Ballerina Update Tool
+##### Ballerina update Tool
 
 #### Bug fixes
 
