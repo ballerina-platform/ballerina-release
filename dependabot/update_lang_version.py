@@ -105,7 +105,12 @@ def commit_file(repo, file_path, updated_file_content, branch_name, commit_messa
                 ref.delete()
                 break
 
-        repo.create_git_ref(ref='refs/heads/' + temp_branch, sha=branch_name.commit.sha)
+        for branch in branches:
+            if branch.name == branch_name:
+                src_branch = branch
+                break
+
+        repo.create_git_ref(ref='refs/heads/' + temp_branch, sha=src_branch.commit.sha)
 
         # commit the changes to temporary branch
         repo.update_file(
