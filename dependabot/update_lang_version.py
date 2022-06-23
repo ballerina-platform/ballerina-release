@@ -26,7 +26,7 @@ def main():
     update_lang_version(branch_name, lang_version)
 
 def update_lang_version(branch_name, lang_version):
-    dist_repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-distribution', ref=branch_name)
+    dist_repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-distribution', branch_name)
     properties_content = dist_repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
     properties_content = properties_content.decoded_content.decode(constants.ENCODING)
 
