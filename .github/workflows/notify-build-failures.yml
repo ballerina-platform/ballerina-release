@@ -2,7 +2,7 @@ name: Notify Notifications chat
 
 on:
   repository_dispatch:
-    types: [notify-build-failure]
+    types: [notify-build-failure, notify-ballerinax-connector-build-failure]
 
 jobs:
   send-chat-message:
@@ -27,10 +27,10 @@ jobs:
           pip install cryptography
           pip install httplib2
           pip install PyGithub
-
+          
       - name: Wget required files
         run: |
-          python3 dependabot/notify_build_failure.py ${{ github.event.client_payload.repoName }}
+          python3 dependabot/notify_build_failure.py ${{ github.event.client_payload.repoName }} "${{ github.event.client_payload.workflow }}" ${{ github.event.action }}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
