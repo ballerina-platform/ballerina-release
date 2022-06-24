@@ -1,29 +1,32 @@
 package main
 
 import (
-    "crypto/sha1"
-    "fmt"
-    "github.com/russross/blackfriday"
-    "io/ioutil"
-    "net/http"
-    "os"
-    "os/exec"
-    "path/filepath"
-    "regexp"
-    "strconv"
-    "strings"
-    "text/template"
-    "bytes"
-    "errors"
-    "encoding/json"
+	"bytes"
+	"crypto/sha1"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"regexp"
+	"strconv"
+	"strings"
+	"text/template"
+
+	"github.com/russross/blackfriday"
 )
 
-const defaultBBEBaseURL = "https://github.com/ballerina-platform/ballerina-distribution/tree/master"
+const defaultBBEBaseURL = "https://github.com/ballerina-platform/ballerina-distribution/tree/"
 
-var bbeDirMeta = getExampleDirMeta();
+var bbeDirMeta = getExampleDirMeta()
+var releaseVersion = getReleaseVersion()
 var cacheDir = filepath.FromSlash("/tmp/gobyexample-cache")
 var pygmentizeBin = filepath.FromSlash("ballerinaByExample/vendor/pygments/pygmentize")
 var templateDir = "ballerinaByExample/templates/"
+var dataDir = "../_data/swanlake-latest/"
 var examplesDir = os.Args[1]
 var version = os.Args[2]
 var siteDir = os.Args[3]
@@ -219,12 +222,24 @@ func getExampleDirMeta() ExampleDirMeta {
     metaContent, err := ioutil.ReadFile(metaFile)
     meta := ExampleDirMeta {};
     if err != nil {
-        meta.GithubBBEBaseURL = defaultBBEBaseURL;
+        meta.GithubBBEBaseURL = defaultBBEBaseURL+"v"+releaseVersion;
         return meta;
     }
     json.Unmarshal(metaContent, &meta)
     return meta;
 }
+
+func getReleaseVersion() string{
+    metadataFile := dataDir+"metadata.json"
+    metadata, err := ioutil.ReadFile(metadataFile)
+	if err != nil {
+		panic(err)
+	}
+    var result map[string]interface{}
+    json.Unmarshal(metadata, &result)
+
+    return result["version"].(string)
+} 
 
 func getBBECategories() []BBECategory {
     allBBEsFile := examplesDir + "/index.json"
@@ -623,7 +638,7 @@ func prepareExample(sourcePaths []string, example Example, currentExamplesList [
     example.FullCode = cachedPygmentize("bal", example.FullCode)
     // If an explicit "githubLink" meta property is not given for the BBE, use the default derived location
     if example.GithubLink == "" {
-        example.GithubLink = bbeDirMeta.GithubBBEBaseURL + "/examples/" + example.Id + "/"
+        example.GithubLink = bbeDirMeta.GithubBBEBaseURL + "v" + releaseVersion + "/examples/" + example.Id + "/"
     }
     if example.EnablePlayground {
         example.PlaygroundLink = generatePlaygroundLink(example);

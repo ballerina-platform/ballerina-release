@@ -24,9 +24,10 @@ def main():
     with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
         dec_file.write(decrypted)
 
-    message = "Daily full build pipeline (" + str(sys.argv[2]) + " branch) failure for *" + str(sys.argv[1]) + "*\n" + \
-              "Please visit <https://github.com/ballerina-platform/ballerina-release/actions/workflows/" + \
-              "daily-full-build-" + str(sys.argv[2]) + ".yml|the daily full build pipeline page> for more information\n"
+    message = "Daily full build pipeline (" + str(sys.argv[2]) + ") failure for *" + str(sys.argv[1]) + "*\n" + \
+              "Please visit the <https://github.com/ballerina-platform/ballerina-release/actions/workflows/" + \
+              "daily-full-build-" + str(sys.argv[2]) + ".yml|daily full build pipeline(" + str(sys.argv[2]) + \
+              ") page> for more information\n"
 
     for owner in owners:
         with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
