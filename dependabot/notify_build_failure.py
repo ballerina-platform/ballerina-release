@@ -24,13 +24,13 @@ def main():
     with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
         dec_file.write(decrypted)
 
-    workflow_name_and_description = '"Daily+build"|the daily build page'
+    workflow_name_and_description = '%22Daily+build%22|the daily build page'
     message_body = "daily build failure"
 
     _, repo_name, workflow_name, github_action_type = sys.argv
 
     if workflow_name != "" :
-        workflow_name_and_description = '"' + workflow_name.replace(" ", "+") + '"|' + "the " + workflow_name + ' page'
+        workflow_name_and_description = '%22' + workflow_name.replace(" ", "+") + '%22|' + 'the ' + workflow_name + ' page'
 
     if github_action_type == "notify-ballerinax-connector-build-failure" :
         message_body = "build using ballerina docker image failed"
