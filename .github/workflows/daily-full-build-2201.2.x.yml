@@ -45,7 +45,7 @@ jobs:
       - name: Notify Build Failure
         if: ${{ failure() }}
         run: |
-          python3 dependabot/notify_full_build_failure.py ${{ steps.set-module.outputs.module }} master
+          python3 dependabot/notify_full_build_failure.py ${{ steps.set-module.outputs.module }} 2201.2.x
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
