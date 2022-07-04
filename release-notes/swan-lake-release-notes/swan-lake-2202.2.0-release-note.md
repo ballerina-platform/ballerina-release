@@ -105,9 +105,9 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ##### CLI
 
-Added new CLI command `bal graph` which resolves the dependencies of the current package and prints the dependency graph in the console. This produces the textual representation of the dependency graph using the DOT graph description language.
+Introduced the `bal graph` CLI command, which resolves the dependencies of the current package and prints the dependency graph in the console. This produces the textual representation of the dependency graph using the DOT graph description language.
 
-```
+```ballerina
 $ bal graph
 digraph "org/package:0.1.0" {
         node [shape=record]
@@ -143,9 +143,9 @@ To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repo
 
 #### New features
 
-Added `include` field under the `[package]` table. It allows providing paths to any additional resources, which need to be packed in the BALA file.
+Introduced an `include` field under the `[package]` table in `Ballerina.toml`. It accepts a string array of paths to any additional files and directories, which need to be packed in the BALA file. The path should be relative to the package root directory.
 
-```
+```ballerina
 [package]
 org = "samjs"
 name = "winery"
@@ -153,6 +153,4 @@ version = "0.1.0"
 include = [documents/”, "images/sample.png"]
 ```
 
-**Info:** The `include` field accepts a string array, which contains the directory or file paths to include in the BALA. The paths should be relative to the package root directory.
-The included file paths will be packaged into the root of the BALA preserving its original structure.
 <!-- <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style> -->
