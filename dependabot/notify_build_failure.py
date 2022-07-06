@@ -24,8 +24,20 @@ def main():
     with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
         dec_file.write(decrypted)
 
-    message = "*" + str(sys.argv[1]) + "* daily build failure" + "\n" +\
-              "Please visit <https://github.com/ballerina-platform/" + str(sys.argv[1]) + "/actions?query=workflow%3A%22Daily+build%22|the daily build page> for more information" +"\n"
+    workflow_name_and_description = '%22Daily+build%22|the daily build page'
+    message_body = "daily build failure"
+
+    _, repo_name, workflow_name, github_action_type = sys.argv
+
+    if workflow_name != "" :
+        workflow_name_and_description = '%22' + workflow_name.replace(" ", "+") + '%22|' + 'the ' + workflow_name + ' page'
+
+    if github_action_type == "notify-ballerinax-connector-build-failure" :
+        message_body = "build using ballerina docker image failed"
+
+    message = "*" + str(repo_name) + "* " + str(message_body) + "\n" +\
+                "Please visit <https://github.com/ballerina-platform/" + str(repo_name) +\
+                "/actions?query=workflow%3A" + str(workflow_name_and_description) + "> for more information" +"\n"
 
     for owner in owners :
         with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:

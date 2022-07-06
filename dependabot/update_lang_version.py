@@ -26,7 +26,7 @@ def main():
     update_lang_version(branch_name, lang_version)
 
 def update_lang_version(branch_name, lang_version):
-    dist_repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-distribution', ref=branch_name)
+    dist_repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/ballerina-distribution', branch_name)
     properties_content = dist_repo.get_contents(constants.GRADLE_PROPERTIES_FILE)
     properties_content = properties_content.decoded_content.decode(constants.ENCODING)
 
@@ -105,7 +105,12 @@ def commit_file(repo, file_path, updated_file_content, branch_name, commit_messa
                 ref.delete()
                 break
 
-        repo.create_git_ref(ref='refs/heads/' + temp_branch, sha=branch_name.commit.sha)
+        for branch in branches:
+            if branch.name == branch_name:
+                src_branch = branch
+                break
+
+        repo.create_git_ref(ref='refs/heads/' + temp_branch, sha=src_branch.commit.sha)
 
         # commit the changes to temporary branch
         repo.update_file(
