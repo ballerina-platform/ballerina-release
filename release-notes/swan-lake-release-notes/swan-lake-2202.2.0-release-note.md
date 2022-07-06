@@ -103,6 +103,22 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 #### New features
 
+##### CLI
+
+Introduced the `bal graph` CLI command, which resolves the dependencies of the current package and prints the dependency graph in the console. This produces the textual representation of the dependency graph using the DOT graph description language.
+
+```ballerina
+$ bal graph
+digraph "org/package:0.1.0" {
+        node [shape=record]
+        "org/package" [label="<0.1.0> org/package:0.1.0"];
+        "ballerina/io" [label="<1.2.2> ballerina/io:1.2.2"];
+
+        // Edges
+        "org/package":"0.1.0" -> "ballerina/io":"1.2.2";
+}
+```
+
 ##### Ballerina Shell
 
 ##### Ballerina Update Tool
@@ -122,5 +138,19 @@ To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repo
 - [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
 - [update tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3AType%2FBug)
 - [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+label%3AType%2FBug+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed)
+
+### Ballerina packages updates
+
+#### New features
+
+Introduced an `include` field under the `[package]` table in `Ballerina.toml`. It accepts a string array of paths to any additional files and directories, which need to be packed in the BALA file. The path should be relative to the package root directory.
+
+```ballerina
+[package]
+org = "samjs"
+name = "winery"
+version = "0.1.0"
+include = [documents/”, "images/sample.png"]
+```
 
 <!-- <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style> -->
