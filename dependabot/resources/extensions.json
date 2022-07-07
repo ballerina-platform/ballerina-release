@@ -18,6 +18,7 @@
                 "module-ballerinax-datamapper",
                 "module-ballerina-log",
                 "module-ballerina-os",
+                "module-ballerina-serdes",
                 "module-ballerina-xslt"
             ]
         },
@@ -887,6 +888,20 @@
             "default_branch": "master",
             "auto_merge": true,
             "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerina-serdes",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "serdes-ballerina",
+            "version_key": "stdlibSerdesVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
             "is_extended_library_module": true,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
