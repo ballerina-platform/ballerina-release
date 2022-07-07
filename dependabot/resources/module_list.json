@@ -233,7 +233,8 @@
             "name": "module-ballerina-xslt"
         },
         {
-            "name": "module-ballerina-serdes"
+            "name": "module-ballerina-serdes",
+            "is_extended_library_module": false
         }
     ]
 }
