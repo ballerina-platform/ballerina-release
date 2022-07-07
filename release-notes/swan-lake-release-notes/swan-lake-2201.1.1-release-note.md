@@ -70,4 +70,14 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.1]().
 - Improved the strand annotation completion support in variable declarations
 - Added completion support for already-imported modules as well as spread fields and rest fields in records
 
+##### OpenAPI Tool
+- Improved the service resource function return type generation by moving inline record generation to customised record.
+
+##### Bug Fixes
+
+To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the repositories below.
+
+- [Debugger](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.1.1%22+label%3AArea%2FDebugger+is%3Aclosed)
+- [OpenAPI](https://github.com/ballerina-platform/openapi-tools/milestone/17?closed=1)
+
 <!-- <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style> -->
