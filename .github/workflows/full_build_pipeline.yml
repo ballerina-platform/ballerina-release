@@ -42,6 +42,25 @@ jobs:
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
           BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
           devCentralToken: ${{ secrets.BALLERINA_DEV_CENTRAL_ACCESS_TOKEN }}
+      - name: Analyze Heap Dump If Exists
+        if: failure()
+        run: |
+          if test -f dump.hprof; then echo "Heap dump exists. Analyzing..."; else exit 0; fi
+          wget https://ftp.jaist.ac.jp/pub/eclipse/mat/1.12.0/rcp/MemoryAnalyzer-1.12.0.20210602-linux.gtk.x86_64.zip
+          unzip MemoryAnalyzer-1.12.0.20210602-linux.gtk.x86_64.zip
+          ./mat/ParseHeapDump.sh ./dump.hprof org.eclipse.mat.api:suspects
+      - name: Upload Heap Dumps
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: heap_dump.hprof
+          path: '*.hprof'
+      - name: Upload Leaks Suspects
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: Leak_Suspects
+          path: 'dump_Leak_Suspects.zip'
       - name: Get project version
         id: project-version
         run: |

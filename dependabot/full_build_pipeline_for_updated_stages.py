@@ -5,6 +5,7 @@ import os
 import sys
 
 dist_repo_patch_branch = '2201.0.x'
+swan_lake_update_number = 0
 
 stdlib_modules_by_level = dict()
 test_ignore_modules = []
@@ -29,6 +30,7 @@ def main():
     global ballerina_lang_branch
     global github_user
     global dist_repo_patch_branch
+    global swan_lake_update_number
     global enable_tests
 
     if len(sys.argv) > 3:
@@ -36,6 +38,7 @@ def main():
         enable_tests = sys.argv[2]
         github_user = sys.argv[3]
         dist_repo_patch_branch = sys.argv[4]
+        swan_lake_update_number = int(dist_repo_patch_branch.split(".")[1])
 
     read_stdlib_modules()
     read_test_ignore_modules()
@@ -142,8 +145,11 @@ def build_stdlib_repositories(enable_tests):
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
+            if module['name'] in "module-ballerina-serdes" and swan_lake_update_number < 2:
+                os.system(f"echo Skipped Building Standard Library Module: {module['name']}")
+                continue
 
-            if module['name'] in test_ignore_modules:
+            elif module['name'] in test_ignore_modules:
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
