@@ -232,6 +232,8 @@ def change_version_to_snapshot():
                                 properties[name] = value
                         except ValueError:
                             continue
+                    if module['name'] == "module-ballerina-http":
+                        properties["org.gradle.jvmargs"] = "-Xmx4096m -XX:MaxPermSize=512m"
                     config_file.close()
 
                 with open(f"{module['name']}/gradle.properties", 'w') as config_file:
