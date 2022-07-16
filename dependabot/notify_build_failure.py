@@ -26,20 +26,28 @@ def main():
 
     workflow_name_and_description = '%22Daily+build%22|the daily build page'
     message_body = "daily build failure"
+    branch_specified = ""
 
-    _, repo_name, workflow_name, github_action_type = sys.argv
+    repo_name, workflow_name, github_action_type, branch = "", "", "", ""
+    if len(sys.argv) > 4:
+        _, repo_name, workflow_name, github_action_type, branch = sys.argv
+    else:
+        _, repo_name, workflow_name, github_action_type = sys.argv
 
-    if workflow_name != "" :
+    if workflow_name != "":
         workflow_name_and_description = '%22' + workflow_name.replace(" ", "+") + '%22|' + 'the ' + workflow_name + ' page'
 
-    if github_action_type == "notify-ballerinax-connector-build-failure" :
+    if github_action_type == "notify-ballerinax-connector-build-failure":
         message_body = "build using ballerina docker image failed"
 
-    message = "*" + str(repo_name) + "* " + str(message_body) + "\n" +\
+    if branch != "":
+        branch_specified = " (" + branch + ")"
+
+    message = "*" + str(repo_name) + branch_specified + "* " + str(message_body) + "\n" +\
                 "Please visit <https://github.com/ballerina-platform/" + str(repo_name) +\
                 "/actions?query=workflow%3A" + str(workflow_name_and_description) + "> for more information" +"\n"
 
-    for owner in owners :
+    for owner in owners:
         with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
             user_file = csv.DictReader(read_obj)
             owner = owner.strip()
