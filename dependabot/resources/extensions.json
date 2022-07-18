@@ -3,6 +3,22 @@
     "lang_version_substring": "2201.0.2",
     "standard_library": [
         {
+            "name": "module-ballerina-constraint",
+            "level": 1,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "constraint-ballerina",
+            "version_key": "stdlibConstraintVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "openapi-tools"
+            ]
+        },
+        {
             "name": "module-ballerina-io",
             "level": 1,
             "group_id": "io.ballerina.stdlib",

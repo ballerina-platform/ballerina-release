@@ -2,6 +2,7 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_1 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
+		constraint
 		io
 		"jballerina.java.arrays"
 		regex

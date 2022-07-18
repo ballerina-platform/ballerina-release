@@ -235,6 +235,9 @@
         {
             "name": "module-ballerina-serdes",
             "is_extended_library_module": false
+        },
+        {
+            "name": "module-ballerina-constraint"
         }
     ]
 }
