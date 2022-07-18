@@ -8,6 +8,7 @@ from pathlib import Path
 
 stdlib_modules_by_level = dict()
 test_ignore_modules = []
+build_ignore_modules = []
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
                            'dependabot/resources/extensions.json'
 test_ignore_modules_file = 'dependabot/resources/full_build_ignore_modules.json'
@@ -26,6 +27,7 @@ def main():
     global stdlib_modules_json_file
     global test_ignore_modules_file
     global test_ignore_modules
+    global build_ignore_modules
     global ballerina_lang_branch
     global github_user
     global enable_tests
@@ -36,7 +38,7 @@ def main():
         github_user = sys.argv[3]
 
     read_stdlib_modules()
-    read_test_ignore_modules()
+    read_ignore_modules()
     if stdlib_modules_by_level:
         clone_repositories()
         change_version_to_snapshot()
@@ -61,11 +63,12 @@ def read_stdlib_modules():
         sys.exit(1)
 
 
-def read_test_ignore_modules():
+def read_ignore_modules():
     try:
         file = open(test_ignore_modules_file)
         data = json.load(file)
-        test_ignore_modules = data['full_build_master']
+        test_ignore_modules = data['master']['test-ignore-modules']
+        build_ignore_modules = data['master']['build-ignore-modules']
 
     except json.decoder.JSONDecodeError:
         print('Failed to load test ignore modules')
@@ -144,7 +147,11 @@ def build_stdlib_repositories(enable_tests):
 
             remove_dependency_files(module['name'])
 
-            if module['name'] in test_ignore_modules:
+            if module['name'] in build_ignore_modules:
+                os.system(f"echo Skipped Building Standard Library Module: {module['name']}")
+                continue
+
+            elif module['name'] in test_ignore_modules:
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +

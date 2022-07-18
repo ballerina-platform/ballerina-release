@@ -9,6 +9,7 @@ swan_lake_update_number = 0
 
 stdlib_modules_by_level = dict()
 test_ignore_modules = []
+build_ignore_modules = []
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
                            'dependabot/resources/extensions.json'
 test_ignore_modules_file = 'dependabot/resources/full_build_ignore_modules.json'
@@ -27,6 +28,7 @@ def main():
     global stdlib_modules_json_file
     global test_ignore_modules_file
     global test_ignore_modules
+    global build_ignore_modules
     global ballerina_lang_branch
     global github_user
     global dist_repo_patch_branch
@@ -41,7 +43,7 @@ def main():
         swan_lake_update_number = int(dist_repo_patch_branch.split(".")[1])
 
     read_stdlib_modules()
-    read_test_ignore_modules()
+    read_ignore_modules()
     if stdlib_modules_by_level:
         clone_repositories()
         switch_to_branches_from_updated_stages()
@@ -51,11 +53,12 @@ def main():
         print('Could not find standard library dependency data from', stdlib_modules_json_file)
 
 
-def read_test_ignore_modules():
+def read_ignore_modules():
     try:
         file = open(test_ignore_modules_file)
         data = json.load(file)
-        test_ignore_modules = data['full_build_2201.0.x']
+        test_ignore_modules = data[dist_repo_patch_branch]['test-ignore-modules']
+        build_ignore_modules = data[dist_repo_patch_branch]['build-ignore-modules']
 
     except json.decoder.JSONDecodeError:
         print('Failed to load test ignore modules')
@@ -145,7 +148,7 @@ def build_stdlib_repositories(enable_tests):
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
-            if module['name'] in "module-ballerina-serdes" and swan_lake_update_number < 2:
+            if module['name'] in build_ignore_modules:
                 os.system(f"echo Skipped Building Standard Library Module: {module['name']}")
                 continue
 
