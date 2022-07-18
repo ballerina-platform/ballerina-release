@@ -89,6 +89,11 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 - Added the support for deprecation of fields and enum values
 - Added the support for GraphQL interceptors
 
+##### `serdes` package
+
+- Introduced the `serdes` standard library package for serializing and deserializing Ballerina `anydata` subtypes
+- Proto3 is the underlying technology used by this package to achieve serialization and deserialization
+
 #### Improvements
 
 ##### `graphql` package
