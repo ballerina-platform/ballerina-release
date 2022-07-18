@@ -54,6 +54,9 @@ def main():
 
 
 def read_ignore_modules():
+    global test_ignore_modules
+    global build_ignore_modules
+
     try:
         file = open(test_ignore_modules_file)
         data = json.load(file)
