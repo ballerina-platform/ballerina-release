@@ -86,6 +86,9 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ##### `graphql` package
 
+- Added the support for deprecation of fields and enum values
+- Added the support for GraphQL interceptors
+
 #### Improvements
 
 ##### `graphql` package
