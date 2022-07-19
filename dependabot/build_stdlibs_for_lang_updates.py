@@ -83,7 +83,7 @@ def read_dependency_data(stdlib_modules_data):
         name = module['name']
         level = module['level']
         version_key = module['version_key']
-        if level < 8:
+        if level < 9:
             stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
                                                                                         "version_key": version_key}]
 
@@ -141,6 +141,7 @@ def build_stdlib_repositories(enable_tests):
         print(f"Build failed for ballerina-lang")
         write_failed_module("ballerina-lang")
         sys.exit(1)
+    delete_module('ballerina-lang')
 
     # Build standard library repos
     for level in stdlib_modules_by_level:
@@ -169,6 +170,7 @@ def build_stdlib_repositories(enable_tests):
                 write_failed_module(module['name'])
                 print(f"Build failed for {module['name']}")
                 sys.exit(1)
+            delete_module(module['name'])
 
     # Build ballerina-distribution repo
     os.system("echo Building ballerina-distribution")
@@ -298,6 +300,14 @@ def remove_dependency_files(module_name):
     if Path(module_name + "/ballerina-tests/Dependencies.toml").is_file():
         os.system(f"cd {module_name}/ballerina-tests;" +
                   "find . -name \"Dependencies.toml\" -delete;")
+
+
+def delete_module(module_name):
+    global exit_code
+
+    exit_code = os.system(f"rm -rf ./{module_name}")
+    if exit_code != 0:
+        sys.exit(1)
 
 
 main()

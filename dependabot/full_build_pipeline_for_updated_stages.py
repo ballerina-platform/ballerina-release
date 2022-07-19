@@ -89,7 +89,7 @@ def read_dependency_data(stdlib_modules_data):
         name = module['name']
         level = module['level']
         version_key = module['version_key']
-        if level < 8:
+        if level < 9:
             stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
                                                                                         "version_key": version_key}]
 
