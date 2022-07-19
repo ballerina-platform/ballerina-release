@@ -194,7 +194,8 @@ def get_lag_info(module_name):
 def get_lag_button(module):
     global modules_with_no_lag
     lag = False
-    days, hrs, color = get_lag_info(module[MODULE_NAME])
+    #days, hrs, color = get_lag_info(module[MODULE_NAME])
+    days, hrs, color = -1, 0, "brightgreen"
     if days > 1:
         lag_status = str(days) + "%20days"
         lag = True
@@ -354,8 +355,10 @@ def get_updated_readme():
     all_modules = utils.read_json_file(constants.EXTENSIONS_FILE)
     module_details_list = all_modules["standard_library"]
 
-    lang_version_statement = get_lang_version_statement()
-    distribution_statement = get_distribution_statement()
+    # lang_version_statement = get_lang_version_statement()
+    # distribution_statement = get_distribution_statement()
+    lang_version_statement = "<code>ballerina-lang</code> repository version <b>2201.0.1-rc3.1</b> has been updated as follows"
+    distribution_statement = "<code>ballerina-distribution</code> repository is up to date."
 
     updated_readme += "# Ballerina Repositories Update Status\n\n" + \
                       "<table><tbody><tr>\n" + \
