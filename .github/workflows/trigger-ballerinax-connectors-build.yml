@@ -2,6 +2,8 @@ name: Trigger ballerinax connectors build
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   trigger_repository_disptach:
