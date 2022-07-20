@@ -141,11 +141,30 @@ digraph "org/package:0.1.0" {
 
 ### Breaking changes
 
+### Developer Tools Updates
+
+#### New Features
+
+##### OpenAPI Tool
+- Added support for allowing resource method capability for client generation command. 
+  Introduced `--client-methods <resource|remote>` option to select client method type,  which can be `resource` or `remote`.
+  - `$ bal openapi -i <OpenAPI contract> --client-methods resource`
+  - `$ bal openapi -i <OpenAPI contract> --mode client --client-methods resource`
+
+#### Improvements
+
+##### OpenAPI Tool
+- Added support to validate the values that have been assigned to generated Ballerina types concerning the given OpenAPI schema
+  validation using API provided by the Ballerina constraint package. This validation available for `int`, `float`, `number`, `string` and `array`.
+  The `@constraint:Int`, `@constraint:Float` and `@constraint:Number` annotations will have the `minValue`, `maxValue`, `minValueExclusive` and `maxValueExclusive` constraints.
+  The `@constraint:String` and `@constraint:Array` annotation will have the `minLength` and `maxLength` constraints.
+
+
 To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repositories below.
 
 - [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
 - [update tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3AType%2FBug)
-- [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+label%3AType%2FBug+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed)
+- [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+milestone%3A%22Swan+Lake+2201.2.0%22+is%3Aclosed)
 
 ### Ballerina packages updates
 
