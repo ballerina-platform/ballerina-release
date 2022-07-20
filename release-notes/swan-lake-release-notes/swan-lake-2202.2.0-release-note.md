@@ -141,23 +141,23 @@ digraph "org/package:0.1.0" {
 
 ### Breaking changes
 
-### Developer Tools Updates
+### Developer tools updates
 
-#### New Features
+#### New features
 
 ##### OpenAPI Tool
-- Added support for allowing resource method capability for client generation command. 
-  Introduced `--client-methods <resource|remote>` option to select client method type,  which can be `resource` or `remote`.
+- Added support for allowing resource method capability for the client generation command. 
+  Introduced `--client-methods <resource|remote>` option to select the client method type,  which can be `resource` or `remote`.
   - `$ bal openapi -i <OpenAPI contract> --client-methods resource`
   - `$ bal openapi -i <OpenAPI contract> --mode client --client-methods resource`
 
 #### Improvements
 
 ##### OpenAPI Tool
-- Added support to validate the values that have been assigned to generated Ballerina types concerning the given OpenAPI schema
-  validation using API provided by the Ballerina constraint package. This validation available for `int`, `float`, `number`, `string` and `array`.
-  The `@constraint:Int`, `@constraint:Float` and `@constraint:Number` annotations will have the `minValue`, `maxValue`, `minValueExclusive` and `maxValueExclusive` constraints.
-  The `@constraint:String` and `@constraint:Array` annotation will have the `minLength` and `maxLength` constraints.
+- Added support to validate the values that have been assigned to the generated Ballerina types concerning the given OpenAPI schema
+  validation using the API provided by the Ballerina constraint package. This validation is available for `int`, `float`, `number`, `string`, and `array`.
+  The `@constraint:Int`, `@constraint:Float` and `@constraint:Number` annotations will have the `minValue`, `maxValue`, `minValueExclusive`, and `maxValueExclusive` constraints.
+  The `@constraint:String` and `@constraint:Array` annotations will have the `minLength` and `maxLength` constraints.
 
 
 To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repositories below.
