@@ -84,6 +84,10 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 #### New features
 
+##### `constraint` package
+
+- Introduced the `constraint` standard library package, which provides features to validate the values that have been assigned to Ballerina types
+
 ##### `graphql` package
 
 - Added the support for deprecation of fields and enum values
