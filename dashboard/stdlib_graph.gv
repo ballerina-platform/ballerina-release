@@ -82,6 +82,8 @@ digraph "Stdlib Dependency Graph" {
 		postgresql
 		label="level 8"
 	}
+	constraint -> http
+	constraint -> nats
 	io -> log
 	io -> os
 	io -> serdes
