@@ -15,7 +15,8 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "openapi-tools"
+                "module-ballerina-http",
+                "module-ballerinax-nats"
             ]
         },
         {
