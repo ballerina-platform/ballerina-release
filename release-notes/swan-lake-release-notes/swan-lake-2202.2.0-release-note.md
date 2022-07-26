@@ -117,11 +117,10 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ##### SemVer validator CLI tool [Experimental] 
 Introduced the `bal semver` CLI command, which attempts to validate <a href="https://semver.org/">SemVer</a> compatibility of the local package changes against any previously published version(s) in Ballerina Central. Currently the tool can be used to 
-- compare the local changes with any published package version available in central
-- suggest the next package version based on the source code changes and,
-- list-down the list of source code changes between the local code and any published package version.
+- list-down the source code differences(along with compatibility impact) between the local and any published versions in Ballerina central
+- suggest the new package version based on the compatibility impact of source code changes
 
-Please refer to the below example, which demonstrate the semver validator tool functionalities on the `ballerina/io` package.
+The below example demonstrates semver validator tool functionalities on the `ballerina/io` package.
 
 i. version suggestions
 ```
