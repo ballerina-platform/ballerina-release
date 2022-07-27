@@ -115,6 +115,47 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 #### New features
 
+##### SemVer validator CLI tool (Experimental)
+Introduced the `bal semver` CLI command, which attempts to validate <a href="https://semver.org/">Semantic Versioning</a> compatibility of the local package changes against any previously published version(s) in Ballerina Central. Currently, the tool can be used to: 
+- list down the source code differences (along with its compatibility impact) between the local and any published versions in Ballerina central
+- suggest the new package version based on the compatibility impact of source code changes
+
+Refer to the examples below which demonstrate few key functionalities of the semver CLI tool.
+
+- version suggestions
+```
+$bal semver             
+checking for the latest compatible release version available in central...
+
+current version: 1.2.2-SNAPSHOT
+compatibility impact (compared with the release version '1.2.1'): backward-incompatible changes detected
+suggested version: 2.0.0
+```
+
+- version suggestions with the list of source code changes
+```
+$bal semver --show-diff
+checking for the latest compatible release version available in central...
+
+=========================================================================
+ Comparing version '1.2.2-SNAPSHOT'(local) with version '1.2.1'(central) 
+=========================================================================
+[+-] package 'io' is modified [version impact: MAJOR]
+  [+-] module 'io' is modified [version impact: MAJOR]
+    [++] function 'printlnNew' is added [version impact: MINOR]
+    [+-] function 'println' is modified [version impact: MAJOR]
+      [+-] documentation is modified [version impact: PATCH]
+      [--] 'isolated' qualifier is removed [version impact: AMBIGUOUS]
+      [++] 'transactional' qualifier is added [version impact: AMBIGUOUS]
+      [++] new required parameter 'a' is added [version impact: MAJOR]
+      [++] new defaultable parameter 'b' is added [version impact: MINOR]
+      [+-] parameter type changed from 'Printable' to 'string' [version impact: AMBIGUOUS]
+      [+-] function body is modified [version impact: PATCH]
+
+current version: 1.2.2-SNAPSHOT
+compatibility impact (compared with the release version '1.2.1'): backward-incompatible changes detected
+suggested version: 2.0.0
+```
 ##### CLI
 
 Introduced the `bal graph` CLI command, which resolves the dependencies of the current package and prints the dependency graph in the console. This produces the textual representation of the dependency graph using the DOT graph description language.
