@@ -60,5 +60,6 @@ To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.2 of the reposi
 
 - [Debugger](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.1.2%22+label%3AArea%2FDebugger+is%3Aclosed)
 - [OpenAPI](https://github.com/ballerina-platform/openapi-tools/milestone/17?closed=1)
-
+- [CLI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.1.2+label%3AArea%2FCLI+is%3Aclosed)
+- [ProjectAPI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.1.2+label%3AArea%2FProjectAPI+is%3Aclosed)
 <!-- <style>.cGitButtonContainer, .cBallerinaTocContainer {display:none;}</style> -->
