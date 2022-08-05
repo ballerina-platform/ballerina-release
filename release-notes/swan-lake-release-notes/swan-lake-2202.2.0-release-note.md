@@ -154,8 +154,7 @@ Introduced the `--client-methods <resource|remote>` option to select the client 
 #### Improvements
 
 ##### OpenAPI Tool
-- Added support to validate the values that have been assigned to the generated Ballerina types concerning the given OpenAPI schema
-  validation using the API provided by the Ballerina constraint package. This validation is available for `int`, `float`, `number`, `string`, and `array`.
+Added support to validate the values that have been assigned to the generated Ballerina types concerning the given OpenAPI schema validation using the API provided by the Ballerina `constraint` package. This validation is available for `int`, `float`, `number`, `string`, and `array`.
   The `@constraint:Int`, `@constraint:Float`, and `@constraint:Number` annotations will have the `minValue`, `maxValue`, `minValueExclusive`, and `maxValueExclusive` constraints.
   The `@constraint:String` and `@constraint:Array` annotations will have the `minLength` and `maxLength` constraints.
 
