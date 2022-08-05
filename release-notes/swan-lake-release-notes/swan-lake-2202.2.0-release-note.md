@@ -94,7 +94,7 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 ### Code to Cloud updates
 
 #### Improvements
-- Base image was updated to `ballerina/jvm-runtime:1.0` based on alpine 3.15 with necessary libraries
+- The base image was updated to `ballerina/jvm-runtime:1.0` based on Alpine 3.15 with the necessary libraries
 
 #### Bug fixes
 
