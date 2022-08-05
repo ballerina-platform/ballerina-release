@@ -153,19 +153,17 @@ Added support for generating client resource methods in the client generation co
 #### Improvements
 
 ##### OpenAPI Tool
-###### OpenAPI to Ballerina Schema Generation
-Added support to validate the values in generated Ballerina data types concerning the given OpenAPI schema data types' validation rules. For the validation use an API provided by the Ballerina `constraint` package.
-The validation is available for 
-- the `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` keywords in the `integer` and `number` OpenAPI schema data types
-- the `minLength` and `maxLength` keywords in the `string` OpenAPI schema daya type
-- the `minItems` and `maxItems` OpenAPI  in the `array` OpenAPI schema data type
-
+Added support for OpenAPI schema constraint properties in client/service generation. With this improvement, the OpenAPI constraints will be applied as `ballerina/constraint` standard library package annotations when generating Ballerina clients and services from the OpenAPI definition.
+The following OpenAPI properties are currently supported in the Ballerina OpenAPI generation tool. 
+- `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` for `integer` and `number` types
+- `minLength` and `maxLength` for `string` type
+- `minItems` and `maxItems` for `array` type
 
 To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repositories below.
 
 - [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
 - [update tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3AType%2FBug)
-- [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+milestone%3A%22Swan+Lake+2201.2.0%22+is%3Aclosed)
+
 
 ### Ballerina packages updates
 
