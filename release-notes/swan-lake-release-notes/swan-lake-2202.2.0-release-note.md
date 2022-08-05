@@ -153,9 +153,12 @@ digraph "org/package:0.1.0" {
 #### Improvements
 
 ##### OpenAPI Tool
-Added support to validate the values that have been assigned to the generated Ballerina types concerning the given OpenAPI schema validation using the API provided by the Ballerina `constraint` package. This validation is available for `int`, `float`, `number`, `string`, and `array`.
-  The `@constraint:Int`, `@constraint:Float`, and `@constraint:Number` annotations will have the `minValue`, `maxValue`, `minValueExclusive`, and `maxValueExclusive` constraints.
-  The `@constraint:String` and `@constraint:Array` annotations will have the `minLength` and `maxLength` constraints.
+###### OpenAPI to Ballerina Schema Generation
+Added support to validate the values that have been assigned to the generated Ballerina types concerning the given OpenAPI schema validation using the API provided by the Ballerina `constraint` package. 
+The validation is available for 
+- keywords `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` in OpenAPI schema data types `integer`and `number`
+- keywords `minLength` and `maxLength` in OpenAPI `string` schema daya type
+- keywords `minItems` and `maxItems` in OpenAPI `array` schema data type
 
 
 To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repositories below.
