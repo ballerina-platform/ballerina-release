@@ -146,7 +146,7 @@ digraph "org/package:0.1.0" {
 #### New features
 
 ##### OpenAPI Tool
-- Added support for allowing resource method capability for the client generation command. 
+Added support for allowing resource method capability for the client generation command. 
   Introduced `--client-methods <resource|remote>` option to select the client method type,  which can be `resource` or `remote`.
   - `$ bal openapi -i <OpenAPI contract> --client-methods resource`
   - `$ bal openapi -i <OpenAPI contract> --mode client --client-methods resource`
