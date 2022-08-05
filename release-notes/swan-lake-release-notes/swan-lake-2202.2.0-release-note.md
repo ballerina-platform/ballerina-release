@@ -154,7 +154,7 @@ Added support for generating client resource methods in the client generation co
 
 ##### OpenAPI Tool
 ###### OpenAPI to Ballerina Schema Generation
-Added support to validate the values that have been assigned to the generated Ballerina types concerning the given OpenAPI schema validation using the API provided by the Ballerina `constraint` package. 
+Added support to validate the values in generated Ballerina data types concerning the given OpenAPI schema data types' validation rules. For the validation use an API provided by the Ballerina `constraint` package.
 The validation is available for 
 - the `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` keywords in the `integer` and `number` OpenAPI schema data types
 - the `minLength` and `maxLength` keywords in the `string` OpenAPI schema daya type
