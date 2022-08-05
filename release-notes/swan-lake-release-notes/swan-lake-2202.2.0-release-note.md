@@ -146,7 +146,7 @@ digraph "org/package:0.1.0" {
 #### New features
 
 ##### OpenAPI Tool
-- Added support for generating client resource methods in client generation command. The preferred client method type can be chosen using `--client-methods=<remote(default)|resource>` option.
+Added support for generating client resource methods in the client generation command. The preferred client method type can be chosen using the `--client-methods=<remote(default)|resource>` option.
   - `$ bal openapi -i <OpenAPI contract> --client-methods=resource`
   - `$ bal openapi -i <OpenAPI contract> --mode client --client-methods=resource`
 
@@ -156,9 +156,9 @@ digraph "org/package:0.1.0" {
 ###### OpenAPI to Ballerina Schema Generation
 Added support to validate the values that have been assigned to the generated Ballerina types concerning the given OpenAPI schema validation using the API provided by the Ballerina `constraint` package. 
 The validation is available for 
-- keywords `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` in OpenAPI schema data types `integer`and `number`
-- keywords `minLength` and `maxLength` in OpenAPI `string` schema daya type
-- keywords `minItems` and `maxItems` in OpenAPI `array` schema data type
+- the `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` keywords in the `integer` and `number` OpenAPI schema data types
+- the `minLength` and `maxLength` keywords in the `string` OpenAPI schema daya type
+- the `minItems` and `maxItems` OpenAPI  in the `array` OpenAPI schema data type
 
 
 To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repositories below.
