@@ -187,11 +187,29 @@ digraph "org/package:0.1.0" {
 
 ### Breaking changes
 
+### Developer tools updates
+
+#### New features
+
+##### OpenAPI Tool
+Added support for generating client resource methods in the client generation command. The preferred client method type can be chosen using the `--client-methods=<remote(default)|resource>` option.
+  - `$ bal openapi -i <OpenAPI contract> --client-methods=resource`
+  - `$ bal openapi -i <OpenAPI contract> --mode client --client-methods=resource`
+
+#### Improvements
+
+##### OpenAPI Tool
+Added support for OpenAPI schema constraint properties in client/service generation. With this improvement, the OpenAPI constraints will be applied as `ballerina/constraint` standard library package annotations when generating Ballerina clients and services from the OpenAPI definition.
+The following OpenAPI properties are currently supported in the Ballerina OpenAPI generation tool. 
+- `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` for `integer` and `number` types
+- `minLength` and `maxLength` for `string` type
+- `minItems` and `maxItems` for `array` type
+
 To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repositories below.
 
 - [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
 - [update tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3AType%2FBug)
-- [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+label%3AType%2FBug+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed)
+
 
 ### Ballerina packages updates
 
