@@ -80,33 +80,33 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ##### Strand dump
 
-Allows to get the status of strands and strand groups during the execution of a Ballerina program.
+Allows getting the status of strands and strand groups during the execution of a Ballerina program.
 
-This can be used to troubleshoot runtime errors. Ballerina runtime will emit the strand dump to the standard output stream in the text format, if it receives a `SIGTRAP` signal. (`SIGTRAP` is not available on Windows.)
+This can be used to troubleshoot runtime errors. The Ballerina runtime will emit the strand dump to the standard output stream in the text format, if it receives a `SIGTRAP` signal (`SIGTRAP` is not available on Windows).
 
-e.g., If the PID of the running Ballerina program is `$PID`, you can get the strand dump by executing either `kill -SIGTRAP $PID` or `kill -5 $PID` command.
+E.g., if the PID of the running Ballerina program is `$PID`, you can get the strand dump by executing either `kill -SIGTRAP $PID` or `kill -5 $PID` command.
 
-##### StopHandler
+##### `StopHandler` Object
 
-Allows to register a function that will be called during graceful shutdown.
+Allows registering a function that will be called during graceful shutdown.
 
-A call to `onGracefulStop` will result in one call to the handler function that was passed as an argument; the handler functions will be called after calling `gracefulStop` on all registered listeners, in reverse order of the corresponding calls to `onGracefulStop`.
+A call to `onGracefulStop` will result in one call to the handler function that was passed as an argument; the handler functions will be called after calling `gracefulStop` on all registered listeners, in the reverse order of the corresponding calls to `onGracefulStop`.
 
-e.g., A function `foo` can be called during the graceful shutdown by registering it as follows,
+E.g., a `foo` function can be called during the graceful shutdown by registering it as follows.
 
 `runtime:onGracefulStop(foo);`
 
 #### Improvements
 
-#### New Runtime Java APIs
+#### New runtime Java APIs
 
-##### Type reference type support at runtime
+##### Type-reference type support at runtime
 
 ###### Modified existing runtime APIs
 
-When a type is defined referring to another type, it will be now passed to runtime as a `BTypeReferenceType` instance.
+When a type is defined referring to another type, it will now be passed to the runtime as a `BTypeReferenceType` instance.
 
-For example, the following code contains type reference types `Integer` and `Student`.
+For example, the following code contains the `Integer` and `Student` type reference types.
 
 ```ballerina
 type Integer int;
@@ -120,28 +120,29 @@ type Student Person;
 
 ```
 
-The following runtime Java APIs are now supported to return `BTypeReferenceType` instances.
+The following runtime Java APIs are now supported to return the `BTypeReferenceType` instances.
 
 ```java
-// from ArrayType
+// from the `ArrayType`.
 Type getElementType();
 
-// from FunctionType
+// from the `FunctionType`.
 Parameter[] getParameters();
 Type[] getParameterTypes();
 
-// from Field
+// from the `Field`.
 Type getFieldType();
 
-// from BTypedesc
+// from the `BTypedesc`.
 Type getDescribingType();
 ```
 
 ###### New runtime Java API
 
 The follwing new runtime APIs are added to provide the referred type of a type reference type.  
-`TypeUtils.getReferredType()`  
-`getReferredType()` in `ReferenceType`  
+
+- `TypeUtils.getReferredType()`
+- `getReferredType()` in `ReferenceType`  
 
 ```ballerina
 type Integer int;
@@ -149,9 +150,9 @@ type Integer int;
 type Quantity Integer;
 ```  
 
-In the above sample for the type `Quantity`,  
-The `TypeUtils.getReferredType()` call will return the `int` type instance.
-`getReferredType()` call on the `ReferenceType` will return another `BTypeReferenceType` instance with name `Integer`.
+In the above example of the `Quantity` type,  
+the `TypeUtils.getReferredType()` call will return the `int` type instance.  
+The `getReferredType()` call on the `ReferenceType` will return another `BTypeReferenceType` instance with the `Integer` name.
 
 #### Bug fixes
 
