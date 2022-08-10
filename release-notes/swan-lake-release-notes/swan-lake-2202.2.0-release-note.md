@@ -98,6 +98,10 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 - Introduced the `serdes` standard library package for serializing and deserializing Ballerina `anydata` subtypes
 - Proto3 is the underlying technology used by this package to achieve serialization and deserialization
 
+##### `xmldata` package
+
+- Introduced new APIs such as `fromXml` and `toXml` to perform conversions between `XML` and `map<anydata>`.
+- Introduced a new config as `rootTag` in the `JsonOptions` to configure the name of the XML root element tag.
 #### Improvements
 
 ##### `graphql` package
