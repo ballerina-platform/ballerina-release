@@ -1,0 +1,18 @@
+{
+  "master": {
+    "test-ignore-modules": ["module-ballerina-http"],
+    "build-ignore-modules": []
+  },
+  "2201.0.x": {
+    "test-ignore-modules": ["module-ballerina-c2c", "module-ballerina-http"],
+    "build-ignore-modules": ["module-ballerina-constraint", "module-ballerina-serdes"]
+  },
+  "2201.1.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": ["module-ballerina-constraint", "module-ballerina-serdes"]
+  },
+  "2201.2.x": {
+    "test-ignore-modules": ["module-ballerina-http"],
+    "build-ignore-modules": []
+  }
+}

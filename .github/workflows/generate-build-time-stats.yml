@@ -1,0 +1,71 @@
+name: Generate build time statistics 
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 0' 
+
+jobs: 
+  build-examples:
+    name: Build Examples and Push statistics back to the repo
+    runs-on: ubuntu-latest
+    steps:         
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: build-time-data
+
+      - name: Get the Ballerina examples 
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout bbe-refactor
+          cd ..
+          git clone https://github.com/ballerina-platform/nballerina.git
+      - name: Build nBallerina sample
+        uses: ballerina-platform/ballerina-action/@nightly
+        with:
+          args:
+            build --dump-build-time --offline ./nballerina/compiler
+
+      - name: Copy nBallerina build-time.json file to build-time-data
+        run: |
+          cp ./nballerina/compiler/target/build-time.json ./build-time-data/nballerina.json
+      - name: Build hello_world sample
+        uses: ballerina-platform/ballerina-action/@nightly
+        with:
+          args:
+            build --dump-build-time --offline ./ballerina-distribution/examples/hello-world/hello_world.bal
+
+      - name: Copy hello_world build-time.json file to build-time-data
+        run: |
+          cp build-time.json ./build-time-data/hello_world.json
+      - name: Build hello_world_service sample
+        uses: ballerina-platform/ballerina-action/@nightly
+        with:
+          args:
+            build --dump-build-time --offline ./ballerina-distribution/examples/hello-world-service/hello_world_service.bal
+
+      - name: Copy hello_world_service build-time.json file to build-time-data
+        run: |
+          cp build-time.json ./build-time-data/hello_world_service.json
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Python Packages
+        run: |
+          pip install requests
+          pip install retry
+          pip install httplib2
+          pip install PyGithub
+          pip install cryptography
+      - name: Send, Review and Merge PR
+        run: |
+          python3 dependabot/generate-build-time-stats.py 
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}

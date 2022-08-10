@@ -1,0 +1,37 @@
+name: Update Standard Library Dependency Graph
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  create:
+    name: Update Standard Library Dependency Graph
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Python Packages
+        run: |
+          pip install graphviz
+          pip install requests
+          sudo apt-get install graphviz
+          pip install retry
+          pip install PyGithub
+          pip install cryptography
+
+      - name: Get Dependencies and Update Dependency Graph
+        run: |
+          python dependabot/update_stdlib_dependency_graph.py
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}

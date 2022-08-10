@@ -7,6 +7,10 @@ on:
         description: 'Re-trigger a failed dependency bump workflow'
         required: false
         default: 'false'
+      skipLang:
+        description: 'Skip lang version update'
+        required: false
+        default: 'false'
       ballerinaVersion:
         description: 'Ballerina Version (Mandatory only when re-triggering failed workflow)'
         required: false
@@ -15,14 +19,21 @@ on:
         description: 'Auto Merge PRs'
         required: false
         default: 'true'
-  schedule:
-    - cron: '30 6 * * *'
+      sendNotification:
+        description: 'Send failure notification to Google Chat'
+        required: false
+        default: 'true'
+  # schedule:
+  #   - cron: '30 6 * * *'
 
 jobs:
   update-lang-version:
     name: Update Ballerina Lang Version
     if: github.repository_owner == 'ballerina-platform'
     runs-on: ubuntu-latest
+    concurrency:
+        group: ${{ github.ref }}-dependency-update
+        cancel-in-progress: true
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -38,17 +49,20 @@ jobs:
           pip install retry
           pip install PyGithub
           pip install httplib2
+          pip install cryptography
 
       - name: Update Ballerina Language Version
         run: |
           if ${IS_SCHEDULE_WORKFLOW} == true; then
             echo "Schedule Workflow Triggered"
-            python dependabot/update_dependencies_in_pipeline.py "false" "" "true" "schedule" 
+            python dependabot/update_dependencies_in_pipeline.py "false" "false" "" "true" "true" "schedule"
            else
              echo "Manual Trigger"
              python dependabot/update_dependencies_in_pipeline.py "${{ github.event.inputs.isRetrigger }}" \
+                                                            "${{ github.event.inputs.skipLang }}" \
                                                             "${{ github.event.inputs.ballerinaVersion }}" \
-                                                            "${{ github.event.inputs.autoMergePRs }}"
+                                                            "${{ github.event.inputs.autoMergePRs }}" \
+                                                            "${{ github.event.inputs.sendNotification }}"
            fi
         env:
           IS_SCHEDULE_WORKFLOW: ${{ github.event_name == 'schedule' }}
@@ -56,27 +70,10 @@ jobs:
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
           BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.BALLERINA_CHAT_ID }}
-          CHAT_KEY: ${{ secrets.BALLERINA_CHAT_KEY }}
-          CHAT_TOKEN: ${{ secrets.BALLERINA_CHAT_TOKEN }}
-          ANURUDDHA_USER_ID: ${{ secrets.ANURUDDHA_USER_ID }}
-          BUDDHI_USER_ID: ${{ secrets.BUDDHI_USER_ID }}
-          MADHUKA_USER_ID: ${{ secrets.MADHUKA_USER_ID }}
-          KALAIYARASI_USER_ID: ${{ secrets.KALAIYARASI_USER_ID }}
-          CHANANKA_USER_ID: ${{ secrets.CHANANKA_USER_ID }}
-          MANINDA_USER_ID: ${{ secrets.MANINDA_USER_ID }}
-          CHAMIL_USER_ID: ${{ secrets.CHAMIL_USER_ID }}
-          ARSHIKA_USER_ID: ${{ secrets.ARSHIKA_USER_ID }}
-          BHASHINEE_USER_ID: ${{ secrets.BHASHINEE_USER_ID }}
-          ANJANA_USER_ID: ${{ secrets.ANJANA_USER_ID }}
-          THISARU_USER_ID: ${{ secrets.THISARU_USER_ID }}
-          DANESH_USER_ID: ${{ secrets.DANESH_USER_ID }}
-          SUMUDU_USER_ID: ${{ secrets.SUMUDU_USER_ID }}
-          GIMANTHA_USER_ID: ${{ secrets.GIMANTHA_USER_ID }}
-          AYESH_USER_ID: ${{ secrets.AYESH_USER_ID }}
-          DILAN_USER_ID: ${{ secrets.DILAN_USER_ID }}
-          LAHIRU_USER_ID: ${{ secrets.LAHIRU_USER_ID }}
-          ALL_USER_ID: 'all'
+          CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
+          CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
+          CHAT_TOKEN: ${{ secrets.NOTIFICATIONS_CHAT_TOKEN }}
+          ENV_USER_ENCRYPTION_KEY: ${{secrets.USER_ENCRYPTION_KEY}}
 
       - name: Trigger Dashboard Update
         if: always()

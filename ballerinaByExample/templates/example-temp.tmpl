@@ -1,5 +1,5 @@
 ---
-layout: ballerina-example-page
+layout: ballerina-example-page-old
 title: {{yamlEscape .Name}}
 description: {{yamlEscape .MetaDescription}}
 keywords: {{yamlEscape .MetaKeywords}}
@@ -27,14 +27,14 @@ redirect_from:
                             <div class="cTopButtonContainer">
                                 {{if .PrevExample}}
                                 <div class="cButtonInfoContainer">
-                                    <a class="prev" href="{{.PrevExample.Id}}.html?is_ref_by_example=true">
+                                    <a class="prev" href="{{.PrevExample.Id}}.html">
                                         <span>< PREVIOUS</span>
                                         <p>{{.PrevExample.Name}}</p>
                                     </a>
                                 </div>
                                 {{end}} {{if .NextExample}}
                                 <div class="cButtonInfoContainer">
-                                    <a class="next" href="{{.NextExample.Id}}.html?is_ref_by_example=true">
+                                    <a class="next" href="{{.NextExample.Id}}.html">
                                         <span>NEXT ></span>
                                         <p>{{.NextExample.Name}}</p>
                                     </a>
@@ -111,10 +111,14 @@ redirect_from:
                     $(".cCodeLeft").toggleClass('cHide');
                 });
 
+                // get code text
+                var codeSnippet = document.getElementsByClassName('FullCode')[0];
+                var codeText = codeSnippet.getElementsByTagName('pre')[0].textContent;
+
                 // register "copy to clipboard" event to elements with "copy" class
                 var clipboard = new ClipboardJS('.copy', {
                     text: function(trigger) {
-                        return $('.FullCode').find('pre').text();
+                        return codeText;
                     }
                 });
 

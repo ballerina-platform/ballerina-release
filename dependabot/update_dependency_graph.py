@@ -24,9 +24,9 @@ def main():
     print('Fetched immediate dependents of each module')
     module_details_json = calculate_levels(module_name_list, module_details_json)
     print('Generated module dependency graph and updated module levels')
-    module_details_json['modules'].sort(key=lambda s: s['level'])
+    module_details_json['standard_library'].sort(key=lambda s: s['level'])
     module_details_json = remove_modules_not_included_in_distribution(module_details_json)
-    print('Removed central only modules and updated the list')
+    print('Removed extended library modules and updated the list')
 
     try:
         utils.write_json_file(constants.EXTENSIONS_FILE, module_details_json)
@@ -66,7 +66,7 @@ def sort_module_name_list():
         print('Failed to read module_list.json', e)
         sys.exit()
 
-    name_list['modules'].sort(key=lambda x: x['name'].split('-')[-1])
+    name_list['standard_library'].sort(key=lambda x: x['name'].split('-')[-1])
 
     try:
         utils.write_json_file(constants.MODULE_LIST_FILE, name_list)
@@ -74,13 +74,13 @@ def sort_module_name_list():
         print('Failed to write to file module_list.json', e)
         sys.exit()
 
-    name_list['modules'].append({
+    name_list['standard_library'].append({
         'name': 'ballerina-distribution'
     })
     auto_bump = name_list['auto_bump']
     ballerina_version_regex = name_list['lang_version_substring']
 
-    return name_list['modules']
+    return name_list['standard_library']
 
 
 # Gets dependencies of ballerina extension module from build.gradle file in module repository
@@ -93,7 +93,7 @@ def get_dependencies(module_name, module_details_json):
     dependencies = []
 
     for line in data.splitlines():
-        for module in module_details_json['modules']:
+        for module in module_details_json['standard_library']:
             if module['version_key'] in line:
                 if module['name'] == module_name:
                     continue
@@ -120,7 +120,7 @@ def remove_modules_in_intermediate_paths(g, source, destination, successors, mod
 
     for n in longest_path[1:-1]:
         if n in successors:
-            for module in module_details_json['modules']:
+            for module in module_details_json['standard_library']:
                 if module['name'] == source:
                     if destination in module['dependents']:
                         module['dependents'].remove(destination)
@@ -142,7 +142,7 @@ def calculate_levels(module_name_list, module_details_json):
         g.add_node(module['name'], level=1)
 
     # Edges are created considering the dependents of each module
-    for module in module_details_json['modules']:
+    for module in module_details_json['standard_library']:
         for dependent in module['dependents']:
             g.add_edge(module['name'], dependent)
 
@@ -172,7 +172,7 @@ def calculate_levels(module_name_list, module_details_json):
         processing_list = temp
         level = level + 1
 
-    for module in module_details_json['modules']:
+    for module in module_details_json['standard_library']:
         module['level'] = g.nodes[module['name']]['level']
 
     return module_details_json
@@ -187,7 +187,7 @@ def initialize_module_details(modules_list):
     module_details_json = {
         'auto_bump': auto_bump,
         'lang_version_substring': ballerina_version_regex,
-        'modules': []
+        'standard_library': []
     }
 
     for module in modules_list:
@@ -198,18 +198,18 @@ def initialize_module_details(modules_list):
         default_artifact_id = artifact_name + '-ballerina'
         default_version_key = 'stdlib' + artifact_name.capitalize() + 'Version'
 
-        module_details_json['modules'].append({
+        module_details_json['standard_library'].append({
             'name': module['name'],
             'level': 0,
-            'group_id': module.get('group_id', 'org.ballerinalang'),
+            'group_id': module.get('group_id', 'io.ballerina.stdlib'),
             'artifact_id': module.get('artifact_id', default_artifact_id),
             'version_key': module.get('version_key', default_version_key),
             'default_branch': default_branch,
             'auto_merge': module.get('auto_merge', True),
-            'central_only_module': module.get('central_only_module', True),
+            'push_to_central': False if module['name'] == 'ballerina-distribution' else module.get('push_to_central', True),
+            'is_extended_library_module': module.get('is_extended_library_module', True),
             'build_action_file': module.get('build_action_file', get_default_build_file(module['name'])),
-            'code_owner_id_env': module.get('code_owner_id_env',
-                                            'ALL_USER_ID' if module['name'] == 'ballerina-distribution' else ''),
+            'send_notification': module.get('send_notification', True),
             'dependents': []})
     # TODO: Add transitive dependencies
     return module_details_json
@@ -227,9 +227,9 @@ def get_default_build_file(module):
 def get_immediate_dependents(module_name_list, module_details_json):
     for module_name in module_name_list:
         dependencies = get_dependencies(module_name['name'], module_details_json)
-        for module in module_details_json['modules']:
+        for module in module_details_json['standard_library']:
             if module['name'] in dependencies:
-                module_details_json['modules'][module_details_json['modules'].index(module)]['dependents'].append(
+                module_details_json['standard_library'][module_details_json['standard_library'].index(module)]['dependents'].append(
                     module_name['name'])
 
     return module_details_json
@@ -238,21 +238,22 @@ def get_immediate_dependents(module_name_list, module_details_json):
 def remove_modules_not_included_in_distribution(module_details_json):
     removed_modules = []
 
-    last_level = module_details_json['modules'][-1]['level']
+    last_level = module_details_json['standard_library'][-1]['level']
 
-    for module in module_details_json['modules']:
+    for module in module_details_json['standard_library']:
         if (module['name'] != 'ballerina-distribution' and not module['dependents'] and
-                module['central_only_module']):
+                module['is_extended_library_module']):
             removed_modules.append(module)
 
     for removed_module in removed_modules:
-        module_details_json['modules'].remove(removed_module)
+        module_details_json['standard_library'].remove(removed_module)
         removed_module['level'] = last_level + 1
 
-    for module in module_details_json['modules']:
-        module['central_only_module'] = False
+    for module in module_details_json['standard_library']:
+        module['is_extended_library_module'] = False
 
-    module_details_json['central_modules'] = removed_modules
+    removed_modules.sort(key=lambda x: x['name'].split('-')[-1])
+    module_details_json['extended_library'] = removed_modules
 
     return module_details_json
 

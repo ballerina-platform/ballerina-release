@@ -3,9 +3,11 @@ import os
 import re
 import time
 import urllib.request
+import csv
 
 from github import Github, InputGitAuthor, GithubException
 from retry import retry
+from cryptography.fernet import Fernet
 
 import constants
 
@@ -39,17 +41,34 @@ def write_json_file(file_path, file_content):
 
 def get_module_message(module, link):
     module_message = "<" + link + "|" + module['name'] + ">" + "\t\t"
-    if module['code_owner_id_env'] != "":
-        code_owner_id = os.getenv(module['code_owner_id_env'])
-        if code_owner_id != "":
-            module_message += "<users/" + code_owner_id + ">\n"
-        else:
-            print("Code owner for module '" + module['name'] + "' is empty.")
+    try:
+        repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + module['name'])
+        code_owner_content = repo.get_contents('.github/CODEOWNERS')
+        code_owner_gh_username = code_owner_content.decoded_content.decode().split("@")[-1].strip()
+    except Exception as e:
+        code_owner_gh_username = ""
+
+    encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
+    fernet = Fernet(encryption_key)
+    with open('dependabot/resources/github_users_encrypted.csv', 'rb') as enc_file:
+        encrypted_csv = enc_file.read()
+
+    decrypted = fernet.decrypt(encrypted_csv)
+    with open('dependabot/resources/github_users_decrypted.csv', 'wb') as dec_file:
+        dec_file.write(decrypted)
+
+    with open('dependabot/resources/github_users_decrypted.csv', 'r') as read_obj:
+        user_file = csv.DictReader(read_obj)
+        for row in user_file:
+            if row['gh-username'] == code_owner_gh_username:
+                module_message += "<users/" + row['user-id'] + ">"
+
+    module_message += "\n"
     return module_message
 
 
 def get_sanitised_chat_message(message):
-    sanitised = re.sub('<user/.*>', '', message)
+    sanitised = re.sub('<users/.*>', '', message)
     return sanitised
 
 
@@ -211,6 +230,6 @@ def approve_pr(module, auto_merge_pull_requests, pr_number):
         try:
             pr.create_review(event='APPROVE')
             print(
-                "[Info] Automated version bump PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
+                "[Info] Automated version update PR approved for module '" + module['name'] + "'. PR: " + pr.html_url)
         except Exception as e:
             raise e

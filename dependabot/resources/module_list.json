@@ -1,10 +1,9 @@
 {
-    "auto_bump": false,
-    "lang_version_substring": "beta.2",
-    "modules": [
+    "auto_bump": true,
+    "lang_version_substring": "2201.0.2",
+    "standard_library": [
         {
-            "name": "module-ballerina-auth",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "name": "module-ballerina-auth"
         },
         {
             "name": "module-ballerinax-aws.lambda",
@@ -12,7 +11,7 @@
             "artifact_id": "awslambda-extension-bala",
             "version_key": "awslambdaVersion",
             "build_action_file": "build-master",
-            "code_owner_id_env": "ANJANA_USER_ID"
+            "push_to_central": false
         },
         {
             "name": "module-ballerinax-azure.functions",
@@ -20,18 +19,16 @@
             "artifact_id": "azurefunctions-extension",
             "version_key": "azFunctionsVersion",
             "build_action_file": "build-master",
-            "code_owner_id_env": "ANJANA_USER_ID"
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-c2c",
             "group_id": "io.ballerina",
             "artifact_id": "c2c-ballerina",
-            "version_key": "c2cVersion",
-            "code_owner_id_env": "ANURUDDHA_USER_ID"
+            "version_key": "c2cVersion"
         },
         {
-            "name": "module-ballerina-cache",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "name": "module-ballerina-cache"
         },
         {
             "name": "module-ballerinax-choreo",
@@ -39,198 +36,208 @@
             "artifact_id": "choreo-extension-ballerina",
             "version_key": "observeExtChoreoVersion",
             "auto_merge": false,
-            "build_action_file": "build-main"
+            "build_action_file": "build-main",
+            "push_to_central": false
         },
         {
-            "name": "module-ballerina-crypto",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "name": "module-ballerina-crypto"
         },
         {
             "name": "module-ballerinax-datamapper",
             "group_id": "org.ballerinax.datamapper",
             "artifact_id": "datamapper-extension",
             "version_key": "dataMapperVersion",
-            "build_action_file": "build-master"
+            "build_action_file": "build-master",
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-docker",
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
             "version_key": "dockerVersion",
-            "code_owner_id_env": "ANURUDDHA_USER_ID"
+            "push_to_central": false
         },
         {
-            "name": "module-ballerina-email",
-            "code_owner_id_env": "MANINDA_USER_ID"
+            "name": "module-ballerina-email"
         },
         {
-            "name": "module-ballerina-file",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "name": "module-ballerina-file"
         },
         {
-            "name": "module-ballerina-ftp",
-            "code_owner_id_env": "MANINDA_USER_ID"
+            "name": "module-ballerina-ftp"
         },
         {
-            "name": "module-ballerina-graphql",
-            "code_owner_id_env": "THISARU_USER_ID"
+            "name": "module-ballerina-graphql"
         },
         {
-            "name": "module-ballerina-grpc",
-            "code_owner_id_env": "DANESH_USER_ID"
+            "name": "module-ballerina-grpc"
         },
         {
-            "name": "module-ballerina-http",
-            "code_owner_id_env": "CHAMIL_USER_ID"
+            "name": "module-ballerina-http"
         },
         {
-            "name": "module-ballerina-io",
-            "code_owner_id_env": "BUDDHI_USER_ID"
+            "name": "module-ballerina-io"
         },
         {
             "name": "module-ballerinax-jaeger",
             "group_id": "org.ballerinalang",
             "artifact_id": "jaeger-extension-ballerina",
             "version_key": "observeExtJaegerVersion",
-            "auto_merge": false,
-            "build_action_file": "build-main"
+            "build_action_file": "build-main",
+            "push_to_central": false
         },
         {
             "name": "module-ballerinax-java.jdbc",
             "version_key": "stdlibJdbcVersion",
-            "central_only_module": false,
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
-            "version_key": "stdlibJavaArraysVersion",
-            "code_owner_id_env": "BUDDHI_USER_ID"
+            "version_key": "stdlibJavaArraysVersion"
         },
         {
-            "name": "module-ballerina-jwt",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "name": "module-ballerina-jwt"
         },
         {
             "name": "module-ballerinax-kafka",
-            "central_only_module": false,
-            "code_owner_id_env": "DILAN_USER_ID"
+            "push_to_central": false
         },
         {
-            "name": "module-ballerina-log",
-            "code_owner_id_env": "MADHUKA_USER_ID"
+            "name": "module-ballerina-log"
         },
         {
-            "name": "module-ballerina-mime",
-            "code_owner_id_env": "CHAMIL_USER_ID"
+            "name": "module-ballerina-mime"
+        },
+        {
+            "name": "module-ballerinax-mssql",
+            "push_to_central": false
         },
         {
             "name": "module-ballerinax-mysql",
-            "central_only_module": false,
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "push_to_central": false
         },
         {
             "name": "module-ballerinax-nats",
-            "central_only_module": false,
-            "code_owner_id_env": "ARSHIKA_USER_ID"
+            "push_to_central": false
         },
         {
             "name": "module-ballerina-oauth2",
-            "version_key": "stdlibOAuth2Version",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "version_key": "stdlibOAuth2Version"
         },
         {
-            "name": "ballerina-openapi",
+            "name": "module-ballerina-observe",
+            "version_key": "observeVersion"
+        },
+        {
+            "name": "module-ballerinai-observe",
             "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-openapi",
-            "version_key": "openapiVersion",
-            "code_owner_id_env": "SUMUDU_USER_ID"
+            "version_key": "observeInternalVersion",
+            "is_extended_library_module": false,
+            "push_to_central": false
         },
         {
-            "name": "module-ballerina-os",
-            "code_owner_id_env": "MADHUKA_USER_ID"
+            "name": "module-ballerinax-oracledb",
+            "push_to_central": false
+        },
+        {
+            "name": "module-ballerina-os"
+        },
+        {
+            "name": "module-ballerinax-postgresql",
+            "push_to_central": false
         },
         {
             "name": "module-ballerinax-prometheus",
             "group_id": "org.ballerinalang",
             "artifact_id": "prometheus-extension-ballerina",
             "version_key": "observeExtPrometheusVersion",
-            "auto_merge": false,
-            "build_action_file": "build-main"
+            "build_action_file": "build-main",
+            "push_to_central": false
+        },
+        {
+            "name": "module-ballerina-protobuf"
         },
         {
             "name": "module-ballerinax-rabbitmq",
-            "central_only_module": false,
-            "code_owner_id_env": "ARSHIKA_USER_ID"
+            "push_to_central": false
         },
         {
-            "name": "module-ballerina-random",
-            "code_owner_id_env": "MADHUKA_USER_ID"
+            "name": "module-ballerina-random"
         },
         {
-            "name": "module-ballerina-regex",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "name": "module-ballerina-regex"
         },
         {
-            "name": "module-ballerina-sql",
-            "code_owner_id_env": "LAHIRU_USER_ID"
+            "name": "module-ballerina-sql"
         },
         {
             "name": "module-ballerinax-stan",
-            "central_only_module": false,
-            "code_owner_id_env": "ARSHIKA_USER_ID"
+            "push_to_central": false
         },
         {
-            "name": "module-ballerina-task",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "name": "module-ballerina-task"
         },
         {
-            "name": "module-ballerina-tcp",
-            "code_owner_id_env": "BHASHINEE_USER_ID"
+            "name": "module-ballerina-tcp"
         },
         {
-            "name": "module-ballerina-time",
-            "code_owner_id_env": "BUDDHI_USER_ID"
+            "name": "module-ballerina-time"
+        },
+        {
+            "name": "graphql-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "graphql-tools",
+            "version_key": "graphqlVersion",
+            "push_to_central": false
+        },
+        {
+            "name": "openapi-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-openapi",
+            "version_key": "openapiVersion"
+        },
+        {
+            "name": "asyncapi-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-asyncapi",
+            "version_key": "asyncapiVersion",
+            "push_to_central": false
         },
         {
             "name": "module-ballerinai-transaction",
-            "code_owner_id_env": "GIMANTHA_USER_ID"
+            "group_id": "org.ballerinalang",
+            "push_to_central": false
         },
         {
-            "name": "module-ballerina-udp",
-            "code_owner_id_env": "MANINDA_USER_ID"
+            "name": "module-ballerina-udp"
         },
         {
-            "name": "module-ballerina-url",
-            "code_owner_id_env": "CHANANKA_USER_ID"
+            "name": "module-ballerina-url"
         },
         {
-            "name": "module-ballerina-uuid",
-            "code_owner_id_env": "MADHUKA_USER_ID"
+            "name": "module-ballerina-uuid"
         },
         {
-            "name": "module-ballerina-websocket",
-            "code_owner_id_env": "BHASHINEE_USER_ID"
+            "name": "module-ballerina-websocket"
         },
         {
-            "name": "module-ballerina-websub",
-            "code_owner_id_env": "AYESH_USER_ID"
+            "name": "module-ballerina-websub"
         },
         {
-            "name": "module-ballerina-websubhub",
-            "code_owner_id_env": "AYESH_USER_ID"
+            "name": "module-ballerina-websubhub"
         },
         {
-            "name": "module-ballerina-xmldata",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "name": "module-ballerina-xmldata"
         },
         {
-            "name": "module-ballerina-xslt",
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "name": "module-ballerina-xslt"
         },
         {
-            "name": "module-ballerinax-postgresql",
-            "central_only_module": false,
-            "code_owner_id_env": "KALAIYARASI_USER_ID"
+            "name": "module-ballerina-serdes",
+            "is_extended_library_module": false
+        },
+        {
+            "name": "module-ballerina-constraint"
         }
     ]
 }

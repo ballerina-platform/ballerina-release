@@ -2,47 +2,19 @@
     "auto_bump": true,
     "modules": [
         {
-            "name": "module-ballerinax-slack",
-            "auto_merge": true
-        },
-        {
-            "name": "module-ballerinax-github",
-            "auto_merge": true
-        },
-        {
-            "name": "module-ballerinax-twilio",
-            "auto_merge": true
-        },
-        {
-            "name": "module-ballerinax-googleapis.sheets",
-            "auto_merge": true
-        },
-        {
-            "name": "module-ballerinax-googleapis.gmail",
-            "auto_merge": true
-        },
-        {
-            "name": "module-ballerinax-googleapis.drive",
-            "auto_merge": true
-        },
-        {
-            "name": "module-ballerinax-googleapis.calendar",
-            "auto_merge": true
-        },
-        {
-            "name": "module-ballerinax-sfdc",
-            "auto_merge": true
-        },
-        {
-            "name": "module-ballerinax-azure.eventhub",
-            "auto_merge": true
-        },
-        {
             "name": "module-ballerinax-azure-service-bus",
             "auto_merge": true
         },
         {
             "name": "module-ballerinax-mongodb",
+            "auto_merge": true
+        },
+        {
+            "name": "module-ballerinax-twitter",
+            "auto_merge": true
+        },
+        {
+            "name": "module-ballerinax-azure-cosmosdb",
             "auto_merge": true
         }
     ]

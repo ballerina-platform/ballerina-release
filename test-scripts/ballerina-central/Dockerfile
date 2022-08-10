@@ -25,8 +25,10 @@ RUN git clone https://github.com/sstephenson/bats /libs/bats && \
 # Get Ballerina releases
 FROM ballerina/ballerina:swan-lake-alpha5 AS alpha5-pack
 FROM ballerina/ballerina:swan-lake-beta1 AS beta1-pack
-FROM ballerina/ballerina:swan-lake-beta2-rc4 AS beta2-pack
-# FROM ballerina/ballerina:swan-lake-beta3 AS beta3-pack
+FROM ballerina/ballerina:swan-lake-beta2 AS beta2-pack
+FROM ballerina/ballerina:swan-lake-beta3 AS beta3-pack
+FROM ballerina/ballerina:swan-lake-beta4 AS beta4-pack
+FROM ballerina/ballerina:swan-lake-beta6 AS beta6-pack
 
 FROM adoptopenjdk/openjdk11:alpine
 
@@ -37,10 +39,12 @@ RUN apk -q update && \
 COPY --from=alpha5-pack /ballerina/runtime /ballerina/alpha5
 COPY --from=beta1-pack /ballerina/runtime /ballerina/beta1
 COPY --from=beta2-pack /ballerina/runtime /ballerina/beta2
-# COPY --from=beta3-pack /ballerina/runtime /ballerina/beta3
+COPY --from=beta3-pack /ballerina/runtime /ballerina/beta3
+COPY --from=beta4-pack /ballerina/runtime /ballerina/beta4
+COPY --from=beta6-pack /ballerina/runtime /ballerina/beta6
 
 ARG BALLERINA_CENTRAL_ACCESS_TOKEN=""
-ARG TEST_ORGANIZATION="bc2testorg"
+ARG TEST_ORGANIZATION="bctestorg"
 ARG BALLERINA_STAGE_CENTRAL="false"
 ARG BALLERINA_DEV_CENTRAL="false"
 
@@ -53,7 +57,9 @@ ENV BALLERINA_DEV_CENTRAL=$BALLERINA_DEV_CENTRAL
 ENV ALPHA5=/ballerina/alpha5
 ENV BETA1=/ballerina/beta1
 ENV BETA2=/ballerina/beta2
-# ENV BETA3=/ballerina/beta3
+ENV BETA3=/ballerina/beta3
+ENV BETA4=/ballerina/beta4
+ENV BETA6=/ballerina/beta6
 
 WORKDIR /tests
 

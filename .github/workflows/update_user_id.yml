@@ -1,0 +1,50 @@
+name: Update User Id
+
+on:
+  workflow_dispatch:
+    inputs:
+      ghUsername:
+        description: 'Github username'
+        required: true
+      wso2Id:
+        description: 'Wso2 id (email id w/o postfix, ex : alice / harry)'
+        required: true
+      userId:
+        description: 'Google chat id (required for add operation)'
+      teamName:
+        description: 'Team name (required for add operation, ex : ballerina / Ecosystem)'
+      operation:
+        description: 'Operation (type "a" to add, "r" to remove a field in csv)'
+        required: true
+
+jobs:
+  update-user-id:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Python Packages
+        run: |
+          pip install cryptography
+          pip install retry
+          pip install PyGithub
+
+      - name: Update csv
+        run: |
+          python3 dependabot/update_user_id.py "${{ github.event.inputs.ghUsername }}" \
+                                              "${{ github.event.inputs.wso2Id }}"\
+                                              "${{ github.event.inputs.userId }}"\
+                                              "${{ github.event.inputs.teamName }}"\
+                                              "${{ github.event.inputs.operation }}"
+        env:
+          ENV_USER_ENCRYPTION_KEY: ${{secrets.USER_ENCRYPTION_KEY}}
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}

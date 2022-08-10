@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Stdlib Dependency Graph</title>
+
+    <script src="//d3js.org/d3.v5.min.js"></script>
+    <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+    <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="heading">
+        <h1>Ballerina Standard Library Dependency Graph</h1>
+    </div>
+
+
+    <div id="graph" class="graph"></div>
+
+    <script>
+        var margin = 150;
+
+        function readFile() {
+            jQuery.get("stdlib_graph.gv", function (txt) {
+                d3.select("#graph").graphviz()
+                    .height(window.innerHeight-margin)
+                    .fit(true)
+                    .scale(1)
+                    .renderDot(txt);
+            });
+        }
+        readFile()
+    </script>
+</body>
+</html>

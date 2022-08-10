@@ -33,17 +33,12 @@ jobs:
       - name: Get package version ids
         if: steps.setUname.outputs.foundUname != ''
         run: |
-          curl -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" -X POST -d '{"query":"query{organization(login:\"${{ github.event.inputs.owner }}\"){repository(name:\"${{ github.event.inputs.repo }}\"){packages(names:\"${{ github.event.inputs.package }}\",first:1){edges{node{version(version:\"${{ github.event.inputs.version }}\"){id}}}}}}}"}' --url https://api.github.com/graphql -o /tmp/version-id.json
-      - name: Filter packages
-        if: steps.setUname.outputs.foundUname != ''
-        run: "cat /tmp/version-id.json | jq -r '.data.organization.repository.packages.edges[0].node.version.id' > /tmp/filtered-id.json"
-      - name: Set version ID
+          curl -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ github.event.inputs.owner }}/packages/maven/${{ github.event.inputs.package }}/versions -o /tmp/version-ids.json
+      - name: Filter packages and set version ID
         id: setid
         if: steps.setUname.outputs.foundUname != ''
-        run: printf "::set-output name=versionId::%s" $(cat /tmp/filtered-id.json)
+        run: printf "::set-output name=versionId::%s" $(cat /tmp/version-ids.json | jq -r '.[] | select(.name=="${{ github.event.inputs.version }}")|.id')
       - name: Delete selected package
-        uses: actions/delete-package-versions@v1.0.3
         if: steps.setUname.outputs.foundUname != '' && steps.setid.outputs.versionId != ''
-        with:
-          package-version-ids: ${{ steps.setid.outputs.versionId }}
-          token: ${{ secrets.DELETE_PACKAGE_PAT }}
+        run: |
+          curl -X DELETE -H "Authorization: bearer ${{ secrets.DELETE_PACKAGE_PAT }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ github.event.inputs.owner }}/packages/maven/${{ github.event.inputs.package }}/versions/${{ steps.setid.outputs.versionId }}

@@ -97,7 +97,7 @@ def get_lang_latest_timestamp():
         sys.exit(1)
     lang_version = version_string.split("-")
     if len(lang_version) > 3:
-        timestamp = create_timestamp(lang_version[2], lang_version[3])
+        timestamp = create_timestamp(lang_version[1], lang_version[2])
     else:
         timestamp = 0
 
@@ -114,10 +114,10 @@ def update_lang_version():
     lang_version = ballerina_lang_version.split("-")
 
     if len(lang_version) > 3:
-        ballerina_timestamp = create_timestamp(lang_version[2], lang_version[3])
+        ballerina_timestamp = create_timestamp(lang_version[1], lang_version[2])
     else:
         ballerina_timestamp = -3
-    latest_ballerina_stable_version = '-'.join(ballerina_lang_version.split('-')[0:2])
+    latest_ballerina_stable_version = '-'.join(ballerina_lang_version.split('-')[0:1])
 
 
 def days_hours_minutes(td):
@@ -175,8 +175,8 @@ def get_lag_info(module_name):
             split_timestamp_string = current_version.split("-")
             if current_version == latest_ballerina_stable_version:
                 timestamp = -1
-            elif '-'.join(split_timestamp_string[0:2]) == latest_ballerina_stable_version:
-                timestamp = create_timestamp(split_timestamp_string[2], split_timestamp_string[3])
+            elif '-'.join(split_timestamp_string[0:1]) == latest_ballerina_stable_version:
+                timestamp = create_timestamp(split_timestamp_string[1], split_timestamp_string[2])
             else:
                 if len(split_timestamp_string) > 2:
                     timestamp = -2
@@ -194,9 +194,13 @@ def get_lag_info(module_name):
 def get_lag_button(module):
     global modules_with_no_lag
     lag = False
-    days, hrs, color = get_lag_info(module[MODULE_NAME])
-    if days > 0:
+    #days, hrs, color = get_lag_info(module[MODULE_NAME])
+    days, hrs, color = -1, 0, "brightgreen"
+    if days > 1:
         lag_status = str(days) + "%20days"
+        lag = True
+    elif days > 0:
+        lag_status = str(days) + "%20day"
         lag = True
     elif days == 0 and hrs > 0:
         lag_status = str(hrs) + "%20h"
@@ -236,7 +240,7 @@ def get_pending_pr(module):
     return pending_pr_button, pending_pr_link
 
 
-def update_modules(updated_readme, module_details_list, is_central_modules):
+def update_modules(updated_readme, module_details_list, is_extended_library):
     global lag_reminder_modules
     global lagging_modules_level
 
@@ -250,6 +254,8 @@ def update_modules(updated_readme, module_details_list, is_central_modules):
         for idx, module in enumerate(current_level_modules):
             if module[MODULE_NAME].startswith("module"):
                 name = module[MODULE_NAME].split("-")[2]
+                if module[MODULE_NAME].split("-")[1] == "ballerinai":
+                    name = name + "i"
             else:
                 name = module[MODULE_NAME]
 
@@ -260,7 +266,7 @@ def update_modules(updated_readme, module_details_list, is_central_modules):
             lag_button, lag = get_lag_button(module)
             pending_pr_button, pending_pr_link = get_pending_pr(module)
 
-            if (not is_central_modules) and is_distribution_lagging and lag:
+            if (not is_extended_library) and is_distribution_lagging and lag:
                 module[MODULE_PULL_REQUEST] = pending_pr_link
                 if lagging_modules_level == 0:
                     # All modules have been up to date so far
@@ -347,10 +353,12 @@ def get_updated_readme():
     global all_modules
 
     all_modules = utils.read_json_file(constants.EXTENSIONS_FILE)
-    module_details_list = all_modules["modules"]
+    module_details_list = all_modules["standard_library"]
 
-    lang_version_statement = get_lang_version_statement()
-    distribution_statement = get_distribution_statement()
+    # lang_version_statement = get_lang_version_statement()
+    # distribution_statement = get_distribution_statement()
+    lang_version_statement = "<code>ballerina-lang</code> repository version <b>2201.0.1-rc3.1</b> has been updated as follows"
+    distribution_statement = "<code>ballerina-distribution</code> repository is up to date."
 
     updated_readme += "# Ballerina Repositories Update Status\n\n" + \
                       "<table><tbody><tr>\n" + \
@@ -360,22 +368,22 @@ def get_updated_readme():
     updated_readme += distribution_statement + "<br><br>\n"
     updated_readme += lang_version_statement + "\n</td>\n</tr></tbody></table> \n\n "
 
-    updated_readme += "## Modules and Extensions Packed in Distribution" + "\n"
+    updated_readme += "## Ballerina Standard Library" + "\n"
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
     updated_readme = update_modules(updated_readme, module_details_list, False)
 
-    updated_readme += "## Modules Released to Central" + "\n"
+    updated_readme += "## Ballerina Extended Library" + "\n"
 
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
 
-    central_modules = all_modules["central_modules"]
+    extended_library = all_modules["extended_library"]
 
-    updated_readme = update_modules(updated_readme, central_modules, True)
+    updated_readme = update_modules(updated_readme, extended_library, True)
 
-    repositories_updated = round((modules_with_no_lag / (len(module_details_list) + len(central_modules))) * 100)
+    repositories_updated = round((modules_with_no_lag / (len(module_details_list) + len(extended_library))) * 100)
     make_pie(repositories_updated)
 
     return updated_readme

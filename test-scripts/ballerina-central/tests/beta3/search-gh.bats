@@ -19,6 +19,6 @@ load '../libs/bats-assert/load'
 
 @test "Search package '$PACKAGE_NAME' with version from BETA3." {
   run $BETA3/bin/bal search "$PACKAGE_NAME"
-  assert_line --partial "bc2testorg/..."
+  assert_line --partial "bctestorg/"
   assert_line --partial "$VERSION"
 }

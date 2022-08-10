@@ -1,0 +1,150 @@
+digraph "Stdlib Dependency Graph" {
+	subgraph cluster_1 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		constraint
+		io
+		"jballerina.java.arrays"
+		regex
+		time
+		url
+		xmldata
+		label="level 1"
+	}
+	subgraph cluster_2 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		crypto
+		log
+		os
+		protobuf
+		random
+		serdes
+		task
+		xslt
+		label="level 2"
+	}
+	subgraph cluster_3 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		cache
+		file
+		ftp
+		mime
+		nats
+		stan
+		tcp
+		udp
+		uuid
+		label="level 3"
+	}
+	subgraph cluster_4 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		auth
+		email
+		jwt
+		oauth2
+		label="level 4"
+	}
+	subgraph cluster_5 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		http
+		label="level 5"
+	}
+	subgraph cluster_6 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		grpc
+		transaction
+		websocket
+		websub
+		websubhub
+		label="level 6"
+	}
+	subgraph cluster_7 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		graphql
+		kafka
+		rabbitmq
+		sql
+		label="level 7"
+	}
+	subgraph cluster_8 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		"java.jdbc"
+		mssql
+		mysql
+		oracledb
+		postgresql
+		label="level 8"
+	}
+	constraint -> http
+	constraint -> nats
+	io -> log
+	io -> os
+	io -> serdes
+	io -> xslt
+	regex -> log
+	regex -> uuid
+	time -> crypto
+	time -> file
+	time -> protobuf
+	time -> random
+	time -> task
+	url -> http
+	crypto -> auth
+	crypto -> jwt
+	crypto -> nats
+	crypto -> oauth2
+	crypto -> stan
+	crypto -> tcp
+	crypto -> uuid
+	log -> auth
+	log -> file
+	log -> ftp
+	log -> jwt
+	log -> mime
+	log -> nats
+	log -> oauth2
+	log -> stan
+	log -> tcp
+	log -> udp
+	os -> file
+	protobuf -> grpc
+	random -> grpc
+	random -> kafka
+	random -> websub
+	random -> websubhub
+	task -> cache
+	task -> email
+	task -> ftp
+	cache -> auth
+	cache -> jwt
+	cache -> oauth2
+	file -> email
+	file -> http
+	mime -> email
+	mime -> http
+	uuid -> http
+	auth -> http
+	jwt -> http
+	oauth2 -> http
+	http -> grpc
+	http -> transaction
+	http -> websocket
+	http -> websub
+	http -> websubhub
+	transaction -> kafka
+	transaction -> rabbitmq
+	transaction -> sql
+	websocket -> graphql
+	sql -> "java.jdbc"
+	sql -> mssql
+	sql -> mysql
+	sql -> oracledb
+	sql -> postgresql
+}

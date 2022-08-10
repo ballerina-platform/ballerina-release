@@ -26,11 +26,6 @@ load '../libs/bats-assert/load'
   cd "$PACKAGE_NAME-$VERSION"
   sed -i'.original' -e "s/$current_user/$TEST_ORGANIZATION/g" "Ballerina.toml"
   sed -i'.original' -e "s/0.1.0/$VERSION/g" "Ballerina.toml"
-  if [ "$REMOVE_STD_LIBS" == "true" ] || [ "$BALLERINA_DEV_CENTRAL" == "true" ] || [ "$BALLERINA_STAGE_CENTRAL" == "true" ]
-  then
-    sed -i'.original' -e "s/import ballerina\/io;/ /g" "$PACKAGE_NAME.bal"
-    sed -i'.original' -e 's/io:println("Hello World!");/ /g' "$PACKAGE_NAME.bal"
-  fi
   rm "Ballerina.toml.original"
   echo '# Sample github package' > "Package.md"
   cd -

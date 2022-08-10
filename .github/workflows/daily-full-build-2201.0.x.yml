@@ -1,0 +1,160 @@
+name: Daily Full Build Pipeline (2201.0.x)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build-pipeline:
+    name: Build Pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Python Packages
+        run: |
+          pip install requests
+          pip install retry
+          pip install PyGithub
+          pip install cryptography
+          pip install httplib2
+
+      - name: Build Modules
+        run: |
+          python dependabot/full_build_pipeline_for_updated_stages.py 2201.0.x true ballerina-platform 2201.0.x
+        env:
+          BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+          BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
+          BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
+          devCentralToken: ${{ secrets.BALLERINA_DEV_CENTRAL_ACCESS_TOKEN }}
+
+      - name: Set Env Variable
+        if: ${{ failure() }}
+        id: set-module
+        run: |
+          echo "::set-output name=module::$(cat failed_module.txt)"
+
+      - name: Notify Build Failure
+        if: ${{ failure() }}
+        run: |
+          python3 dependabot/notify_full_build_failure.py ${{ steps.set-module.outputs.module }} 2201.0.x
+        env:
+          CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
+          CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
+          CHAT_TOKEN: ${{ secrets.NOTIFICATIONS_CHAT_TOKEN }}
+          ENV_USER_ENCRYPTION_KEY: ${{secrets.USER_ENCRYPTION_KEY}}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
+
+      - name: Get project version
+        id: project-version
+        run: |
+          SHORT_VERSION=$((grep -w "version" | cut -d= -f2 | cut -d- -f1) < ballerina-distribution/gradle.properties)
+          DIST_VERSION=$((grep -w "version" | cut -d= -f2) < ballerina-distribution/gradle.properties)
+          CODE_NAME=$((grep -w 'codeName' | cut -d= -f2) < ballerina-distribution/gradle.properties)
+          RELEASE_VERSION=$DIST_VERSION-$CODE_NAME
+          echo "::set-output name=version::$RELEASE_VERSION"
+          echo "::set-output name=sversion::$SHORT_VERSION"
+      - name: Archive Ballerina ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: Ballerina ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-swan-lake.zip
+      - name: Archive Ballerina Short Name ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: Ballerina Short Name ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-22*.zip
+      - name: Archive MacOS Installer ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS Installer ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-macos.zip
+      - name: Archive Windows Installer ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows Installer ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-windows.zip
+      - name: Create linux-deb
+        id: run_installers_deb
+        working-directory: ballerina-distribution/installers/linux-deb
+        run: ./build-ballerina-linux-deb-x64.sh -v ${{ steps.project-version.outputs.version }} -p ./../../ballerina/build/distributions
+      - name: Create linux-rpm
+        id: run_installers_rpm
+        working-directory: ballerina-distribution/installers/linux-rpm
+        run: ./build-ballerina-linux-rpm-x64.sh -v ${{ steps.project-version.outputs.version }} -p ./../../ballerina/build/distributions
+      - name: Archive Linux deb
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux Installer deb
+          path: ballerina-distribution/installers/linux-deb/target/ballerina-*-linux-x64.deb
+      - name: Archive Linux rpm
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux Installer rpm
+          path: ballerina-distribution/installers/linux-rpm/rpmbuild/RPMS/x86_64/ballerina-*-linux-x64.rpm
+    outputs:
+      project-version: ${{ steps.project-version.outputs.version }}
+
+  macos-installer-build:
+    needs: build-pipeline
+    name: Build MacOS Installer
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Download Ballerina Distribution
+        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
+      - name: Download MacOS Intaller Zip
+        uses: actions/download-artifact@v2
+        with:
+          name: MacOS Installer ZIP
+      - name: Create macos-pkg
+        id: run_installers_pkg
+        working-directory: ballerina-distribution/installers/mac
+        run: ./build-ballerina-macos-x64.sh -v ${{ needs.build-pipeline.outputs.project-version }} -p ./../../../
+      - name: Archive MacOS pkg
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS Installer pkg
+          path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-x64.pkg
+
+  windows-installer-build:
+    needs: build-pipeline
+    name: Build Windows Installer
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '2.1.x'
+      - name: Install GUID Generator
+        run: dotnet tool install -g dotnet-guid
+      - name: Download Ballerina Distribution
+        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
+      - name: Download Windows Intaller Zip
+        uses: actions/download-artifact@v2
+        with:
+          name: Windows Installer ZIP
+      - name: Create windows-msi
+        id: run_installers_msi
+        run: |
+          $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
+          move ballerina-distribution\installers\windows .\
+          ren windows w
+          cd w
+          .\build-ballerina-windows-x64.bat --version ${{ needs.build-pipeline.outputs.project-version }} --path .\..\
+          echo "Created windows-msi successfully"
+      - name: Archive Windows msi
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows Installer msi
+          path: w\target\msi\ballerina-*-windows-x64.msi
