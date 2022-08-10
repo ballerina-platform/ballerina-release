@@ -106,7 +106,7 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 ##### `graphql` package
 
 ##### `random` Package
-- Update `createDecimal()` function to be cryptographically secure
+- Updated the `createDecimal()` function to be cryptographically secure
 
 ### Code to Cloud updates
 
