@@ -98,10 +98,15 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 - Introduced the `serdes` standard library package for serializing and deserializing Ballerina `anydata` subtypes
 - Proto3 is the underlying technology used by this package to achieve serialization and deserialization
 
+##### `os` Package
+- Introduced the `exec()` function to support OS command execution in Ballerina
+
 #### Improvements
 
 ##### `graphql` package
 
+##### `random` Package
+- Update `createDecimal()` function to be cryptographically secure
 
 ### Code to Cloud updates
 
