@@ -68,6 +68,10 @@ A few backward-incompatible changes have been introduced during the Swan Lake Be
 
 #### New features
 
+##### Compiler API
+
+- Introduced the Type Builders in the Types API which is used to construct complex types which have varying components.
+
 #### Improvements
 
 #### Bug fixes
