@@ -196,12 +196,25 @@ digraph "org/package:0.1.0" {
 
 #### New features
 
+##### Language Server
+
+- Added API docs reference support on hover
+- Refactored `LSCodeActionProvider` interfaces and `NodeBasedCodeAction` classes to overcome limitations in node based code actions
+- Implemented a publisher subscriber model for internal components and extensions to be notified about various events like project updates
+- Added new code actions to extract anonymous records into records and to generate undefined record types
+- Introduced new code actions to generate getters and setters for class-level variables
+- Added a new code action to make annotation declarations with the 'source' attach point(s) constant
+
 ##### OpenAPI Tool
 Added support for generating client resource methods in the client generation command. The preferred client method type can be chosen using the `--client-methods=<remote(default)|resource>` option.
   - `$ bal openapi -i <OpenAPI contract> --client-methods=resource`
   - `$ bal openapi -i <OpenAPI contract> --mode client --client-methods=resource`
 
 #### Improvements
+
+##### Language Server
+- Improved the `Create variable` code action in async send action
+- Added completion support for resource access action context
 
 ##### OpenAPI Tool
 Added support for OpenAPI schema constraint properties in client/service generation. With this improvement, the OpenAPI constraints will be applied as `ballerina/constraint` standard library package annotations when generating Ballerina clients and services from the OpenAPI definition.
