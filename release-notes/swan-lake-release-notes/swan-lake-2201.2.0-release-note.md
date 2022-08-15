@@ -217,7 +217,7 @@ Query expressions are now allowed with `readonly` contextually-expected types. S
 import ballerina/io;
 
 type T1 readonly & record {
-	string[] arr;
+    string[] arr;
 };
 
 type T2 record {
@@ -229,21 +229,23 @@ public function main() {
 	T1 t = {arr: from var s in ["A", "C"]
         	select s};
 	io:println(t); // {"arr":["A","C"]}
-	io:println(t is readonly & record {| string[] arr; |}); // true
+	io:println(isImmutable(t)); // true
 
 
 	var arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3]];
 	map<int> & readonly|error mp = map from var element in arr
                                     	select [element[0], element[1]];
-	io:println(mp); // {"A":0,"B":1,"C":2,"D":3}
+	io:println(isImmutable(mp)); // true
 
 	table<T2> & readonly tbl = table key(id) from var item in [[1, "John"], [2, "Jane"]]
     	select {
         	id: item[0],
         	name: item[1]
     	};
-	io:println(tbl); // [{"id":1,"name":"John"},{"id":2,"name":"Jane"}]
+	io:println(isImmutable(tbl)); // true
 }
+
+function isImmutable(any|error value) returns boolean => value is readonly;
 ```
 
 ##### Improvements to type narrowing
@@ -291,7 +293,7 @@ type Person record {|
 
 However, with improvements proposed to how typing works with mutable values this will not be possible, making it safe to narrow the type of `v` in the else block.
 
-##### Made the variable declaration in the on-fail clause optional
+##### Make the variable declaration in the on-fail clause optional
 
 Previously, it was mandatory for a variable to be declared in the on-fail clause (e.g., `on fail error err`). It has now been made optional.
 
