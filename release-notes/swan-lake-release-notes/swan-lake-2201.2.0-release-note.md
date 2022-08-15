@@ -86,7 +86,7 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ##### `io` package
 
-- Added the support for datamapping in CSV read/write APIs.
+- Added support for data mapping between Ballerina Records and CSV in CSV read/write APIs.
 
 ##### `constraint` package
 
