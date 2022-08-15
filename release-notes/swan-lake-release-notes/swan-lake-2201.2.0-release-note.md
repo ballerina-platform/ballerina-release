@@ -84,6 +84,10 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 #### New features
 
+##### `io` package
+
+- Added the support for datamapping in CSV read/write APIs.
+
 ##### `constraint` package
 
 - Introduced the `constraint` standard library package, which provides features to validate the values that have been assigned to Ballerina types
