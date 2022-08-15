@@ -70,7 +70,7 @@ A few backward-incompatible changes have been introduced during the Swan Lake Be
 
 ##### Compiler API
 
-- Introduced the Type Builders in the Types API which is used to construct complex types which have varying components.
+- Introduced a set of builders in the Types API which is used to construct complex types that have varying components
 
 #### Improvements
 
