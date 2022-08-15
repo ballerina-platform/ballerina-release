@@ -68,7 +68,15 @@ A few backward-incompatible changes have been introduced during the Swan Lake Be
 
 #### New features
 
+##### Compiler API
+
+- Introduced a set of builders in the Types API, which are used to construct complex types that have varying components
+
 #### Improvements
+
+##### Compiler API
+
+- Added semantic API support for the `client resource access` action
 
 #### Bug fixes
 
@@ -98,15 +106,20 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 - Introduced the `serdes` standard library package for serializing and deserializing Ballerina `anydata` subtypes
 - Proto3 is the underlying technology used by this package to achieve serialization and deserialization
 
+##### `os` Package
+- Introduced the `exec()` function to support OS command execution in Ballerina
+
 ##### `xmldata` package
 
-- Introduced new APIs such as `fromXml` and `toXml` to perform conversions between `XML` and `map<anydata>`.
-- Introduced a new config as `rootTag` in the `JsonOptions` to configure the name of the XML root element tag.
+- Introduced new APIs such as `fromXml` and `toXml` to perform conversions between `XML` and `map<anydata>`
+- Introduced a new config named `rootTag` in the `JsonOptions` to configure the name of the XML root element tag
 
 #### Improvements
 
 ##### `graphql` package
 
+##### `random` Package
+- Updated the `createDecimal()` function to be cryptographically secure
 
 ### Code to Cloud updates
 
