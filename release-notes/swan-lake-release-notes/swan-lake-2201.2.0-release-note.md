@@ -70,6 +70,49 @@ A few backward-incompatible changes have been introduced during the Swan Lake Be
 
 #### Improvements
 
+- A change introduced to type narrowing may now result in the types of certain variables being narrowed in contexts where they were previously not narrowed.
+
+Consider the following example.
+
+  ```ballerina
+  type Employee record {
+      int id;
+      string name;
+      string department;
+  };
+
+  type Student record {
+      string id;
+      string name;
+      int grade;
+  };
+
+  function fn(Employee|Student v) {
+      if v is Employee {
+          // `v` is narrowed to `Employee` here.
+          string dept = v.department;
+      } else {
+          // Previously, `v` continued to be `Employee|Student` here.
+          // It is now narrowed to `Student`, making the following 
+          // access possible.
+          int grade = v.grade;
+      }
+  }
+  ```
+
+This was previously disallowed since it was expected to be able to call `fn` with a variable of the `Person` type defined below, even though jBallerina did not allow it.
+
+  ```ballerina
+  type Person record {|
+      int|string id;
+      string name;
+      anydata grade;
+      anydata department;
+  |};
+  ```
+
+However, with improvements proposed to how typing works with mutable values this will not be possible, making it safe to narrow the type of `v` in the else block.
+
 #### Bug fixes
 
 To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.2.0%22).
