@@ -199,8 +199,6 @@ digraph "org/package:0.1.0" {
 ##### Language Server
 
 - Added API docs reference support on hover
-- Refactored `LSCodeActionProvider` interfaces and `NodeBasedCodeAction` classes to overcome limitations in node based code actions
-- Implemented a publisher subscriber model for internal components and extensions to be notified about various events like project updates
 - Added new code actions to extract anonymous records into records and to generate undefined record types
 - Introduced new code actions to generate getters and setters for class-level variables
 - Added a new code action to make annotation declarations with the 'source' attach point(s) constant
