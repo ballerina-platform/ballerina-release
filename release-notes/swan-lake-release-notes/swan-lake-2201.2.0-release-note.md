@@ -68,7 +68,15 @@ A few backward-incompatible changes have been introduced during the Swan Lake Be
 
 #### New features
 
+##### Compiler API
+
+- Introduced a set of builders in the Types API, which are used to construct complex types that have varying components
+
 #### Improvements
+
+##### Compiler API
+
+- Added semantic API support for the `client resource access` action
 
 #### Bug fixes
 
@@ -199,12 +207,24 @@ digraph "org/package:0.1.0" {
 
 #### New features
 
+##### Language Server
+
+- Added API docs reference support on hover. Now when you hover over a construct (class, type, function), the hover documentation will include a link to view the API docs specific to that construct
+- Added new code actions to extract anonymous records into records and to generate undefined record types
+- Introduced new source actions to generate getters and setters for class-level variables
+- Added a new code action to make annotation declarations with the `source` attach point(s) constant
+- Moved the `Optimize imports` code action to `Source action` and no longer appears under the code action bulb. Source actions are displayed under `Source action` in the context menu
+
 ##### OpenAPI Tool
 Added support for generating client resource methods in the client generation command. The preferred client method type can be chosen using the `--client-methods=<remote(default)|resource>` option.
   - `$ bal openapi -i <OpenAPI contract> --client-methods=resource`
   - `$ bal openapi -i <OpenAPI contract> --mode client --client-methods=resource`
 
 #### Improvements
+
+##### Language Server
+- Improved the `Create variable` code action in the `async send` action
+- Added completion support for the `resource access` action context
 
 ##### OpenAPI Tool
 Added support for OpenAPI schema constraint properties in client/service generation. With this improvement, the OpenAPI constraints will be applied as `ballerina/constraint` standard library package annotations when generating Ballerina clients and services from the OpenAPI definition.
