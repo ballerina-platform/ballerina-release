@@ -74,6 +74,11 @@ A few backward-incompatible changes have been introduced during the Swan Lake Be
 
 #### Improvements
 
+##### Compiler API
+
+- Added semantic API support for the `client resource access` action
+
+
 #### Bug fixes
 
 To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.2.0%22).
