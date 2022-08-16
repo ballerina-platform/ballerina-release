@@ -68,15 +68,7 @@ A few backward-incompatible changes have been introduced during the Swan Lake Be
 
 #### New features
 
-##### Compiler API
-
-- Introduced a set of builders in the Types API, which are used to construct complex types that have varying components
-
 #### Improvements
-
-##### Compiler API
-
-- Added semantic API support for the `client resource access` action
 
 #### Bug fixes
 
@@ -215,11 +207,19 @@ digraph "org/package:0.1.0" {
 }
 ```
 
+##### Compiler API
+
+- Introduced a set of builders in the Types API, which are used to construct complex types that have varying components
+
 ##### Ballerina Shell
 
 ##### Ballerina Update Tool
 
 #### Improvements
+
+##### Compiler API
+
+- Added semantic API support for the client resource access action
 
 ##### Ballerina shell
 
