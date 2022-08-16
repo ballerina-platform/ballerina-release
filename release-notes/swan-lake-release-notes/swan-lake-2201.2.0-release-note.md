@@ -181,10 +181,6 @@ public function main() {
 }
 ```
 
-##### Compiler API
-
-- Introduced a set of builders in the Types API, which are used to construct complex types that have varying components
-
 #### Improvements
 
 ##### Use `xml` as the contextually-expected type for interpolations in XML template expressions
@@ -391,10 +387,6 @@ function getSum(int a, int b, int c) returns int {
 }
 ```
 
-##### Compiler API
-
-- Added semantic API support for the `client resource access` action
-
 #### Bug fixes
 
 - A bug that resulted in allowing access of non-public error intersection types outside the module has been fixed.
@@ -472,9 +464,22 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 #### New features
 
+##### `io` package
+
+- Added support for data mapping between Ballerina Records and CSV in CSV read/write APIs.
+
 ##### `constraint` package
 
 - Introduced the `constraint` standard library package, which provides features to validate the values that have been assigned to Ballerina types
+
+##### `http` package
+
+- Implemented the `immediateStop()` function for the HTTP listener
+- Added the initial support for HATEOAS
+- Added support for client resource methods in the HTTP client
+- Added IP address to both local and remote addresses
+- Added proxy support for the HTTP2 client
+- Added constraint validation to HTTP payload binding
 
 ##### `graphql` package
 
@@ -489,12 +494,28 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 ##### `os` Package
 - Introduced the `exec()` function to support OS command execution in Ballerina
 
+##### `xmldata` package
+
+- Introduced new APIs such as `fromXml` and `toXml` to perform conversions between `XML` and `map<anydata>`. 
+  The `toRecord` API is being deprecated by introducing this `fromXml` API
+- Introduced a new config named `rootTag` in the `JsonOptions` to configure the name of the XML root element tag
+
+##### `sql` Package
+- Added schema client abstraction to support metadata retrieval from SQL databases. The implementation for the connectors will be added soon
+
 #### Improvements
 
-##### `graphql` package
+##### `http` package
+
+- Made HTTP2 the default transport for the `http` package
+- Updated the default response status as `HTTP 201` for POST resources
 
 ##### `random` Package
 - Updated the `createDecimal()` function to be cryptographically secure
+
+#### Bug Fixes
+
+To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%222201.2.0%22+label%3AType%2FBug).
 
 ### Code to Cloud updates
 
@@ -566,11 +587,19 @@ digraph "org/package:0.1.0" {
 }
 ```
 
+##### Compiler API
+
+- Introduced a set of builders in the Types API, which are used to construct complex types that have varying components
+
 ##### Ballerina Shell
 
 ##### Ballerina Update Tool
 
 #### Improvements
+
+##### Compiler API
+
+- Added semantic API support for the client resource access action
 
 ##### Ballerina shell
 
