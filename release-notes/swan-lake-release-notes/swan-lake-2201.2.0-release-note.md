@@ -107,12 +107,12 @@ public function main() {
     [string, int][] arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3], ["A", 4]];
 
     map<int>|error mapA = map from var element in arr
-							select [element[0], element[1]];
+                            select [element[0], element[1]];
     io:println(mapA); // {"A":4,"B":1,"C":2,"D":3}
 
     map<int>|error mapB = map from var element in arr
-							select [element[0], element[1]]
-							on conflict error("Duplicate Key");
+                            select [element[0], element[1]]
+                            on conflict error("Duplicate Key");
     io:println(mapB); // error("Duplicate Key")
 }
 ```
@@ -200,7 +200,7 @@ public function main() {
     io:println(x1); // <doc><num>0</num><num>1</num></doc>
 
     xml:Element x2 = xml `<doc>${from int i in 0 ..< 2
-        select xml `<num>${i}</num>`}</doc>`;
+                            select xml `<num>${i}</num>`}</doc>`;
     io:println(x2); // <doc><num>0</num><num>1</num></doc>
 
     int n = 1;
@@ -232,14 +232,14 @@ public function main() {
 
     var arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3]];
     map<int> & readonly|error mp = map from var element in arr
-        							select [element[0], element[1]];
+                                    select [element[0], element[1]];
     io:println(isImmutable(mp)); // true
 
     table<T2> & readonly tbl = table key(id) from var item in [[1, "John"], [2, "Jane"]]
-								select {
-									id: item[0],
-									name: item[1]
-								};
+                                    select {
+                                        id: item[0],
+                                        name: item[1]
+                                    };
     io:println(isImmutable(tbl)); // true
 }
 
@@ -425,15 +425,15 @@ type TokenTable table<Token> key(idx);
 
 public function main() {
     Token[] tbl = from Token i in (table key(idx) from var j in [1, 2]
-            select {
-                idx: j,
-                value: "A"
-            })
-        select {
-            idx: i.idx,
-            value: "A"
-        }
-        on conflict error("Duplicate Key"); // Now an error
+                        select {
+                            idx: j,
+                            value: "A"
+                        })
+                    select {
+                        idx: i.idx,
+                        value: "A"
+                    }
+                    on conflict error("Duplicate Key"); // Now an error
 }
 ```
 
