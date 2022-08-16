@@ -102,11 +102,11 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ##### `http` package
 
-- Implemented `immediateStop()` in HTTP listener
+- Implemented the `immediateStop()` function for the HTTP listener
 - Added the initial support for HATEOAS
-- Added support for client resource methods in HTTP client
+- Added support for client resource methods in the HTTP client
 - Added IP address to both local and remote addresses
-- Added proxy support for HTTP2 client
+- Added proxy support for the HTTP2 client
 - Added constraint validation to HTTP payload binding
 
 ##### `graphql` package
@@ -126,8 +126,8 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ##### `http` package
 
-- Made HTTP2 as the default transport for `http` package
-- Updated default response status as HTTP 201 for POST resources
+- Made HTTP2 the default transport for the `http` package
+- Updated the default response status as `HTTP 201` for POST resources
 
 ##### `random` Package
 - Updated the `createDecimal()` function to be cryptographically secure
