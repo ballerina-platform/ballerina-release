@@ -68,9 +68,389 @@ A few backward-incompatible changes have been introduced during the Swan Lake Be
 
 #### New features
 
+##### Support for resource methods in client objects
+
+Client objects can now contain `resource` methods. These `resource` methods can only be accessed by client resource access actions. With this feature, `resource` methods are also allowed in object type descriptors.
+
+```ballerina
+import ballerina/io;
+
+type ClientObjectType client object {
+    resource function get greeting/[string name]() returns string;
+};
+
+ClientObjectType clientObj = client object {
+    resource function get greeting/[string name]() returns string {
+        return "Hello, " + name;
+    }
+};
+
+public function main() {
+    string result = clientObj->/greeting/James;
+    // Will print `Hello, James`
+    io:println(result);
+}
+```
+
+In the above example, the `greeting/[string name]` resource in `clientObj` is accessed with the `->/` call syntax. This notation signifies that it is a resource access action on a client object.
+
+The `greeting/James` resource access path segments after `->/` specify the target resource to access on the `clientObj`. The default resource method name will be`get` if it is not specified in the client resource access action.
+
+##### Support for creating maps with query expressions
+
+Maps can now be constructed using query expressions. A query expression that constructs a map must start with the `map` keyword. Further, the type of the `select` expression must be a tuple `[string, T]`. Then the query expression will create a value of type `map<T>`. Duplicate keys will be handled similar to a query expression constructing a table.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    [string, int][] arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3], ["A", 4]];
+
+    map<int>|error mapA = map from var element in arr
+                            select [element[0], element[1]];
+    io:println(mapA); // {"A":4,"B":1,"C":2,"D":3}
+
+    map<int>|error mapB = map from var element in arr
+                            select [element[0], element[1]]
+                            on conflict error("Duplicate Key");
+    io:println(mapB); // error("Duplicate Key")
+}
+```
+
+##### Support for running new strands safely on separate threads
+
+The `isolated` feature has been extended to identify cases where strands created by a `start` action or a named worker can be run safely on separate threads. 
+
+A `call-action-or-expr` is isolated, if the function or method it calls has a type that is isolated and the expression for every argument is an isolated expression. The object whose method is called by the `method-call-expr` or `client-remote-method-call-action` is treated as an argument. When a `start` action is used with a `call-action-or-expr` that is isolated, then the `start` action is allowed in an `isolated` function and the strand created by the `start` action will run in a separate thread from the current thread.
+
+```ballerina
+import ballerina/io;
+
+isolated function f1(int[] arr) returns int[] {
+    return arr.sort();
+}
+
+isolated function f2() {
+    future<int[]> f = start f1([4, 2, 8, 6]); // Now allowed
+}
+
+function f3(int[] arr) returns int[] {
+    return arr.sort();
+}
+
+function f4() {
+    future<int[]> f = start f3([4, 2, 8, 6]);
+}
+
+public function main() {
+    io:println(f3 is isolated function (int[]) returns int[]); // true, f3 is inferred to be isolated
+    io:println(f4 is isolated function ()); // true, f4 is inferred to be isolated
+}
+```
+
+The strand created by a named worker can run on a separate thread from the default worker if the body of the worker satisfies the requirements for an isolated function.
+
+```ballerina
+import ballerina/io;
+
+final int[] & readonly intArr = [4, 2, 8, 6];
+
+isolated function f1(int[] arr) returns int[] {
+    return arr.sort();
+}
+
+isolated function f2() {
+    worker A { // Now allowed
+        int[] f = f1(intArr);
+    }
+}
+
+function f3(int[] arr) returns int[] {
+    return arr.sort();
+}
+
+function f4() {
+    worker A {
+        int[] f = f3(intArr);
+    }
+}
+
+public function main() {
+    io:println(f3 is isolated function (int[]) returns int[]); // true, f3 is inferred to be isolated
+    io:println(f4 is isolated function ()); // true, f4 is inferred to be isolated
+}
+```
+
 #### Improvements
 
+##### Use `xml` as the contextually-expected type for interpolations in XML template expressions
+
+The contextually-expected type for interpolations in XML template expressions has been changed to `xml`. This ensures that a query expression as an interpolation works as expected. However, it is not an error for the static type to not be a subtype of the contextually-expected type.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    var x1 = xml `<doc>${from int i in 0 ..< 2
+                            select xml `<num>${i}</num>`}</doc>`;
+    io:println(x1); // <doc><num>0</num><num>1</num></doc>
+
+    xml:Element x2 = xml `<doc>${from int i in 0 ..< 2
+                            select xml `<num>${i}</num>`}</doc>`;
+    io:println(x2); // <doc><num>0</num><num>1</num></doc>
+
+    int n = 1;
+    var x3 = xml `<num>${n}</num>`; // no error, although the static type is not a subtype of xml
+    io:println(x3); // <num>1</num>
+}
+```
+
+##### Allow query expressions with `readonly` contextually-expected types
+
+Query expressions are now allowed with `readonly` contextually-expected types. Such query expressions create immutable structural values. 
+
+```ballerina
+import ballerina/io;
+
+type T1 readonly & record {
+    string[] arr;
+};
+
+type T2 record {
+    int id;
+    string name;
+};
+
+public function main() {
+    T1 t = {arr: from var s in ["A", "C"] select s};
+    io:println(t); // {"arr":["A","C"]}
+    io:println(isImmutable(t)); // true
+
+    var arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3]];
+    map<int> & readonly|error mp = map from var element in arr
+                                    select [element[0], element[1]];
+    io:println(isImmutable(mp)); // true
+
+    table<T2> & readonly tbl = table key(id) from var item in [[1, "John"], [2, "Jane"]]
+                                    select {
+                                        id: item[0],
+                                        name: item[1]
+                                    };
+    io:println(isImmutable(tbl)); // true
+}
+
+function isImmutable(any|error value) returns boolean => value is readonly;
+```
+
+##### Improvements to type narrowing
+
+A change introduced to type narrowing may now result in the types of certain variables being narrowed in contexts where they were previously not narrowed.
+
+Consider the following example.
+
+```ballerina
+type Employee record {
+    int id;
+    string name;
+    string department;
+};
+
+type Student record {
+    string id;
+    string name;
+    int grade;
+};
+
+function fn(Employee|Student v) {
+    if v is Employee {
+        // `v` is narrowed to `Employee` here.
+        string dept = v.department;
+    } else {
+        // Previously, `v` continued to be `Employee|Student` here.
+        // It is now narrowed to `Student`, making the following 
+        // access possible.
+        int grade = v.grade;
+    }
+}
+```
+
+This was previously disallowed since it was expected to be able to call `fn` with a variable of the `Person` type defined below, even though jBallerina did not allow it.
+
+```ballerina
+type Person record {|
+    int|string id;
+    string name;
+    anydata grade;
+    anydata department;
+|};
+```
+
+However, with improvements proposed to how typing works with mutable values this will not be possible, making it safe to narrow the type of `v` in the else block.
+
+##### Make the variable declaration in the on-fail clause optional
+
+Previously, it was mandatory for a variable to be declared in the on-fail clause (e.g., `on fail error err`). It has now been made optional.
+
+```ballerina
+import ballerina/io;
+
+function parseInts(string[] strs) returns [int[], int] {
+    int[] ints = [];
+    int errCount = 0;
+
+    foreach string strVal in strs {
+        do {
+            int intVal = check int:fromString(strVal);
+            ints.push(intVal);
+        } on fail {
+            errCount += 1;
+        }
+    }
+
+    return [ints, errCount];
+}
+
+public function main() {
+    [int[], int] [ints, errCount] = parseInts(["1", "b7a", "2"]);
+    io:println(ints); // [1,2]
+    io:println(errCount); // 1
+}
+```
+
+##### Allow actions inside queries
+
+The grammar now allows an action such as a remote method call to occur inside a query.
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    var obj = client object {
+        remote function f1() returns (int|string)[] {
+            return [1, "2", "3", 4];
+        }
+
+        remote function f2() returns int {
+            return 10;
+        }
+
+        remote function f3(int i, int j) returns int {
+            return i * j;
+        }
+    };
+
+    int[] arr = from var i in obj->f1()
+                  let int j = obj->f2()
+                  where i is int
+                  select obj->f3(i, j);
+
+    io:println(arr); // [10,40]
+}
+```
+
+##### Add the `call` langlib function to dynamically call a function
+
+The `lang.function:call()` langlib function is introduced to call a function dynamically, passing a function value and optionally argument(s) .
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    io:println(function:call(getSum)); // 30
+    io:println(function:call(getSum, 10)); // 40
+    io:println(function:call(getSum, 10, 15)); // 45
+    io:println(function:call(getSum, 10, 15, 25)); // 50
+}
+
+function getSum(int a = 0, int b = 10, int c = 20) returns int {
+    return a + b + c;
+}
+```
+
+If the arguments do not match the parameters expected by the function, the function call results in a panic.
+
+
+```ballerina
+import ballerina/io;
+
+public function main() {
+    callFn(getSum); // The `function:call` call results in a panic.
+}
+
+function callFn(function fn) {
+    any|error value = function:call(fn, 10);
+    io:println(value);
+}
+
+function getSum(int a, int b, int c) returns int {
+    return a + b + c;
+}
+```
+
 #### Bug fixes
+
+- A bug that resulted in allowing access of non-public error intersection types outside the module has been fixed.
+
+```ballerina
+public type E1 distinct error;
+ 
+public type E2 distinct error;
+ 
+type E3 distinct error;
+ 
+type E4 distinct error;
+ 
+type E5 E1 & E2; // not allowed to access outside the module
+ 
+type E6 E3 & E4; // not allowed to access outside the module
+```
+
+- Fixed a bug that resulted in a compilation error not being logged for invalid usage of an on-conflict clause in a query with inner queries.
+
+```ballerina
+type Token record {|
+    readonly int idx;
+    string value;
+|};
+
+type TokenTable table<Token> key(idx);
+
+public function main() {
+    Token[] tbl = from Token i in (table key(idx) from var j in [1, 2]
+                        select {
+                            idx: j,
+                            value: "A"
+                        })
+                    select {
+                        idx: i.idx,
+                        value: "A"
+                    }
+                    on conflict error("Duplicate Key"); // Now an error
+}
+```
+
+- A bug that resulted in a compilation error not being logged when a spread field is used in a table member to specify a field that is part of the key sequence has been fixed. For every field name in the key sequence of a table, a mapping constructor member must have a specific field corresponding to the field.
+
+```ballerina
+type Employee record {
+    readonly int id;
+    string name;
+    string dept;
+};
+
+public function main() {
+    Employee employee = {
+        id: 1234,
+        name: "Amy Wilson",
+        dept: "legal"
+    };
+
+    table<Employee> key(id) employees = table [
+        // Results in an error now.
+        {...employee}
+    ];
+}
+```
 
 To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.2.0%22).
 
