@@ -194,7 +194,7 @@ digraph "org/package:0.1.0" {
 
 ##### Compiler API
 
-- Added semantic API support for the `client resource access` action
+- Added semantic API support for the client resource access action
 
 ##### Ballerina shell
 
