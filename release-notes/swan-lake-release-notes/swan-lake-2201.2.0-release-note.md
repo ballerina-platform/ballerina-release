@@ -104,16 +104,16 @@ Maps can now be constructed using query expressions. A query expression that con
 import ballerina/io;
 
 public function main() {
-	[string, int][] arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3], ["A", 4]];
+    [string, int][] arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3], ["A", 4]];
 
-	map<int>|error mapA = map from var element in arr
-                        	select [element[0], element[1]];
-	io:println(mapA); // {"A":4,"B":1,"C":2,"D":3}
+    map<int>|error mapA = map from var element in arr
+							select [element[0], element[1]];
+    io:println(mapA); // {"A":4,"B":1,"C":2,"D":3}
 
-	map<int>|error mapB = map from var element in arr
-                        	select [element[0], element[1]]
-                        	on conflict error("Duplicate Key");
-	io:println(mapB); // error("Duplicate Key")
+    map<int>|error mapB = map from var element in arr
+							select [element[0], element[1]]
+							on conflict error("Duplicate Key");
+    io:println(mapB); // error("Duplicate Key")
 }
 ```
 
@@ -221,28 +221,26 @@ type T1 readonly & record {
 };
 
 type T2 record {
-	int id;
-	string name;
+    int id;
+    string name;
 };
 
 public function main() {
-	T1 t = {arr: from var s in ["A", "C"]
-        	select s};
-	io:println(t); // {"arr":["A","C"]}
-	io:println(isImmutable(t)); // true
+    T1 t = {arr: from var s in ["A", "C"] select s};
+    io:println(t); // {"arr":["A","C"]}
+    io:println(isImmutable(t)); // true
 
+    var arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3]];
+    map<int> & readonly|error mp = map from var element in arr
+        							select [element[0], element[1]];
+    io:println(isImmutable(mp)); // true
 
-	var arr = [["A", 0], ["B", 1], ["C", 2], ["D", 3]];
-	map<int> & readonly|error mp = map from var element in arr
-                                    	select [element[0], element[1]];
-	io:println(isImmutable(mp)); // true
-
-	table<T2> & readonly tbl = table key(id) from var item in [[1, "John"], [2, "Jane"]]
-    	select {
-        	id: item[0],
-        	name: item[1]
-    	};
-	io:println(isImmutable(tbl)); // true
+    table<T2> & readonly tbl = table key(id) from var item in [[1, "John"], [2, "Jane"]]
+								select {
+									id: item[0],
+									name: item[1]
+								};
+    io:println(isImmutable(tbl)); // true
 }
 
 function isImmutable(any|error value) returns boolean => value is readonly;
