@@ -100,6 +100,15 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 - Introduced the `constraint` standard library package, which provides features to validate the values that have been assigned to Ballerina types
 
+##### `http` package
+
+- Implemented `immediateStop()` in HTTP listener
+- Added the initial support for HATEOAS
+- Added support for client resource methods in HTTP client
+- Added IP address to both local and remote addresses
+- Added proxy support for HTTP2 client
+- Added constraint validation to HTTP payload binding
+
 ##### `graphql` package
 
 - Added the support for deprecation of fields and enum values
@@ -115,10 +124,17 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 #### Improvements
 
-##### `graphql` package
+##### `http` package
+
+- Made HTTP2 as the default transport for `http` package
+- Updated default response status as HTTP 201 for POST resources
 
 ##### `random` Package
 - Updated the `createDecimal()` function to be cryptographically secure
+
+#### Bug Fixes
+
+To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aclosed+is%3Aissue+milestone%3A%222201.2.0%22+label%3AType%2FBug).
 
 ### Code to Cloud updates
 
