@@ -456,9 +456,85 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ### Runtime updates
 
+#### New features
+
+##### Strand dump
+
+Allows getting the status of strands and strand groups during the execution of a Ballerina program.
+
+This can be used to troubleshoot runtime errors. The Ballerina runtime will emit the strand dump to the standard output stream in the text format, if it receives a `SIGTRAP` signal (`SIGTRAP` is not available on Windows).
+
+E.g., if the PID of the running Ballerina program is `$PID`, you can get the strand dump by executing either `kill -SIGTRAP $PID` or `kill -5 $PID` command.
+
+##### `StopHandler` Object
+
+Allows registering a function that will be called during graceful shutdown.
+
+A call to `onGracefulStop` will result in one call to the handler function that was passed as an argument; the handler functions will be called after calling `gracefulStop` on all registered listeners, in the reverse order of the corresponding calls to `onGracefulStop`.
+
+E.g., a `foo` function can be called during the graceful shutdown by registering it as follows.
+
+`runtime:onGracefulStop(foo);`
+
+#### Improvements
+
+
+#### Type-reference type support at runtime
+
+When a type is defined referring to another type, it will now be passed to the runtime as a `BTypeReferenceType` instance.
+
+For example, the following code contains the `Integer` and `Student` type reference types.
+
+```ballerina
+type Integer int;
+
+type Person record {|
+    string name;
+    Integer age;
+|};
+
+type Student Person;
+```
+
+##### Modified existing runtime APIs
+
+The following runtime Java APIs are now supported to return the `BTypeReferenceType` instances.
+
+```java
+// from the `ArrayType`.
+Type getElementType();
+
+// from the `FunctionType`.
+Parameter[] getParameters();
+Type[] getParameterTypes();
+
+// from the `Field`.
+Type getFieldType();
+
+// from the `BTypedesc`.
+Type getDescribingType();
+```
+
+##### New runtime Java API
+
+The following new runtime APIs are added to provide the referred type of a type reference type.  
+
+- `TypeUtils.getReferredType()`
+- `getReferredType()` in `ReferenceType`  
+
+```ballerina
+type Integer int;
+
+type Quantity Integer;
+```  
+
+In the above example of the `Quantity` type,  
+the `TypeUtils.getReferredType()` call will return the `int` type instance.  
+The `getReferredType()` call on the `ReferenceType` will return another `BTypeReferenceType` instance with the `Integer` name.
+
 #### Bug fixes
 
-To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FjBallerina+milestone%3A%22Ballerina+2201.2.0%22).
+To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.2.0+label%3ATeam%2FjBallerina+label%3AType%2FBug+is%3Aclosed).
 
 ### Standard library updates
 
