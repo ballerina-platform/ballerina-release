@@ -92,6 +92,10 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 #### New features
 
+##### `io` package
+
+- Added support for data mapping between Ballerina Records and CSV in CSV read/write APIs.
+
 ##### `constraint` package
 
 - Introduced the `constraint` standard library package, which provides features to validate the values that have been assigned to Ballerina types
@@ -114,6 +118,9 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 - Introduced new APIs such as `fromXml` and `toXml` to perform conversions between `XML` and `map<anydata>`. 
   The `toRecord` API is being deprecated by introducing this `fromXml` API
 - Introduced a new config named `rootTag` in the `JsonOptions` to configure the name of the XML root element tag
+
+##### `sql` Package
+- Added schema client abstraction to support metadata retrieval from SQL databases. The implementation for the connectors will be added soon
 
 #### Improvements
 
