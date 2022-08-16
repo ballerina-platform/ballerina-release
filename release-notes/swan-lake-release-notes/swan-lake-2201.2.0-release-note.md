@@ -98,11 +98,8 @@ E.g., a `foo` function can be called during the graceful shutdown by registering
 
 #### Improvements
 
-#### New runtime Java APIs
 
-##### Type-reference type support at runtime
-
-###### Modified existing runtime APIs
+#### Type-reference type support at runtime
 
 When a type is defined referring to another type, it will now be passed to the runtime as a `BTypeReferenceType` instance.
 
@@ -117,8 +114,9 @@ type Person record {|
 |};
 
 type Student Person;
-
 ```
+
+##### Modified existing runtime APIs
 
 The following runtime Java APIs are now supported to return the `BTypeReferenceType` instances.
 
@@ -137,9 +135,9 @@ Type getFieldType();
 Type getDescribingType();
 ```
 
-###### New runtime Java API
+##### New runtime Java API
 
-The follwing new runtime APIs are added to provide the referred type of a type reference type.  
+The following new runtime APIs are added to provide the referred type of a type reference type.  
 
 - `TypeUtils.getReferredType()`
 - `getReferredType()` in `ReferenceType`  
