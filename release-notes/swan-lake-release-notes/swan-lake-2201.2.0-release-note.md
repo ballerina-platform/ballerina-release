@@ -250,7 +250,7 @@ Added support for generating client resource methods in the client generation co
 
 ##### Language Server
 - Improved the `Create variable` code action in the `async send` action
-- Added completion support for the `resource access` action context
+- Added completion support for the resource access action context
 
 ##### OpenAPI Tool
 Added support for OpenAPI schema constraint properties in client/service generation. With this improvement, the OpenAPI constraints will be applied as `ballerina/constraint` standard library package annotations when generating Ballerina clients and services from the OpenAPI definition.
