@@ -113,6 +113,12 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 ##### `os` Package
 - Introduced the `exec()` function to support OS command execution in Ballerina
 
+##### `xmldata` package
+
+- Introduced new APIs such as `fromXml` and `toXml` to perform conversions between `XML` and `map<anydata>`. 
+  The `toRecord` API is being deprecated by introducing this `fromXml` API
+- Introduced a new config named `rootTag` in the `JsonOptions` to configure the name of the XML root element tag
+
 ##### `sql` Package
 - Added schema client abstraction to support metadata retrieval from SQL databases. The implementation for the connectors will be added soon
 
