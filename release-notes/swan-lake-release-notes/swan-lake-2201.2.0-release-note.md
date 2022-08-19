@@ -557,6 +557,10 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 - Added proxy support for the HTTP2 client
 - Added constraint validation to HTTP payload binding
 
+##### `websocket` package
+
+- Added constraint validation to WebSocket payload binding
+
 ##### `graphql` package
 
 - Added the support for deprecation of fields and enum values
