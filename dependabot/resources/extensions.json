@@ -105,7 +105,7 @@
         },
         {
             "name": "module-ballerina-log",
-            "level": 3,
+            "level": 2,
             "group_id": "io.ballerina.stdlib",
             "artifact_id": "log-ballerina",
             "version_key": "stdlibLogVersion",
