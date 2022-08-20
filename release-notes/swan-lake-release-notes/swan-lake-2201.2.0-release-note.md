@@ -583,6 +583,20 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 ##### `sql` Package
 - Added schema client abstraction to support metadata retrieval from SQL databases. The implementation for the connectors will be added soon
 
+##### `grpc` Package
+- Introduced message-level annotations for the proto descriptor instead of a centralized proto descriptor
+- Introduced packaging support
+- Added stub generation support for nested directories
+
+##### `kafka` Package
+- Added constraint validation support for payload binding
+
+##### `rabbitmq` Package
+- Added constraint validation support for payload binding
+
+##### `nats` Package
+- Added constraint validation support for payload binding
+
 #### Improvements
 
 ##### `http` package
@@ -592,6 +606,11 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 ##### `random` Package
 - Updated the `createDecimal()` function to be cryptographically secure
+
+##### `grpc` Package
+- Added sample client calls with dummy values to generated client files
+- Removed caller client object when generating code in client mode
+- Added a new `grpc:Descriptor` annotation for services as a replacement for the current `grpc:ServiceDescriptor`. Both annotations are supported now to maintain backward compatibility. The `grpc:ServiceDescriptor` will be removed in the future. (Please update the service annotation if stub files are regenerated for the existing gRPC services)
 
 #### Bug Fixes
 
