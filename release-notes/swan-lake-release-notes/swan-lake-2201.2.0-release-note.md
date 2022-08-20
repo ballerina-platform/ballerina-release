@@ -580,7 +580,7 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 - Added schema client abstraction to support metadata retrieval from SQL databases. The implementation for the connectors will be added soon
 
 ##### `grpc` Package
-- Introduced message level annotations for the proto descriptor instead of a centralized proto descriptor
+- Introduced message-level annotations for the proto descriptor instead of a centralized proto descriptor
 - Introduced packaging support
 - Added stub generation support for nested directories
 
