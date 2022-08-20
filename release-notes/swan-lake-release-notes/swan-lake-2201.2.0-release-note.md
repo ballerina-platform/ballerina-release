@@ -696,6 +696,60 @@ digraph "org/package:0.1.0" {
 
 #### Improvements
 
+##### JSON to Record Converter
+Updated the conversion logic to handle certain scenarios more effectively.
+
+###### Handling of array of elements/objects
+Instead of looking at the first object of the array, all elements/objects would be looked at to generate the record field.
+```json
+[
+    { "id": "5001", "type": "None", "index": "15" },
+    { "id": "5002", "type": "Glazed", "index": 15 }
+]
+```
+```ballerina
+type ArrayItem record {
+    string id;
+    string 'type;
+    (int|string) index;
+};
+```
+
+###### Handling optional fields
+If an element is present in a JSON object and not in another(in an array of objects), that field would be treated as optional field.
+```json
+[
+    { "id": "5001", "type": "None", "index": "15" },
+    { "id": "5002", "type": "Glazed"}
+]
+```
+```ballerina
+type ArrayItem record {
+    string id;
+    string 'type;
+    string index?;
+};
+```
+
+###### Handling `null` values
+JSON null fields would be treated as required fields with `anydata` type.
+```json
+{
+  "firstName": "Joe",
+  "lastName": "Jackson",
+  "phoneNumber": null
+}
+```
+```ballerina
+type NewRecord record {
+    string firstName;
+    string lastName;
+    anydata phoneNumber;
+};
+```
+
+Note: The entire JSON value to Ballerina record conversion logic is rewritten to enhance the conversion experience. Above-mentioned scenarios are few noticeable important changes.
+
 ##### Compiler API
 
 - Added semantic API support for the client resource access action
