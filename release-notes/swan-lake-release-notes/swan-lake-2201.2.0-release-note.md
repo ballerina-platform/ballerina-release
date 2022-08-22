@@ -629,6 +629,19 @@ To view bug fixes, see the [GitHub milestone for 2201.2.0 (Swan Lake)](https://g
 
 #### New features
 
+##### Language Server
+
+- Added API docs reference support on hover. Now when you hover over a construct (class, type, function), the hover documentation will include a link to view the API docs specific to that construct
+- Added new code actions to extract anonymous records into records and to generate undefined record types
+- Introduced new source actions to generate getters and setters for class-level variables
+- Added a new code action to make annotation declarations with the `source` attach point(s) constant
+- Moved the `Optimize imports` code action to `Source action` and no longer appears under the code action bulb. Source actions are displayed under `Source action` in the context menu
+
+##### OpenAPI Tool
+Added support for generating client resource methods in the client generation command. The preferred client method type can be chosen using the `--client-methods=<remote(default)|resource>` option.
+- `$ bal openapi -i <OpenAPI contract> --client-methods=resource`
+- `$ bal openapi -i <OpenAPI contract> --mode client --client-methods=resource`
+
 ##### SemVer validator CLI tool (Experimental)
 Introduced the `bal semver` CLI command, which attempts to validate <a href="https://semver.org/">Semantic Versioning</a> compatibility of the local package changes against any previously published version(s) in Ballerina Central. Currently, the tool can be used to: 
 - list down the source code differences (along with its compatibility impact) between the local and any published versions in Ballerina central
@@ -696,6 +709,72 @@ digraph "org/package:0.1.0" {
 
 #### Improvements
 
+##### Language Server
+- Improved the `Create variable` code action in the `async send` action
+- Added completion support for the resource access action context
+
+##### OpenAPI Tool
+Added support for OpenAPI schema constraint properties in client/service generation. With this improvement, the OpenAPI constraints will be applied as `ballerina/constraint` standard library package annotations when generating Ballerina clients and services from the OpenAPI definition.
+The following OpenAPI properties are currently supported in the Ballerina OpenAPI generation tool.
+- `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` for `integer` and `number` types
+- `minLength` and `maxLength` for `string` type
+- `minItems` and `maxItems` for `array` type
+
+To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repositories below.
+
+- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
+- [update tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3AType%2FBug)
+
+##### JSON to record converter
+Improved JSON value to Ballerina record conversion logic, to enhance the conversion experience of `Paste JSON as record` feature in Ballerina VSCode extension.
+
+###### Handling of array of elements/objects
+Instead of looking at the first object of the array, all elements/objects would be looked at to generate the record field.
+```json
+[
+    { "id": "5001", "index": "15" },
+    { "id": "5002", "index": 16 }
+]
+```
+```ballerina
+type ArrayItem record {
+    string id;
+    (int|string) index;
+};
+```
+
+###### Handling optional fields
+If an element is present in a JSON object and not in another (in an array of objects), that field would be treated as an optional field.
+```json
+[
+    { "id": "5001", "index": "15" },
+    { "id": "5002" }
+]
+```
+```ballerina
+type ArrayItem record {
+    string id;
+    string index?;
+};
+```
+
+###### Handling `null` values
+JSON `null` fields would be treated as required fields with the `anydata` type.
+```json
+{
+  "name": "Joe",
+  "phoneNumber": null
+}
+```
+```ballerina
+type NewRecord record {
+    string name;
+    anydata phoneNumber;
+};
+```
+
+>**Note:** The entire JSON value to Ballerina record conversion logic is rewritten to enhance the conversion experience. The above-mentioned scenarios are a few noticeable, important changes.
+
 ##### Compiler API
 
 - Added semantic API support for the client resource access action
@@ -707,42 +786,6 @@ digraph "org/package:0.1.0" {
 #### Bug fixes
 
 ### Breaking changes
-
-### Developer tools updates
-
-#### New features
-
-##### Language Server
-
-- Added API docs reference support on hover. Now when you hover over a construct (class, type, function), the hover documentation will include a link to view the API docs specific to that construct
-- Added new code actions to extract anonymous records into records and to generate undefined record types
-- Introduced new source actions to generate getters and setters for class-level variables
-- Added a new code action to make annotation declarations with the `source` attach point(s) constant
-- Moved the `Optimize imports` code action to `Source action` and no longer appears under the code action bulb. Source actions are displayed under `Source action` in the context menu
-
-##### OpenAPI Tool
-Added support for generating client resource methods in the client generation command. The preferred client method type can be chosen using the `--client-methods=<remote(default)|resource>` option.
-  - `$ bal openapi -i <OpenAPI contract> --client-methods=resource`
-  - `$ bal openapi -i <OpenAPI contract> --mode client --client-methods=resource`
-
-#### Improvements
-
-##### Language Server
-- Improved the `Create variable` code action in the `async send` action
-- Added completion support for the resource access action context
-
-##### OpenAPI Tool
-Added support for OpenAPI schema constraint properties in client/service generation. With this improvement, the OpenAPI constraints will be applied as `ballerina/constraint` standard library package annotations when generating Ballerina clients and services from the OpenAPI definition.
-The following OpenAPI properties are currently supported in the Ballerina OpenAPI generation tool. 
-- `minimum`, `maximum`, `exclusiveMinimum`, and `exclusiveMaximum` for `integer` and `number` types
-- `minLength` and `maxLength` for `string` type
-- `minItems` and `maxItems` for `array` type
-
-To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repositories below.
-
-- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
-- [update tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3AType%2FBug)
-
 
 ### Ballerina packages updates
 
