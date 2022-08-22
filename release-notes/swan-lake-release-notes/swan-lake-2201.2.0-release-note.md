@@ -762,15 +762,13 @@ type ArrayItem record {
 JSON `null` fields would be treated as required fields with the `anydata` type.
 ```json
 {
-  "firstName": "Joe",
-  "lastName": "Jackson",
+  "name": "Joe",
   "phoneNumber": null
 }
 ```
 ```ballerina
 type NewRecord record {
-    string firstName;
-    string lastName;
+    string name;
     anydata phoneNumber;
 };
 ```
