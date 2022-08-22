@@ -726,7 +726,7 @@ To view bug fixes, see the GitHub milestone for 2201.2.0 (Swan Lake) of the repo
 - [update tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.2.0%22+is%3Aclosed+label%3AType%2FBug)
 
 ##### JSON to record converter
-Improved JSON value to Ballerina record conversion logic, to enhance the conversion experience in `Paste JSON as a record` feature in Ballerina VSCode extension.
+Improved JSON value to Ballerina record conversion logic, to enhance the conversion experience of `Paste JSON as record` feature in Ballerina VSCode extension.
 
 ###### Handling of array of elements/objects
 Instead of looking at the first object of the array, all elements/objects would be looked at to generate the record field.
