@@ -40,7 +40,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.2](https://git
 
 ## Standard library updates
 
-To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.2]().
+To view bug fixes, see the [GitHub milestone for Swan Lake 2201.1.2](https://github.com/ballerina-platform/ballerina-standard-library/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2201.1.2).
 
 ### Developer tools updates
 
