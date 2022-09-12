@@ -8,6 +8,7 @@ on:
 jobs:
   trigger_repository_disptach:
     name: Trigger repository dispatch in ballerinax connector repos
+    if: github.repository_owner == 'ballerina-platform'
     strategy:
       fail-fast: false
       matrix:
@@ -59,6 +60,7 @@ jobs:
 
   get_extended_library_modules:
     name: Get extended library repos names
+    if: github.repository_owner == 'ballerina-platform'
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -71,6 +73,7 @@ jobs:
     
   trigger_repository_disptach_in_extended_library_modules:
     name: Trigger repository dispatch in extended standard library repos
+    if: github.repository_owner == 'ballerina-platform'
     needs: get_extended_library_modules
     runs-on: ubuntu-latest
     strategy:
