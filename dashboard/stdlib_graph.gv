@@ -82,7 +82,7 @@ digraph "Stdlib Dependency Graph" {
 		postgresql
 		label="level 8"
 	}
-	constraint -> http
+	constraint -> cache
 	constraint -> nats
 	io -> log
 	io -> os
