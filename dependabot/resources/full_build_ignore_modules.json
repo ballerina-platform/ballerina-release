@@ -1,6 +1,6 @@
 {
   "master": {
-    "test-ignore-modules": ["module-ballerina-http"],
+    "test-ignore-modules": [],
     "build-ignore-modules": []
   },
   "2201.0.x": {
@@ -12,7 +12,7 @@
     "build-ignore-modules": ["module-ballerina-constraint", "module-ballerina-serdes"]
   },
   "2201.2.x": {
-    "test-ignore-modules": ["module-ballerina-http"],
+    "test-ignore-modules": [],
     "build-ignore-modules": []
   }
 }
