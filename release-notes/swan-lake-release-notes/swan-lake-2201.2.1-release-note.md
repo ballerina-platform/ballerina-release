@@ -36,14 +36,6 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ## Developer tools updates
 
-### New features
-
-#### Language Server
-
-### Improvements
-
-#### Language Server
-
 ### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the repositories below.
