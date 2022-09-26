@@ -21,9 +21,11 @@ on:
           description: 'Patch Level'
           required: true
           options:
+            - '2201.2.x'
             - '2201.1.x'
             - '2201.0.x'
-          default: '2201.1.x'
+            - 'master'
+          default: '2201.2.x'
 
 jobs:
   build-pipeline:

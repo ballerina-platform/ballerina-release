@@ -265,73 +265,74 @@ def switch_to_branches_from_updated_stages():
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
-            if module['name'] == "module-ballerinai-transaction" and dist_repo_patch_branch == "2201.0.x":
-                os.system(f"echo {module['name']}")
-                exit_code = os.system(f"cd {module['name']};git checkout 1.0.x")
-
-                if exit_code != 0:
-                    print(f"Failed to switch to branch '1.0.x' from last updated commit id for " +
-                          f"{module['name']}")
-                    sys.exit(1)
-                continue
-            elif module['name'] == "module-ballerina-websubhub" and dist_repo_patch_branch == "2201.0.x":
-                os.system(f"echo {module['name']}")
-                exit_code = os.system(f"cd {module['name']};git checkout 2201.0.x")
-
-                if exit_code != 0:
-                    print(f"Failed to switch to branch '2201.0.x' from last updated commit id for " +
-                          f"{module['name']}")
-                    sys.exit(1)
-                continue
-            elif module['name'] == "module-ballerina-mime" and dist_repo_patch_branch == "2201.1.x":
-                os.system(f"echo {module['name']}")
-                exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
-
-                if exit_code != 0:
-                    print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
-                          f"{module['name']}")
-                    sys.exit(1)
-                continue
-            elif module['name'] == "module-ballerina-http" and dist_repo_patch_branch == "2201.1.x":
-                os.system(f"echo {module['name']}")
-                exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
-
-                if exit_code != 0:
-                    print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
-                          f"{module['name']}")
-                    sys.exit(1)
-                continue
-            elif module['name'] == "module-ballerina-c2c" and dist_repo_patch_branch == "2201.1.x":
-                os.system(f"echo {module['name']}")
-                exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
-
-                if exit_code != 0:
-                    print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
-                          f"{module['name']}")
-                    sys.exit(1)
-                continue
-            try:
-                version = properties[module['version_key']]
-                if len(version.split("-")) > 1:
-                    updated_commit_id = version.split("-")[-1]
+            if dist_repo_patch_branch != "master":
+                if module['name'] == "module-ballerinai-transaction" and dist_repo_patch_branch == "2201.0.x":
                     os.system(f"echo {module['name']}")
-                    exit_code = os.system(f"cd {module['name']};git checkout -b full-build {updated_commit_id}")
+                    exit_code = os.system(f"cd {module['name']};git checkout 1.0.x")
 
                     if exit_code != 0:
-                        print(f"Failed to create new branch from last updated commit id '{updated_commit_id}' for " +
+                        print(f"Failed to switch to branch '1.0.x' from last updated commit id for " +
                               f"{module['name']}")
                         sys.exit(1)
-                else:
+                    continue
+                elif module['name'] == "module-ballerina-websubhub" and dist_repo_patch_branch == "2201.0.x":
                     os.system(f"echo {module['name']}")
-                    exit_code = os.system(f"cd {module['name']};git checkout v{version}")
+                    exit_code = os.system(f"cd {module['name']};git checkout 2201.0.x")
 
                     if exit_code != 0:
-                        print(f"Failed to switch to branch 'v{version}' from last updated commit id for " +
+                        print(f"Failed to switch to branch '2201.0.x' from last updated commit id for " +
                               f"{module['name']}")
                         sys.exit(1)
+                    continue
+                elif module['name'] == "module-ballerina-mime" and dist_repo_patch_branch == "2201.1.x":
+                    os.system(f"echo {module['name']}")
+                    exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
 
-            except KeyError:
-                continue
+                    if exit_code != 0:
+                        print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
+                              f"{module['name']}")
+                        sys.exit(1)
+                    continue
+                elif module['name'] == "module-ballerina-http" and dist_repo_patch_branch == "2201.1.x":
+                    os.system(f"echo {module['name']}")
+                    exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
+
+                    if exit_code != 0:
+                        print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
+                              f"{module['name']}")
+                        sys.exit(1)
+                    continue
+                elif module['name'] == "module-ballerina-c2c" and dist_repo_patch_branch == "2201.1.x":
+                    os.system(f"echo {module['name']}")
+                    exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
+
+                    if exit_code != 0:
+                        print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
+                              f"{module['name']}")
+                        sys.exit(1)
+                    continue
+                try:
+                    version = properties[module['version_key']]
+                    if len(version.split("-")) > 1:
+                        updated_commit_id = version.split("-")[-1]
+                        os.system(f"echo {module['name']}")
+                        exit_code = os.system(f"cd {module['name']};git checkout -b full-build {updated_commit_id}")
+
+                        if exit_code != 0:
+                            print(f"Failed to create new branch from last updated commit id '{updated_commit_id}' for " +
+                                  f"{module['name']}")
+                            sys.exit(1)
+                    else:
+                        os.system(f"echo {module['name']}")
+                        exit_code = os.system(f"cd {module['name']};git checkout v{version}")
+
+                        if exit_code != 0:
+                            print(f"Failed to switch to branch 'v{version}' from last updated commit id for " +
+                                  f"{module['name']}")
+                            sys.exit(1)
+
+                except KeyError:
+                    continue
 
 
 def write_failed_module(module_name):
