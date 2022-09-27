@@ -7,6 +7,10 @@ on:
           description: 'Ballerina-lang branch'
           required: true
           default: 'master'
+        downstream_repo_branch:
+          description: 'Downstream repository branch'
+          required: true
+          default: 'master'
         enable_tests:
           type: choice
           description: 'Enable Tests'
@@ -35,7 +39,8 @@ jobs:
           pip install PyGithub
       - name: Build Modules
         run: |
-          python dependabot/build_stdlibs_for_lang_updates.py ${{ github.event.inputs.ballerina_lang_branch }} ${{ github.event.inputs.enable_tests }} ${{ github.repository_owner }}
+          python dependabot/build_stdlibs_for_lang_updates.py ${{ github.event.inputs.ballerina_lang_branch }} \
+          ${{ github.event.inputs.enable_tests }} ${{ github.repository_owner }} ${{ github.event.inputs.downstream_repo_branch }}
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}

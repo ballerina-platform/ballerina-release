@@ -5,6 +5,7 @@ import os
 import sys
 from pathlib import Path
 
+DEFAULT_DOWNSTREAM_REPO_BRANCH = "master"
 
 stdlib_modules_by_level = dict()
 test_ignore_modules = []
@@ -14,6 +15,7 @@ stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform
 test_ignore_modules_file = 'dependabot/resources/full_build_ignore_modules.json'
 
 ballerina_lang_branch = "master"
+downstream_repo_branch = "master"
 enable_tests = 'true'
 github_user = 'ballerina-platform'
 exit_code = 0
@@ -29,6 +31,7 @@ def main():
     global test_ignore_modules
     global build_ignore_modules
     global ballerina_lang_branch
+    global downstream_repo_branch
     global github_user
     global enable_tests
 
@@ -36,6 +39,7 @@ def main():
         ballerina_lang_branch = sys.argv[1]
         enable_tests = sys.argv[2]
         github_user = sys.argv[3]
+        downstream_repo_branch = sys.argv[4]
 
     read_stdlib_modules()
     read_ignore_modules()
@@ -117,6 +121,12 @@ def clone_repositories():
             exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}{module['name']}.git")
             if exit_code != 0:
                 sys.exit(1)
+
+            if downstream_repo_branch != DEFAULT_DOWNSTREAM_REPO_BRANCH:
+                exit_code = os.system(f"cd {module['name']};git checkout {downstream_repo_branch}")
+                os.system(f"cd {module['name']};git status")
+                if exit_code != 0:
+                    sys.exit(1)
 
     # Clone ballerina-distribution repo
     exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}ballerina-distribution.git")
