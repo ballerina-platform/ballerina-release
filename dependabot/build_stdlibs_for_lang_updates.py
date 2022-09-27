@@ -5,7 +5,6 @@ import os
 import sys
 from pathlib import Path
 
-DEFAULT_DOWNSTREAM_REPO_BRANCH = "master"
 
 stdlib_modules_by_level = dict()
 test_ignore_modules = []
@@ -122,11 +121,8 @@ def clone_repositories():
             if exit_code != 0:
                 sys.exit(1)
 
-            if downstream_repo_branch != DEFAULT_DOWNSTREAM_REPO_BRANCH:
-                exit_code = os.system(f"cd {module['name']};git checkout {downstream_repo_branch}")
-                os.system(f"cd {module['name']};git status")
-                if exit_code != 0:
-                    sys.exit(1)
+            os.system(f"cd {module['name']};git checkout {downstream_repo_branch}")
+            os.system(f"cd {module['name']};git status")
 
     # Clone ballerina-distribution repo
     exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}ballerina-distribution.git")
