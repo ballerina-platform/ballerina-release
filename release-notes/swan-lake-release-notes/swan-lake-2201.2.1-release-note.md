@@ -2,7 +2,7 @@
 layout: ballerina-left-nav-release-notes
 title: 2201.2.1 (Swan Lake) 
 permalink: /downloads/swan-lake-release-notes/2201.2.1/
-active: 2201.1.1
+active: 2201.2.1
 redirect_from: 
     - /downloads/swan-lake-release-notes/2201.2.1
     - /downloads/swan-lake-release-notes/2201.2.1/
@@ -40,6 +40,6 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.1.0 of the repositories below.
 
-- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3ATeam%2FLanguageServer+milestone%3A%22Ballerina+2201.2.1%22+label%3AType%2FBug)
-- [CLI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.2.1+label%3AArea%2FCLI+is%3Aclosed+)
-- [Project API](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.2.1+label%3AArea%2FProjectAPI+is%3Aclosed+)
+- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FLanguageServer%2FExtensions+milestone%3A2201.2.1+is%3Aclosed)
+- [CLI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2201.2.1+label%3AArea%2FCLI)
+- [Project API](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.2.1+is%3Aclosed+label%3AArea%2FProjectAPI)
