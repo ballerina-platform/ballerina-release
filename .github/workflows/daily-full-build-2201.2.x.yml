@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/full_build_pipeline_for_updated_stages.py 2201.2.x true ballerina-platform
+          python dependabot/full_build_pipeline_for_updated_stages.py 2201.2.x true ballerina-platform 2201.2.x
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
