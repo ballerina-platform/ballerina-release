@@ -14,5 +14,9 @@
   "2201.2.x": {
     "test-ignore-modules": [],
     "build-ignore-modules": []
+  },
+  "2201.3.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": []
   }
 }
