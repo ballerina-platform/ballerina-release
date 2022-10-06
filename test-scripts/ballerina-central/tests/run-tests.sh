@@ -32,22 +32,6 @@ export PACKAGE_NAME="bc$(random)"
 rm -rf bc*
 
 echo "-----------------------------------------------------------"
-echo ">>>>>>>>>>>>>>>>>>>> Test with BETA2 <<<<<<<<<<<<<<<<<<<<<"
-echo "-----------------------------------------------------------"
-
-# Test push and pull with beta2
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/init-gh.bats
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/push-gh.bats
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/pull-gh.bats
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/search-gh.bats
-VERSION=16.7.2 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/init-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/push-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
-VERSION=16.8.5 ./libs/bats/bin/bats beta2/pull-gh.bats
-
-echo "-----------------------------------------------------------"
 echo ">>>>>>>>>>>>>>>>>>>> Test with BETA3 <<<<<<<<<<<<<<<<<<<<<"
 echo "-----------------------------------------------------------"
 
@@ -62,9 +46,6 @@ VERSION=18.6.1 ./libs/bats/bin/bats beta3/push-gh.bats
 VERSION=18.6.1 ./libs/bats/bin/bats beta3/pull-gh.bats
 VERSION=18.6.1 ./libs/bats/bin/bats beta3/pull-latest-gh.bats
 VERSION=18.6.1 ./libs/bats/bin/bats beta3/pull-gh.bats
-
-# Test pull with beta2
-VERSION=17.4.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 
 echo "-----------------------------------------------------------"
 echo ">>>>>>>>>>>>>>>>>>>> Test with BETA4 <<<<<<<<<<<<<<<<<<<<<"
@@ -81,9 +62,6 @@ VERSION=20.7.5 ./libs/bats/bin/bats beta4/push-gh.bats
 VERSION=20.7.5 ./libs/bats/bin/bats beta4/pull-gh.bats
 VERSION=20.7.5 ./libs/bats/bin/bats beta4/pull-latest-gh.bats
 VERSION=20.7.5 ./libs/bats/bin/bats beta4/pull-gh.bats
-
-# Test pull with beta2
-VERSION=19.7.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 
 # Test pull with beta3
 VERSION=19.7.4 ./libs/bats/bin/bats beta3/pull-latest-gh.bats
@@ -110,9 +88,6 @@ VERSION=23.9.5 ./libs/bats/bin/bats beta6/push-gh.bats
 VERSION=23.9.5 ./libs/bats/bin/bats beta6/pull-gh.bats
 VERSION=23.9.5 ./libs/bats/bin/bats beta6/pull-latest-gh.bats
 VERSION=23.9.5 ./libs/bats/bin/bats beta6/pull-gh.bats
-
-# Test pull with beta2
-VERSION=21.7.4 ./libs/bats/bin/bats beta2/pull-latest-gh.bats
 
 # Test pull with beta3
 VERSION=22.7.4 ./libs/bats/bin/bats beta3/pull-latest-gh.bats
