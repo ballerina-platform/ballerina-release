@@ -132,6 +132,8 @@ def clone_repositories():
 
 def build_stdlib_repositories(enable_tests):
     global exit_code
+    level_failed = False
+    failed_modules = []
 
     cmd_exclude_tests = ''
     if enable_tests == 'false':
@@ -144,8 +146,8 @@ def build_stdlib_repositories(enable_tests):
     exit_code = os.system(f"cd ballerina-lang;" +
                           f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan")
     if exit_code != 0:
-        print(f"Build failed for ballerina-lang")
-        write_failed_module("ballerina-lang")
+        failed_modules.append("ballerina-lang")
+        write_failed_modules(failed_modules)
         sys.exit(1)
     delete_module('ballerina-lang')
 
@@ -173,10 +175,13 @@ def build_stdlib_repositories(enable_tests):
                                       f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
 
             if exit_code != 0:
-                write_failed_module(module['name'])
-                print(f"Build failed for {module['name']}")
-                sys.exit(1)
+                level_failed = True
+                failed_modules.append(module['name'])
             delete_module(module['name'])
+
+        if level_failed:
+            write_failed_modules(failed_modules)
+            sys.exit(1)
 
     # Build ballerina-distribution repo
     os.system("echo Building ballerina-distribution")
@@ -186,8 +191,8 @@ def build_stdlib_repositories(enable_tests):
                     f"./gradlew clean build{cmd_exclude_tests} " +
                     f"publishToMavenLocal --stacktrace --scan --console=plain --no-daemon --continue")
     if exit_code != 0:
-        write_failed_module("ballerina-distribution")
-        print(f"Build failed for ballerina-distribution")
+        failed_modules.append("ballerina-distribution")
+        write_failed_modules(failed_modules)
         sys.exit(1)
 
 
@@ -287,9 +292,11 @@ def change_version_to_snapshot():
         config_file.close()
 
 
-def write_failed_module(module_name):
-    with open("failed_module.txt", "w") as file:
-        file.writelines(module_name)
+def write_failed_modules(failed_module_names):
+    with open("failed_modules.txt", "w") as file:
+        for module_name in failed_module_names:
+            file.write(module_name + "\n")
+            print(f"Build failed for {module_name}")
         file.close()
 
 
