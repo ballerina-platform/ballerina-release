@@ -169,7 +169,7 @@
         },
         {
             "name": "module-ballerina-tcp",
-            "level": 4,
+            "level": 3,
             "group_id": "io.ballerina.stdlib",
             "artifact_id": "tcp-ballerina",
             "version_key": "stdlibTcpVersion",
