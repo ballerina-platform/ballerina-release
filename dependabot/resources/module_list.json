@@ -198,7 +198,8 @@
             "group_id": "io.ballerina",
             "artifact_id": "persist-tools",
             "version_key": "persistVersion",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": false
         },
         {
             "name": "openapi-tools",
