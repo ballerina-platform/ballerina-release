@@ -885,6 +885,22 @@
             "dependents": []
         },
         {
+            "name": "persist-tools",
+            "level": 1,
+            "group_id": "io.ballerina",
+            "artifact_id": "persist-tools",
+            "version_key": "persistVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
             "name": "module-ballerinax-postgresql",
             "level": 10,
             "group_id": "io.ballerina.stdlib",
