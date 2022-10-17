@@ -143,6 +143,9 @@
             "name": "module-ballerina-os"
         },
         {
+            "name": "module-ballerina-persist"
+        },
+        {
             "name": "module-ballerinax-postgresql",
             "push_to_central": false
         },
