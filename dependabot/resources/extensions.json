@@ -679,8 +679,7 @@
                 "module-ballerinax-mysql",
                 "module-ballerinax-oracledb",
                 "module-ballerina-persist",
-                "module-ballerinax-postgresql",
-                "ballerina-distribution"
+                "module-ballerinax-postgresql"
             ]
         },
         {
@@ -712,7 +711,8 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "persist-tools"
+                "persist-tools",
+                "ballerina-distribution"
             ]
         },
         {
