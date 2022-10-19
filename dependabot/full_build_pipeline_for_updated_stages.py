@@ -165,12 +165,14 @@ def build_stdlib_repositories(enable_tests):
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
-                                      f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan")
+                                      f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan " +
+                                      "--console=plain --no-daemon --continue")
             else:
                 exit_code = os.system(f"cd {module['name']};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
-                                      f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace --scan")
+                                      f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace " +
+                                      "--scan --console=plain --no-daemon --continue")
 
             if exit_code != 0:
                 level_failed = True
