@@ -36,16 +36,15 @@ jobs:
           BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
           devCentralToken: ${{ secrets.BALLERINA_DEV_CENTRAL_ACCESS_TOKEN }}
 
-      - name: Set Env Variable
-        if: ${{ failure() }}
-        id: set-module
-        run: |
-          echo "::set-output name=module::$(cat failed_module.txt)"
-
       - name: Notify Build Failure
         if: ${{ failure() }}
-        run: |
-          python3 dependabot/notify_full_build_failure.py ${{ steps.set-module.outputs.module }} master
+        shell: bash
+        run:
+          FILE="failed_modules.txt"
+
+          while read module; do
+            python3 dependabot/notify_full_build_failure.py $module master;
+          done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
