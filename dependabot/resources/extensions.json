@@ -59,6 +59,22 @@
             ]
         },
         {
+            "name": "module-ballerina-xslt",
+            "level": 2,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "xslt-ballerina",
+            "version_key": "stdlibXsltVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
             "name": "module-ballerina-log",
             "level": 2,
             "group_id": "io.ballerina.stdlib",
@@ -91,7 +107,7 @@
             "version_key": "stdlibCacheVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -109,7 +125,7 @@
             "version_key": "stdlibUuidVersion",
             "default_branch": "main",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -125,29 +141,13 @@
             "version_key": "stdlibFileVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
                 "module-ballerina-email",
                 "module-ballerina-http"
-            ]
-        },
-        {
-            "name": "module-ballerina-ftp",
-            "level": 3,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "ftp-ballerina",
-            "version_key": "stdlibFtpVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
             ]
         },
         {
@@ -158,7 +158,7 @@
             "version_key": "stdlibMimeVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -175,7 +175,7 @@
             "version_key": "stdlibTcpVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -191,7 +191,7 @@
             "version_key": "stdlibUdpVersion",
             "default_branch": "main",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -200,32 +200,20 @@
             ]
         },
         {
-            "name": "module-ballerinax-nats",
+            "name": "module-ballerina-ftp",
             "level": 3,
             "group_id": "io.ballerina.stdlib",
-            "artifact_id": "nats-ballerina",
-            "version_key": "stdlibNatsVersion",
+            "artifact_id": "ftp-ballerina",
+            "version_key": "stdlibFtpVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerinax-stan",
-            "level": 3,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "stan-ballerina",
-            "version_key": "stdlibStanVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-auth",
@@ -235,7 +223,7 @@
             "version_key": "stdlibAuthVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -251,7 +239,7 @@
             "version_key": "stdlibJwtVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -259,7 +247,6 @@
                 "module-ballerina-http"
             ]
         },
-
         {
             "name": "module-ballerina-oauth2",
             "level": 4,
@@ -268,7 +255,7 @@
             "version_key": "stdlibOAuth2Version",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -276,7 +263,6 @@
                 "module-ballerina-http"
             ]
         },
-
         {
             "name": "module-ballerina-email",
             "level": 4,
@@ -285,13 +271,318 @@
             "version_key": "stdlibEmailVersion",
             "default_branch": "master",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
             ]
+        },
+        {
+            "name": "module-ballerina-http",
+            "level": 5,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "http-ballerina",
+            "version_key": "stdlibHttpVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
+                "module-ballerina-grpc",
+                "module-ballerinax-jaeger",
+                "module-ballerinax-prometheus",
+                "asyncapi-tools",
+                "module-ballerinai-transaction",
+                "module-ballerina-websocket",
+                "module-ballerina-websub",
+                "module-ballerina-websubhub"
+            ]
+        },
+        {
+            "name": "module-ballerina-grpc",
+            "level": 6,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "grpc-ballerina",
+            "version_key": "stdlibGrpcVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-c2c",
+                "module-ballerinax-choreo",
+                "openapi-tools"
+            ]
+        },
+        {
+            "name": "module-ballerinai-transaction",
+            "level": 6,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "transaction-ballerina",
+            "version_key": "stdlibTransactionVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerinax-kafka",
+                "module-ballerinax-rabbitmq",
+                "module-ballerina-sql"
+            ]
+        },
+        {
+            "name": "module-ballerina-websocket",
+            "level": 6,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "websocket-ballerina",
+            "version_key": "stdlibWebsocketVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-graphql"
+            ]
+        },
+        {
+            "name": "module-ballerina-websub",
+            "level": 6,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "websub-ballerina",
+            "version_key": "stdlibWebsubVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-c2c",
+                "openapi-tools"
+            ]
+        },
+        {
+            "name": "module-ballerina-websubhub",
+            "level": 6,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "websubhub-ballerina",
+            "version_key": "stdlibWebsubhubVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-c2c"
+            ]
+        },
+        {
+            "name": "module-ballerina-graphql",
+            "level": 7,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "graphql-ballerina",
+            "version_key": "stdlibGraphqlVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-c2c",
+                "openapi-tools"
+            ]
+        },
+        {
+            "name": "module-ballerina-sql",
+            "level": 7,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "sql-ballerina",
+            "version_key": "stdlibSqlVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerinax-java.jdbc",
+                "module-ballerinax-mssql",
+                "module-ballerinax-mysql",
+                "module-ballerinax-oracledb",
+                "module-ballerina-persist",
+                "module-ballerinax-postgresql"
+            ]
+        },
+        {
+            "name": "module-ballerina-persist",
+            "level": 8,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "persist-ballerina",
+            "version_key": "stdlibPersistVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "persist-tools",
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "persist-tools",
+            "level": 9,
+            "group_id": "io.ballerina",
+            "artifact_id": "persist-tools",
+            "version_key": "persistVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-java.jdbc",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "java.jdbc-ballerina",
+            "version_key": "stdlibJdbcVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-kafka",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "kafka-ballerina",
+            "version_key": "stdlibKafkaVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-mssql",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mssql-ballerina",
+            "version_key": "stdlibMssqlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-mysql",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mysql-ballerina",
+            "version_key": "stdlibMysqlVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-nats",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "nats-ballerina",
+            "version_key": "stdlibNatsVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-oracledb",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "oracledb-ballerina",
+            "version_key": "stdlibOracledbVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-postgresql",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "postgresql-ballerina",
+            "version_key": "stdlibPostgresqlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-rabbitmq",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "rabbitmq-ballerina",
+            "version_key": "stdlibRabbitmqVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-stan",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "stan-ballerina",
+            "version_key": "stdlibStanVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
         }
     ]
 }
