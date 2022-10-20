@@ -38,20 +38,6 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 To view bug fixes, see the [GitHub milestone for Swan Lake 2201.2.2](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FCompilerFE+milestone%3A2201.2.2+is%3Aclosed)
 
-### New features
-
-### Improvements
-
-### Bug Fixes
-
-## Standard library updates
-
-### New features
-
-### Improvements
-
-### Bug Fixes
-
 ## Developer tools updates
 
 ### Bug Fixes
