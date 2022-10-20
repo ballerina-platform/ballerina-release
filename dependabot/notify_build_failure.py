@@ -35,8 +35,14 @@ def main():
                 "Please visit <https://github.com/ballerina-platform/" + str(repo_name) +\
                 "/actions?query=workflow%3A" + str(workflow_name_and_description) + "> for more information" +"\n"
     try:
-        code_owner_content = repo.get_contents('.github/CODEOWNERS')
-        owners = code_owner_content.decoded_content.decode().split("*")[1].split("@")
+        if repo_name == "ballerina-lang":
+            owners = ["gimantha","azinneera","warunalakshitha"]
+        elif repo_name == "ballerina-distribution":
+            owners = ["gimantha","azinneera","niveathika","NipunaRanasinghe","keizer619"]
+        else:
+            code_owner_content = repo.get_contents('.github/CODEOWNERS')
+            owners = code_owner_content.decoded_content.decode().split("*")[1].split("@")
+
         encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
 
         fernet = Fernet(encryption_key)
