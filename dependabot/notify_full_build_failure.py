@@ -19,8 +19,14 @@ def main():
               ") page> for more information\n"
 
     try:
-        code_owner_content = repo.get_contents('.github/CODEOWNERS')
-        owners = code_owner_content.decoded_content.decode().split("*")[1].split("@")
+        if sys.argv[1] == "ballerina-lang":
+            owners = ["gimantha","azinneera","warunalakshitha"]
+        elif sys.argv[1] == "ballerina-distribution":
+            owners = ["gimantha","azinneera","niveathika","NipunaRanasinghe","keizer619"]
+        else:
+            code_owner_content = repo.get_contents('.github/CODEOWNERS')
+            owners = code_owner_content.decoded_content.decode().split("*")[1].split("@")
+
         encryption_key = os.environ['ENV_USER_ENCRYPTION_KEY']
 
         fernet = Fernet(encryption_key)
