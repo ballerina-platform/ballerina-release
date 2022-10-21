@@ -40,6 +40,26 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.2.2](https://git
 
 ## Developer tools updates
 
+### New features
+
+#### Language Server
+
+- Implemented a new code action to extract a constant expression to a constant
+- Added a new code action to convert an array to array mapping into a query expression
+- Introduced new API to load a project into the Workspace Manager
+
+### Improvements
+
+#### Language Server
+
+- Improved code action support for optional fields, union typed fields & query expressions
+- Improved LS Pacakage Loader to update package map after pulling a module
+- Improved the import module code action to change module prefix, when the module is already imported
+- Improved sorting in method call expression, limit expression, error constructor and positional argument
+- Improved create variable code action to provide a rename popup after applying
+- Refactored the usage of commands in code actions with code action resolve request
+- Improved compiler plugin code action to prevent applying invalid text edits
+
 ### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.2.2 of the repositories below.
