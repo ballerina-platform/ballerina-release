@@ -48,7 +48,10 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.2.3](https://git
 
 ## New features
 
-## Imrpovements
+### Language Server
+
+* Add a new quick-fix code action to fill in the missing required fields of a mapping constructor
+* Add a new module-level completion item to generate an expression-bodied function snippet
 
 ### Bug Fixes
 
