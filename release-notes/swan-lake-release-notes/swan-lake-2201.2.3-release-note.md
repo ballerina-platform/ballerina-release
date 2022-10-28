@@ -36,19 +36,24 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ## Language updates
 
-## New features
+### New features
 
-## Imrpovements
+### Improvements
 
-## Bug fixes
+### Bug fixes
 
 To view bug fixes, see the [GitHub milestone for Swan Lake 2201.2.3](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FCompilerFE+milestone%3A2201.2.3+is%3Aclosed)
 
 ## Developer tools updates
 
-## New features
+### New features
 
-## Imrpovements
+#### Language Server
+
+- A new snippet completion item for expression bodied function. 
+- A new code action to fill rest of the fields in record literal.
+
+### Improvements
 
 ### Bug Fixes
 
