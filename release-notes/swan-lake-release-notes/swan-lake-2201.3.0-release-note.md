@@ -67,9 +67,9 @@ To view bug fixes, see the [GitHub milestone for 2201.0.0 (Swan Lake)](https://g
 
 #### `graphql` package
 
-- Added service-level interceptor execution for records fields, maps & tables
+- Added service-level interceptor execution for records fields, maps, and tables
 - Added service-level interceptor execution for subscriptions
-- Added returning all the errors related to a GraphQL document in a single response
+- Enabled returning all the errors related to a GraphQL document in a single response
 
 ## Code to Cloud updates
 
