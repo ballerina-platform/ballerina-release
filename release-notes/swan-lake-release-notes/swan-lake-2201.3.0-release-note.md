@@ -58,9 +58,15 @@ To view bug fixes, see the [GitHub milestone for 2201.0.0 (Swan Lake)](https://g
 
 #### `graphql` package
 
+#### `gRPC` package
+- Added server reflection support for gRPC services
+
 ### Improvements
 
 #### `graphql` package
+
+#### `gRPC` package
+- Updated Protocol Buffers version to 3.21.7
 
 ## Code to Cloud updates
 
