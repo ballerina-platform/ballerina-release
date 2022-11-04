@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/build_stdlibs_for_lang_updates.py master true ballerina-platform master
+          python dependabot/build_stdlibs_for_lang_updates.py master true ballerina-platform update4
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
