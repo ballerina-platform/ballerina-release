@@ -221,7 +221,7 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 ## Code to Cloud updates
 
 ### New features
-- Introduced native executable docker image creation for cloud enabled projects by executing `bal build --native` 
+- Introduced the native executable Docker image creation for cloud-enabled projects by executing the `bal build --native` command
 
 #### Ballerina Shell
 
