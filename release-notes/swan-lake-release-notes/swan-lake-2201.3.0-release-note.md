@@ -34,7 +34,7 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ## Language updates
 
-### New Features
+### New features
 
 ##### Support to import a non-Ballerina interface definition as a module that defines a client
 
