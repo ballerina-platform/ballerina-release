@@ -82,6 +82,11 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 ### New features
 
+#### Native-image build (Experimental)
+Introduced the `--native` flag, which generates a GraalVM native image executable when building a ballerina project.
+- The generated executable contains the modules in the current package, their dependencies, Ballerina runtime, and statically linked native code from the JDK.
+- `$bal build --native`
+
 #### Ballerina Shell
 
 #### Ballerina Update Tool
