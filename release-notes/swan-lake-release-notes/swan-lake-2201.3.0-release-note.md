@@ -58,14 +58,25 @@ To view bug fixes, see the [GitHub milestone for 2201.0.0 (Swan Lake)](https://g
 
 #### `graphql` package
 
+- Added support for disabling introspection queries
+- Added support for GraphQL interfaces
+- Added support for interfaces implementing interfaces
+- Introduced GraphQL client configurations
+
 #### `gRPC` package
+
 - Added server reflection support for gRPC services
 
 ### Improvements
 
 #### `graphql` package
 
+- Added service-level interceptor execution for records fields, maps, and tables
+- Added service-level interceptor execution for subscriptions
+- Changed to return all the errors related to a GraphQL document in a single response
+
 #### `gRPC` package
+
 - Updated Protocol Buffers version to 3.21.7
 
 ## Code to Cloud updates
