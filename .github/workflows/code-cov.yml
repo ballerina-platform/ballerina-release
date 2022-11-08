@@ -5,7 +5,7 @@ name: Generate and archive a Jacoco code coverage report
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 0 * * *'
+    - cron:  '30 18 * * *'    # 00:00 in LK time (GMT+5:30)
   workflow_dispatch:
 
 jobs:
