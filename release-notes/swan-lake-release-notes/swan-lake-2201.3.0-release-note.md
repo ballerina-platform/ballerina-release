@@ -186,9 +186,9 @@ To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://g
 ##### `http` package
 
 - Added support for killing the application when a resource function panics 
-- Added a grace period for graceful stop of the listener
-- Added missing HTTP status codes
-- Made socket configuration to be configurable in both listener and client configurations
+- Added a grace period for the graceful stop of the listener
+- Added the missing HTTP status codes
+- Made the socket configuration to be configurable in both listener and client configurations
 - Added defaultable parameter support for query parameters
 - Added support for populating HATEOAS link's `types` field based on the resource return type
 
@@ -207,8 +207,8 @@ To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://g
 
 ##### `http` package
 
-- Reduced listener default timeout to 60s and client default timeout to 30s
-- Improved data binding based on MIME type match
+- Reduced the listener default timeout to 60s and client default timeout to 30s
+- Improved data binding based on the  MIME type match
 
 #### `graphql` package
 
