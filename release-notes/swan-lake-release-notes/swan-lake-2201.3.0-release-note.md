@@ -88,7 +88,7 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 #### Ballerina shell
 
-#### Ballerina update Tool
+#### Ballerina Update Tool
 
 #### GraphQL Tool 
 - Introduced single client generation for single schema definition
