@@ -231,11 +231,18 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 
 #### Ballerina Update Tool
 
+#### GraphQL Tool
+- Added support to generate graphQL client definitions using graphQL IDL(i.e. config) files
+
 ### Improvements
 
-#### Ballerina shell
+#### Ballerina Shell
 
-#### Ballerina update Tool
+#### Ballerina Update Tool
+
+#### GraphQL Tool 
+- Introduced single client generation for single schema definition
+- Improved the GraphQL client config generation to support runtime configurability
 
 ### Bug fixes
 
