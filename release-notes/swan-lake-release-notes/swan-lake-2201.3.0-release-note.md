@@ -48,9 +48,136 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 ### Improvements
 
+#### Strand dump showing the total strand count
+
+The total number of strand groups and strands created in a Ballerina program is now shown in the strand dump.
+
+#### Allow ambiguous target types in `fromJsonWithType` & `cloneWithType`
+
+The `fromJsonWithType` & `cloneWithType` functions returned an error in the earlier implementation when the user-specified target type was a union type consisting of multiple convertible types for a given source value. Now, for such user-specified target types, the operation succeeds without returning an error by returning a value whose inherent type is as follows. If the given source value belongs to at least one of the member types of the target union type, the inherent type of the returned value is the first found type to which the source value belongs. Otherwise, the inherent type of the returned value is the first convertible type in the union.
+
+For example, the following operations will not return an error.
+
+```ballerina
+type PetByAge record {
+    int age;
+    string nickname?;
+};
+
+type PetByType record {
+    "Cat"|"Dog" pet_type;
+    boolean hunts?;
+};
+
+type Pet PetByAge|PetByType;
+
+public function main() {
+    json j = {
+        "nickname": "Fido",
+        "pet_type": "Dog",
+        "age": 4
+    };
+    Pet|error pet = j.fromJsonWithType(); // inherent type of pet will be PetByAge
+
+    j = {x: 1};
+    record {float x;}|record {int x;}|error v = j.cloneWithType(); // inherent type of v will be record {int x;}
+}
+```
+
+#### Configurable support for the array of tables
+
+The configurable feature is improved to support the array of tables using a two-dimensional TOML array of in-line tables.
+
+For example, if the configurable variables are defined in the following way,
+
+```ballerina
+type Person record {
+    readonly int id;
+    string name;
+};
+
+configurable table<map<int>>[] array1 = ?;
+configurable table<Person> key (id)[] array2 = ?;
+```
+
+the values can be provided in the `Config.toml` file as follows.
+
+```toml
+array1 = [[{a = 1, b = 2}, {c = 3, d = 4}], [{e = 5, f = 6}]]
+
+array2 = [[{id = 1, name = "Anne"}, {id = 2, name = "Bob"}], [{id = 3, name = "Charles"}]]
+
+```
+
+#### Configurable support for nil type
+
+The configurable feature is now improved to support the following `()` cases.
+
+- configurable variables of nil type 
+The configurable variables with nil type are now supported if the configuration is optional.
+
+For example, the following will be initialized with the default values without providing a compilation error.
+
+```ballerina
+configurable () nilValue = ();
+configurable ())[] nilArray = [];
+```
+
+- record fields with nil type
+The record fields of nil type or a union of nil are now supported by the configurable feature only if the field contains a default value.
+
+For example, if the configurable variables are defined in the following way,
+
+```ballerina
+type Person record {
+    int id;
+    string name;
+    string? department = "HR";
+};
+
+configurable Person person = ?;
+```
+
+the values can be provided in the `Config.toml` file as follows.
+
+```toml
+person = {id = 101, name = "Tom"}
+```
+
+#### Configurable support for `json` type
+As `json` is a sub-type of `anydata`, it is now supported by the configurable feature.
+
+For example, if the configurable variables are defined in the following way,
+
+```ballerina
+configurable json jsonVar = ?;
+```
+
+the values can be provided in the `Config.toml` file as follows.
+
+```toml
+jsonVar = {stringValue = "string", num = 12, arr = [1, 2, "hello"], map = {a = "a"}}
+```
+
+#### Configurable support for array filler values
+
+The configurable feature is now improved to include filler values while configuring array values.
+
+For example, if the configurable variable is defined in the following way,
+
+```ballerina
+configurable int[5] arr = ?;
+```
+the values are provided in the `Config.toml` as follows.
+
+```toml
+arr = [1, 2]
+```
+It will create an array with the `[1,2,0,0,0]` elements because the filler value of `int` type is `0`.
+
 ### Bug fixes
 
-To view bug fixes, see the [GitHub milestone for 2201.0.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FjBallerina+milestone%3A%22Ballerina+2201.3.0%22).
+To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.3.0+label%3ATeam%2FjBallerina+label%3AType%2FBug+is%3Aclosed+)
 
 ## Standard library updates
 
