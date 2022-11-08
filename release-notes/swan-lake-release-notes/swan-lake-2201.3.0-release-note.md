@@ -81,7 +81,7 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 #### Ballerina Update Tool
 
 #### GraphQL Tool
-- Added a new Ballerina script generation including the Ballerina data types related to connector configuration
+- Added a new Ballerina script generation including the Ballerina data types related to the connector configuration
 - Added IDL client generation support using non-Ballerina Interface Definition Language
 
 ### Improvements
