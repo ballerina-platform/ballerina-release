@@ -206,16 +206,6 @@ To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://g
 
 - Updated Protocol Buffers version to 3.21.7
 
-## Code to Cloud updates
-
-### New features
-
-### Improvements
-
-### Bug fixes
-
-To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://github.com/ballerina-platform/module-ballerina-c2c/issues?q=is%3Aissue+is%3Aclosed+milestone%3A%22Ballerina+2201.3.0%22+label%3AType%2FBug).
-
 ## Developer tools updates
 
 ### New features
@@ -226,6 +216,12 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 Introduced the `--native` flag, which generates a GraalVM native executable when building a Ballerina project.
 - The generated executable contains the modules in the current package, their dependencies, Ballerina runtime, and statically linked native code from the JDK.
 - `bal build --native`
+
+
+## Code to Cloud updates
+
+### New features
+- Introduced native executable docker image creation for cloud enabled projects by executing `bal build --native` 
 
 #### Ballerina Shell
 
