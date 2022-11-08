@@ -149,7 +149,8 @@ int result = -9223372036854775808; // error: '9223372036854775808' is out of ran
 
 ### Improvements
 
-#### Added a few methods to the `NodeParser` API
+#### Syntax API
+Added a few methods to the `NodeParser` API
 The following methods have been introduced for the `NodeParser` class.
 - `Node parseObjectMember(String text)`
 - `ModulePartNode parseModulePart(String text)`
