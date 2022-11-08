@@ -62,13 +62,13 @@ public function main() returns error? {
 }
 ```
 
-The reserved `client` keyword can be used in a qualified identifier (`petstore:client`) without a quoted identifier. This is specifically allowed when the module prefix (`petstore`) was defined using a client declaration.
+The reserved `client` keyword can be used in a qualified identifier (`petstore:client`) without a quoted identifier. This is specifically allowed when the module prefix (`petstore`) is defined using a client declaration.
 
 The Swan Lake Update 3 release supports OpenAPI and GraphQL definitions in client declarations.
 
-#### Add new field to display annotation
+#### Added a new field to display the annotation
 
-New metadata called `kind` has been introduced to `display` annotation in order to catagorize the kind of the record field.
+A new metadata called `kind` has been introduced to `display` the annotation in order to categorize the kind of the record field.
 
 ```ballerina
 public type RefreshTokenGrantConfig record {|
@@ -126,43 +126,43 @@ public function main() {
 
 ```
 
-#### Make the terminating semicolon optional for module-level declarations
-Previously a closing semicolon was not allowed after following module-level declarations.
-- Function-defn-body
-- Service-declaration
-- module-class-defn
-- module-enum-decl
-  Now the user can optionally end these declarations with a semicolon.
+#### Made the terminating semicolon optional for module-level declarations
+Previously, a closing semicolon was not allowed after the module-level declarations below.
+- `Function-defn-body`
+- the service declaration
+- `module-class-defn`
+- `module-enum-decl`
+  Now, you can optionally end these declarations with a semicolon.
 
 
-### Backward incompatible changes
+### Backward-incompatible changes
 
 #### Disallow using the `-9223372036854775808` unary expression as an integer
 
-Previously `-9223372036854775808` was allowed to be assigned to an integer in Ballerina. It is now disallowed to comply with the language specification, thus, attempting to assign `-9223372036854775808` to an `int` will now give an error.
+Previously, `-9223372036854775808` was allowed to be assigned to an integer in Ballerina. It is now disallowed to comply with the language specification, thus, attempting to assign `-9223372036854775808` to an `int` will now give an error.
 
 ```
 int result = -9223372036854775808; // error: '9223372036854775808' is out of range for 'int'
 ```
 
-## Compiler API Updates
+## Compiler API updates
 
 ### Improvements
 
-#### Add few methods to the NodeParser API
-The following methods have been introduced for the NodeParser class.
-- Node parseObjectMember(String text)
-- ModulePartNode parseModulePart(String text)
-- IntermediateClauseNode parseIntermediateClause(String text, boolean allowActions)
+#### Added a few methods to the `NodeParser` API
+The following methods have been introduced for the `NodeParser` class.
+- `Node parseObjectMember(String text)`
+- `ModulePartNode parseModulePart(String text)`
+- `IntermediateClauseNode parseIntermediateClause(String text, boolean allowActions)`
 
-### Backward incompatible changes
+### Backward-incompatible changes
 
 #### Update NodeFactory methods to allow optional terminating semicolon for module-level declarations
-Following methods in NodeFactory have been updated with an extra parameter for the optional semicolon token.
-- createServiceDeclarationNode
-- createFunctionBodyBlockNode
-- createEnumDeclarationNode
-- createClassDefinitionNode
+The methods below in the `NodeFactory` have been updated with an extra parameter for the optional semicolon token.
+- `createServiceDeclarationNode`
+- `createFunctionBodyBlockNode`
+- `createEnumDeclarationNode`
+- `createClassDefinitionNode`
 
 To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.3.0%22).
 
