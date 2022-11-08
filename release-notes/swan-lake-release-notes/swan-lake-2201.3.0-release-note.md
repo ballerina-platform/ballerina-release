@@ -48,13 +48,13 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 ### Improvements
 
-#### Strand dump tool improved to show the strand group information
+#### Strand dump showing the total strand count
 
 The total number of strand groups and strands created in a Ballerina program is now shown in the strand dump.
 
 #### Allow ambiguous target types in `fromJsonWithType` & `cloneWithType`
 
-The `fromJsonWithType` & `cloneWithType` types returned an error in the earlier implementation when the user-specified target type was a union type consisting of multiple convertible types for a given source value. Now, for such user-specified target types, the operation succeeds without returning an error by returning a value whose inherent type is as follows. If the given source value belongs to at least one of the member types of the target union type, the inherent type of the returned value is the first found type to which the source value belongs. Otherwise, the inherent type of the returned value is the first convertible type in the union.
+The `fromJsonWithType` & `cloneWithType` functions returned an error in the earlier implementation when the user-specified target type was a union type consisting of multiple convertible types for a given source value. Now, for such user-specified target types, the operation succeeds without returning an error by returning a value whose inherent type is as follows. If the given source value belongs to at least one of the member types of the target union type, the inherent type of the returned value is the first found type to which the source value belongs. Otherwise, the inherent type of the returned value is the first convertible type in the union.
 
 For example, the following operations will not return an error.
 
@@ -124,7 +124,7 @@ configurable ())[] nilArray = [];
 ```
 
 - record fields with nil type
-The record fields of nil type or a nilable union type are now supported by the configurable feature only if the field contains a default value.
+The record fields of nil type or a union of nil are now supported by the configurable feature only if the field contains a default value.
 
 For example, if the configurable variables are defined in the following way,
 
