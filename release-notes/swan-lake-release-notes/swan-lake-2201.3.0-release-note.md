@@ -44,7 +44,7 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 ## Runtime updates
 
-### New Features
+### New features
 
 ### Improvements
 
@@ -175,10 +175,7 @@ arr = [1, 2]
 ```
 It will create an array with the elements `[1,2,0,0,0]` as the filler value for the `int` type is `0`.
 
-### New Runtime Java APIs
-
-
-### Bug Fixes
+### Bug fixes
 
 To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.3.0+label%3ATeam%2FjBallerina+label%3AType%2FBug+is%3Aclosed+)
 
