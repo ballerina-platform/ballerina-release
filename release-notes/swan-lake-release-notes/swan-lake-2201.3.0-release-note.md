@@ -239,7 +239,8 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 #### Language Server
 
-- Introduced new `Extract to local variable`code action
+- Introduced new `Extract to local variable` code action
+- Introduced new `Extract to function` code action
 - Introduced `loadProject()` API to the workspace manager
 - Introduced a new code action to generate module for client declarations (`Generate module for client declaration`)
 
