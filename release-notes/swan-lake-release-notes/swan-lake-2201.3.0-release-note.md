@@ -48,13 +48,13 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 ### Improvements
 
-#### Strand dump showing the total strand group and strand count in a Ballerina program
+#### Strand dump tool improved to show the strand group information
 
 The total number of strand groups and strands created in a Ballerina program is now shown in the strand dump.
 
-#### Allowing ambiguous target types in `fromJsonWithType` & `cloneWithType`
+#### Allow ambiguous target types in `fromJsonWithType` & `cloneWithType`
 
-When the user-specified target type was a union type consisting of multiple convertible types for a given source value, earlier `fromJsonWithType` & `cloneWithType` returned an error. Now for such user-specified target types, the operation succeeds without returning an error, returning a value whose inherent type is as follows. If the given source value belongs to at least one of the member types of the target union type, the inherent type of the returned value is the first found type to which the source value belongs. Otherwise, the inherent type of the returned value is the first convertible type in the union.
+The `fromJsonWithType` & `cloneWithType` types returned an error in the earlier implementation when the user-specified target type was a union type consisting of multiple convertible types for a given source value. Now, for such user-specified target types, the operation succeeds without returning an error by returning a value whose inherent type is as follows. If the given source value belongs to at least one of the member types of the target union type, the inherent type of the returned value is the first found type to which the source value belongs. Otherwise, the inherent type of the returned value is the first convertible type in the union.
 
 For example, the following operations will not return an error.
 
@@ -111,10 +111,10 @@ array2 = [[{id = 1, name = "Anne"}, {id = 2, name = "Bob"}], [{id = 3, name = "C
 
 #### Configurable support for nil type
 
-The configurable feature is now improved to support the following `()` cases
+The configurable feature is now improved to support the following `()` cases.
 
-- configurable variables of nil type
-  The configurable variables with nil type are now supported if the configuration is optional.
+- configurable variables of nil type 
+The configurable variables with nil type are now supported if the configuration is optional.
 
 For example, the following will be initialized with the default values without providing a compilation error.
 
@@ -124,7 +124,7 @@ configurable ())[] nilArray = [];
 ```
 
 - record fields with nil type
-  The record fields of nil type or a nilable union type are now supported by the configurable feature, only if the field contains a default value. If the configurable variable is of record type and the record contains nil or union of nil is now supported if the record configurable variable
+The record fields of nil type or a nilable union type are now supported by the configurable feature only if the field contains a default value.
 
 For example, if the configurable variables are defined in the following way,
 
@@ -168,12 +168,12 @@ For example, if the configurable variable is defined in the following way,
 ```ballerina
 configurable int[5] arr = ?;
 ```
-And the values are provided in the `Config.toml` as follows,
+the values are provided in the `Config.toml` as follows.
 
 ```toml
 arr = [1, 2]
 ```
-It will create an array with the elements `[1,2,0,0,0]` as the filler value for the `int` type is `0`.
+It will create an array with the `[1,2,0,0,0]` elements because the filler value of `int` type is `0`.
 
 ### Bug fixes
 
