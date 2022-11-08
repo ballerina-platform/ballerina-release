@@ -62,40 +62,45 @@ public function main() returns error? {
 }
 ```
 
-The reserved `client` keyword can be used in a qualified identifier (`petstore:client`) without a quoted identifier. This is specifically allowed when the module prefix (`petstore`) is defined using a client declaration.
+The reserved `client` keyword can be used in a qualified identifier (`petstore:client`) without a quoted identifier to refer to the client in the generated module. This is specifically allowed when the module prefix (`petstore`) is defined using a client declaration.
 
 The Swan Lake Update 3 release supports OpenAPI and GraphQL definitions in client declarations.
 
-#### Added a new field to display the annotation
+#### Added a new field to the `display` annotation
 
-A new metadata called `kind` has been introduced to `display` the annotation in order to categorize the kind of the record field.
+A new field named `kind` has been introduced to the `display` annotation to indicate the kind of the data. Allowed values are "text", "password", and "file".
 
 ```ballerina
 public type RefreshTokenGrantConfig record {|
-    @display {iconPath: "Field.icon", label: "clientSecret field", kind: "password"}
+    @display {
+        iconPath: "Field.icon",
+        label: "clientSecret field",
+        kind: "password"
+    }
     string clientSecret;
 |};
 ```
 
 #### Added support for function pointers with defaultable parameters
 
-Function pointers are now allowed with default values for function pointer parameters. Any expression can be used as the default value of a function pointer parameter.
+Function pointers are now allowed with default values for parameters. Any expression can be used as the default value of a function pointer parameter.
 
 ```ballerina
-public function main() {
-	int num1 = 100;
-	int num2 = 50;
-	int num3 = 25;
+import ballerina/io;
 
-	function(int a = 0, int b = 0, int c = 0) returns int total = getSum;
-    
-	io:println(total()); // Prints `0`.
-	io:println(total(num1, num2)); // Prints `150`.
-	io:println(total(num1, num2, num3)); // Prints `175`.
+public function main() {
+    int num1 = 100;
+    int num2 = 50;
+    int num3 = 25;
+    function (int a = 0, int b = 0, int c = 0) returns int total = getSum;
+
+    io:println(total()); // Prints `0`.
+    io:println(total(num1, num2)); // Prints `150`.
+    io:println(total(num1, num2, num3)); // Prints `175`.
 }
 
 function getSum(int num1, int num2, int num3) returns int {
-	return num1 + num2 + num3;
+    return num1 + num2 + num3;
 }
 ```
 
@@ -128,11 +133,12 @@ public function main() {
 
 #### Made the terminating semicolon optional for module-level declarations
 Previously, a closing semicolon was not allowed after the module-level declarations below.
-- `Function-defn-body`
-- the service declaration
-- `module-class-defn`
-- `module-enum-decl`
-  Now, you can optionally end these declarations with a semicolon.
+- block function body
+- service declaration
+- module class definition
+- module enumeration declaration 
+
+Now, you can optionally end these declarations with a semicolon.
 
 
 ### Backward-incompatible changes
