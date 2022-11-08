@@ -82,7 +82,9 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 ### New features
 
-#### Native-image build (Experimental)
+#### CLI
+
+##### Native-image build (Experimental)
 Introduced the `--native` flag, which generates a GraalVM native executable when building a Ballerina project.
 - The generated executable contains the modules in the current package, their dependencies, Ballerina runtime, and statically linked native code from the JDK.
 - `bal build --native`
@@ -99,6 +101,14 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 
 ### Bug fixes
 
+To view bug fixes, see the GitHub milestone for 2201.3.0 (Swan Lake) of the repositories below.
+
+- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
+- [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed+label%3AType%2FBug)
+- [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+label%3AType%2FBug+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed)
+- [ProjectAPI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FDevTools+milestone%3A2201.3.0+label%3AArea%2FProjectAPI)
+
+
 ## Package updates
 
 ### New features
@@ -108,10 +118,3 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 ### Bug fixes
 
 ## Breaking changes
-
-To view bug fixes, see the GitHub milestone for 2201.3.0 (Swan Lake) of the repositories below.
-
-- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
-- [update tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed+label%3AType%2FBug)
-- [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+label%3AType%2FBug+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed)
-- [ProjectAPI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FDevTools+milestone%3A2201.3.0+label%3AArea%2FProjectAPI)
