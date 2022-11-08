@@ -60,7 +60,7 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.2.3](https://git
 ## Improvements
 
 ### OpenAPI Tool
-- Add improvement to OpenAPI client configuration handling. The record which contains the information for client initialization has changed from ClientConfig to ConnectionConfig. Few of defaultable configuration fields which were in ClientConfig have been changed to the optional fields in ConnectionConfig record. Due to this change ConnectionConfig record can be defined as a configurable variable.
+-Improved the OpenAPI client configuration handling functionality. Now, the record, which contains the information for client initialization is changed from the `ClientConfig` to `ConnectionConfig`. A few of the defaultable configuration fields, which were in the `ClientConfig` have been changed to the optional fields in the `ConnectionConfig` record. Due to this change, the `ConnectionConfig` record can be defined as a configurable variable.
 
 ### Bug Fixes
 
