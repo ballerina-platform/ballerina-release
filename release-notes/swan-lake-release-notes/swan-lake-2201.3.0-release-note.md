@@ -53,7 +53,7 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 ### Improvements
 
 #### Semantic API
-- Improved constValue() method to retrieve the constant value as an object from the constant-symbol
+- Improved `constValue()` method to retrieve the constant value as an object from the constant-symbol
 
 ### Bug fixes
 
