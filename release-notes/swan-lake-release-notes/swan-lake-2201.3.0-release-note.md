@@ -82,7 +82,7 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 
 #### Debugger
 
-* Introduced the run in terminal feature. This provides the capability to debug Ballerina programs that take user inputs, in the launch mode. This can be achieved by setting the `terminal` attribute in the launch configurations to `integrated`. Once the configuration is set, launching the debugger will cause the Ballerina programs to be executed in a separate integrated VSCode terminal.
+* Introduced the run in terminal feature. This provides the capability to debug Ballerina programs that take user inputs in the launch mode. This can be achieved by setting the `terminal` attribute in the launch configurations to `integrated`. Once the configuration is set, launching the debugger will cause the Ballerina programs to be executed in a separate integrated VS Code terminal.
 
 ### Improvements
 
