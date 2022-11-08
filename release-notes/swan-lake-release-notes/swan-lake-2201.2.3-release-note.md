@@ -57,9 +57,15 @@ To view bug fixes, see the [GitHub milestone for Swan Lake 2201.2.3](https://git
 * Add a new quick-fix code action to fill in the missing required fields of a mapping constructor
 * Add a new module-level completion item to generate an expression-bodied function snippet
 
+## Improvements
+
+### OpenAPI Tool
+-Improved the OpenAPI client configuration handling functionality. Now, the record, which contains the information for client initialization is changed from the `ClientConfig` to `ConnectionConfig`. A few of the defaultable configuration fields, which were in the `ClientConfig` have been changed to the optional fields in the `ConnectionConfig` record. Due to this change, the `ConnectionConfig` record can be defined as a configurable variable.
+
 ### Bug Fixes
 
 To view bug fixes, see the GitHub milestone for Swan Lake 2201.2.3 of the repositories below.
 
 - [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FLanguageServer+milestone%3A2201.2.3+is%3Aclosed)
 - [Debugger](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.2.3+is%3Aclosed+label%3AArea%2FDebugger)
+- [OpenAPI Tool](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+label%3AType%2FBug+milestone%3A%22Swan+Lake+2201.2.3%22+is%3Aclosed)
