@@ -296,13 +296,4 @@ To view bug fixes, see the GitHub milestone for 2201.3.0 (Swan Lake) of the repo
 - [ProjectAPI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FDevTools+milestone%3A2201.3.0+label%3AArea%2FProjectAPI)
 - [Semantic API](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.3.0+label%3AArea%2FSemanticAPI+)
 
-
-## Package updates
-
-### New features
-
-### Improvements
-
-### Bug fixes
-
 ## Breaking changes
