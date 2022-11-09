@@ -111,22 +111,23 @@ function getSum(int num1, int num2, int num3) returns int {
 If there is an optional field `T x?;` in a record, the absence of `x` is represented by nil where `T` does not allow nil.
 
 ```ballerina
-type Topt record {
-    int x?;
-    int y?;
+import ballerina/io;
+
+type Employee record {
+    int id?;
+    string department?;
 };
 
 public function main() {
-    Topt t = {x: 2, y: 4};
-    t.x = ();
+    Employee e = {id: 2, department: "HR"};
+    e.id = ();
+    e = {id: 3};
+    var {id: _, department} = e;
+    io:println(department is ()); // true
 
-    t = {x: 2};
-    var {x: _, y} = t;
-    io:println(y is ()); // true
-
-    int? xOrNil = ();
-    t = {x: xOrNil, y: 5};
-    io:println(t.x is ()); // true
+    int? idOrNil = ();
+    e = {id: idOrNil, department: "Engineering"};
+    io:println(e.id is ()); // true
 }
 
 ```
