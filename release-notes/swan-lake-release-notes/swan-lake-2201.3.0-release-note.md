@@ -231,7 +231,22 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 - The generated executable contains the modules in the current package, their dependencies, Ballerina runtime, and statically linked native code from the JDK.
 - `bal build --native`
 
-
+#### OpenAPI Tool
+- Added support to allow user to add an openAPI specification to generate the IDL client as follows.
+```ballerina
+client "./openapi.yaml" as foo; 
+```
+- Introduced `@openapi:ClientConfig` annotation to add additional details to create IDL client.
+```ballerina
+@openapi:ClientConfig {
+    tags: ["store"],
+    operations: ["op1", "op2"],
+    license: "/path/to/license_file.txt",
+    isResource: true // (default value => true),
+    nullable: false // (default value => false)
+}
+client "./openapi.yaml" as foo;
+```
 ## Code to Cloud updates
 
 ### New features
