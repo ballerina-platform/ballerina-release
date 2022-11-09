@@ -108,13 +108,4 @@ To view bug fixes, see the GitHub milestone for 2201.3.0 (Swan Lake) of the repo
 - [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+label%3AType%2FBug+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed)
 - [ProjectAPI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FDevTools+milestone%3A2201.3.0+label%3AArea%2FProjectAPI)
 
-
-## Package updates
-
-### New features
-
-### Improvements
-
-### Bug fixes
-
 ## Breaking changes
