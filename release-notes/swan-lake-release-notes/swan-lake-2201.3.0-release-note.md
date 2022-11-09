@@ -42,6 +42,23 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.3.0%22).
 
+## Compiler API updates
+
+### New features
+
+#### Semantic API
+- Added a new `annotAttachments()` API to get the annotation attachments and their constant values from the annotatable symbols
+- Introduced a new `ClientDeclSymbol` symbol to represent the semantic information of the client-declaration statement
+
+### Improvements
+
+#### Semantic API
+- Improved the `constValue()` method to retrieve the constant value as an object from the constant symbol
+
+### Bug fixes
+
+To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.3.0+label%3ATeam%2FCompilerFETools+label%3AType%2FBug+).
+
 ## Runtime updates
 
 ### New features
@@ -224,6 +241,13 @@ To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://g
 
 ### New features
 
+#### Language Server
+
+- Introduced a new `Extract to local variable` code action
+- Introduced a new `Extract to function` code action
+- Introduced the `loadProject()` API to the workspace manager to open up a project programmatically
+- Introduced a new `Generate module for client declaration` code action to generate a module for client declarations
+
 #### CLI
 
 ##### Native-image build (Experimental)
@@ -250,6 +274,10 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 
 ### Improvements
 
+#### Language Server
+- Improved completions sorting within the expression of the `if` condition
+- Improved the `Change variable type` code action
+
 #### Ballerina Shell
 
 #### Ballerina Update Tool
@@ -262,10 +290,11 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 
 To view bug fixes, see the GitHub milestone for 2201.3.0 (Swan Lake) of the repositories below.
 
-- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed+label%3ATeam%2FLanguageServer)
+- [Language Server](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.3.0+label%3AType%2FBug+label%3ATeam%2FLanguageServer)
 - [Update Tool](https://github.com/ballerina-platform/ballerina-update-tool/issues?q=is%3Aissue+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed+label%3AType%2FBug)
 - [OpenAPI](https://github.com/ballerina-platform/openapi-tools/issues?q=is%3Aissue+label%3AType%2FBug+milestone%3A%22Ballerina+2201.3.0%22+is%3Aclosed)
 - [ProjectAPI](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+label%3ATeam%2FDevTools+milestone%3A2201.3.0+label%3AArea%2FProjectAPI)
+- [Semantic API](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.3.0+label%3AArea%2FSemanticAPI+)
 
 
 ## Package updates
