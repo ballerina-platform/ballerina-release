@@ -47,7 +47,7 @@ To view bug fixes, see the [GitHub milestone for 2201.x.0 (Swan Lake)](https://g
 ### New features
 
 #### Semantic API
-- Added a new API: `annotAttachments()` to get the annotation attachments and their constant values from the annotatable symbols
+- Added a new `annotAttachments()` API to get the annotation attachments and their constant values from the annotatable symbols
 - Introduced a new symbol: `ClientDeclSymbol` to represent semantic information of client-declaration statement
 
 ### Improvements
