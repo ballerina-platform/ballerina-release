@@ -240,7 +240,7 @@ client "./openapi.yaml" as weather;
 public function main() returns error? {
     // Initializes the client which is generated from the IDL import.
     weather:client weatherClient = check new ();
-    // Consume the `/weather` API, that has been given in the OpenAPI specification.
+    // Consume the `/weather` resource defined in the OpenAPI specification.
     weather:CurrentWeatherData weatherResult = check weatherClient->/weather("Colombo");
 }
 ```
