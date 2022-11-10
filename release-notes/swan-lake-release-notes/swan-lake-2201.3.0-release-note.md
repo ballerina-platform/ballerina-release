@@ -244,7 +244,7 @@ public function main() returns error? {
     weather:CurrentWeatherData weatherResult = check weatherClient->/weather("Colombo");
 }
 ```
-- Also introduced `@openapi:ClientConfig` annotation to add additional details to create IDL client.
+Also introduced `@openapi:ClientConfig` annotation to configure the client generation.
 
 ```ballerina
 import ballerina/openapi;
