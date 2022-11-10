@@ -129,6 +129,10 @@ def clone_repositories():
     if exit_code != 0:
         sys.exit(1)
 
+    # Change ballerina-distribution branch
+    os.system(f"cd ballerina-distribution;git checkout {ballerina_lang_branch}")
+    os.system("cd ballerina-distribution;git status")
+
 
 def build_stdlib_repositories(enable_tests):
     global exit_code
