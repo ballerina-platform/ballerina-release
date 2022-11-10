@@ -234,7 +234,7 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 #### OpenAPI Tool
 - Introduced non-Ballerina IDL client declaration support for openAPI specifications. With the support, openAPI specifications can be imported(i.e. declared) at module level and, consumed as follows.
 ```ballerina
-// Add the client import with OpenAPI specification.
+// Add the client import with the OpenAPI specification.
 client "./openapi.yaml" as weather; 
 
 public function main() returns error? {
@@ -244,7 +244,7 @@ public function main() returns error? {
     weather:CurrentWeatherData weatherResult = check weatherClient->/weather("Colombo");
 }
 ```
-Also introduced `@openapi:ClientConfig` annotation to configure the client generation.
+Also, introduced the `@openapi:ClientConfig` annotation to configure the client generation.
 
 ```ballerina
 import ballerina/openapi;
