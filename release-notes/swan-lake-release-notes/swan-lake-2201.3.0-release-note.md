@@ -154,26 +154,33 @@ int result = -9223372036854775808; // error: '9223372036854775808' is out of ran
 
 ## Compiler API updates
 
-### Syntax API
+### New features
 
-#### Improvements
+#### Semantic API
+- Added a new `annotAttachments()` API to get the annotation attachments and their constant values from the annotatable symbols
+- Introduced a new `ClientDeclSymbol` symbol to represent the semantic information of the client-declaration statement
 
-##### Added a few methods to the `NodeParser` API
-The following methods have been introduced for the `NodeParser` class.
-- `Node parseObjectMember(String text)`
-- `ModulePartNode parseModulePart(String text)`
-- `IntermediateClauseNode parseIntermediateClause(String text, boolean allowActions)`
+### Improvements
 
-#### Backward-incompatible changes
+#### Semantic API
+- Improved the `constValue()` method to retrieve the constant value as an object from the constant symbol
 
-##### Update NodeFactory methods to allow optional terminating semicolon for module-level declarations
-The methods below in the `NodeFactory` have been updated with an extra parameter for the optional semicolon token.
-- `createServiceDeclarationNode`
-- `createFunctionBodyBlockNode`
-- `createEnumDeclarationNode`
-- `createClassDefinitionNode`
+#### Syntax API
+- Added a few methods to the `NodeParser` API. The following methods have been introduced for the `NodeParser` class.
+  - `Node parseObjectMember(String text)`
+  - `ModulePartNode parseModulePart(String text)`
+  - `IntermediateClauseNode parseIntermediateClause(String text, boolean allowActions)`
 
-To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+is%3Aclosed+label%3AType%2FBug+label%3ATeam%2FCompilerFE+milestone%3A%22Ballerina+2201.3.0%22).
+### Backward-incompatible changes
+- Updated NodeFactory methods to allow optional terminating semicolon for module-level declarations. The methods below in the `NodeFactory` have been updated with an extra parameter for the optional semicolon token.
+  - `createServiceDeclarationNode`
+  - `createFunctionBodyBlockNode`
+  - `createEnumDeclarationNode`
+  - `createClassDefinitionNode`
+
+### Bug fixes
+
+To view bug fixes, see the [GitHub milestone for 2201.3.0 (Swan Lake)](https://github.com/ballerina-platform/ballerina-lang/issues?q=is%3Aissue+milestone%3A2201.3.0+label%3ATeam%2FCompilerFETools+label%3AType%2FBug+).
 
 ## Runtime updates
 
