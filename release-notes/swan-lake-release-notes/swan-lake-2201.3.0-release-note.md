@@ -132,7 +132,7 @@ public function main() {
 
 ```
 
-#### Made the terminating semicolon optional for module-level declarations
+#### Allow an optional terminating semicolon for module-level declarations
 Previously, a closing semicolon was not allowed after the module-level declarations below.
 - block function body
 - service declaration
