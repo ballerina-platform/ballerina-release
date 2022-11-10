@@ -154,18 +154,19 @@ int result = -9223372036854775808; // error: '9223372036854775808' is out of ran
 
 ## Compiler API updates
 
-### Improvements
+### Syntax API
 
-#### Syntax API
-Added a few methods to the `NodeParser` API
+#### Improvements
+
+##### Added a few methods to the `NodeParser` API
 The following methods have been introduced for the `NodeParser` class.
 - `Node parseObjectMember(String text)`
 - `ModulePartNode parseModulePart(String text)`
 - `IntermediateClauseNode parseIntermediateClause(String text, boolean allowActions)`
 
-### Backward-incompatible changes
+#### Backward-incompatible changes
 
-#### Update NodeFactory methods to allow optional terminating semicolon for module-level declarations
+##### Update NodeFactory methods to allow optional terminating semicolon for module-level declarations
 The methods below in the `NodeFactory` have been updated with an extra parameter for the optional semicolon token.
 - `createServiceDeclarationNode`
 - `createFunctionBodyBlockNode`
