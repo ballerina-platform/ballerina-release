@@ -36,7 +36,6 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ### New features
 
-
 #### Added a new field to the `display` annotation
 
 A new field named `kind` has been introduced to the `display` annotation to indicate the kind of the data. Allowed values are "text", "password", and "file".
