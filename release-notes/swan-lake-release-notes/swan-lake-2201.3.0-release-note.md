@@ -255,33 +255,6 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 - The generated executable contains the modules in the current package, their dependencies, Ballerina runtime, and statically linked native code from the JDK.
 - `bal build --native`
 
-#### OpenAPI Tool
-- Introduced non-Ballerina IDL client declaration support for OpenAPI specifications. With this support, OpenAPI specifications can now be imported (i.e., declared) at the module level and consumed as follows.
-```ballerina
-// Add the client import with the OpenAPI specification.
-client "./openapi.yaml" as weather; 
-
-public function main() returns error? {
-    // Initializes the client which is generated from the IDL import.
-    weather:Client weatherClient = check new ();
-    // Consume the `/weather` resource defined in the OpenAPI specification.
-    weather:CurrentWeatherData weatherResult = check weatherClient->/weather("Colombo");
-}
-```
-Also, introduced the `@openapi:ClientConfig` annotation to configure the client generation.
-
-```ballerina
-import ballerina/openapi;
-
-@openapi:ClientConfig {
-    tags: ["store"],
-    operations: ["op1", "op2"],
-    license: "/path/to/license_file.txt",
-    isResource: true, // default value => true
-    nullable: false // default value => false
-}
-client "./openapi.yaml" as weather;
-```
 
 ## Code to Cloud updates
 
