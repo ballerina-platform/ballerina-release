@@ -292,9 +292,6 @@ client "./openapi.yaml" as weather;
 
 #### Ballerina Update Tool
 
-#### GraphQL Tool
-- Added support to generate graphQL client definitions using graphQL IDL(i.e. config) files
-
 #### Debugger
 
 * Introduced the run-in-terminal feature, which provides the capability to debug Ballerina programs (that take user inputs) in the launch mode. This can be achieved by setting the `terminal` attribute in the launch configurations to `integrated`. Once the configuration is set, launching the debugger will cause the Ballerina programs to be executed in a separate integrated VS Code terminal.
