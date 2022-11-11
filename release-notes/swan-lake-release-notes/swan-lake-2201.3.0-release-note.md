@@ -36,35 +36,6 @@ If you have not installed Ballerina, then download the [installers](/downloads/#
 
 ### New features
 
-##### Support to import a non-Ballerina interface definition as a module that defines a client
-
-A module client declaration can be used with a supported non-Ballerina interface definition to generate a client module corresponding to the definition. The prefix used in the client declaration can then be used to access constructs from the generated module.
-
-```ballerina
-import ballerina/io;
-
-client "petstore.yaml" as petstore;
-
-public function main() returns error? {
-    petstore:client petstoreClient = check new;
-
-    petstore:Pets pets = check petstoreClient->/pets();
-
-    foreach petstore:Pet pet in pets {
-        string? petType = pet.'type;
-
-        if petType is string {
-            io:println(string `Pet type: ${petType}, name: ${pet.name}`);
-        } else {
-            io:println(string `Pet name: ${pet.name}`);
-        }
-    }
-}
-```
-
-The reserved `client` keyword can be used in a qualified identifier (`petstore:client`) without a quoted identifier to refer to the client in the generated module. This is specifically allowed when the module prefix (`petstore`) is defined using a client declaration.
-
-The Swan Lake Update 3 release supports OpenAPI and GraphQL definitions in client declarations.
 
 #### Added a new field to the `display` annotation
 
