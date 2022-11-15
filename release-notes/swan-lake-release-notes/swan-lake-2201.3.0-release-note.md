@@ -255,6 +255,7 @@ Introduced the `--native` flag, which generates a GraalVM native executable when
 - The generated executable contains the modules in the current package, their dependencies, Ballerina runtime, and statically linked native code from the JDK.
 - `bal build --native`
 
+>**Note:** There is a known [issue](https://github.com/ballerina-platform/ballerina-lang/issues/38665) in the native image build when using locks along with loops. 
 
 ## Code to Cloud updates
 
