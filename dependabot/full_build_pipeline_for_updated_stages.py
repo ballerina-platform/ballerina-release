@@ -187,12 +187,19 @@ def build_stdlib_repositories(enable_tests):
     exit_code = os.system(f"cd ballerina-distribution;" +
                           f"export packageUser={ballerina_bot_username};" +
                           f"export packagePAT={ballerina_bot_token};" +
-                          f"./gradlew clean build{cmd_exclude_tests} " +
+                          f"./gradlew clean build{cmd_exclude_tests} -x :project-api-tests:test " +
                           f"publishToMavenLocal --stacktrace --scan --console=plain --no-daemon --continue")
     if exit_code != 0:
         failed_modules.append("ballerina-distribution")
         write_failed_modules(failed_modules)
         sys.exit(1)
+
+    os.system("echo Run project-api tests")
+    exit_code = os.system(f"cd ballerina-distribution;" +
+                          f"export packageUser={ballerina_bot_username};" +
+                          f"export packagePAT={ballerina_bot_token};" +
+                          f"./gradlew :project-api-tests:test " +
+                          "--stacktrace --scan --console=plain --no-daemon --continue")
 
 
 def change_version_to_snapshot():
