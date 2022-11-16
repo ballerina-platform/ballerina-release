@@ -122,6 +122,51 @@ Previously, `-9223372036854775808` was allowed to be assigned to an integer in B
 int result = -9223372036854775808; // error: '9223372036854775808' is out of range for 'int'
 ```
 
+#### Restricted the typed binding of the query expression outer join to `var`
+
+Previously, the typed binding for outer join could be any type descriptor, but now it's restricted to be `var` so that it will be inferred as a nillable type.
+
+```ballerina
+type User record {|
+    readonly int id;
+    string name;
+|};
+
+type Login record {|
+    int userId;
+    string time;
+|};
+
+type Entry record {|
+    string? name;
+    string login;
+|};
+
+public function main() {
+    Login[] logins = [
+        {userId: 6789, time: "20:10:23"},
+        {userId: 1234, time: "10:30:02"},
+        {userId: 3987, time: "12:05:00"}
+    ];
+
+    table<User> key(id) users = table [
+            {id: 1234, name: "Keith"},
+            {id: 6789, name: "Anne"}
+        ];
+
+    Entry[] _ = from var login in logins
+        outer join var user in users
+        on login.userId equals user?.id
+        select {name: user?.name, login: login.time};
+
+    // Now, the code below gives an error at the outer join typed binding.
+    _ = from var login in logins
+        outer join User user in users  //error: outer join must be declared with 'var'
+        on login.userId equals user.id
+        select {name: user?.name, login: login.time};
+}
+```
+
 ## Compiler API updates
 
 ### New features
