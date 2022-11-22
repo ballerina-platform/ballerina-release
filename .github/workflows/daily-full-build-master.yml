@@ -233,12 +233,12 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-      - name: Download MacOS Intaller Zip
+      - name: Download Linux Deb Installer
         uses: actions/download-artifact@v2
         with:
           name: Linux Installer deb
       - name: Install Ballerina DEB
-        run: sudo dpkg -i ballerina-distribution/installers/linux-deb/target/ballerina-*-linux-x64.deb
+        run: sudo dpkg -i ballerina-*-linux-x64.deb
       - name: Run compiler tests
         working-directory: compiler
         run: bal test
