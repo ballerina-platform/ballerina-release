@@ -135,6 +135,7 @@ jobs:
       - name: Download Ballerina Distribution
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
           git checkout 2201.3.x
       - name: Download Ballerina rpm Installer
         uses: actions/download-artifact@v2
@@ -163,6 +164,7 @@ jobs:
       - name: Download Ballerina Distribution
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
           git checkout 2201.3.x
       - name: Download MacOS Intaller Zip
         uses: actions/download-artifact@v2
@@ -200,6 +202,7 @@ jobs:
       - name: Download Ballerina Distribution
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
           git checkout 2201.3.x
       - name: Download Windows Intaller Zip
         uses: actions/download-artifact@v2
