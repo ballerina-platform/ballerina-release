@@ -261,3 +261,13 @@ jobs:
       - name: Run compiler tests
         working-directory: nballerina/compiler
         run: bal test
+      - name: Notify Build Failure
+        if: ${{ failure() }}
+        shell: bash
+        run: python3 dependabot/notify_full_build_failure.py nballerina 2201.3.x
+        env:
+          CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
+          CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
+          CHAT_TOKEN: ${{ secrets.NOTIFICATIONS_CHAT_TOKEN }}
+          ENV_USER_ENCRYPTION_KEY: ${{secrets.USER_ENCRYPTION_KEY}}
+          BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
