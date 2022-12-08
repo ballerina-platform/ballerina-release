@@ -23,6 +23,8 @@ def main():
             owners = ["gimantha","azinneera","warunalakshitha"]
         elif sys.argv[1] == "ballerina-distribution":
             owners = ["gimantha","azinneera","niveathika","NipunaRanasinghe","keizer619"]
+        elif sys.argv[1] == "nballerina":
+            owners = ["manuranga"]
         else:
             code_owner_content = repo.get_contents('.github/CODEOWNERS')
             owners = code_owner_content.decoded_content.decode().split("*")[1].split("@")
