@@ -109,22 +109,6 @@
             ]
         },
         {
-            "name": "graphql-tools",
-            "level": 1,
-            "group_id": "io.ballerina",
-            "artifact_id": "graphql-tools",
-            "version_key": "graphqlVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
             "name": "module-ballerina-url",
             "level": 1,
             "group_id": "io.ballerina.stdlib",
@@ -658,6 +642,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerina-c2c",
+                "graphql-tools",
                 "openapi-tools"
             ]
         },
@@ -713,6 +698,22 @@
             "send_notification": true,
             "dependents": [
                 "persist-tools"
+            ]
+        },
+        {
+            "name": "graphql-tools",
+            "level": 8,
+            "group_id": "io.ballerina",
+            "artifact_id": "graphql-tools",
+            "version_key": "graphqlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
             ]
         },
         {
