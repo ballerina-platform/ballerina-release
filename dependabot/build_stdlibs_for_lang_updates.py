@@ -9,6 +9,7 @@ from pathlib import Path
 stdlib_modules_by_level = dict()
 test_ignore_modules = []
 build_ignore_modules = []
+downstream_repo_branches = dict()
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
                            'dependabot/resources/extensions.json'
 test_ignore_modules_file = 'dependabot/resources/full_build_ignore_modules.json'
@@ -29,6 +30,7 @@ def main():
     global test_ignore_modules_file
     global test_ignore_modules
     global build_ignore_modules
+    global downstream_repo_branches
     global ballerina_lang_branch
     global downstream_repo_branch
     global github_user
@@ -69,12 +71,14 @@ def read_stdlib_modules():
 def read_ignore_modules():
     global test_ignore_modules
     global build_ignore_modules
+    global downstream_repo_branches
 
     try:
         file = open(test_ignore_modules_file)
         data = json.load(file)
         test_ignore_modules = data['master']['test-ignore-modules']
         build_ignore_modules = data['master']['build-ignore-modules']
+        downstream_repo_branches = data['master']['downstream-repo-branches']
 
     except json.decoder.JSONDecodeError:
         print('Failed to load test ignore modules')
@@ -89,13 +93,6 @@ def read_dependency_data(stdlib_modules_data):
         if level < 9:
             stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
                                                                                         "version_key": version_key}]
-
-    # for module in stdlib_modules_data['extended_library']:
-    #     name = module['name']
-    #     level = module['level']
-    #     version_key = module['version_key']
-    #     stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
-    #                                                                                 "version_key": version_key}]
 
 
 def clone_repositories():
@@ -117,12 +114,18 @@ def clone_repositories():
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
-            exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}{module['name']}.git")
+            module_name = module['name']
+            exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}{module_name}.git")
             if exit_code != 0:
                 sys.exit(1)
 
-            os.system(f"cd {module['name']};git checkout {downstream_repo_branch}")
-            os.system(f"cd {module['name']};git status")
+            if downstream_repo_branch != "master":
+                os.system(f"cd {module_name};git checkout {downstream_repo_branch}")
+                os.system(f"cd {module_name};git status")
+            else:
+                if module_name in downstream_repo_branches.keys():
+                    os.system(f"cd {module_name};git checkout {downstream_repo_branches[module_name]}")
+                    os.system(f"cd {module_name};git status")
 
     # Clone ballerina-distribution repo
     exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}ballerina-distribution.git")
