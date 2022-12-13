@@ -10,6 +10,7 @@ swan_lake_update_number = 0
 stdlib_modules_by_level = dict()
 test_ignore_modules = []
 build_ignore_modules = []
+downstream_repo_branches = dict()
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
                            'dependabot/resources/extensions.json'
 test_ignore_modules_file = 'dependabot/resources/full_build_ignore_modules.json'
@@ -29,6 +30,7 @@ def main():
     global test_ignore_modules_file
     global test_ignore_modules
     global build_ignore_modules
+    global downstream_repo_branches
     global ballerina_lang_branch
     global github_user
     global dist_repo_patch_branch
@@ -59,12 +61,14 @@ def main():
 def read_ignore_modules():
     global test_ignore_modules
     global build_ignore_modules
+    global downstream_repo_branches
 
     try:
         file = open(test_ignore_modules_file)
         data = json.load(file)
         test_ignore_modules = data[dist_repo_patch_branch]['test-ignore-modules']
         build_ignore_modules = data[dist_repo_patch_branch]['build-ignore-modules']
+        downstream_repo_branches = data[dist_repo_patch_branch]['downstream-repo-branches']
 
     except json.decoder.JSONDecodeError:
         print('Failed to load test ignore modules')
@@ -156,19 +160,21 @@ def build_stdlib_repositories(enable_tests):
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
-            os.system(f"echo Building Standard Library Module: {module['name']}")
-            if module['name'] in build_ignore_modules:
-                os.system(f"echo Skipped Building Standard Library Module: {module['name']}")
+            module_name = module['name']
+
+            os.system(f"echo Building Standard Library Module: {module_name}")
+            if module_name in build_ignore_modules:
+                os.system(f"echo Skipped Building Standard Library Module: {module_name}")
                 continue
 
-            elif module['name'] in test_ignore_modules:
-                exit_code = os.system(f"cd {module['name']};" +
+            elif module_name in test_ignore_modules:
+                exit_code = os.system(f"cd {module_name};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
                                       f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan " +
                                       "--console=plain --no-daemon --continue")
             else:
-                exit_code = os.system(f"cd {module['name']};" +
+                exit_code = os.system(f"cd {module_name};" +
                                       f"export packageUser={ballerina_bot_username};" +
                                       f"export packagePAT={ballerina_bot_token};" +
                                       f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace " +
@@ -176,7 +182,7 @@ def build_stdlib_repositories(enable_tests):
 
             if exit_code != 0:
                 level_failed = True
-                failed_modules.append(module['name'])
+                failed_modules.append(module_name)
 
         if level_failed:
             write_failed_modules(failed_modules)
@@ -222,9 +228,10 @@ def change_version_to_snapshot():
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
+            module_name = module['name']
             try:
                 properties = dict()
-                with open(f"{module['name']}/gradle.properties", 'r') as config_file:
+                with open(f"{module_name}/gradle.properties", 'r') as config_file:
                     for line in config_file:
                         try:
                             name, value = line.split("=")
@@ -235,16 +242,16 @@ def change_version_to_snapshot():
                             continue
                     config_file.close()
                 # Increase java heap size for c2c module
-                if module['name'] == "module-ballerina-c2c":
+                if module_name == "module-ballerina-c2c":
                     properties["org.gradle.jvmargs"] = "-Xmx4096m"
 
-                with open(f"{module['name']}/gradle.properties", 'w') as config_file:
+                with open(f"{module_name}/gradle.properties", 'w') as config_file:
                     for prop in properties:
                         config_file.write(prop + "=" + properties[prop])
                     config_file.close()
 
             except FileNotFoundError:
-                print(f"Cannot find the gradle.properties file for {module['name']}")
+                print(f"Cannot find the gradle.properties file for {module_name}")
                 sys.exit(1)
 
     # Change ballerina-lang version in ballerina-distribution
@@ -284,66 +291,32 @@ def switch_to_branches_from_updated_stages():
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
+            module_name = module['name']
+
             if dist_repo_patch_branch != "master":
-                if module['name'] == "module-ballerinai-transaction" and dist_repo_patch_branch == "2201.0.x":
-                    os.system(f"echo {module['name']}")
-                    exit_code = os.system(f"cd {module['name']};git checkout 1.0.x")
-
-                    if exit_code != 0:
-                        print(f"Failed to switch to branch '1.0.x' from last updated commit id for " +
-                              f"{module['name']}")
-                        sys.exit(1)
-                    continue
-                elif module['name'] == "module-ballerina-websubhub" and dist_repo_patch_branch == "2201.0.x":
-                    os.system(f"echo {module['name']}")
-                    exit_code = os.system(f"cd {module['name']};git checkout 2201.0.x")
-
-                    if exit_code != 0:
-                        print(f"Failed to switch to branch '2201.0.x' from last updated commit id for " +
-                              f"{module['name']}")
-                        sys.exit(1)
-                    continue
-                elif module['name'] == "module-ballerina-mime" and dist_repo_patch_branch == "2201.1.x":
-                    os.system(f"echo {module['name']}")
-                    exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
-
-                    if exit_code != 0:
-                        print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
-                              f"{module['name']}")
-                        sys.exit(1)
-                    continue
-                elif module['name'] == "module-ballerina-http" and dist_repo_patch_branch == "2201.1.x":
-                    os.system(f"echo {module['name']}")
-                    exit_code = os.system(f"cd {module['name']};git checkout 2201.1.x")
-
-                    if exit_code != 0:
-                        print(f"Failed to switch to branch '2201.1.x' from last updated commit id for " +
-                              f"{module['name']}")
-                        sys.exit(1)
-                    continue
-                elif module['name'] == "module-ballerina-c2c":
-                    os.system(f"echo {module['name']}")
-                    exit_code = os.system(f"cd {module['name']};git checkout {dist_repo_patch_branch}")
+                if module_name in downstream_repo_branches.keys():
+                    os.system(f"echo {module_name}")
+                    exit_code = os.system(f"cd {module_name};git checkout {downstream_repo_branches[module_name]}")
 
                     continue
                 try:
                     version = properties[module['version_key']]
                     if len(version.split("-")) > 1:
                         updated_commit_id = version.split("-")[-1]
-                        os.system(f"echo {module['name']}")
-                        exit_code = os.system(f"cd {module['name']};git checkout -b full-build {updated_commit_id}")
+                        os.system(f"echo {module_name}")
+                        exit_code = os.system(f"cd {module_name};git checkout -b full-build {updated_commit_id}")
 
                         if exit_code != 0:
-                            print(f"Failed to create new branch from last updated commit id '{updated_commit_id}' for " +
-                                  f"{module['name']}")
+                            print(f"Failed to create new branch from last updated commit id '{updated_commit_id}' " +
+                                  f"for {module_name}")
                             sys.exit(1)
                     else:
-                        os.system(f"echo {module['name']}")
-                        exit_code = os.system(f"cd {module['name']};git checkout v{version}")
+                        os.system(f"echo {module_name}")
+                        exit_code = os.system(f"cd {module_name};git checkout v{version}")
 
                         if exit_code != 0:
                             print(f"Failed to switch to branch 'v{version}' from last updated commit id for " +
-                                  f"{module['name']}")
+                                  f"{module_name}")
                             sys.exit(1)
 
                 except KeyError:
