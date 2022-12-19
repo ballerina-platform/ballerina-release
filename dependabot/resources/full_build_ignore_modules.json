@@ -6,7 +6,7 @@
   },
   "2201.2.x": {
     "test-ignore-modules": [],
-    "build-ignore-modules": ["module-ballerina-persist"],
+    "build-ignore-modules": ["module-ballerina-persist", "persist-tools"],
     "downstream-repo-branches": {
       "module-ballerina-c2c": "2201.2.x",
       "openapi-tools": "1.2.x"
@@ -14,7 +14,7 @@
   },
   "2201.3.x": {
     "test-ignore-modules": [],
-    "build-ignore-modules": [],
+    "build-ignore-modules": ["module-ballerina-persist", "persist-tools"],
     "downstream-repo-branches": {
       "module-ballerina-c2c": "2201.3.x",
       "openapi-tools": "1.3.x",
