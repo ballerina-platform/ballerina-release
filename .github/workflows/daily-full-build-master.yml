@@ -241,6 +241,13 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
+      - name: Install Python Packages
+        run: |
+          pip install requests
+          pip install retry
+          pip install PyGithub
+          pip install cryptography
+          pip install httplib2
       - name: Clone nBallerina repository
         run: git clone https://github.com/ballerina-platform/nballerina.git
       - name: Download Linux Deb Installer
