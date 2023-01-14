@@ -353,7 +353,16 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-http"
+                "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
+                "module-ballerina-grpc",
+                "module-ballerinax-jaeger",
+                "module-ballerinax-prometheus",
+                "asyncapi-tools",
+                "module-ballerinai-transaction",
+                "module-ballerina-websocket",
+                "module-ballerina-websub",
+                "module-ballerina-websubhub"
             ]
         },
         {
@@ -664,8 +673,7 @@
                 "module-ballerinax-mysql",
                 "module-ballerinax-oracledb",
                 "module-ballerina-persist",
-                "module-ballerinax-postgresql",
-                "ballerina-distribution"
+                "module-ballerinax-postgresql"
             ]
         },
         {
@@ -697,7 +705,8 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "persist-tools"
+                "persist-tools",
+                "ballerina-distribution"
             ]
         },
         {
