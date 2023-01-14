@@ -129,7 +129,11 @@ digraph "Stdlib Dependency Graph" {
 	file -> http
 	mime -> email
 	mime -> http
-	uuid -> http
+	uuid -> grpc
+	uuid -> transaction
+	uuid -> websocket
+	uuid -> websub
+	uuid -> websubhub
 	auth -> http
 	jwt -> http
 	oauth2 -> http
