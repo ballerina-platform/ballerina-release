@@ -197,7 +197,7 @@
             "name": "persist-tools",
             "group_id": "io.ballerina",
             "artifact_id": "persist-tools",
-            "version_key": "persistVersion",
+            "version_key": "persistToolVersion",
             "push_to_central": false,
             "is_extended_library_module": false
         },
