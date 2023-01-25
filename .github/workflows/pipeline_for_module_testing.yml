@@ -1,4 +1,4 @@
-                        name: Module Testing Pipeline
+name: Module Testing Pipeline
 
 on:
   workflow_dispatch:
