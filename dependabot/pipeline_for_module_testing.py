@@ -86,8 +86,17 @@ def read_dependency_data(stdlib_modules_data, test_module_name):
         if current_module_name != test_module_name:
             level = standard_library_data[current_module_name]['level']
             version_key = standard_library_data[current_module_name]['version_key']
-            stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": current_module_name,
-                                                                                             "version_key": version_key}]
+            if level in stdlib_modules_by_level.keys():
+                repeated = False
+                for module in stdlib_modules_by_level[level]:
+                    if module["name"] == current_module_name:
+                        repeated = True
+                        break
+                if not repeated:
+                    stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + \
+                                                     [{"name": current_module_name, "version_key": version_key}]
+            else:
+                stdlib_modules_by_level[level] = [{"name": current_module_name, "version_key": version_key}]
 
         if current_module_name in module_dependencies.keys():
             dependencies = set(module_dependencies[current_module_name])
