@@ -205,6 +205,9 @@ def build_stdlib_repositories(enable_tests):
                           f"export packagePAT={ballerina_bot_token};" +
                           f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace " +
                           "--scan --console=plain --no-daemon --continue")
+    if exit_code != 0:
+        failed_modules.append(test_module_name)
+        sys.exit(1)
 
 
 def change_version_to_snapshot():
