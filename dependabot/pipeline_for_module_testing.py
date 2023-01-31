@@ -198,7 +198,7 @@ def build_stdlib_repositories(enable_tests):
             sys.exit(1)
 
     # Build module which needs to be tested
-    os.system(f"echo Building {test_module_name}")
+    os.system(f"echo Building Testing Module: {test_module_name}")
     exit_code = os.system(f"cd {test_module_name};" +
                           f"export packageUser={ballerina_bot_username};" +
                           f"export packagePAT={ballerina_bot_token};" +
