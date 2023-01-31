@@ -109,6 +109,7 @@ def read_dependency_data(stdlib_modules_data, test_module_name):
         print("Build Level:", level)
         module_names = [module['name'] for module in stdlib_modules_by_level[level]]
         print("Modules:", ", ".join(module_names))
+    print("Testing Module:", test_module_name)
 
 
 def clone_repositories():
