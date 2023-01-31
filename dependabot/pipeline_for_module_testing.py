@@ -109,6 +109,7 @@ def read_dependency_data(stdlib_modules_data, test_module_name):
         print("Build Level:", level)
         module_names = [module['name'] for module in stdlib_modules_by_level[level]]
         print("Modules:", ", ".join(module_names))
+    print("Testing Module:", test_module_name)
 
 
 def clone_repositories():
@@ -198,12 +199,15 @@ def build_stdlib_repositories(enable_tests):
             sys.exit(1)
 
     # Build module which needs to be tested
-    os.system(f"echo Building {test_module_name}")
+    os.system(f"echo Building Testing Module: {test_module_name}")
     exit_code = os.system(f"cd {test_module_name};" +
                           f"export packageUser={ballerina_bot_username};" +
                           f"export packagePAT={ballerina_bot_token};" +
                           f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace " +
                           "--scan --console=plain --no-daemon --continue")
+    if exit_code != 0:
+        failed_modules.append(test_module_name)
+        sys.exit(1)
 
 
 def change_version_to_snapshot():
