@@ -268,7 +268,7 @@ jobs:
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash
-        run: python3 dependabot/notify_full_build_failure.py nballerina master
+        run: python3 dependabot/notify_full_build_failure.py nballerina 2201.4.x
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
