@@ -208,6 +208,12 @@
             "version_key": "openapiVersion"
         },
         {
+            "name": "ballerina-dev-tools",
+            "group_id": "org.ballerinalang",
+            "artifact_id": "ballerina-dev-tools",
+            "version_key": "devToolsVersion"
+        },
+        {
             "name": "asyncapi-tools",
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-asyncapi",
