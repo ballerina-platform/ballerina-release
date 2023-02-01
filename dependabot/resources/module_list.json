@@ -211,7 +211,8 @@
             "name": "ballerina-dev-tools",
             "group_id": "org.ballerinalang",
             "artifact_id": "ballerina-dev-tools",
-            "version_key": "devToolsVersion"
+            "version_key": "devToolsVersion",
+            "build_action_file": "build-master"
         },
         {
             "name": "asyncapi-tools",
