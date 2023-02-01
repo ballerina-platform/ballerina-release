@@ -687,7 +687,7 @@
             "auto_merge": true,
             "push_to_central": true,
             "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
+            "build_action_file": "build-master",
             "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
