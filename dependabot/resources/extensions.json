@@ -57,23 +57,6 @@
             ]
         },
         {
-            "name": "module-ballerinai-observe",
-            "level": 2,
-            "group_id": "io.ballerina",
-            "artifact_id": "observe-ballerina",
-            "version_key": "observeInternalVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerinax-datamapper",
-                "module-ballerina-log"
-            ]
-        },
-        {
             "name": "module-ballerina-os",
             "level": 2,
             "group_id": "io.ballerina.stdlib",
