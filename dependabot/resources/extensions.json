@@ -40,22 +40,6 @@
             ]
         },
         {
-            "name": "module-ballerina-observe",
-            "level": 1,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "observe-ballerina",
-            "version_key": "observeVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerinai-observe"
-            ]
-        },
-        {
             "name": "module-ballerina-xmldata",
             "level": 1,
             "group_id": "io.ballerina.stdlib",
