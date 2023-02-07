@@ -1,7 +1,24 @@
 {
     "auto_bump": true,
     "lang_version_substring": "2201.0.2",
-    "standard_library": [],
+    "standard_library": [
+        {
+            "name": "persist-tools",
+            "level": 9,
+            "group_id": "io.ballerina",
+            "artifact_id": "persist-tools",
+            "version_key": "persistToolVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        }
+    ],
     "extended_library": [
         {
             "name": "module-ballerinax-aws.lambda",
