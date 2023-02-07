@@ -79,9 +79,12 @@ digraph "Stdlib Dependency Graph" {
 		mssql
 		mysql
 		oracledb
+		persist
 		postgresql
 		label="level 8"
 	}
+	constraint -> cache
+	constraint -> nats
 	io -> log
 	io -> os
 	io -> serdes
@@ -127,7 +130,11 @@ digraph "Stdlib Dependency Graph" {
 	file -> http
 	mime -> email
 	mime -> http
-	uuid -> http
+	uuid -> grpc
+	uuid -> transaction
+	uuid -> websocket
+	uuid -> websub
+	uuid -> websubhub
 	auth -> http
 	jwt -> http
 	oauth2 -> http
@@ -144,5 +151,6 @@ digraph "Stdlib Dependency Graph" {
 	sql -> mssql
 	sql -> mysql
 	sql -> oracledb
+	sql -> persist
 	sql -> postgresql
 }

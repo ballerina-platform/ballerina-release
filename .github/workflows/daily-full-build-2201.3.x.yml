@@ -1,4 +1,4 @@
-name: Daily Full Build Pipeline (master)
+name: Daily Full Build Pipeline (2201.3.x)
 
 on:
   workflow_dispatch:
@@ -19,11 +19,6 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Setup NodeJs
-        uses: actions/setup-node@v3
-        with:
-          node-version: 10.22.1
-
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -39,7 +34,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/build_stdlibs_for_lang_updates.py master true ballerina-platform master
+          python dependabot/full_build_pipeline_for_updated_stages.py 2201.3.x true ballerina-platform 2201.3.x
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -54,7 +49,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-            python3 dependabot/notify_full_build_failure.py $module master;
+          python3 dependabot/notify_full_build_failure.py $module 2201.3.x;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -144,7 +139,10 @@ jobs:
           yum install sudo -y
           sudo dnf install git -y
       - name: Download Ballerina Distribution
-        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout 2201.3.x
       - name: Download Ballerina rpm Installer
         uses: actions/download-artifact@v2
         with:
@@ -170,7 +168,10 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
       - name: Download Ballerina Distribution
-        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout 2201.3.x
       - name: Download MacOS Intaller Zip
         uses: actions/download-artifact@v2
         with:
@@ -210,7 +211,10 @@ jobs:
       - name: Install GUID Generator
         run: dotnet tool install -g dotnet-guid --version 0.5.2
       - name: Download Ballerina Distribution
-        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout 2201.3.x
       - name: Download Windows Intaller Zip
         uses: actions/download-artifact@v2
         with:
@@ -273,7 +277,7 @@ jobs:
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash
-        run: python3 dependabot/notify_full_build_failure.py nballerina master
+        run: python3 dependabot/notify_full_build_failure.py nballerina 2201.3.x
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}

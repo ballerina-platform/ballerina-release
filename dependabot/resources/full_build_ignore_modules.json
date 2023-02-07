@@ -1,10 +1,29 @@
 {
-  "full_build_master": [
-  ],
-  "full_build_2201.0.x": [
-    "module-ballerina-c2c",
-    "module-ballerina-http"
-  ],
-  "full_build_2201.1.x": [
-  ]
+  "master": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {}
+  },
+  "2201.4.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {}
+  },
+  "2201.3.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": ["module-ballerina-persist", "persist-tools", "ballerina-dev-tools"],
+    "downstream-repo-branches": {
+      "module-ballerina-c2c": "2201.3.x",
+      "openapi-tools": "1.3.x",
+      "module-ballerina-grpc": "2201.3.x"
+    }
+  },
+  "2201.2.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": ["module-ballerina-persist", "persist-tools", "ballerina-dev-tools"],
+    "downstream-repo-branches": {
+      "module-ballerina-c2c": "2201.2.x",
+      "openapi-tools": "1.2.x"
+    }
+  }
 }
