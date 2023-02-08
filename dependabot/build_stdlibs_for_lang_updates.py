@@ -133,7 +133,13 @@ def clone_repositories():
         sys.exit(1)
 
     # Change ballerina-distribution branch
-    os.system(f"cd ballerina-distribution;git checkout {ballerina_lang_branch}")
+    distribution_branch = ballerina_lang_branch
+    if ballerina_lang_branch != "master":
+        version = ballerina_lang_branch.split("-")[0]
+        version[-1] = "x"
+        distribution_branch = version
+
+    os.system(f"cd ballerina-distribution;git checkout {distribution_branch}")
     os.system("cd ballerina-distribution;git status")
 
 
