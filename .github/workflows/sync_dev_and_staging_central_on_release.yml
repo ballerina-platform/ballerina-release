@@ -62,19 +62,39 @@ jobs:
         if: ${{github.event.inputs.update_env == 'staging'}}
         run: |
           cd ./bala-archive ;
+          upload_failure=false
           for dir in *; do
             echo -e "\n" $dir ;
-            curl -X POST -w "\n" -H "Content-Type:application/octet-stream" \
+            response=$(curl -X POST -w "\n" -H "Content-Type:application/octet-stream" \
             -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_STAGE_ACCESS_TOKEN}}" \
-            --data-binary @"$dir" https://api.staging-central.ballerina.io/2.0/registry/packages ;
+            --data-binary @"$dir" https://api.staging-central.ballerina.io/2.0/registry/packages ;)
+            if [ -z "$response" ]; then
+              echo "Upload Success";
+            else
+              echo $response;
+              upload_failure=true;
+            fi;
           done
+          if $upload_failure ; then
+            exit 1;
+          fi;
       - name: Push to dev central
         if: ${{github.event.inputs.update_env == 'dev'}}
         run: |
           cd ./bala-archive ;
+          upload_failure=false
           for dir in *; do
             echo -e "\n" $dir ;
-            curl -X POST -w "\n" -H "Content-Type:application/octet-stream" \
+            response=$(curl -X POST -w "\n" -H "Content-Type:application/octet-stream" \
             -H "Authorization: Bearer ${{secrets.BALLERINA_CENTRAL_DEV_ACCESS_TOKEN}}" \
-            --data-binary @"$dir" https://api.dev-central.ballerina.io/2.0/registry/packages ;
+            --data-binary @"$dir" https://api.dev-central.ballerina.io/2.0/registry/packages ;)
+            if [ -z "$response" ]; then
+              echo "Upload Success";
+            else
+              echo $response;
+              upload_failure=true;
+            fi;
           done
+          if $upload_failure ; then
+            exit 1;
+          fi;
