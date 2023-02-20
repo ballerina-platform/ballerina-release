@@ -313,28 +313,6 @@ def change_version_to_snapshot():
             config_file.write(prop + "=" + properties[prop])
         config_file.close()
 
-    installer_test_properties = dict()
-    with open("ballerina-distribution/ballerina-test-automation/gradle.properties", 'r') as config_file:
-        for line in config_file:
-            try:
-                fields = line.split("=")
-                if len(fields) > 1:
-                    name = fields[0]
-                    value = "=".join(fields[1:])
-                    if name == "swan-lake-latest-version":
-                        value = "swan-lake-" + lang_version + "\n"
-                    elif name == "swan-lake-latest-version-display-text":
-                        value = lang_version + "\n"
-                    installer_test_properties[name] = value
-            except ValueError:
-                continue
-        config_file.close()
-
-    with open("ballerina-distribution/ballerina-test-automation/gradle.properties", 'w') as config_file:
-        for prop in installer_test_properties:
-            config_file.write(prop + "=" + installer_test_properties[prop])
-        config_file.close()
-
 
 def write_failed_modules(failed_module_names):
     with open("failed_modules.txt", "w") as file:
