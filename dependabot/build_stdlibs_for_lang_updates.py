@@ -313,6 +313,12 @@ def change_version_to_snapshot():
             config_file.write(prop + "=" + properties[prop])
         config_file.close()
 
+    # Update installer test version
+    os.system(f"perl -pi -e \"s/^\s*swan-lake-latest-version=.*/swan-lake-latest-version=swan-lake-{lang_version}/\" " +
+              "ballerina-distribution/ballerina-test-automation/gradle.properties")
+    os.system(f"perl -pi -e \"s/^\s*swan-lake-latest-version-display-text=.*/swan-lake-latest-version-display-text=" +
+              f"{lang_version}/\" ballerina-distribution/ballerina-test-automation/gradle.properties")
+
 
 def write_failed_modules(failed_module_names):
     with open("failed_modules.txt", "w") as file:
