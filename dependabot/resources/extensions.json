@@ -121,7 +121,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-http"
+                "module-ballerina-oauth2"
             ]
         },
         {
