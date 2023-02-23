@@ -96,7 +96,7 @@ digraph "Stdlib Dependency Graph" {
 	time -> protobuf
 	time -> random
 	time -> task
-	url -> http
+	url -> oauth2
 	crypto -> auth
 	crypto -> jwt
 	crypto -> nats
