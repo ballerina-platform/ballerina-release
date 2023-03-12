@@ -1,1 +1,1 @@
-{"timestamp":1678019704798,"offline":true,"compile":false,"projectLoadDuration":755,"packageResolutionDuration":226,"packageCompilationDuration":236,"codeGenDuration":194,"emitArtifactDuration":454,"testingExecutionDuration":0,"totalDuration":1888}
+{"timestamp":1678624438704,"offline":true,"compile":false,"projectLoadDuration":761,"packageResolutionDuration":208,"codeGeneratorPluginDuration":195,"codeModifierPluginDuration":10,"packageCompilationDuration":7,"codeGenDuration":246,"emitArtifactDuration":470,"testingExecutionDuration":0,"totalDuration":1916}
