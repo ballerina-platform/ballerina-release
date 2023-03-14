@@ -653,7 +653,8 @@
             "dependents": [
                 "module-ballerina-c2c",
                 "graphql-tools",
-                "openapi-tools"
+                "openapi-tools",
+                "ballerina-dev-tools"
             ]
         },
         {
@@ -675,22 +676,6 @@
                 "module-ballerinax-oracledb",
                 "module-ballerina-persist",
                 "module-ballerinax-postgresql"
-            ]
-        },
-        {
-            "name": "ballerina-dev-tools",
-            "level": 7,
-            "group_id": "org.ballerinalang",
-            "artifact_id": "ballerina-dev-tools",
-            "version_key": "devToolsVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
             ]
         },
         {
@@ -752,6 +737,22 @@
             "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "ballerina-dev-tools",
+            "level": 8,
+            "group_id": "org.ballerinalang",
+            "artifact_id": "ballerina-dev-tools",
+            "version_key": "devToolsVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-master",
             "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
