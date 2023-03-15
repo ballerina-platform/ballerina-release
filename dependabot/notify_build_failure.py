@@ -27,6 +27,8 @@ def main():
 
     if github_action_type == "notify-ballerinax-connector-build-failure":
         message_body = "build using ballerina docker image failed"
+    elif github_action_type == "notify-trivy-failure":
+        message_body = "trivy scan failed."
 
     if branch != "":
         branch_specified = " (" + branch + ")"
