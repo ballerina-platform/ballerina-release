@@ -1,7 +1,7 @@
 {
   "master": {
     "test-ignore-modules": [],
-    "build-ignore-modules": [],
+    "build-ignore-modules": ["module-ballerina-persist", "persist-tools"],
     "downstream-repo-branches": {}
   },
   "2201.4.x": {
