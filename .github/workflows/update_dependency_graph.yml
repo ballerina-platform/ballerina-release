@@ -2,13 +2,13 @@ name: Update Dependency Graph
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '30 18 * * *'   # 00:00 in LK time (GMT+5:30)
-  push:
-    branches:
-      - master
-    paths:
-      - 'dependabot/resources/module_list.json'
+#   schedule:
+#     - cron: '30 18 * * *'   # 00:00 in LK time (GMT+5:30)
+#   push:
+#     branches:
+#       - master
+#     paths:
+#       - 'dependabot/resources/module_list.json'
 
 jobs:
   dependency:
