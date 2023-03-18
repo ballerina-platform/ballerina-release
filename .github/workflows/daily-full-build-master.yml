@@ -9,6 +9,7 @@ jobs:
   build-pipeline:
     name: Build Pipeline
     runs-on: ubuntu-latest
+    timeout-minutes: 480
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
