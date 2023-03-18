@@ -143,8 +143,7 @@
             "name": "module-ballerina-os"
         },
         {
-            "name": "module-ballerina-persist",
-            "version_key": "TstdlibPersistVersion"
+            "name": "module-ballerina-persist"
         },
         {
             "name": "module-ballerinax-postgresql",
@@ -198,7 +197,7 @@
             "name": "persist-tools",
             "group_id": "io.ballerina",
             "artifact_id": "persist-tools",
-            "version_key": "TpersistToolVersion",
+            "version_key": "persistToolVersion",
             "push_to_central": false,
             "is_extended_library_module": false
         },
