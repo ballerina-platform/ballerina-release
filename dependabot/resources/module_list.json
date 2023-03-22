@@ -104,6 +104,10 @@
         },
         {
             "name": "module-ballerina-log"
+        },        
+        {
+            "name": "module-ballerina-math.vector",
+            "version_key": "stdlibMathVectorVersion"
         },
         {
             "name": "module-ballerina-mime"
