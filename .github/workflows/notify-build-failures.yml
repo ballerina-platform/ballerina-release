@@ -2,7 +2,7 @@ name: Notify Notifications chat
 
 on:
   repository_dispatch:
-    types: [notify-build-failure, notify-ballerinax-connector-build-failure]
+    types: [notify-build-failure, notify-ballerinax-connector-build-failure, notify-trivy-failure]
 
 jobs:
   send-chat-message:

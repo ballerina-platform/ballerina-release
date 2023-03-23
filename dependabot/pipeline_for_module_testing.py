@@ -7,8 +7,6 @@ from pathlib import Path
 
 
 stdlib_modules_by_level = dict()
-test_ignore_modules = []
-build_ignore_modules = []
 downstream_repo_branches = dict()
 stdlib_modules_json_file = 'https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/' + \
                            'dependabot/resources/extensions.json'
@@ -18,6 +16,7 @@ ballerina_lang_branch = "master"
 downstream_repo_branch = "master"
 enable_tests = 'true'
 github_user = 'ballerina-platform'
+test_module_name = ""
 exit_code = 0
 
 ballerina_bot_username = os.environ[constants.ENV_BALLERINA_BOT_USERNAME]
@@ -28,11 +27,10 @@ def main():
     global stdlib_modules_by_level
     global stdlib_modules_json_file
     global test_ignore_modules_file
-    global test_ignore_modules
-    global build_ignore_modules
     global downstream_repo_branches
     global ballerina_lang_branch
     global downstream_repo_branch
+    global test_module_name
     global github_user
     global enable_tests
 
@@ -41,9 +39,13 @@ def main():
         enable_tests = sys.argv[2]
         github_user = sys.argv[3]
         downstream_repo_branch = sys.argv[4]
+        test_module_name = sys.argv[5]
 
-    read_stdlib_modules()
-    read_ignore_modules()
+    if test_module_name != "":
+        read_stdlib_modules(test_module_name)
+    else:
+        print('Please specify the repository (module) name you need to test')
+
     if stdlib_modules_by_level:
         clone_repositories()
         change_version_to_snapshot()
@@ -52,13 +54,13 @@ def main():
         print('Could not find standard library dependency data from', stdlib_modules_json_file)
 
 
-def read_stdlib_modules():
+def read_stdlib_modules(test_module_name):
     try:
         response = requests.get(url=stdlib_modules_json_file)
 
         if response.status_code == 200:
             stdlib_modules_data = json.loads(response.text)
-            read_dependency_data(stdlib_modules_data)
+            read_dependency_data(stdlib_modules_data, test_module_name)
         else:
             print('Failed to access standard library dependency data from', stdlib_modules_json_file)
             sys.exit(1)
@@ -68,31 +70,46 @@ def read_stdlib_modules():
         sys.exit(1)
 
 
-def read_ignore_modules():
-    global test_ignore_modules
-    global build_ignore_modules
-    global downstream_repo_branches
-
-    try:
-        file = open(test_ignore_modules_file)
-        data = json.load(file)
-        test_ignore_modules = data['master']['test-ignore-modules']
-        build_ignore_modules = data['master']['build-ignore-modules']
-        downstream_repo_branches = data['master']['downstream-repo-branches']
-
-    except json.decoder.JSONDecodeError:
-        print('Failed to load test ignore modules')
-        sys.exit(1)
-
-
-def read_dependency_data(stdlib_modules_data):
+def read_dependency_data(stdlib_modules_data, test_module_name):
+    standard_library_data = dict()
+    module_dependencies = dict()
     for module in stdlib_modules_data['standard_library']:
-        name = module['name']
-        level = module['level']
-        version_key = module['version_key']
-        if level < 9:
-            stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + [{"name": name,
-                                                                                        "version_key": version_key}]
+        module_name = module['name']
+        standard_library_data[module_name] = module
+        dependents = module['dependents']
+        for dependent in dependents:
+            module_dependencies[dependent] = module_dependencies.get(dependent, []) + [module_name]
+
+    module_list = {test_module_name}
+    while module_list:
+        current_module_name = module_list.pop()
+        if current_module_name != test_module_name:
+            level = standard_library_data[current_module_name]['level']
+            version_key = standard_library_data[current_module_name]['version_key']
+            if level in stdlib_modules_by_level.keys():
+                repeated = False
+                for module in stdlib_modules_by_level[level]:
+                    if module["name"] == current_module_name:
+                        repeated = True
+                        break
+                if not repeated:
+                    stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + \
+                                                     [{"name": current_module_name, "version_key": version_key}]
+            else:
+                stdlib_modules_by_level[level] = [{"name": current_module_name, "version_key": version_key}]
+
+        if current_module_name in module_dependencies.keys():
+            dependencies = set(module_dependencies[current_module_name])
+            module_list = module_list.union(dependencies)
+
+    stdlib_levels = list(stdlib_modules_by_level.keys())
+    stdlib_levels.sort()
+    print("--------------------Following modules will be built with the pipeline--------------------")
+    for level in stdlib_levels:
+        print("Build Level:", level)
+        module_names = [module['name'] for module in stdlib_modules_by_level[level]]
+        print("Modules:", ", ".join(module_names))
+    print("Testing Module:", test_module_name)
 
 
 def clone_repositories():
@@ -111,7 +128,9 @@ def clone_repositories():
         sys.exit(1)
 
     # Clone standard library repos
-    for level in stdlib_modules_by_level:
+    stdlib_levels = list(stdlib_modules_by_level.keys())
+    stdlib_levels.sort()
+    for level in stdlib_levels:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             module_name = module['name']
@@ -127,20 +146,10 @@ def clone_repositories():
                     os.system(f"cd {module_name};git checkout {downstream_repo_branches[module_name]}")
                     os.system(f"cd {module_name};git status")
 
-    # Clone ballerina-distribution repo
-    exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}ballerina-distribution.git")
-    if exit_code != 0:
-        sys.exit(1)
-
-    # Change ballerina-distribution branch
-    distribution_branch = ballerina_lang_branch
-    if ballerina_lang_branch != "master":
-        version = ballerina_lang_branch.split("-")[0]
-        version = version[:-1] + "x"
-        distribution_branch = version
-
-    os.system(f"cd ballerina-distribution;git checkout {distribution_branch}")
-    os.system("cd ballerina-distribution;git status")
+    # Clone module repository which needs to be tested
+    exit_code = os.system(f"git clone {constants.BALLERINA_ORG_URL}{test_module_name}.git")
+    if downstream_repo_branch != "master":
+        os.system(f"cd {test_module_name};git checkout {downstream_repo_branch}")
 
 
 def build_stdlib_repositories(enable_tests):
@@ -165,29 +174,20 @@ def build_stdlib_repositories(enable_tests):
     delete_module('ballerina-lang')
 
     # Build standard library repos
-    for level in stdlib_modules_by_level:
+    stdlib_levels = list(stdlib_modules_by_level.keys())
+    stdlib_levels.sort()
+    for level in stdlib_levels:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
             os.system(f"echo Building Standard Library Module: {module['name']}")
 
             remove_dependency_files(module['name'])
 
-            if module['name'] in build_ignore_modules:
-                os.system(f"echo Skipped Building Standard Library Module: {module['name']}")
-                continue
-
-            elif module['name'] in test_ignore_modules:
-                exit_code = os.system(f"cd {module['name']};" +
-                                      f"export packageUser={ballerina_bot_username};" +
-                                      f"export packagePAT={ballerina_bot_token};" +
-                                      f"./gradlew clean build -x test publishToMavenLocal --stacktrace --scan " +
-                                      "--console=plain --no-daemon --continue")
-            else:
-                exit_code = os.system(f"cd {module['name']};" +
-                                      f"export packageUser={ballerina_bot_username};" +
-                                      f"export packagePAT={ballerina_bot_token};" +
-                                      f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace " +
-                                      "--scan --console=plain --no-daemon --continue")
+            exit_code = os.system(f"cd {module['name']};" +
+                                  f"export packageUser={ballerina_bot_username};" +
+                                  f"export packagePAT={ballerina_bot_token};" +
+                                  f"./gradlew clean build -x test publishToMavenLocal --stacktrace " +
+                                  "--scan --console=plain --no-daemon --continue")
 
             if exit_code != 0:
                 level_failed = True
@@ -198,24 +198,16 @@ def build_stdlib_repositories(enable_tests):
             write_failed_modules(failed_modules)
             sys.exit(1)
 
-    # Build ballerina-distribution repo
-    os.system("echo Building ballerina-distribution")
-    exit_code = os.system(f"cd ballerina-distribution;" +
-                    f"export packageUser={ballerina_bot_username};" +
-                    f"export packagePAT={ballerina_bot_token};" +
-                    f"./gradlew clean build{cmd_exclude_tests} -x :project-api-tests:test " +
-                    f"publishToMavenLocal --stacktrace --scan --console=plain --no-daemon --continue")
-    if exit_code != 0:
-        failed_modules.append("ballerina-distribution")
-        write_failed_modules(failed_modules)
-        sys.exit(1)
-
-    os.system("echo Run project-api tests")
-    exit_code = os.system(f"cd ballerina-distribution;" +
+    # Build module which needs to be tested
+    os.system(f"echo Building Testing Module: {test_module_name}")
+    exit_code = os.system(f"cd {test_module_name};" +
                           f"export packageUser={ballerina_bot_username};" +
                           f"export packagePAT={ballerina_bot_token};" +
-                          f"./gradlew :project-api-tests:test " +
-                          "--stacktrace --scan --console=plain --no-daemon --continue")
+                          f"./gradlew clean build{cmd_exclude_tests} publishToMavenLocal --stacktrace " +
+                          "--scan --console=plain --no-daemon --continue")
+    if exit_code != 0:
+        failed_modules.append(test_module_name)
+        sys.exit(1)
 
 
 def change_version_to_snapshot():
@@ -290,9 +282,9 @@ def change_version_to_snapshot():
                 print(f"Cannot find the gradle.properties file for {module}")
                 sys.exit(1)
 
-    # Change dependent stdlib module versions & ballerina-lang version in ballerina-distribution
+    # Change dependent stdlib module versions & ballerina-lang version in module which needs to be tested
     properties = dict()
-    with open("ballerina-distribution/gradle.properties", 'r') as config_file:
+    with open(f"{test_module_name}/gradle.properties", 'r') as config_file:
         for line in config_file:
             try:
                 fields = line.split("=")
@@ -308,11 +300,10 @@ def change_version_to_snapshot():
                 continue
         config_file.close()
 
-    with open("ballerina-distribution/gradle.properties", 'w') as config_file:
+    with open(f"{test_module_name}/gradle.properties", 'w') as config_file:
         for prop in properties:
             config_file.write(prop + "=" + properties[prop])
         config_file.close()
-
 
 
 def write_failed_modules(failed_module_names):

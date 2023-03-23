@@ -9,6 +9,7 @@ jobs:
   build-pipeline:
     name: Build Pipeline
     runs-on: ubuntu-latest
+    timeout-minutes: 480
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -18,6 +19,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 10.22.1
 
       - name: Setup Python
         uses: actions/setup-python@v2

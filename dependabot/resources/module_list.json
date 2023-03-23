@@ -104,6 +104,10 @@
         },
         {
             "name": "module-ballerina-log"
+        },        
+        {
+            "name": "module-ballerina-math.vector",
+            "version_key": "stdlibMathVectorVersion"
         },
         {
             "name": "module-ballerina-mime"
@@ -206,6 +210,13 @@
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-openapi",
             "version_key": "openapiVersion"
+        },
+        {
+            "name": "ballerina-dev-tools",
+            "group_id": "org.ballerinalang",
+            "artifact_id": "ballerina-dev-tools",
+            "version_key": "devToolsVersion",
+            "build_action_file": "build-master"
         },
         {
             "name": "asyncapi-tools",
