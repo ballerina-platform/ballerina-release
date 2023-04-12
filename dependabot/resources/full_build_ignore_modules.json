@@ -8,7 +8,7 @@
     "test-ignore-modules": [],
     "build-ignore-modules": [],
     "downstream-repo-branches": {
-      "ballerina-dev-tools": "0.11.x-testing-branch"
+      "ballerina-dev-tools": "0.11.x"
     }
   },
   "2201.3.x": {
