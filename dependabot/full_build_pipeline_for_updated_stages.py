@@ -183,6 +183,7 @@ def build_stdlib_repositories(enable_tests):
             if exit_code != 0:
                 level_failed = True
                 failed_modules.append(module_name)
+            delete_module(module_name)
 
         if level_failed:
             write_failed_modules(failed_modules)
@@ -329,6 +330,14 @@ def write_failed_modules(failed_module_names):
             file.write(module_name + "\n")
             print(f"Build failed for {module_name}")
         file.close()
+
+
+def delete_module(module_name):
+    global exit_code
+
+    exit_code = os.system(f"rm -rf ./{module_name}")
+    if exit_code != 0:
+        sys.exit(1)
 
 
 main()
