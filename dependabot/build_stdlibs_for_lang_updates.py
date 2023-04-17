@@ -314,7 +314,6 @@ def change_version_to_snapshot():
         config_file.close()
 
 
-
 def write_failed_modules(failed_module_names):
     with open("failed_modules.txt", "w") as file:
         for module_name in failed_module_names:
