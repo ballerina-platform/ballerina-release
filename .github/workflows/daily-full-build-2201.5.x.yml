@@ -40,7 +40,7 @@ jobs:
 
       - name: Build Modules
         run: |
-          python dependabot/build_stdlibs_for_lang_updates.py 2201.5.0-stage true ballerina-platform master
+          python dependabot/full_build_pipeline_for_updated_stages.py 2201.5.x true ballerina-platform 2201.5.x
         env:
           BALLERINA_BOT_USERNAME: ${{ secrets.BALLERINA_BOT_USERNAME }}
           BALLERINA_BOT_TOKEN: ${{ secrets.BALLERINA_BOT_TOKEN }}
