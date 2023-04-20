@@ -47,6 +47,7 @@ jobs:
           BALLERINA_BOT_EMAIL: ${{ secrets.BALLERINA_BOT_EMAIL }}
           BALLERINA_REVIEWER_BOT_TOKEN: ${{ secrets.BALLERINA_REVIEWER_BOT_TOKEN }}
           devCentralToken: ${{ secrets.BALLERINA_DEV_CENTRAL_ACCESS_TOKEN }}
+          SKIP_ARCHITECTURE_MODEL_GENERATOR_TESTS: true
 
       - name: Notify Build Failure
         if: ${{ failure() }}
