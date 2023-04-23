@@ -145,7 +145,10 @@ jobs:
           yum install sudo -y
           sudo dnf install git -y
       - name: Download Ballerina Distribution
-        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout 2201.5.x
       - name: Download Ballerina rpm Installer
         uses: actions/download-artifact@v2
         with:
@@ -171,7 +174,10 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
       - name: Download Ballerina Distribution
-        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout 2201.5.x
       - name: Download MacOS Intaller Zip
         uses: actions/download-artifact@v2
         with:
@@ -211,7 +217,10 @@ jobs:
       - name: Install GUID Generator
         run: dotnet tool install -g dotnet-guid --version 0.5.2
       - name: Download Ballerina Distribution
-        run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout 2201.5.x
       - name: Download Windows Intaller Zip
         uses: actions/download-artifact@v2
         with:
