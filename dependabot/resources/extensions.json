@@ -100,7 +100,16 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-jwt"
+                "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
+                "module-ballerina-grpc",
+                "module-ballerinax-jaeger",
+                "module-ballerinax-prometheus",
+                "asyncapi-tools",
+                "module-ballerinai-transaction",
+                "module-ballerina-websocket",
+                "module-ballerina-websub",
+                "module-ballerina-websubhub"
             ]
         },
         {
