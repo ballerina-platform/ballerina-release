@@ -89,8 +89,7 @@ digraph "Stdlib Dependency Graph" {
 	io -> os
 	io -> serdes
 	io -> xslt
-	regex -> log
-	regex -> uuid
+	regex -> jwt
 	time -> crypto
 	time -> file
 	time -> protobuf
