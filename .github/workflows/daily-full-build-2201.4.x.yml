@@ -280,7 +280,7 @@ jobs:
         run: sudo dpkg -i ballerina-*-linux-x64.deb
       - name: Run compiler tests
         working-directory: nballerina/compiler
-        run: bal test --disable-groups longRunning
+        run: bal test
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash
