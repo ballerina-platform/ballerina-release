@@ -89,11 +89,13 @@ digraph "Stdlib Dependency Graph" {
 	io -> os
 	io -> serdes
 	io -> xslt
-	regex -> grpc
-	regex -> transaction
-	regex -> websocket
-	regex -> websub
-	regex -> websubhub
+	regex -> graphql
+	regex -> "java.jdbc"
+	regex -> mssql
+	regex -> mysql
+	regex -> oracledb
+	regex -> postgresql
+	regex -> rabbitmq
 	time -> crypto
 	time -> file
 	time -> protobuf
