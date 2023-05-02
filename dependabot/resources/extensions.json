@@ -102,16 +102,13 @@
             "dependents": [
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
+                "module-ballerina-c2c",
                 "module-ballerinax-choreo",
-                "module-ballerina-graphql",
                 "module-ballerinax-jaeger",
-                "module-ballerinax-java.jdbc",
-                "module-ballerinax-mssql",
-                "module-ballerinax-mysql",
-                "module-ballerinax-oracledb",
-                "module-ballerinax-postgresql",
                 "module-ballerinax-prometheus",
-                "module-ballerinax-rabbitmq",
+                "graphql-tools",
+                "openapi-tools",
+                "ballerina-dev-tools",
                 "asyncapi-tools"
             ]
         },
