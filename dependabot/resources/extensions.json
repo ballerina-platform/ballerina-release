@@ -100,8 +100,16 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-log",
-                "module-ballerina-uuid"
+                "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
+                "module-ballerina-c2c",
+                "module-ballerinax-choreo",
+                "module-ballerinax-jaeger",
+                "module-ballerinax-prometheus",
+                "graphql-tools",
+                "openapi-tools",
+                "ballerina-dev-tools",
+                "asyncapi-tools"
             ]
         },
         {
