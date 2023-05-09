@@ -61,7 +61,7 @@ parser.add_argument('--from-module', help="Build from the specified module")
 parser.add_argument('--test-module', help="Test the specified module (Only the dependency modules and dependent " +
                                           "modules will be built)")
 parser.add_argument('--skip-build-distribution', action="store_true",
-                    help="If the distribution build should be skipped.")
+                    help="If the distribution build should be skipped")
 parser.add_argument('--additional-commands',
                     help="To provide a custom command to execute inside each repo. Provide this as a " +
                          "string. If not provided './gradlew clean build' will be used")
