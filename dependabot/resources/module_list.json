@@ -191,6 +191,9 @@
             "name": "module-ballerina-time"
         },
         {
+            "name": "module-ballerina-toml"
+        },
+        {
             "name": "graphql-tools",
             "group_id": "io.ballerina",
             "artifact_id": "graphql-tools",
@@ -253,6 +256,9 @@
         },
         {
             "name": "module-ballerina-xslt"
+        },
+        {
+            "name": "module-ballerina-yaml"
         },
         {
             "name": "module-ballerina-serdes",
