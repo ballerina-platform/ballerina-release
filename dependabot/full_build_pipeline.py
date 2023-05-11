@@ -141,6 +141,12 @@ def main():
     else:
         print_info("Updating all the repositories. Any local change will be overridden")
 
+    if args.skip_tests:
+        print_info("Skipping tests for downstream modules")
+        skip_tests = True
+        commands.append("-x")
+        commands.append("test")
+
     if args.lang_version:
         print_info("Using ballerina lang version: " + args.lang_version)
         lang_version = args.lang_version
@@ -155,16 +161,13 @@ def main():
 
         lang_version = get_version()
         print_info(f"Lang version: {lang_version}")
-        lang_build_commands = ["./gradlew", "clean", "build", "-x", "test", "-x", "check", "--scan", "--stacktrace",
+        lang_build_commands = ["./gradlew", "clean", "build", "--scan", "--stacktrace",
                                "publishToMavenLocal"]
+        if skip_tests:
+            lang_build_commands.append("-x")
+            lang_build_commands.append("test")
         build_module(BALLERINA_LANG_REPO_NAME, lang_build_commands)
         os.chdir("..")
-
-    if args.skip_tests:
-        print_info("Skipping tests for downstream modules")
-        skip_tests = True
-        commands.append("-x")
-        commands.append("test")
 
     if args.update_stdlib_dependencies:
         print_info("Using local SNAPSHOT builds for upper level stdlib dependencies")
@@ -324,7 +327,7 @@ def main():
             exit(exit_code)
         os.chdir("..")
 
-        update_installer_versions(lang_version)
+    # update_installer_versions(lang_version)
 
 
 def process_module(module_name, module_version_key, lang_version, patch_level, use_released_versions,
@@ -453,25 +456,25 @@ def read_released_stdlib_versions(url):
         exit(1)
 
 
-def update_installer_versions(lang_version):
-    print_info(f"Updating installer test versions..")
-
-    ballerina_lang_configs = ConfigObj(BALLERINA_LANG_REPO_NAME + "/" + GRADLE_PROPERTIES)
-    ballerina_distribution_configs = ConfigObj(BALLERINA_DIST_REPO_NAME + "/" + GRADLE_PROPERTIES)
-    installer_test_configs = ConfigObj(BALLERINA_DIST_REPO_NAME + "/" + INSTALLER_TEST_DIRECTORY + "/" +
-                                       GRADLE_PROPERTIES)
-
-    display_text = lang_version.split("-")[0]
-    swan_lake_latest_version = "swan-lake-" + display_text
-    spec_version = ballerina_lang_configs['specVersion']
-    update_tool_version = ballerina_distribution_configs['ballerinaCommandVersion']
-
-    installer_test_configs['swan-lake-latest-version'] = swan_lake_latest_version
-    installer_test_configs['swan-lake-latest-version-display-text'] = display_text
-    installer_test_configs['swan-lake-latest-spec-version'] = spec_version
-    installer_test_configs['latest-tool-version'] = update_tool_version
-    installer_test_configs['swan-lake-latest-tool-version'] = update_tool_version
-    installer_test_configs.write()
+# def update_installer_versions(lang_version):
+#     print_info(f"Updating installer test versions..")
+#
+#     ballerina_lang_configs = ConfigObj(BALLERINA_LANG_REPO_NAME + "/" + GRADLE_PROPERTIES)
+#     ballerina_distribution_configs = ConfigObj(BALLERINA_DIST_REPO_NAME + "/" + GRADLE_PROPERTIES)
+#     installer_test_configs = ConfigObj(BALLERINA_DIST_REPO_NAME + "/" + INSTALLER_TEST_DIRECTORY + "/" +
+#                                        GRADLE_PROPERTIES)
+#
+#     display_text = lang_version.split("-")[0]
+#     swan_lake_latest_version = "swan-lake-" + display_text
+#     spec_version = ballerina_lang_configs['specVersion']
+#     update_tool_version = ballerina_distribution_configs['ballerinaCommandVersion']
+#
+#     installer_test_configs['swan-lake-latest-version'] = swan_lake_latest_version
+#     installer_test_configs['swan-lake-latest-version-display-text'] = display_text
+#     installer_test_configs['swan-lake-latest-spec-version'] = spec_version
+#     installer_test_configs['latest-tool-version'] = update_tool_version
+#     installer_test_configs['swan-lake-latest-tool-version'] = update_tool_version
+#     installer_test_configs.write()
 
 
 def checkout_branch(branch, keep_local_changes):
