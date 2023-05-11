@@ -34,7 +34,7 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
       - name: Build ballerina-lang
-        run: python -u scripts/new_full_build_pipeline.py ./ --lang-branch $PATCH_LEVEL --build-level 0
+        run: python -u dependabot/full_build_pipeline.py ./ --lang-branch $PATCH_LEVEL --build-level 0
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -105,7 +105,7 @@ jobs:
           path: ~/.m2/
       - name: Build Standard Libraries & Tools
         run: |
-          python -u scripts/new_full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
+          python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
           --build-released-versions --patch-level $PATCH_LEVEL --skip-build-distribution --continue-on-error
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
@@ -159,7 +159,7 @@ jobs:
           path: ~/.m2/
       - name: Build ballerina-distribution
         run: |
-          python -u scripts/new_full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
+          python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
           --build-level $DISTRIBUTION_BUILD_LEVEL --continue-on-error
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
