@@ -34,7 +34,7 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
       - name: Build ballerina-lang
-        run: python -u scripts/new_full_build_pipeline.py ./ --lang-branch $PATCH_LEVEL --build-level 0 --skip-tests
+        run: python -u scripts/new_full_build_pipeline.py ./ --lang-branch $PATCH_LEVEL --build-level 0
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
