@@ -328,12 +328,13 @@ def main():
             dist_build_commands.append("test")
 
         return_code = build_module(BALLERINA_DIST_REPO_NAME, dist_build_commands)
+        os.chdir("..")
+
         if return_code != 0:
             exit_code = return_code
             failed_modules.append(BALLERINA_DIST_REPO_NAME)
             write_failed_modules(failed_modules)
             exit(exit_code)
-        os.chdir("..")
 
     # update_installer_versions(lang_version)
 
