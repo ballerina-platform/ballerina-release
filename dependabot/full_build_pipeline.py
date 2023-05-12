@@ -93,6 +93,8 @@ def main():
     global released_stdlib_versions
     global released_version_data_file_url
 
+    failed_modules = []
+
     args = parser.parse_args()
     # Commands to be used to build downstream repositories (Except ballerina-distribution)
     commands = ["./gradlew", "clean", "build", "--stacktrace", "--scan", "--console=plain", "--no-daemon", "--continue"]
@@ -166,8 +168,15 @@ def main():
         if skip_tests:
             lang_build_commands.append("-x")
             lang_build_commands.append("test")
-        build_module(BALLERINA_LANG_REPO_NAME, lang_build_commands)
+        return_code = build_module(BALLERINA_LANG_REPO_NAME, lang_build_commands)
         os.chdir("..")
+
+        if return_code != 0:
+            exit_code = return_code
+            failed_modules.append(BALLERINA_LANG_REPO_NAME)
+            if not continue_on_error:
+                write_failed_modules(failed_modules)
+                exit(exit_code)
 
     if args.update_stdlib_dependencies:
         print_info("Using local SNAPSHOT builds for upper level stdlib dependencies")
@@ -243,7 +252,6 @@ def main():
     read_ignore_modules(patch_level)
 
     start_build = False if from_module else True
-    failed_modules = []
     exit_code = 0
     module_levels = list(stdlib_modules_by_level.keys())
     module_levels.sort()
@@ -278,6 +286,7 @@ def main():
                     return_code = build_module(module_name, build_commands)
                 else:
                     return_code = build_module(module_name, commands)
+                os.chdir("..")
 
                 if return_code != 0:
                     exit_code = return_code
@@ -285,7 +294,6 @@ def main():
                     if not continue_on_error:
                         write_failed_modules(failed_modules)
                         exit(exit_code)
-                os.chdir("..")
 
                 if remove_after_build:
                     delete_module(module_name)
