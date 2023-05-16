@@ -106,7 +106,6 @@
                 "module-ballerinax-choreo",
                 "module-ballerinax-jaeger",
                 "module-ballerinax-prometheus",
-                "graphql-tools",
                 "openapi-tools",
                 "ballerina-dev-tools",
                 "asyncapi-tools"
