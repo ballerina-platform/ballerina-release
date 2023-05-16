@@ -6,6 +6,7 @@ on:
     - cron: '30 18 * * *'   # 00:00 in LK time (GMT+5:30)
 
 env:
+  PATCH_LEVEL: master
   DISTRIBUTION_BUILD_LEVEL: 10
 
 jobs:
@@ -48,7 +49,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-            python3 dependabot/notify_full_build_failure.py $module master;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -127,7 +128,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-            python3 dependabot/notify_full_build_failure.py $module master;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -250,7 +251,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-            python3 dependabot/notify_full_build_failure.py $module master;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -449,7 +450,7 @@ jobs:
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash
-        run: python3 dependabot/notify_full_build_failure.py nballerina master
+        run: python3 dependabot/notify_full_build_failure.py nballerina $PATCH_LEVEL
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
           CHAT_KEY: ${{ secrets.NOTIFICATIONS_CHAT_KEY }}
