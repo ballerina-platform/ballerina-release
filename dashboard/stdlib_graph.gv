@@ -45,6 +45,8 @@ digraph "Stdlib Dependency Graph" {
 		email
 		jwt
 		oauth2
+		toml
+		yaml
 		label="level 4"
 	}
 	subgraph cluster_5 {
@@ -87,6 +89,8 @@ digraph "Stdlib Dependency Graph" {
 	io -> os
 	io -> serdes
 	io -> xslt
+	regex -> toml
+	regex -> yaml
 	time -> constraint
 	time -> crypto
 	time -> file
@@ -127,6 +131,8 @@ digraph "Stdlib Dependency Graph" {
 	cache -> oauth2
 	file -> email
 	file -> http
+	file -> toml
+	file -> yaml
 	mime -> email
 	mime -> http
 	uuid -> grpc
