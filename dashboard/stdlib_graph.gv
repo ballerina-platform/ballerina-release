@@ -2,7 +2,6 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_1 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
-		constraint
 		io
 		"jballerina.java.arrays"
 		regex
@@ -14,6 +13,7 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_2 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
+		constraint
 		crypto
 		log
 		os
@@ -83,18 +83,19 @@ digraph "Stdlib Dependency Graph" {
 		postgresql
 		label="level 8"
 	}
-	constraint -> cache
-	constraint -> nats
 	io -> log
 	io -> os
 	io -> serdes
 	io -> xslt
+	time -> constraint
 	time -> crypto
 	time -> file
 	time -> protobuf
 	time -> random
 	time -> task
 	url -> oauth2
+	constraint -> cache
+	constraint -> nats
 	crypto -> auth
 	crypto -> jwt
 	crypto -> nats
