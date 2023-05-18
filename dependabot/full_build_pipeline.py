@@ -323,6 +323,8 @@ def main():
         dist_build_commands = commands.copy()
         dist_build_commands.append("-x")
         dist_build_commands.append(":project-api-tests:test")
+        dist_build_commands.append("-x")
+        dist_build_commands.append(":ballerina:testExamples")
         if not skip_tests and test_module and test_module != BALLERINA_DIST_REPO_NAME:
             dist_build_commands.append("-x")
             dist_build_commands.append("test")
