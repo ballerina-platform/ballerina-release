@@ -261,6 +261,9 @@
             "name": "module-ballerina-yaml"
         },
         {
+            "name": "module-ballerina-edi"
+        },
+        {
             "name": "module-ballerina-serdes",
             "is_extended_library_module": false
         },
