@@ -39,6 +39,9 @@ on:
         deprecationMessage: 'true or false'
         required: true
 
+env:
+  DISTRIBUTION_BUILD_LEVEL: 11
+
 jobs:
   build-lang:
     name: Build ballerina-lang

@@ -87,14 +87,14 @@
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
                 "module-ballerinax-choreo",
+                "module-ballerina-edi",
                 "module-ballerinax-jaeger",
                 "module-ballerinax-prometheus",
                 "module-ballerina-toml",
                 "openapi-tools",
                 "ballerina-dev-tools",
                 "asyncapi-tools",
-                "module-ballerina-yaml",
-                "module-ballerina-edi"
+                "module-ballerina-yaml"
             ]
         },
         {
@@ -419,11 +419,11 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
+                "module-ballerina-edi",
                 "module-ballerina-email",
                 "module-ballerina-http",
                 "module-ballerina-toml",
-                "module-ballerina-yaml",
-                "module-ballerina-edi"
+                "module-ballerina-yaml"
             ]
         },
         {
@@ -522,6 +522,34 @@
             "dependents": [
                 "ballerina-distribution"
             ]
+        },
+        {
+            "name": "module-ballerina-toml",
+            "level": 4,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "toml-ballerina",
+            "version_key": "stdlibTomlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerina-yaml",
+            "level": 4,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "yaml-ballerina",
+            "version_key": "stdlibYamlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
         },
         {
             "name": "module-ballerina-email",
@@ -875,6 +903,20 @@
             "dependents": []
         },
         {
+            "name": "module-ballerina-edi",
+            "level": 12,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "edi-ballerina",
+            "version_key": "stdlibEdiVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
             "name": "module-ballerinax-jaeger",
             "level": 12,
             "group_id": "org.ballerinalang",
@@ -1024,48 +1066,6 @@
             "auto_merge": true,
             "push_to_central": false,
             "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerina-toml",
-            "level": 12,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "toml-ballerina",
-            "version_key": "stdlibTomlVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerina-yaml",
-            "level": 12,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "yaml-ballerina",
-            "version_key": "stdlibYamlVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerina-edi",
-            "level": 12,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "edi-ballerina",
-            "version_key": "stdlibEdiVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": []
