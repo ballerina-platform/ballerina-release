@@ -264,10 +264,6 @@
             "name": "module-ballerina-edi"
         },
         {
-            "name": "module-ballerina-serdes",
-            "is_extended_library_module": false
-        },
-        {
             "name": "module-ballerina-constraint"
         }
     ]
