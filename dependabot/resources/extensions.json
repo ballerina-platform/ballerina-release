@@ -89,7 +89,6 @@
                 "module-ballerina-edi",
                 "module-ballerinax-jaeger",
                 "module-ballerinax-prometheus",
-                "module-ballerina-toml",
                 "openapi-tools",
                 "ballerina-dev-tools",
                 "asyncapi-tools",
