@@ -32,7 +32,6 @@ digraph "Stdlib Dependency Graph" {
 		ftp
 		mime
 		nats
-		stan
 		tcp
 		udp
 		uuid
@@ -104,7 +103,6 @@ digraph "Stdlib Dependency Graph" {
 	crypto -> jwt
 	crypto -> nats
 	crypto -> oauth2
-	crypto -> stan
 	crypto -> tcp
 	crypto -> uuid
 	log -> auth
@@ -114,7 +112,6 @@ digraph "Stdlib Dependency Graph" {
 	log -> mime
 	log -> nats
 	log -> oauth2
-	log -> stan
 	log -> tcp
 	log -> udp
 	os -> file
