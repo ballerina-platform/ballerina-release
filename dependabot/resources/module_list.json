@@ -178,10 +178,6 @@
             "name": "module-ballerina-sql"
         },
         {
-            "name": "module-ballerinax-stan",
-            "push_to_central": false
-        },
-        {
             "name": "module-ballerina-task"
         },
         {
