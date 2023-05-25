@@ -206,6 +206,11 @@ jobs:
         with:
           name: MacOS Installer ZIP
           path: ballerina-distribution/ballerina/build/distributions/ballerina-*-macos.zip
+      - name: Archive MacOS-ARM Installer ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS-ARM Installer ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-macos-arm.zip
       - name: Archive Windows Installer ZIP
         uses: actions/upload-artifact@v2
         with:
