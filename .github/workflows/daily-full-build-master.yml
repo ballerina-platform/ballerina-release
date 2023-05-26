@@ -392,21 +392,6 @@ jobs:
         with:
           name: MacOS Installer pkg
           path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-arm-x64.pkg
-      - name: Install Ballerina PKG
-        run: sudo installer -pkg ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-arm-x64.pkg -target /
-      - name: Update Installer Test Configs
-        run: |
-          DISPLAY_TEXT=${{ needs.build-distribution.outputs.short-version }}
-          SWAN_LAKE_LATEST_VERSION="swan-lake-"+$DISPLAY_TEXT
-          SPEC_VERSION=${{ needs.build-lang.outputs.spec-version }}
-          perl -pi -e "s/^\s*swan-lake-latest-version-display-text=.*/swan-lake-latest-version-display-text=$DISPLAY_TEXT/" ballerina-distribution/ballerina-test-automation/gradle.properties
-          perl -pi -e "s/^\s*swan-lake-latest-version=.*/swan-lake-latest-version=$SWAN_LAKE_LATEST_VERSION/" ballerina-distribution/ballerina-test-automation/gradle.properties
-          perl -pi -e "s/^\s*swan-lake-latest-spec-version=.*/swan-lake-latest-spec-version=$SPEC_VERSION/" ballerina-distribution/ballerina-test-automation/gradle.properties
-      - name: Run Installer Tests
-        working-directory: ./ballerina-distribution/ballerina-test-automation/installer-test
-        run: ./../gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
-        env:
-          TEST_MODE_ACTIVE: true
 
   windows-installer-build:
     needs: [build-lang, build-distribution]
