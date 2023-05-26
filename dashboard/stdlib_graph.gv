@@ -88,7 +88,6 @@ digraph "Stdlib Dependency Graph" {
 	io -> os
 	io -> serdes
 	io -> xslt
-	regex -> yaml
 	time -> constraint
 	time -> crypto
 	time -> file
