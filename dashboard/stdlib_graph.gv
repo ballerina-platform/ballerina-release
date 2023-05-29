@@ -19,7 +19,6 @@ digraph "Stdlib Dependency Graph" {
 		os
 		protobuf
 		random
-		serdes
 		task
 		xslt
 		label="level 2"
@@ -86,7 +85,6 @@ digraph "Stdlib Dependency Graph" {
 	}
 	io -> log
 	io -> os
-	io -> serdes
 	io -> xslt
 	time -> constraint
 	time -> crypto
