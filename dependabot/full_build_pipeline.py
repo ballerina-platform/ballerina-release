@@ -275,7 +275,7 @@ def main():
 
             if module_name in build_ignore_modules:
                 print_separation_block()
-                print_info(print_info("Skipping: " + module))
+                print_info(print_info("Skipping: " + module_name))
             elif start_build:
                 print_separation_block()
                 clone_repository(module_name)
