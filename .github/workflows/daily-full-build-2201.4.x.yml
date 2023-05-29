@@ -368,7 +368,7 @@ jobs:
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
           cd ballerina-distribution
-          git checkout $PATCH_LEVEL
+          git checkout $env:PATCH_LEVEL
       - name: Download Windows Intaller Zip
         uses: actions/download-artifact@v2
         with:
