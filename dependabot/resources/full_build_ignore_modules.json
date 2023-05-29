@@ -37,7 +37,8 @@
       "persist-tools",
       "ballerina-dev-tools",
       "module-ballerina-toml",
-      "module-ballerina-yaml"
+      "module-ballerina-yaml",
+      "module-ballerina-math.vector"
     ],
     "downstream-repo-branches": {
       "module-ballerina-c2c": "2201.3.x",
