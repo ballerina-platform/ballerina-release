@@ -276,7 +276,7 @@ def main():
             if module_name in build_ignore_modules:
                 print_separation_block()
                 print_info(print_info("Skipping: " + module_name))
-            if build_released_versions and module_version_key not in released_stdlib_versions:
+            elif build_released_versions and module_version_key not in released_stdlib_versions:
                 print_separation_block()
                 print_info(print_info("Skipping: " + module_name))
             elif start_build:
