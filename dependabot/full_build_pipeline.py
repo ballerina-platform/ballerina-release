@@ -190,14 +190,14 @@ def main():
     else:
         print_info("Using existing upper level stdlib versions for the builds")
 
-    if args.build_released_versions:
-        print_info("Using released versions for build in " +
-                   "https://github.com/ballerina-platform/ballerina-distribution/blob/master/gradle.properties")
-        build_released_versions = True
-
     if args.patch_level:
         print_info(f"Using patch level: {args.patch_level}")
         patch_level = args.patch_level
+
+    if args.build_released_versions:
+        print_info("Using released versions for build in " +
+                   f"https://github.com/ballerina-platform/ballerina-distribution/blob/{patch_level}/gradle.properties")
+        build_released_versions = True
 
     if args.skip_build_distribution:
         print_info("Skipping ballerina-distribution build")
@@ -274,6 +274,9 @@ def main():
                 start_build = True
 
             if module_name in build_ignore_modules:
+                print_separation_block()
+                print_info(print_info("Skipping: " + module_name))
+            elif build_released_versions and module_version_key not in released_stdlib_versions:
                 print_separation_block()
                 print_info(print_info("Skipping: " + module_name))
             elif start_build:
@@ -362,16 +365,11 @@ def process_module(module_name, module_version_key, lang_version, patch_level, u
         if module_name in downstream_repo_branches:
             module_branch = downstream_repo_branches[module_name]
             print_info(f"Using defined branch {module_branch} in {TEST_IGNORE_MODULES_JSON}")
-        elif use_released_versions:
-            if module_version_key in released_stdlib_versions:
-                module_branch = f"v{released_stdlib_versions[module_version_key]}"
-                print_info(f"Using released version tag {module_branch} in {released_version_data_file_url}")
     elif patch_level:
         module_branch = patch_level
         print_info(f"Using patch branch {module_branch} for {BALLERINA_DIST_REPO_NAME}")
 
-    checkout_branch(module_branch, keep_local_changes)
-    print_info("Branch: " + module_branch)
+    checkout_branch(module_branch, keep_local_changes, module_version_key, use_released_versions)
 
     module_version = get_version()
     print_info(f"Module {module_name} version: {module_version}")
@@ -493,15 +491,26 @@ def read_released_stdlib_versions(url):
 #     installer_test_configs.write()
 
 
-def checkout_branch(branch, keep_local_changes):
+def checkout_branch(branch, keep_local_changes, module_key, build_released_versions):
     try:
-        process = subprocess.run(["git", "checkout", branch])
+        if build_released_versions:
+            released_version = released_stdlib_versions[module_key]
+            if len(released_version.split("-")) > 1:
+                updated_commit_id = released_version.split("-")[-1]
+                process = subprocess.run(["git", "checkout", "-b", "full-build", updated_commit_id])
+                print_info(f"Using commit ID {updated_commit_id} to create a new branch")
+            else:
+                process = subprocess.run(["git", "checkout", f"v{released_version}"])
+                print_info(f"Using released version tag v{released_version} in {released_version_data_file_url}")
+        else:
+            process = subprocess.run(["git", "checkout", branch])
+            print_info(f"Using branch {branch}")
+
         if process.returncode != 0:
             print_warn(f"Failed to checkout branch {branch}. Default branch will be used.")
         if not keep_local_changes:
             subprocess.run(["git", "reset", "--hard", "origin/" + branch])
             subprocess.run(["git", "pull", "origin", branch])
-
     except Exception as e:
         print_warn("Failed to Sync the Default Branch: " + str(e))
 
