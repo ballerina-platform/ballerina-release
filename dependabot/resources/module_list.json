@@ -178,10 +178,6 @@
             "name": "module-ballerina-sql"
         },
         {
-            "name": "module-ballerinax-stan",
-            "push_to_central": false
-        },
-        {
             "name": "module-ballerina-task"
         },
         {
@@ -262,10 +258,6 @@
         },
         {
             "name": "module-ballerina-edi"
-        },
-        {
-            "name": "module-ballerina-serdes",
-            "is_extended_library_module": false
         },
         {
             "name": "module-ballerina-constraint"

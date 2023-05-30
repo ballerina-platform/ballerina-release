@@ -7,7 +7,7 @@ on:
 
 env:
   PATCH_LEVEL: 2201.4.x
-  DISTRIBUTION_BUILD_LEVEL: 11
+  DISTRIBUTION_BUILD_LEVEL: 10
 
 jobs:
   build-lang:
@@ -368,7 +368,7 @@ jobs:
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
           cd ballerina-distribution
-          git checkout $PATCH_LEVEL
+          git checkout $env:PATCH_LEVEL
       - name: Download Windows Intaller Zip
         uses: actions/download-artifact@v2
         with:
@@ -436,7 +436,7 @@ jobs:
         run: sudo dpkg -i ballerina-*-linux-x64.deb
       - name: Run compiler tests
         working-directory: nballerina/compiler
-        run: bal test
+        run: bal test --disable-groups private
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash

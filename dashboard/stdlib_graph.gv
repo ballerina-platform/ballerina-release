@@ -19,7 +19,6 @@ digraph "Stdlib Dependency Graph" {
 		os
 		protobuf
 		random
-		serdes
 		task
 		xslt
 		label="level 2"
@@ -32,7 +31,6 @@ digraph "Stdlib Dependency Graph" {
 		ftp
 		mime
 		nats
-		stan
 		tcp
 		udp
 		uuid
@@ -87,10 +85,7 @@ digraph "Stdlib Dependency Graph" {
 	}
 	io -> log
 	io -> os
-	io -> serdes
 	io -> xslt
-	regex -> toml
-	regex -> yaml
 	time -> constraint
 	time -> crypto
 	time -> file
@@ -104,7 +99,6 @@ digraph "Stdlib Dependency Graph" {
 	crypto -> jwt
 	crypto -> nats
 	crypto -> oauth2
-	crypto -> stan
 	crypto -> tcp
 	crypto -> uuid
 	log -> auth
@@ -114,7 +108,6 @@ digraph "Stdlib Dependency Graph" {
 	log -> mime
 	log -> nats
 	log -> oauth2
-	log -> stan
 	log -> tcp
 	log -> udp
 	os -> file
