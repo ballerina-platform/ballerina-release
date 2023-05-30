@@ -482,7 +482,7 @@ jobs:
         run: sudo dpkg -i ballerina-*-linux-x64.deb
       - name: Run compiler tests
         working-directory: nballerina/compiler
-        run: bal test
+        run: bal test --disable-groups private
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash
