@@ -17,6 +17,7 @@ digraph "Stdlib Dependency Graph" {
 		crypto
 		log
 		os
+		persist
 		protobuf
 		random
 		task
@@ -79,7 +80,6 @@ digraph "Stdlib Dependency Graph" {
 		mssql
 		mysql
 		oracledb
-		persist
 		postgresql
 		label="level 8"
 	}
@@ -89,6 +89,7 @@ digraph "Stdlib Dependency Graph" {
 	time -> constraint
 	time -> crypto
 	time -> file
+	time -> persist
 	time -> protobuf
 	time -> random
 	time -> task
@@ -149,6 +150,5 @@ digraph "Stdlib Dependency Graph" {
 	sql -> mssql
 	sql -> mysql
 	sql -> oracledb
-	sql -> persist
 	sql -> postgresql
 }
