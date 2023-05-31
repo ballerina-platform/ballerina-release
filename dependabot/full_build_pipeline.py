@@ -157,7 +157,7 @@ def main():
         os.chdir(BALLERINA_LANG_REPO_NAME)
         if args.lang_branch:
             print_info("Using ballerina lang branch: " + args.lang_branch)
-            checkout_branch(args.lang_branch, keep_local_changes)
+            checkout_branch(args.lang_branch, keep_local_changes, "ballerinaLangVersion", build_released_versions)
         else:
             print_info("Using ballerina lang branch: master (default)")
 
