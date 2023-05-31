@@ -508,9 +508,9 @@ def checkout_branch(branch, keep_local_changes, module_key, build_released_versi
 
         if process.returncode != 0:
             print_warn(f"Failed to checkout branch {branch}. Default branch will be used.")
-        if not keep_local_changes:
-            subprocess.run(["git", "reset", "--hard", "origin/" + branch])
-            subprocess.run(["git", "pull", "origin", branch])
+        # if not keep_local_changes:
+        #     subprocess.run(["git", "reset", "--hard", "origin/" + branch])
+        #     subprocess.run(["git", "pull", "origin", branch])
     except Exception as e:
         print_warn("Failed to Sync the Default Branch: " + str(e))
 
