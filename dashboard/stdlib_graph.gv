@@ -32,6 +32,7 @@ digraph "Stdlib Dependency Graph" {
 		ftp
 		mime
 		nats
+		"persist.inmemory"
 		tcp
 		udp
 		uuid
@@ -69,6 +70,7 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		graphql
 		kafka
+		"persist.googlesheets"
 		rabbitmq
 		sql
 		label="level 7"
@@ -80,6 +82,7 @@ digraph "Stdlib Dependency Graph" {
 		mssql
 		mysql
 		oracledb
+		"persist.sql"
 		postgresql
 		label="level 8"
 	}
@@ -112,6 +115,9 @@ digraph "Stdlib Dependency Graph" {
 	log -> tcp
 	log -> udp
 	os -> file
+	persist -> "persist.googlesheets"
+	persist -> "persist.inmemory"
+	persist -> "persist.sql"
 	protobuf -> grpc
 	random -> grpc
 	random -> kafka
@@ -143,6 +149,7 @@ digraph "Stdlib Dependency Graph" {
 	http -> websub
 	http -> websubhub
 	transaction -> kafka
+	transaction -> "persist.googlesheets"
 	transaction -> rabbitmq
 	transaction -> sql
 	websocket -> graphql
@@ -150,5 +157,6 @@ digraph "Stdlib Dependency Graph" {
 	sql -> mssql
 	sql -> mysql
 	sql -> oracledb
+	sql -> "persist.sql"
 	sql -> postgresql
 }
