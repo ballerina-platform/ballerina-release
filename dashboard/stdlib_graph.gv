@@ -17,9 +17,9 @@ digraph "Stdlib Dependency Graph" {
 		crypto
 		log
 		os
+		persist
 		protobuf
 		random
-		serdes
 		task
 		xslt
 		label="level 2"
@@ -32,7 +32,7 @@ digraph "Stdlib Dependency Graph" {
 		ftp
 		mime
 		nats
-		stan
+		"persist.inmemory"
 		tcp
 		udp
 		uuid
@@ -70,6 +70,7 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		graphql
 		kafka
+		"persist.googlesheets"
 		rabbitmq
 		sql
 		label="level 7"
@@ -81,19 +82,17 @@ digraph "Stdlib Dependency Graph" {
 		mssql
 		mysql
 		oracledb
-		persist
+		"persist.sql"
 		postgresql
 		label="level 8"
 	}
 	io -> log
 	io -> os
-	io -> serdes
 	io -> xslt
-	regex -> toml
-	regex -> yaml
 	time -> constraint
 	time -> crypto
 	time -> file
+	time -> persist
 	time -> protobuf
 	time -> random
 	time -> task
@@ -104,7 +103,6 @@ digraph "Stdlib Dependency Graph" {
 	crypto -> jwt
 	crypto -> nats
 	crypto -> oauth2
-	crypto -> stan
 	crypto -> tcp
 	crypto -> uuid
 	log -> auth
@@ -114,10 +112,12 @@ digraph "Stdlib Dependency Graph" {
 	log -> mime
 	log -> nats
 	log -> oauth2
-	log -> stan
 	log -> tcp
 	log -> udp
 	os -> file
+	persist -> "persist.googlesheets"
+	persist -> "persist.inmemory"
+	persist -> "persist.sql"
 	protobuf -> grpc
 	random -> grpc
 	random -> kafka
@@ -149,6 +149,7 @@ digraph "Stdlib Dependency Graph" {
 	http -> websub
 	http -> websubhub
 	transaction -> kafka
+	transaction -> "persist.googlesheets"
 	transaction -> rabbitmq
 	transaction -> sql
 	websocket -> graphql
@@ -156,6 +157,6 @@ digraph "Stdlib Dependency Graph" {
 	sql -> mssql
 	sql -> mysql
 	sql -> oracledb
-	sql -> persist
+	sql -> "persist.sql"
 	sql -> postgresql
 }

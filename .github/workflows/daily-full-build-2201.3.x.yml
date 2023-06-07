@@ -110,7 +110,7 @@ jobs:
       - name: Build Standard Libraries & Tools
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --build-released-versions --patch-level $PATCH_LEVEL --skip-build-distribution --continue-on-error
+          --build-released-versions --patch-level $PATCH_LEVEL --skip-build-distribution --continue-on-error --remove-after-build
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -368,7 +368,7 @@ jobs:
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
           cd ballerina-distribution
-          git checkout $PATCH_LEVEL
+          git checkout $env:PATCH_LEVEL
       - name: Download Windows Intaller Zip
         uses: actions/download-artifact@v2
         with:
@@ -436,7 +436,7 @@ jobs:
         run: sudo dpkg -i ballerina-*-linux-x64.deb
       - name: Run compiler tests
         working-directory: nballerina/compiler
-        run: bal test
+        run: bal test --disable-groups private
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash

@@ -110,7 +110,7 @@ jobs:
       - name: Build Standard Libraries & Tools
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --build-released-versions --patch-level $PATCH_LEVEL --skip-build-distribution --continue-on-error
+          --build-released-versions --patch-level $PATCH_LEVEL --skip-build-distribution --continue-on-error --remove-after-build
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -196,6 +196,11 @@ jobs:
         with:
           name: MacOS Installer ZIP
           path: ballerina-distribution/ballerina/build/distributions/ballerina-*-macos.zip
+      - name: Archive MacOS-ARM Installer ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS-ARM Installer ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-macos-arm.zip
       - name: Archive Windows Installer ZIP
         uses: actions/upload-artifact@v2
         with:
@@ -347,6 +352,37 @@ jobs:
         env:
           TEST_MODE_ACTIVE: true
 
+  macos-arm-installer-build:
+    needs: [build-lang, build-distribution]
+    name: Build MacOS ARM Installer
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Download Ballerina Distribution
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout $PATCH_LEVEL
+      - name: Download MacOS-ARM Intaller Zip
+        uses: actions/download-artifact@v2
+        with:
+          name: MacOS-ARM Installer ZIP
+      - name: Create macos-pkg
+        id: run_installers_pkg
+        working-directory: ballerina-distribution/installers/mac
+        run: ./build-ballerina-macos-x64.sh -v ${{ needs.build-distribution.outputs.project-version }} -p ./../../../ -a arm
+      - name: Archive MacOS pkg
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS Installer pkg
+          path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-arm-x64.pkg
+
   windows-installer-build:
     needs: [build-lang, build-distribution]
     name: Build Windows Installer
@@ -368,7 +404,7 @@ jobs:
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
           cd ballerina-distribution
-          git checkout $PATCH_LEVEL
+          git checkout $env:PATCH_LEVEL
       - name: Download Windows Intaller Zip
         uses: actions/download-artifact@v2
         with:
@@ -436,7 +472,7 @@ jobs:
         run: sudo dpkg -i ballerina-*-linux-x64.deb
       - name: Run compiler tests
         working-directory: nballerina/compiler
-        run: bal test
+        run: bal test --disable-groups private
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash
