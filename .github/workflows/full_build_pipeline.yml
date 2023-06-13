@@ -40,7 +40,7 @@ on:
         required: true
 
 env:
-  DISTRIBUTION_BUILD_LEVEL: 11
+  DISTRIBUTION_BUILD_LEVEL: 10
 
 jobs:
   build-lang:
