@@ -4,6 +4,11 @@
     "build-ignore-modules": [],
     "downstream-repo-branches": {}
   },
+  "2201.7.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {}
+  },
   "2201.6.x": {
     "test-ignore-modules": [],
     "build-ignore-modules": [],
