@@ -32,21 +32,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerina-math.vector",
-            "level": 1,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "math.vector-ballerina",
-            "version_key": "stdlibMathVectorVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-observe",
@@ -197,6 +185,9 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
             "dependents": [
+                "module-ballerinax-persist.googlesheets",
+                "module-ballerinax-persist.inmemory",
+                "module-ballerinax-persist.sql",
                 "persist-tools"
             ]
         },
@@ -265,7 +256,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-cache",
@@ -330,6 +323,54 @@
             ]
         },
         {
+            "name": "module-ballerinax-persist.inmemory",
+            "level": 3,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "persist.inmemory-ballerina",
+            "version_key": "stdlibPersistInmemoryVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": false,
+            "dependents": [
+                "persist-tools"
+            ]
+        },
+        {
+            "name": "module-ballerinax-persist.googlesheets",
+            "level": 3,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "persist.googlesheets-ballerina",
+            "version_key": "stdlibPersistGoogleSheetVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": false,
+            "dependents": [
+                "persist-tools"
+            ]
+        },
+        {
+            "name": "module-ballerinax-persist.sql",
+            "level": 3,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "persist.sql-ballerina",
+            "version_key": "stdlibPersistSqlVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": false,
+            "dependents": [
+                "persist-tools"
+            ]
+        },
+        {
             "name": "module-ballerina-auth",
             "level": 4,
             "group_id": "io.ballerina.stdlib",
@@ -376,7 +417,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-jwt",
@@ -439,7 +482,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-udp",
@@ -453,7 +498,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-email",
@@ -467,7 +514,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-http",
@@ -501,7 +550,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-yaml",
@@ -515,7 +566,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-grpc",
@@ -640,7 +693,25 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "ballerina-distribution",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "distribution-ballerina",
+            "version_key": "stdlibDistributionVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "main",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
         }
 
     ],
