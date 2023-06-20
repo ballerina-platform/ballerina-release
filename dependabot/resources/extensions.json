@@ -669,7 +669,7 @@
         },
         {
             "name": "module-ballerinax-persist.sql",
-            "level": 3,
+            "level": 8,
             "group_id": "io.ballerina.stdlib",
             "artifact_id": "persist.sql-ballerina",
             "version_key": "stdlibPersistSqlVersion",
