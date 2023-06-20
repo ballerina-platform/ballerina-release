@@ -598,6 +598,7 @@
             "send_notification": false,
             "dependents": [
                 "module-ballerinax-kafka",
+                "module-ballerinax-persist.googlesheets",
                 "module-ballerinax-rabbitmq",
                 "module-ballerina-sql"
             ]
