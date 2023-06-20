@@ -339,38 +339,6 @@
             ]
         },
         {
-            "name": "module-ballerinax-persist.googlesheets",
-            "level": 3,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "persist.googlesheets-ballerina",
-            "version_key": "stdlibPersistGoogleSheetVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": false,
-            "dependents": [
-                "persist-tools"
-            ]
-        },
-        {
-            "name": "module-ballerinax-persist.sql",
-            "level": 3,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "persist.sql-ballerina",
-            "version_key": "stdlibPersistSqlVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": false,
-            "dependents": [
-                "persist-tools"
-            ]
-        },
-        {
             "name": "module-ballerina-auth",
             "level": 4,
             "group_id": "io.ballerina.stdlib",
@@ -662,6 +630,22 @@
             "dependents": []
         },
         {
+            "name": "module-ballerinax-persist.googlesheets",
+            "level": 7,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "persist.googlesheets-ballerina",
+            "version_key": "stdlibPersistGoogleSheetVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": false,
+            "dependents": [
+                "persist-tools"
+            ]
+        },
+        {
             "name": "module-ballerina-sql",
             "level": 7,
             "group_id": "io.ballerina.stdlib",
@@ -684,8 +668,24 @@
             ]
         },
         {
+            "name": "module-ballerinax-persist.sql",
+            "level": 3,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "persist.sql-ballerina",
+            "version_key": "stdlibPersistSqlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": false,
+            "dependents": [
+                "persist-tools"
+            ]
+        },
+        {
             "name": "persist-tools",
-            "level": 8,
+            "level": 9,
             "group_id": "io.ballerina",
             "artifact_id": "persist-tools",
             "version_key": "persistToolVersion",
