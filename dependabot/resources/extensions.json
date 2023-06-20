@@ -677,6 +677,7 @@
                 "module-ballerinax-mssql",
                 "module-ballerinax-mysql",
                 "module-ballerinax-oracledb",
+                "module-ballerinax-persist.sql",
                 "module-ballerinax-postgresql",
                 "persist-tools"
             ]
