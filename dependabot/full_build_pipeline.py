@@ -279,7 +279,7 @@ def main():
             elif build_released_versions and module_version_key not in released_stdlib_versions:
                 print_separation_block()
                 print_info(print_info("Skipping: " + module_name))
-            elif start_build:
+            elif start_build or update_stdlib_dependencies:
                 print_separation_block()
                 clone_repository(module_name)
 
@@ -287,6 +287,7 @@ def main():
                 process_module(module_name, module_version_key, lang_version, patch_level, build_released_versions,
                                update_stdlib_dependencies, keep_local_changes, downstream_branch)
 
+            if start_build:
                 if not skip_tests and test_module and test_module != module_name:
                     build_commands = commands.copy()
                     build_commands.append("-x")
@@ -303,8 +304,8 @@ def main():
                         write_failed_modules(failed_modules)
                         exit(exit_code)
 
-                if remove_after_build:
-                    delete_module(module_name)
+            if remove_after_build:
+                delete_module(module_name)
 
             if up_to_module == module_name:
                 start_build = False
