@@ -194,6 +194,10 @@ def main():
         print_info(f"Using patch level: {args.patch_level}")
         patch_level = args.patch_level
 
+    if args.downstream_branch:
+        print_info(f"Using downstream branch: {args.downstream_branch}")
+        downstream_branch = args.downstream_branch
+
     if args.build_released_versions:
         print_info("Using released versions for build in " +
                    f"https://github.com/ballerina-platform/ballerina-distribution/blob/{patch_level}/gradle.properties")
