@@ -308,8 +308,8 @@ def main():
                 if remove_after_build:
                     delete_module(module_name)
 
-                if up_to_module == module_name:
-                    start_build = False
+            if up_to_module == module_name:
+                start_build = False
 
         if exit_code != 0:
             write_failed_modules(failed_modules)
