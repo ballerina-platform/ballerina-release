@@ -287,28 +287,29 @@ def main():
                 process_module(module_name, module_version_key, lang_version, patch_level, build_released_versions,
                                update_stdlib_dependencies, keep_local_changes, downstream_branch)
 
-            if start_build:
-                if not skip_tests and test_module and test_module != module_name:
-                    build_commands = commands.copy()
-                    build_commands.append("-x")
-                    build_commands.append("test")
-                    return_code = build_module(module_name, build_commands)
-                else:
-                    return_code = build_module(module_name, commands)
+                if start_build:
+                    if not skip_tests and test_module and test_module != module_name:
+                        build_commands = commands.copy()
+                        build_commands.append("-x")
+                        build_commands.append("test")
+                        return_code = build_module(module_name, build_commands)
+                    else:
+                        return_code = build_module(module_name, commands)
+
+                    if return_code != 0:
+                        exit_code = return_code
+                        failed_modules.append(module_name)
+                        if not continue_on_error:
+                            write_failed_modules(failed_modules)
+                            exit(exit_code)
+
                 os.chdir("..")
 
-                if return_code != 0:
-                    exit_code = return_code
-                    failed_modules.append(module_name)
-                    if not continue_on_error:
-                        write_failed_modules(failed_modules)
-                        exit(exit_code)
+                if remove_after_build:
+                    delete_module(module_name)
 
-            if remove_after_build:
-                delete_module(module_name)
-
-            if up_to_module == module_name:
-                start_build = False
+                if up_to_module == module_name:
+                    start_build = False
 
         if exit_code != 0:
             write_failed_modules(failed_modules)
