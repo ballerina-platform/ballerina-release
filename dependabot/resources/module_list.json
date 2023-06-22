@@ -268,6 +268,18 @@
         },
         {
             "name": "module-ballerina-constraint"
+        },
+        {
+            "name": "module-ballerinax-persist.googlesheets",
+            "version_key": "stdlibPersistGoogleSheetVersion"
+        },
+        {
+            "name": "module-ballerinax-persist.inmemory",
+            "version_key": "stdlibPersistInmemoryVersion"
+        },
+        {
+            "name": "module-ballerinax-persist.sql",
+            "version_key": "stdlibPersistSqlVersion"
         }
     ]
 }
