@@ -179,9 +179,7 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": false,
-            "dependents": [
-                "ballerina-distribution"
-            ]
+            "dependents": []
         }
 
     ],
