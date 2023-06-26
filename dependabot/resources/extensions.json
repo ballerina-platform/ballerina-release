@@ -234,7 +234,6 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerinax-persist.googlesheets",
                 "module-ballerinax-persist.inmemory",
                 "module-ballerinax-persist.sql"
             ]
@@ -678,7 +677,6 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerinax-kafka",
-                "module-ballerinax-persist.googlesheets",
                 "module-ballerinax-rabbitmq",
                 "module-ballerina-sql"
             ]
@@ -749,22 +747,6 @@
                 "graphql-tools",
                 "openapi-tools",
                 "ballerina-dev-tools"
-            ]
-        },
-        {
-            "name": "module-ballerinax-persist.googlesheets",
-            "level": 7,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "persist.googlesheets-ballerina",
-            "version_key": "stdlibPersistGoogleSheetVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "persist-tools"
             ]
         },
         {
