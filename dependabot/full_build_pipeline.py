@@ -11,8 +11,6 @@ from pathlib import Path
 from configobj import ConfigObj
 
 # Resources
-MODULE_LIST_JSON = "https://raw.githubusercontent.com/ballerina-platform/" + \
-                   "ballerina-release/master/dependabot/resources/extensions.json"
 TEST_IGNORE_MODULES_JSON = "https://raw.githubusercontent.com/ballerina-platform/" + \
                            "ballerina-release/master/dependabot/resources/full_build_ignore_modules.json"
 
@@ -80,10 +78,12 @@ build_ignore_modules = []
 downstream_repo_branches = dict()
 released_version_data_file_url = None
 distribution_level = None
+module_list_json = "https://raw.githubusercontent.com/ballerina-platform/" + \
+                   "ballerina-release/master/dependabot/resources/extensions.json"
 
 
 def main():
-    global MODULE_LIST_JSON
+    global module_list_json
     global stdlib_modules_by_level
     global test_ignore_modules
     global build_ignore_modules
@@ -193,6 +193,8 @@ def main():
     if args.patch_level:
         print_info(f"Using patch level: {args.patch_level}")
         patch_level = args.patch_level
+        module_list_json = "https://raw.githubusercontent.com/ballerina-platform/ballerina-release/" + \
+                           args.patch_level + "/dependabot/resources/extensions.json"
 
     if args.downstream_branch:
         print_info(f"Using downstream branch: {args.downstream_branch}")
@@ -529,7 +531,7 @@ def read_stdlib_data(test_module):
     global stdlib_modules_by_level
 
     try:
-        response = requests.get(MODULE_LIST_JSON)
+        response = requests.get(module_list_json)
         if response.status_code == 200:
             stdlib_modules_data = json.loads(response.text)
             if test_module:
@@ -537,7 +539,7 @@ def read_stdlib_data(test_module):
             else:
                 read_data_for_fbp(stdlib_modules_data)
         else:
-            print_error(f"Failed to access standard library dependency data from {MODULE_LIST_JSON}")
+            print_error(f"Failed to access standard library dependency data from {module_list_json}")
             exit(1)
     except json.decoder.JSONDecodeError:
         print_error("Failed to load standard library dependency data")
@@ -572,7 +574,7 @@ def read_data_for_module_testing(stdlib_modules_data, test_module_name):
             module_dependencies[dependent] = module_dependencies.get(dependent, []) + [module_name]
 
     if test_module_name not in standard_library_data.keys():
-        print_error(f"Desired module {test_module_name} for testing was not found in {MODULE_LIST_JSON}")
+        print_error(f"Desired module {test_module_name} for testing was not found in {module_list_json}")
         exit(1)
 
     module_list = {test_module_name}
