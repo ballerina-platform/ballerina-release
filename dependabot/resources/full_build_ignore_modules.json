@@ -4,23 +4,48 @@
     "build-ignore-modules": [],
     "downstream-repo-branches": {}
   },
+  "2201.7.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {}
+  },
+  "2201.6.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {
+      "ballerina-dev-tools": "1.1.x",
+      "openapi-tools": "1.6.x"
+    }
+  },
   "2201.5.x": {
     "test-ignore-modules": [],
     "build-ignore-modules": [],
     "downstream-repo-branches": {
-      "ballerina-dev-tools": "1.0.x"
+      "ballerina-dev-tools": "1.0.x",
+      "openapi-tools": "1.5.x"
     }
   },
   "2201.4.x": {
     "test-ignore-modules": [],
-    "build-ignore-modules": [],
+    "build-ignore-modules": [
+      "module-ballerina-toml",
+      "module-ballerina-yaml"
+    ],
     "downstream-repo-branches": {
-      "ballerina-dev-tools": "0.11.x"
+      "ballerina-dev-tools": "0.11.x",
+      "openapi-tools": "1.4.x"
     }
   },
   "2201.3.x": {
     "test-ignore-modules": [],
-    "build-ignore-modules": ["module-ballerina-persist", "persist-tools", "ballerina-dev-tools"],
+    "build-ignore-modules": [
+      "module-ballerina-persist",
+      "persist-tools",
+      "ballerina-dev-tools",
+      "module-ballerina-toml",
+      "module-ballerina-yaml",
+      "module-ballerina-math.vector"
+    ],
     "downstream-repo-branches": {
       "module-ballerina-c2c": "2201.3.x",
       "openapi-tools": "1.3.x",

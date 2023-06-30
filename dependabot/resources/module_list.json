@@ -178,10 +178,6 @@
             "name": "module-ballerina-sql"
         },
         {
-            "name": "module-ballerinax-stan",
-            "push_to_central": false
-        },
-        {
             "name": "module-ballerina-task"
         },
         {
@@ -189,6 +185,9 @@
         },
         {
             "name": "module-ballerina-time"
+        },
+        {
+            "name": "module-ballerina-toml"
         },
         {
             "name": "graphql-tools",
@@ -255,11 +254,28 @@
             "name": "module-ballerina-xslt"
         },
         {
-            "name": "module-ballerina-serdes",
-            "is_extended_library_module": false
+            "name": "module-ballerina-yaml"
+        },
+        {
+            "name": "module-ballerina-edi",
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "edi-ballerina",
+            "version_key": "stdlibEdiVersion",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master"
         },
         {
             "name": "module-ballerina-constraint"
+        },
+        {
+            "name": "module-ballerinax-persist.inmemory",
+            "version_key": "stdlibPersistInmemoryVersion"
+        },
+        {
+            "name": "module-ballerinax-persist.sql",
+            "version_key": "stdlibPersistSqlVersion"
         }
     ]
 }

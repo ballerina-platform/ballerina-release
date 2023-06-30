@@ -6,51 +6,33 @@ on:
     - cron: '30 18 * * *'   # 00:00 in LK time (GMT+5:30)
 
 jobs:
-  trigger_repository_disptach:
-    name: Trigger repository dispatch in ballerinax connector repos
+  get_connector_list:
+    name: Get connector repository names
     if: github.repository_owner == 'ballerina-platform'
-    strategy:
-      fail-fast: false
-      matrix:
-        modules:
-          - aws.dynamodb
-          - aws.s3
-          - aws.ses
-          - aws.simpledb
-          - aws.sns
-          - aws.sqs
-          - azure-cosmosdb
-          - azure-service-bus
-          - azure-storage-service
-          - azure.ad
-          - azure.eventhub
-          - cdata.connect
-          - github
-          - googleapis.calendar
-          - googleapis.drive
-          - googleapis.gmail
-          - googleapis.people
-          - googleapis.sheets
-          - microsoft.excel
-          - microsoft.onedrive
-          - microsoft.onenote
-          - microsoft.outlook.calendar
-          - microsoft.outlook.mail
-          - microsoft.teams
-          - mongodb
-          - netsuite
-          - peoplehr
-          - sfdc
-          - slack
-          - snowflake
-          - twilio
-          - twitter
     runs-on: ubuntu-latest
     steps:
-      - name: dispatch build request
+      - name: Get extended library names
+        id: set-matrix
+        run: |
+            curl https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/dependabot/resources/ballerina_connector_list.json | jq '.ballerinax_connectors | .[] | {name}' > modules.txt
+            cat modules.txt | jq -s '.' | sed "s: ::g" | tr -d '\n' > processed.txt
+            echo "::set-output name=matrix::{\"include\":$(cat processed.txt)}"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  trigger_repository_disptach_in_connectors:
+    name: Trigger repository dispatch in ballerinax connector repos
+    if: github.repository_owner == 'ballerina-platform'
+    needs: get_connector_list
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJSON(needs.get_connector_list.outputs.matrix)}}
+    steps:
+      - name: Trigger repository dispatch
         run: |
           curl --request \
-          POST 'https://api.github.com/repos/ballerina-platform/module-ballerinax-${{matrix.modules}}/dispatches' \
+          POST 'https://api.github.com/repos/ballerina-platform/${{matrix.modules}}/dispatches' \
           --header 'Accept: application/vnd.github.v3+json' \
           --header 'Content-Type: application/json' \
           --header 'Authorization: token ${{secrets.BALLERINA_BOT_TOKEN}}' \
@@ -58,28 +40,31 @@ jobs:
               "event_type":"check_connector_for_breaking_changes"
           }'
 
-  get_extended_library_modules:
-    name: Get extended library repos names
+  get_extended_library_list:
+    name: Get extended library repository names
     if: github.repository_owner == 'ballerina-platform'
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - id: set-matrix
+      - name: Get extended library names
+        id: set-matrix
         run: |
             curl https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/dependabot/resources/extensions.json | jq '.extended_library | .[] | {name}' > modules.txt
             cat modules.txt | jq -s '.' | sed "s: ::g" | tr -d '\n' > processed.txt
             echo "::set-output name=matrix::{\"include\":$(cat processed.txt)}"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     
   trigger_repository_disptach_in_extended_library_modules:
     name: Trigger repository dispatch in extended standard library repos
     if: github.repository_owner == 'ballerina-platform'
-    needs: get_extended_library_modules
+    needs: get_extended_library_list
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJSON(needs.get_extended_library_modules.outputs.matrix)}}
+      fail-fast: false
+      matrix: ${{fromJSON(needs.get_extended_library_list.outputs.matrix)}}
     steps:
-      - run: |
+      - name: Trigger repository dispatch
+        run: |
           curl --request \
           POST 'https://api.github.com/repos/ballerina-platform/${{matrix.name}}/dispatches' \
           --header 'Accept: application/vnd.github.v3+json' \

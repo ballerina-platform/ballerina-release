@@ -2,7 +2,6 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_1 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
-		constraint
 		io
 		"jballerina.java.arrays"
 		regex
@@ -14,12 +13,13 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_2 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
+		constraint
 		crypto
 		log
 		os
+		persist
 		protobuf
 		random
-		serdes
 		task
 		xslt
 		label="level 2"
@@ -32,7 +32,7 @@ digraph "Stdlib Dependency Graph" {
 		ftp
 		mime
 		nats
-		stan
+		"persist.inmemory"
 		tcp
 		udp
 		uuid
@@ -45,6 +45,8 @@ digraph "Stdlib Dependency Graph" {
 		email
 		jwt
 		oauth2
+		toml
+		yaml
 		label="level 4"
 	}
 	subgraph cluster_5 {
@@ -68,6 +70,7 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		graphql
 		kafka
+		"persist.googlesheets"
 		rabbitmq
 		sql
 		label="level 7"
@@ -79,27 +82,27 @@ digraph "Stdlib Dependency Graph" {
 		mssql
 		mysql
 		oracledb
-		persist
+		"persist.sql"
 		postgresql
 		label="level 8"
 	}
-	constraint -> cache
-	constraint -> nats
 	io -> log
 	io -> os
-	io -> serdes
 	io -> xslt
+	time -> constraint
 	time -> crypto
 	time -> file
+	time -> persist
 	time -> protobuf
 	time -> random
 	time -> task
 	url -> oauth2
+	constraint -> cache
+	constraint -> nats
 	crypto -> auth
 	crypto -> jwt
 	crypto -> nats
 	crypto -> oauth2
-	crypto -> stan
 	crypto -> tcp
 	crypto -> uuid
 	log -> auth
@@ -109,10 +112,12 @@ digraph "Stdlib Dependency Graph" {
 	log -> mime
 	log -> nats
 	log -> oauth2
-	log -> stan
 	log -> tcp
 	log -> udp
 	os -> file
+	persist -> "persist.googlesheets"
+	persist -> "persist.inmemory"
+	persist -> "persist.sql"
 	protobuf -> grpc
 	random -> grpc
 	random -> kafka
@@ -126,6 +131,8 @@ digraph "Stdlib Dependency Graph" {
 	cache -> oauth2
 	file -> email
 	file -> http
+	file -> toml
+	file -> yaml
 	mime -> email
 	mime -> http
 	uuid -> grpc
@@ -142,6 +149,7 @@ digraph "Stdlib Dependency Graph" {
 	http -> websub
 	http -> websubhub
 	transaction -> kafka
+	transaction -> "persist.googlesheets"
 	transaction -> rabbitmq
 	transaction -> sql
 	websocket -> graphql
@@ -149,6 +157,6 @@ digraph "Stdlib Dependency Graph" {
 	sql -> mssql
 	sql -> mysql
 	sql -> oracledb
-	sql -> persist
+	sql -> "persist.sql"
 	sql -> postgresql
 }
