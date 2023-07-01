@@ -12,7 +12,7 @@ from configobj import ConfigObj
 
 # Resources
 MODULE_LIST_JSON = "https://raw.githubusercontent.com/ballerina-platform/" + \
-                   "ballerina-release/master/dependabot/resources/extensions.json"
+                   "ballerina-release/java_17_migration/dependabot/resources/extensions.json"
 TEST_IGNORE_MODULES_JSON = "https://raw.githubusercontent.com/ballerina-platform/" + \
                            "ballerina-release/master/dependabot/resources/full_build_ignore_modules.json"
 
