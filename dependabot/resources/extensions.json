@@ -786,7 +786,39 @@
                 "ballerina-distribution"
             ]
         },
-               {
+            {
+            "name": "module-ballerinax-mssql.driver",
+            "level": 8,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mssql.driver-ballerina",
+            "version_key": "stdlibMssqlDriverVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerinax-mssql"
+            ]
+        },
+        {
+            "name": "module-ballerinax-mysql.driver",
+            "level": 8,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mysql.driver-ballerina",
+            "version_key": "stdlibMysqlDriverVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerinax-mysql"
+            ]
+        },
+        {
             "name": "module-ballerinax-mssql",
             "level": 8,
             "group_id": "io.ballerina.stdlib",
