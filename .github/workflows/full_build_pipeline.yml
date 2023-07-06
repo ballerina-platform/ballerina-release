@@ -16,6 +16,8 @@ on:
         required: true
         options:
           - 'master'
+          - '2201.7.x'
+          - '2201.6.x'
           - '2201.5.x'
           - '2201.4.x'
           - '2201.3.x'
@@ -40,7 +42,7 @@ on:
         required: true
 
 env:
-  DISTRIBUTION_BUILD_LEVEL: 10
+  DISTRIBUTION_BUILD_LEVEL: 11
 
 jobs:
   build-lang:
