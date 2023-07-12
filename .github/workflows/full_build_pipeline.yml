@@ -376,7 +376,7 @@ jobs:
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
           cd ballerina-distribution
-          git checkout $PATCH_LEVEL
+          git checkout java_17_migration
       - name: Download Ballerina rpm Installer
         uses: actions/download-artifact@v2
         with:
@@ -413,7 +413,7 @@ jobs:
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
           cd ballerina-distribution
-          git checkout $PATCH_LEVEL
+          git checkout java_17_migration
       - name: Download MacOS Intaller Zip
         uses: actions/download-artifact@v2
         with:
@@ -464,7 +464,7 @@ jobs:
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
           cd ballerina-distribution
-          git checkout $PATCH_LEVEL
+          git checkout java_17_migration
       - name: Download Windows Intaller Zip
         uses: actions/download-artifact@v2
         with:
