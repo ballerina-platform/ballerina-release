@@ -332,6 +332,21 @@ jobs:
         with:
           name: Linux Installer rpm
           path: ballerina-distribution/installers/linux-rpm/rpmbuild/RPMS/x86_64/ballerina-*-linux-x64.rpm
+      - name: Install Ballerina DEB
+        run: sudo dpkg -i ballerina-distribution/installers/linux-deb/target/ballerina-*-linux-x64.deb
+      - name: Update Installer Test Configs
+        run: |
+          DISPLAY_TEXT=${{ steps.project-version.outputs.sVersion }}
+          SWAN_LAKE_LATEST_VERSION="swan-lake-"+$DISPLAY_TEXT
+          SPEC_VERSION=${{ needs.build-lang.outputs.spec-version }}
+          perl -pi -e "s/^\s*swan-lake-latest-version-display-text=.*/swan-lake-latest-version-display-text=$DISPLAY_TEXT/" ballerina-distribution/ballerina-test-automation/gradle.properties
+          perl -pi -e "s/^\s*swan-lake-latest-version=.*/swan-lake-latest-version=$SWAN_LAKE_LATEST_VERSION/" ballerina-distribution/ballerina-test-automation/gradle.properties
+          perl -pi -e "s/^\s*swan-lake-latest-spec-version=.*/swan-lake-latest-spec-version=$SPEC_VERSION/" ballerina-distribution/ballerina-test-automation/gradle.properties
+      - name: Run Installer Tests
+        working-directory: ./ballerina-distribution/ballerina-test-automation/installer-test
+        run: ./../gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
+        env:
+          TEST_MODE_ACTIVE: true
     outputs:
       project-version: ${{ steps.project-version.outputs.version }}
       short-version: ${{ steps.project-version.outputs.sVersion }}
@@ -368,6 +383,21 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: Linux Installer rpm
+      - name: Install Ballerina RPM
+        run: rpm -ivh ballerina-*-linux-x64.rpm
+      - name: Update Installer Test Configs
+        run: |
+          DISPLAY_TEXT=${{ needs.build-distribution.outputs.short-version }}
+          SWAN_LAKE_LATEST_VERSION="swan-lake-"+$DISPLAY_TEXT
+          SPEC_VERSION=${{ needs.build-lang.outputs.spec-version }}
+          perl -pi -e "s/^\s*swan-lake-latest-version-display-text=.*/swan-lake-latest-version-display-text=$DISPLAY_TEXT/" ballerina-distribution/ballerina-test-automation/gradle.properties
+          perl -pi -e "s/^\s*swan-lake-latest-version=.*/swan-lake-latest-version=$SWAN_LAKE_LATEST_VERSION/" ballerina-distribution/ballerina-test-automation/gradle.properties
+          perl -pi -e "s/^\s*swan-lake-latest-spec-version=.*/swan-lake-latest-spec-version=$SPEC_VERSION/" ballerina-distribution/ballerina-test-automation/gradle.properties
+      - name: Run Installer Tests
+        working-directory: ./ballerina-distribution/ballerina-test-automation/installer-test
+        run: ./../gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
+        env:
+          TEST_MODE_ACTIVE: true
 
   macos-installer-build:
     needs: [build-lang, build-distribution]
@@ -399,6 +429,21 @@ jobs:
         with:
           name: MacOS Installer pkg
           path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-x64.pkg
+      - name: Install Ballerina PKG
+        run: sudo installer -pkg ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-x64.pkg -target /
+      - name: Update Installer Test Configs
+        run: |
+          DISPLAY_TEXT=${{ needs.build-distribution.outputs.short-version }}
+          SWAN_LAKE_LATEST_VERSION="swan-lake-"+$DISPLAY_TEXT
+          SPEC_VERSION=${{ needs.build-lang.outputs.spec-version }}
+          perl -pi -e "s/^\s*swan-lake-latest-version-display-text=.*/swan-lake-latest-version-display-text=$DISPLAY_TEXT/" ballerina-distribution/ballerina-test-automation/gradle.properties
+          perl -pi -e "s/^\s*swan-lake-latest-version=.*/swan-lake-latest-version=$SWAN_LAKE_LATEST_VERSION/" ballerina-distribution/ballerina-test-automation/gradle.properties
+          perl -pi -e "s/^\s*swan-lake-latest-spec-version=.*/swan-lake-latest-spec-version=$SPEC_VERSION/" ballerina-distribution/ballerina-test-automation/gradle.properties
+      - name: Run Installer Tests
+        working-directory: ./ballerina-distribution/ballerina-test-automation/installer-test
+        run: ./../gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
+        env:
+          TEST_MODE_ACTIVE: true
 
   windows-installer-build:
     needs: [build-lang, build-distribution]
@@ -439,6 +484,25 @@ jobs:
         with:
           name: Windows Installer msi
           path: w\target\msi\ballerina-*-windows-x64.msi
+      - name: Install Ballerina msi
+        run: msiexec /i w\target\msi\ballerina-${{ needs.build-distribution.outputs.project-version }}-windows-x64.msi /quiet /qr
+        shell: cmd
+      - name: Update Installer Test Configs
+        run: |
+          set DISPLAY_TEXT=${{ needs.build-distribution.outputs.short-version }}
+          set SWAN_LAKE_LATEST_VERSION=swan-lake-%DISPLAY_TEXT%
+          set SPEC_VERSION=${{ needs.build-lang.outputs.spec-version }}
+          perl -pi -e "s/^\s*swan-lake-latest-version-display-text=.*/swan-lake-latest-version-display-text=%DISPLAY_TEXT%/" ballerina-distribution/ballerina-test-automation/gradle.properties
+          perl -pi -e "s/^\s*swan-lake-latest-version=.*/swan-lake-latest-version=%SWAN_LAKE_LATEST_VERSION%/" ballerina-distribution/ballerina-test-automation/gradle.properties
+          perl -pi -e "s/^\s*swan-lake-latest-spec-version=.*/swan-lake-latest-spec-version=%SPEC_VERSION%/" ballerina-distribution/ballerina-test-automation/gradle.properties
+        shell: cmd
+      - name: Run Installer Tests
+        working-directory: .\ballerina-distribution\ballerina-test-automation\installer-test
+        run: |
+          $env:Path += ";C:\Program Files\Ballerina\bin"
+          .\..\gradlew build --stacktrace -scan --console=plain --no-daemon -DballerinaInstalled=true
+        env:
+          TEST_MODE_ACTIVE: true
 
   nballerina-build:
     needs: build-distribution
