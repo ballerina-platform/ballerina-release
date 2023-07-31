@@ -4,7 +4,6 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		io
 		"jballerina.java.arrays"
-		regex
 		time
 		url
 		xmldata
