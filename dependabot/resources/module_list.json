@@ -172,9 +172,6 @@
             "name": "module-ballerina-random"
         },
         {
-            "name": "module-ballerina-regex"
-        },
-        {
             "name": "module-ballerina-sql"
         },
         {
