@@ -81,9 +81,14 @@ digraph "Stdlib Dependency Graph" {
 		mssql
 		mysql
 		oracledb
-		"persist.sql"
 		postgresql
 		label="level 8"
+	}
+	subgraph cluster_9 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		"persist.sql"
+		label="level 9"
 	}
 	io -> log
 	io -> os
@@ -156,6 +161,7 @@ digraph "Stdlib Dependency Graph" {
 	sql -> mssql
 	sql -> mysql
 	sql -> oracledb
-	sql -> "persist.sql"
 	sql -> postgresql
+	mssql -> "persist.sql"
+	mysql -> "persist.sql"
 }
