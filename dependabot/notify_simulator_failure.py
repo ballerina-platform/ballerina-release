@@ -13,9 +13,9 @@ def main():
     github = Github(ballerina_bot_token)
     repo = github.get_repo(constants.BALLERINA_ORG_NAME + '/' + "ballerina-distribution")
 
-    message = "*Language server simulator failure in (" + str(sys.argv[0]) + ")*" + \
+    message = "*Language server simulator failure in (" + str(sys.argv[1]) + ")*" + \
               "Please visit the <https://github.com/ballerina-platform/ballerina-distribution/actions/runs/" + \
-              + str(sys.argv[1]) + "|the LS simulator run>" + \
+              str(sys.argv[2]) + "| LS simulator run>" + \
               "for more information\n"
 
     try:
