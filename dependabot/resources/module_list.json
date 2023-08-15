@@ -172,6 +172,9 @@
             "name": "module-ballerina-random"
         },
         {
+            "name": "module-ballerina-soap"
+        },
+        {
             "name": "module-ballerina-sql"
         },
         {
