@@ -58,6 +58,7 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		grpc
+		soap
 		transaction
 		websocket
 		websub
@@ -125,6 +126,7 @@ digraph "Stdlib Dependency Graph" {
 	protobuf -> grpc
 	random -> grpc
 	random -> kafka
+	random -> rabbitmq
 	random -> websub
 	random -> websubhub
 	task -> cache
@@ -140,6 +142,7 @@ digraph "Stdlib Dependency Graph" {
 	mime -> email
 	mime -> http
 	uuid -> grpc
+	uuid -> soap
 	uuid -> transaction
 	uuid -> websocket
 	uuid -> websub
@@ -148,6 +151,7 @@ digraph "Stdlib Dependency Graph" {
 	jwt -> http
 	oauth2 -> http
 	http -> grpc
+	http -> soap
 	http -> transaction
 	http -> websocket
 	http -> websub
