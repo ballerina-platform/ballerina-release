@@ -43,6 +43,7 @@ digraph "Stdlib Dependency Graph" {
 		auth
 		email
 		jwt
+		mqtt
 		oauth2
 		toml
 		yaml
@@ -115,6 +116,7 @@ digraph "Stdlib Dependency Graph" {
 	log -> ftp
 	log -> jwt
 	log -> mime
+	log -> mqtt
 	log -> nats
 	log -> oauth2
 	log -> tcp
@@ -142,6 +144,7 @@ digraph "Stdlib Dependency Graph" {
 	mime -> email
 	mime -> http
 	uuid -> grpc
+	uuid -> mqtt
 	uuid -> soap
 	uuid -> transaction
 	uuid -> websocket
