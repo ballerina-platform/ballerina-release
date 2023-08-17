@@ -93,6 +93,7 @@
         },
         {
             "name": "module-ballerinax-java.jms",
+            "version_key": "stdlibJmsVersion",
             "push_to_central": false
         },
         {
