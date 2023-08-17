@@ -92,6 +92,11 @@
             "push_to_central": false
         },
         {
+            "name": "module-ballerinax-java.jms",
+            "version_key": "stdlibJmsVersion",
+            "push_to_central": false
+        },
+        {
             "name": "module-ballerina-jballerina.java.arrays",
             "version_key": "stdlibJavaArraysVersion"
         },
