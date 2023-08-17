@@ -42,6 +42,7 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		auth
 		email
+		"java.jms"
 		jwt
 		mqtt
 		oauth2
@@ -114,6 +115,7 @@ digraph "Stdlib Dependency Graph" {
 	log -> auth
 	log -> file
 	log -> ftp
+	log -> "java.jms"
 	log -> jwt
 	log -> mime
 	log -> mqtt
@@ -144,6 +146,7 @@ digraph "Stdlib Dependency Graph" {
 	mime -> email
 	mime -> http
 	uuid -> grpc
+	uuid -> "java.jms"
 	uuid -> mqtt
 	uuid -> soap
 	uuid -> transaction
