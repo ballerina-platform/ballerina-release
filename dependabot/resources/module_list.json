@@ -118,7 +118,12 @@
             "name": "module-ballerina-mime"
         },
         {
-            "name": "module-ballerina-mqtt"
+            "name": "module-ballerina-mqtt",
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mqtt-ballerina",
+            "version_key": "stdlibMqttVersion",
+            "push_to_central": true,
+            "is_extended_library_module": false
         },
         {
             "name": "module-ballerinax-mssql",
