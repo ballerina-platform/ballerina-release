@@ -484,7 +484,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-oauth2",
@@ -655,7 +657,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "asyncapi-tools",
