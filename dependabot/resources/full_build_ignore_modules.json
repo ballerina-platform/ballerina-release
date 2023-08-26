@@ -2,7 +2,8 @@
   "master": {
     "test-ignore-modules": [],
     "build-ignore-modules": [],
-    "downstream-repo-branches": {}
+    "downstream-repo-branches": {},
+    "additional-arguments": {}
   },
   "2201.7.x": {
     "test-ignore-modules": [],
@@ -10,7 +11,8 @@
     "downstream-repo-branches": {
       "ballerina-dev-tools": "1.2.x",
       "openapi-tools": "1.7.x"
-    }
+    },
+    "additional-arguments": {}
   },
   "2201.6.x": {
     "test-ignore-modules": [],
@@ -18,7 +20,8 @@
     "downstream-repo-branches": {
       "ballerina-dev-tools": "1.1.x",
       "openapi-tools": "1.6.x"
-    }
+    },
+    "additional-arguments": {}
   },
   "2201.5.x": {
     "test-ignore-modules": [],
@@ -26,6 +29,9 @@
     "downstream-repo-branches": {
       "ballerina-dev-tools": "1.0.x",
       "openapi-tools": "1.5.x"
+    },
+    "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
     }
   },
   "2201.4.x": {
@@ -37,7 +43,8 @@
     "downstream-repo-branches": {
       "ballerina-dev-tools": "0.11.x",
       "openapi-tools": "1.4.x"
-    }
+    },
+    "additional-arguments": {}
   },
   "2201.3.x": {
     "test-ignore-modules": [],
@@ -54,6 +61,7 @@
       "openapi-tools": "1.3.x",
       "module-ballerina-grpc": "2201.3.x",
       "ballerina-dev-tools": "0.10.x"
-    }
+    },
+    "additional-arguments": {}
   }
 }

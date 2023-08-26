@@ -76,6 +76,7 @@ released_stdlib_versions = dict()
 test_ignore_modules = []
 build_ignore_modules = []
 downstream_repo_branches = dict()
+additional_arguments = dict()
 released_version_data_file_url = None
 distribution_level = None
 module_list_json = "https://raw.githubusercontent.com/ballerina-platform/" + \
@@ -88,6 +89,7 @@ def main():
     global test_ignore_modules
     global build_ignore_modules
     global downstream_repo_branches
+    global additional_arguments
     global github_user
     global stdlib_versions
     global released_stdlib_versions
@@ -294,13 +296,14 @@ def main():
                                update_stdlib_dependencies, keep_local_changes, downstream_branch)
 
                 if start_build:
+                    build_commands = commands.copy()
                     if not skip_tests and test_module and test_module != module_name:
-                        build_commands = commands.copy()
                         build_commands.append("-x")
                         build_commands.append("test")
-                        return_code = build_module(module_name, build_commands)
-                    else:
-                        return_code = build_module(module_name, commands)
+                    if module_name in additional_arguments:
+                        build_commands += additional_arguments[module_name]
+
+                    return_code = build_module(module_name, build_commands)
 
                     if return_code != 0:
                         exit_code = return_code
@@ -616,6 +619,7 @@ def read_ignore_modules(patch_level):
     global test_ignore_modules
     global build_ignore_modules
     global downstream_repo_branches
+    global additional_arguments
 
     try:
         response = requests.get(TEST_IGNORE_MODULES_JSON)
@@ -625,10 +629,12 @@ def read_ignore_modules(patch_level):
                 test_ignore_modules = data[patch_level]['test-ignore-modules']
                 build_ignore_modules = data[patch_level]['build-ignore-modules']
                 downstream_repo_branches = data[patch_level]['downstream-repo-branches']
+                additional_arguments = data[patch_level]['additional-arguments']
             else:
                 test_ignore_modules = data['master']['test-ignore-modules']
                 build_ignore_modules = data['master']['build-ignore-modules']
                 downstream_repo_branches = data['master']['downstream-repo-branches']
+                additional_arguments = data['master']['additional-arguments']
         else:
             print_error(f"Failed to load test ignore modules from {TEST_IGNORE_MODULES_JSON}")
             exit(1)
