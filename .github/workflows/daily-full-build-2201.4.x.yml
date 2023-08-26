@@ -428,6 +428,9 @@ jobs:
           pip install httplib2
       - name: Clone nBallerina repository
         run: git clone https://github.com/ballerina-platform/nballerina.git
+      - name: Switch to last working nBallerina commit
+        run: git checkout jballerina-2201.4
+        working-directory: nballerina
       - name: Download Linux Deb Installer
         uses: actions/download-artifact@v2
         with:

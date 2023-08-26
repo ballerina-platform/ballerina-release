@@ -8,7 +8,10 @@
   "2201.7.x": {
     "test-ignore-modules": [],
     "build-ignore-modules": [],
-    "downstream-repo-branches": {},
+    "downstream-repo-branches": {
+      "ballerina-dev-tools": "1.2.x",
+      "openapi-tools": "1.7.x"
+    },
     "additional-arguments": {}
   },
   "2201.6.x": {
