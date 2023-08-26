@@ -373,7 +373,9 @@ def process_module(module_name, module_version_key, lang_version, patch_level, u
         if module_name in downstream_repo_branches:
             module_branch = downstream_repo_branches[module_name]
             print_info(f"Using defined branch {module_branch} in {TEST_IGNORE_MODULES_JSON}")
-        checkout_branch(module_branch, keep_local_changes, module_version_key, False)
+            checkout_branch(module_branch, keep_local_changes, module_version_key, False)
+        else:
+            checkout_branch(module_branch, keep_local_changes, module_version_key, use_released_versions)
     elif patch_level:
         module_branch = patch_level
         print_info(f"Using patch branch {module_branch} for {BALLERINA_DIST_REPO_NAME}")
