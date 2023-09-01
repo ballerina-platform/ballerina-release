@@ -3,13 +3,28 @@
     "test-ignore-modules": [],
     "build-ignore-modules": [],
     "downstream-repo-branches": {},
-    "additional-arguments": {}
+    "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
+    }
+  },
+  "2201.8.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {},
+    "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
+    }
   },
   "2201.7.x": {
     "test-ignore-modules": [],
     "build-ignore-modules": [],
-    "downstream-repo-branches": {},
-    "additional-arguments": {}
+    "downstream-repo-branches": {
+      "ballerina-dev-tools": "1.2.x",
+      "openapi-tools": "1.7.x"
+    },
+    "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
+    }
   },
   "2201.6.x": {
     "test-ignore-modules": [],
@@ -18,7 +33,9 @@
       "ballerina-dev-tools": "1.1.x",
       "openapi-tools": "1.6.x"
     },
-    "additional-arguments": {}
+    "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
+    }
   },
   "2201.5.x": {
     "test-ignore-modules": [],
