@@ -4,7 +4,6 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		io
 		"jballerina.java.arrays"
-		regex
 		time
 		url
 		xmldata
@@ -43,7 +42,9 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		auth
 		email
+		"java.jms"
 		jwt
+		mqtt
 		oauth2
 		toml
 		yaml
@@ -59,6 +60,7 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		grpc
+		soap
 		transaction
 		websocket
 		websub
@@ -82,9 +84,14 @@ digraph "Stdlib Dependency Graph" {
 		mssql
 		mysql
 		oracledb
-		"persist.sql"
 		postgresql
 		label="level 8"
+	}
+	subgraph cluster_9 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		"persist.sql"
+		label="level 9"
 	}
 	io -> log
 	io -> os
@@ -108,8 +115,10 @@ digraph "Stdlib Dependency Graph" {
 	log -> auth
 	log -> file
 	log -> ftp
+	log -> "java.jms"
 	log -> jwt
 	log -> mime
+	log -> mqtt
 	log -> nats
 	log -> oauth2
 	log -> tcp
@@ -121,6 +130,7 @@ digraph "Stdlib Dependency Graph" {
 	protobuf -> grpc
 	random -> grpc
 	random -> kafka
+	random -> rabbitmq
 	random -> websub
 	random -> websubhub
 	task -> cache
@@ -136,6 +146,9 @@ digraph "Stdlib Dependency Graph" {
 	mime -> email
 	mime -> http
 	uuid -> grpc
+	uuid -> "java.jms"
+	uuid -> mqtt
+	uuid -> soap
 	uuid -> transaction
 	uuid -> websocket
 	uuid -> websub
@@ -144,6 +157,7 @@ digraph "Stdlib Dependency Graph" {
 	jwt -> http
 	oauth2 -> http
 	http -> grpc
+	http -> soap
 	http -> transaction
 	http -> websocket
 	http -> websub
@@ -157,6 +171,7 @@ digraph "Stdlib Dependency Graph" {
 	sql -> mssql
 	sql -> mysql
 	sql -> oracledb
-	sql -> "persist.sql"
 	sql -> postgresql
+	mssql -> "persist.sql"
+	mysql -> "persist.sql"
 }
