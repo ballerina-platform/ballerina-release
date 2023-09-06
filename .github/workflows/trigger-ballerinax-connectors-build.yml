@@ -32,7 +32,7 @@ jobs:
       - name: Trigger repository dispatch
         run: |
           curl --request \
-          POST 'https://api.github.com/repos/ballerina-platform/${{matrix.modules}}/dispatches' \
+          POST 'https://api.github.com/repos/ballerina-platform/${{matrix.name}}/dispatches' \
           --header 'Accept: application/vnd.github.v3+json' \
           --header 'Content-Type: application/json' \
           --header 'Authorization: token ${{secrets.BALLERINA_BOT_TOKEN}}' \
