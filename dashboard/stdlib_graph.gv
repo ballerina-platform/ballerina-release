@@ -130,6 +130,7 @@ digraph "Stdlib Dependency Graph" {
 	protobuf -> grpc
 	random -> grpc
 	random -> kafka
+	random -> mqtt
 	random -> rabbitmq
 	random -> websub
 	random -> websubhub
