@@ -3,7 +3,7 @@ name: Trigger ballerinax connectors build
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 18 * * *'   # 00:00 in LK time (GMT+5:30)
+    - cron: '30 19 * * *'   # 01:00AM IST (GMT+5:30) 
 
 jobs:
   get_connector_list:
