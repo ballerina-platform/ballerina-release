@@ -185,14 +185,6 @@
             "name": "module-ballerina-random"
         },
         {
-            "name": "module-ballerina-soap",
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "soap-ballerina",
-            "version_key": "stdlibSoapVersion",
-            "push_to_central": true,
-            "is_extended_library_module": false
-        },
-        {
             "name": "module-ballerina-sql"
         },
         {
