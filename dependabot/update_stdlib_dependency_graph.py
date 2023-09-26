@@ -40,10 +40,10 @@ def read_stdlib_modules():
             stdlib_modules_data = json.loads(response.text)
             read_dependency_data(stdlib_modules_data)
         else:
-            print('Failed to access standard library dependency data from', stdlib_modules_json_file)
+            print('Failed to access Ballerina library dependency data from', stdlib_modules_json_file)
 
     except json.decoder.JSONDecodeError:
-        print('Failed to load standard library dependency data')
+        print('Failed to load Ballerina library dependency data')
 
 
 def read_dependency_data(stdlib_modules_data):
