@@ -11,6 +11,15 @@ Following are the main components of the Ballerina platform.
 
 ## Components of Ballerina Platform
 
+Ballerina platform release consists of multiple components across multiple repositories. This section describes the main components of the Ballerina platform and the repositories that are related to each component.
+
+<figure>
+  <img
+  src="resources/ballerina-repo-structure.png"
+  alt="Ballerina Platform Repository Structure">
+  <figcaption>Ballerina Platform Repository Structure</figcaption>
+</figure>
+
 ### Ballerina Language
 
 This is the heart of the Ballerina platform. It includes the Ballerina compiler, the Ballerina runtime, and the Ballerina language server. The source repository of the Ballerina language is [ballerina-lang](https://github.com/ballerina-platform/ballerina-lang). All the issues related to Ballerina language are reported and tracked in this repository.
