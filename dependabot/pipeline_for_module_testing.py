@@ -51,7 +51,7 @@ def main():
         change_version_to_snapshot()
         build_stdlib_repositories(enable_tests)
     else:
-        print('Could not find standard library dependency data from', stdlib_modules_json_file)
+        print('Could not find Ballerina library dependency data from', stdlib_modules_json_file)
 
 
 def read_stdlib_modules(test_module_name):
@@ -62,11 +62,11 @@ def read_stdlib_modules(test_module_name):
             stdlib_modules_data = json.loads(response.text)
             read_dependency_data(stdlib_modules_data, test_module_name)
         else:
-            print('Failed to access standard library dependency data from', stdlib_modules_json_file)
+            print('Failed to access Ballerina library dependency data from', stdlib_modules_json_file)
             sys.exit(1)
 
     except json.decoder.JSONDecodeError:
-        print('Failed to load standard library dependency data')
+        print('Failed to load Ballerina library dependency data')
         sys.exit(1)
 
 
@@ -127,7 +127,7 @@ def clone_repositories():
     if exit_code != 0:
         sys.exit(1)
 
-    # Clone standard library repos
+    # Clone Ballerina library repos
     stdlib_levels = list(stdlib_modules_by_level.keys())
     stdlib_levels.sort()
     for level in stdlib_levels:
@@ -173,13 +173,13 @@ def build_stdlib_repositories(enable_tests):
         sys.exit(1)
     delete_module('ballerina-lang')
 
-    # Build standard library repos
+    # Build Ballerina library repos
     stdlib_levels = list(stdlib_modules_by_level.keys())
     stdlib_levels.sort()
     for level in stdlib_levels:
         stdlib_modules = stdlib_modules_by_level[level]
         for module in stdlib_modules:
-            os.system(f"echo Building Standard Library Module: {module['name']}")
+            os.system(f"echo Building Ballerina Library Module: {module['name']}")
 
             remove_dependency_files(module['name'])
 
@@ -225,7 +225,7 @@ def change_version_to_snapshot():
 
     print("Lang Version:", lang_version)
 
-    # Read standard library module versions
+    # Read Ballerina library module versions
     stdlib_module_versions = dict()
     for level in stdlib_modules_by_level:
         stdlib_modules = stdlib_modules_by_level[level]
