@@ -246,6 +246,7 @@
                 "module-ballerinax-kafka",
                 "module-ballerina-mqtt",
                 "module-ballerinax-rabbitmq",
+                "module-ballerina-soap",
                 "module-ballerina-websub",
                 "module-ballerina-websubhub"
             ]
@@ -380,7 +381,6 @@
                 "module-ballerinax-java.jms",
                 "module-ballerina-mqtt",
                 "module-ballerinax-prometheus",
-                "module-ballerina-soap",
                 "asyncapi-tools",
                 "module-ballerinai-transaction",
                 "module-ballerina-websocket",
@@ -587,7 +587,6 @@
                 "module-ballerina-grpc",
                 "module-ballerinax-jaeger",
                 "module-ballerinax-prometheus",
-                "module-ballerina-soap",
                 "asyncapi-tools",
                 "module-ballerinai-transaction",
                 "module-ballerina-websocket",
@@ -647,22 +646,6 @@
             ]
         },
         {
-            "name": "module-ballerina-soap",
-            "level": 6,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "soap-ballerina",
-            "version_key": "stdlibSoapVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
             "name": "asyncapi-tools",
             "level": 6,
             "group_id": "io.ballerina",
@@ -693,6 +676,7 @@
             "dependents": [
                 "module-ballerinax-kafka",
                 "module-ballerinax-rabbitmq",
+                "module-ballerina-soap",
                 "module-ballerina-sql"
             ]
         },
@@ -762,6 +746,22 @@
                 "graphql-tools",
                 "openapi-tools",
                 "ballerina-dev-tools"
+            ]
+        },
+        {
+            "name": "module-ballerina-soap",
+            "level": 7,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "soap-ballerina",
+            "version_key": "stdlibSoapVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
             ]
         },
         {
