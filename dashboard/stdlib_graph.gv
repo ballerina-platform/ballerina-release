@@ -61,7 +61,6 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		grpc
-		soap
 		transaction
 		websocket
 		websub
@@ -75,6 +74,7 @@ digraph "Stdlib Dependency Graph" {
 		kafka
 		"persist.googlesheets"
 		rabbitmq
+		soap
 		sql
 		label="level 7"
 	}
@@ -133,6 +133,7 @@ digraph "Stdlib Dependency Graph" {
 	random -> kafka
 	random -> mqtt
 	random -> rabbitmq
+	random -> soap
 	random -> websub
 	random -> websubhub
 	task -> cache
@@ -150,7 +151,6 @@ digraph "Stdlib Dependency Graph" {
 	uuid -> grpc
 	uuid -> "java.jms"
 	uuid -> mqtt
-	uuid -> soap
 	uuid -> transaction
 	uuid -> websocket
 	uuid -> websub
@@ -159,7 +159,6 @@ digraph "Stdlib Dependency Graph" {
 	jwt -> http
 	oauth2 -> http
 	http -> grpc
-	http -> soap
 	http -> transaction
 	http -> websocket
 	http -> websub
@@ -167,6 +166,7 @@ digraph "Stdlib Dependency Graph" {
 	transaction -> kafka
 	transaction -> "persist.googlesheets"
 	transaction -> rabbitmq
+	transaction -> soap
 	transaction -> sql
 	websocket -> graphql
 	sql -> "java.jdbc"
