@@ -130,7 +130,7 @@ def main():
 
     extended_library_level = extensions_file['extended_library'][-1]['level']
 
-    print('Start dependency update for Ballerina Extended Library')
+    print('Start dependency update for Ballerina library')
     for j in range(last_level, extended_library_level):
         current_level = j + 1
         current_level_modules = list(filter(lambda s: s['level'] == current_level, extensions_file['extended_library']))

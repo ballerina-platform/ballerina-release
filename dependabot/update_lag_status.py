@@ -374,7 +374,7 @@ def get_updated_readme():
 
     updated_readme = update_modules(updated_readme, module_details_list, False)
 
-    updated_readme += "## Ballerina Extended Library" + "\n"
+    updated_readme += "## Ballerina library" + "\n"
 
     updated_readme += "| Level | Modules | Build | Lag Status | Pending Automated PR |" + "\n"
     updated_readme += "|:---:|:---:|:---:|:---:|:---:|" + "\n"
