@@ -16,7 +16,6 @@
 
 import ballerina/http;
 import ballerina/url;
-// import ballerina/log;
 import ballerina/os;
 import ballerinax/googleapis.sheets as sheets;
 import ballerina/time;
@@ -156,23 +155,11 @@ public function writeDataToSheet(HttpResponse response, sheets:Client spreadshee
     string[][] excelRows = [];
     Tables tableResult = <Tables>response.tables[0];
 
-    // UNCOMMENT THIS FOR INITIAL CONFIGURATIONS ONLY 
-
-    // foreach Column columns in tableResult.columns {
-    //     data.push(columns.name);
-    // }
-    // data.push("Date");
-    // excelRows.push(data);
-
     foreach string[] row in tableResult.rows {
         data = row;
         data.push(dateOfQuery);
         excelRows.push(data);
     }
-
-    // UNCOMMENT THIS FOR INITIAL CONFIGURATIONS ONLY 
-
-    // _ = check spreadsheetClient->addSheet(spreadsheetID, sheetName);
 
     sheets:A1Range a1Range = {
         sheetName: sheetName
