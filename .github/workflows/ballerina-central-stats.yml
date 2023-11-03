@@ -1,0 +1,30 @@
+name: Dashboard Extractor
+run-name: Testing out GitHub Actions Now
+on: [push]
+# on:
+#   workflow_dispatch:
+#   schedule:
+#     - cron: '30 18 * * *'   # 00:00 in LK time (GMT+5:30)
+
+
+jobs:
+  nballerina-build:
+    name: Build nBallerina
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ballerina-platform/setup-ballerina@v1
+        name: Install Ballerina
+        with:
+          version: 2201.7.4
+      - run: bal version
+      - name: Run Script
+        working-directory: ./centralStats/
+        env:
+          SPREADSHEET_CLIENT_ID: ${{secrets.SPREADSHEET_CLIENT_ID}}
+          SPREADSHEET_CLIENT_SECRET: ${{secrets.SPREADSHEET_CLIENT_SECRET}}
+          SPREADSHEET_REFRESH_TOKEN: ${{secrets.SPREADSHEET_REFRESH_TOKEN}}
+          SPREADSHEET_ID: ${{secrets.SPREADSHEET_ID}}
+          APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
+          API_KEY: ${{secrets.API_KEY}}
+        run: bal run 
