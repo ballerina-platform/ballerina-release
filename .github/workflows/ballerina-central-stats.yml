@@ -19,7 +19,7 @@ jobs:
           version: 2201.7.4
       - run: bal version
       - name: Run Script
-        working-directory: ./centralStats/
+        working-directory: ./central_stats/
         env:
           SPREADSHEET_CLIENT_ID: ${{secrets.SPREADSHEET_CLIENT_ID}}
           SPREADSHEET_CLIENT_SECRET: ${{secrets.SPREADSHEET_CLIENT_SECRET}}
