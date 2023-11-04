@@ -1,5 +1,5 @@
 name: Dashboard Extractor
-run-name: Testing out GitHub Actions Now
+run-name: Testing out GitHub Actions
 on: [push]
 # on:
 #   workflow_dispatch:
@@ -8,8 +8,8 @@ on: [push]
 
 
 jobs:
-  nballerina-build:
-    name: Build nBallerina
+  daily-central-stats-build:
+    name: Write Central Stats
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
