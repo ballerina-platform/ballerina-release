@@ -88,6 +88,8 @@ sheets:ConnectionConfig spreadsheetConfig = {
 
 sheets:Client spreadsheetClient = check new (spreadsheetConfig);
 
+http:Client http = check new http:Client(string `https://api.applicationinsights.io/v1/apps/${applicationID}`);
+
 public type HttpResponse record {
     Tables[] tables;
 };
@@ -104,64 +106,47 @@ public type Column record {
 };
 
 public function main() returns error? {
-    http:Client http = check new http:Client(string `https://api.applicationinsights.io/v1/apps/${applicationID}`);
 
     // pull count - ballerina/ballerinax
     string encodedQuery = check url:encode(queryPullCountOfBallerinaBallerinax, "UTF-8");
-    HttpResponse response = check http->/query.get({
-            [x_api_key] : apiKey
-        },
-        query = encodedQuery
-    );
 
-    _ = check writeDataToSheet(response, spreadsheetClient, "Packages - on Pull packages count - ballerina_ballerinax");
+    _ = check writeDataToSheet(encodedQuery, "Packages - on Pull packages count - ballerina_ballerinax");
 
     // pull count - country-wise
     encodedQuery = check url:encode(queryPullCountByCountry, "UTF-8");
-    response = check http->/query.get({
-            [x_api_key] : apiKey
-        },
-        query = encodedQuery
-    );
-    _ = check writeDataToSheet(response, spreadsheetClient, "Country-wise Count - Pull packages count");
+
+    _ = check writeDataToSheet(encodedQuery, "Country-wise Count - Pull packages count");
 
     // push count
     encodedQuery = check url:encode(queryPushCount, "UTF-8");
-    response = check http->/query.get({
-            [x_api_key] : apiKey
-        },
-        query = encodedQuery
-    );
-    _ = check writeDataToSheet(response, spreadsheetClient, "Country-wise Count - Push packages count");
+
+    _ = check writeDataToSheet(encodedQuery, "Country-wise Count - Push packages count");
 
     // distribution download count
     encodedQuery = check url:encode(queryDistDownloadCount, "UTF-8");
-    response = check http->/query.get({
-            [x_api_key] : apiKey
-        },
-        query = encodedQuery
-    );
-    _ = check writeDataToSheet(response, spreadsheetClient, "Country-wise Count - Distribution download count");
+
+    _ = check writeDataToSheet(encodedQuery, "Country-wise Count - Distribution download count");
 
     // packages - pull count
     encodedQuery = check url:encode(queryPackages, "UTF-8");
-    response = check http->/query.get({
-            [x_api_key] : apiKey
-        },
-        query = encodedQuery
-    );
-    _ = check writeDataToSheet(response, spreadsheetClient, "Packages - on Pull packages count");
+
+    _ = check writeDataToSheet(encodedQuery, "Packages - on Pull packages count");
 
 }
 
 # Description of the function.
 #
-# + response - Response of the http request
-# + spreadsheetClient - spreadsheetClient configured
+# + encodedQuery - query needed to pass
 # + sheetName - name of the sheet needed to be created
 # + return - Rows to be inserted to the excel sheet
 #
-public function writeDataToSheet(HttpResponse response, sheets:Client spreadsheetClient, string sheetName) returns error? {
+public function writeDataToSheet(string encodedQuery, string sheetName) returns error? {
+
+    HttpResponse response = check http->/query.get({
+            [x_api_key] : apiKey
+        },
+        query = encodedQuery
+    );
 
     sheets:A1Range a1Range = {
         sheetName: sheetName
