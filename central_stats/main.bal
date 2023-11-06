@@ -163,16 +163,13 @@ public function main() returns error? {
 #
 public function writeDataToSheet(HttpResponse response, sheets:Client spreadsheetClient, string sheetName) returns error? {
 
-    string[][] excelRows = [];
-    foreach string[] row in response.tables[0].rows {
-        row.push(dateOfQuery);
-        excelRows.push(row);
-    }
-
     sheets:A1Range a1Range = {
         sheetName: sheetName
     };
-    foreach string[] values in excelRows {
-        _ = check spreadsheetClient->appendValue(SPREADSHEET_ID, values, a1Range);
+
+    foreach string[] row in response.tables[0].rows {
+        row.push(dateOfQuery);
+        _ = check spreadsheetClient->appendValue(SPREADSHEET_ID, row, a1Range);
     }
+
 }
