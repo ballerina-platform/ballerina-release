@@ -21,6 +21,14 @@ import ballerinax/googleapis.sheets as sheets;
 import ballerina/time;
 
 configurable string timeDuration = "24h";
+configurable string SPREADSHEET_CLIENT_ID = os:getEnv("SPREADSHEET_CLIENT_ID");
+configurable string SPREADSHEET_CLIENT_SECRET = os:getEnv("SPREADSHEET_CLIENT_SECRET");
+configurable string SPREADSHEET_REFRESH_TOKEN = os:getEnv("SPREADSHEET_REFRESH_TOKEN");
+configurable string SPREADSHEET_ID = os:getEnv("SPREADSHEET_ID");
+configurable string applicationID = os:getEnv("APPLICATION_ID");
+configurable string apiKey = os:getEnv("API_KEY");
+const string x_api_key = "x-api-key";
+
 time:Utc utc = time:utcNow();
 time:Civil civil = time:utcToCivil(utc);
 string dateOfQuery = civil.day.toString() + "/" + civil.month.toString() + "/" + civil.year.toString();
@@ -69,13 +77,17 @@ let x = mainTable
 | sort by PullCount desc;
 x ;`;
 
-configurable string SPREADSHEET_CLIENT_ID = os:getEnv("SPREADSHEET_CLIENT_ID");
-configurable string SPREADSHEET_CLIENT_SECRET = os:getEnv("SPREADSHEET_CLIENT_SECRET");
-configurable string SPREADSHEET_REFRESH_TOKEN = os:getEnv("SPREADSHEET_REFRESH_TOKEN");
-configurable string SPREADSHEET_ID = os:getEnv("SPREADSHEET_ID");
-configurable string applicationID = os:getEnv("APPLICATION_ID");
-configurable string apiKey = os:getEnv("API_KEY");
-const string x_api_key = "x-api-key";
+sheets:ConnectionConfig spreadsheetConfig = {
+    auth: {
+        clientId: SPREADSHEET_CLIENT_ID,
+        clientSecret: SPREADSHEET_CLIENT_SECRET,
+        refreshUrl: sheets:REFRESH_URL,
+        refreshToken: SPREADSHEET_REFRESH_TOKEN
+    }
+};
+
+sheets:Client spreadsheetClient = check new (spreadsheetConfig);
+
 public type HttpResponse record {
     Tables[] tables;
 };
@@ -92,33 +104,22 @@ public type Column record {
 };
 
 public function main() returns error? {
-
     http:Client http = check new http:Client(string `https://api.applicationinsights.io/v1/apps/${applicationID}`);
-
-    sheets:ConnectionConfig spreadsheetConfig = {
-        auth: {
-            clientId: SPREADSHEET_CLIENT_ID,
-            clientSecret: SPREADSHEET_CLIENT_SECRET,
-            refreshUrl: sheets:REFRESH_URL,
-            refreshToken: SPREADSHEET_REFRESH_TOKEN
-        }
-    };
-
-    sheets:Client spreadsheetClient = check new (spreadsheetConfig);
 
     // pull count - ballerina/ballerinax
     string encodedQuery = check url:encode(queryPullCountOfBallerinaBallerinax, "UTF-8");
     HttpResponse response = check http->/query.get({
-            x_api_key: apiKey
+            [x_api_key] : apiKey
         },
         query = encodedQuery
     );
+
     _ = check writeDataToSheet(response, spreadsheetClient, "Packages - on Pull packages count - ballerina_ballerinax");
 
     // pull count - country-wise
     encodedQuery = check url:encode(queryPullCountByCountry, "UTF-8");
     response = check http->/query.get({
-            x_api_key: apiKey
+            [x_api_key] : apiKey
         },
         query = encodedQuery
     );
@@ -127,7 +128,7 @@ public function main() returns error? {
     // push count
     encodedQuery = check url:encode(queryPushCount, "UTF-8");
     response = check http->/query.get({
-            x_api_key: apiKey
+            [x_api_key] : apiKey
         },
         query = encodedQuery
     );
@@ -136,7 +137,7 @@ public function main() returns error? {
     // distribution download count
     encodedQuery = check url:encode(queryDistDownloadCount, "UTF-8");
     response = check http->/query.get({
-            x_api_key: apiKey
+            [x_api_key] : apiKey
         },
         query = encodedQuery
     );
@@ -145,7 +146,7 @@ public function main() returns error? {
     // packages - pull count
     encodedQuery = check url:encode(queryPackages, "UTF-8");
     response = check http->/query.get({
-            x_api_key: apiKey
+            [x_api_key] : apiKey
         },
         query = encodedQuery
     );
