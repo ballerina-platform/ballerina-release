@@ -17,8 +17,8 @@
 import ballerina/http;
 import ballerina/url;
 import ballerina/os;
-import ballerinax/googleapis.sheets as sheets;
 import ballerina/time;
+import ballerinax/googleapis.sheets as sheets;
 
 configurable string timeDuration = "24h";
 configurable string SPREADSHEET_CLIENT_ID = os:getEnv("SPREADSHEET_CLIENT_ID");
@@ -110,27 +110,27 @@ public function main() returns error? {
     // pull count - ballerina/ballerinax
     string encodedQuery = check url:encode(queryPullCountOfBallerinaBallerinax, "UTF-8");
 
-    _ = check writeDataToSheet(encodedQuery, "Packages - on Pull packages count - ballerina_ballerinax");
+    _ = check writeDataToSheet(encodedQuery, "Packages Count - ballerina_x");
 
     // pull count - country-wise
     encodedQuery = check url:encode(queryPullCountByCountry, "UTF-8");
 
-    _ = check writeDataToSheet(encodedQuery, "Country-wise Count - Pull packages count");
+    _ = check writeDataToSheet(encodedQuery, "Country-wise Count - Pull");
 
     // push count
     encodedQuery = check url:encode(queryPushCount, "UTF-8");
 
-    _ = check writeDataToSheet(encodedQuery, "Country-wise Count - Push packages count");
+    _ = check writeDataToSheet(encodedQuery, "Country-wise Count - Push");
 
     // distribution download count
     encodedQuery = check url:encode(queryDistDownloadCount, "UTF-8");
 
-    _ = check writeDataToSheet(encodedQuery, "Country-wise Count - Distribution download count");
+    _ = check writeDataToSheet(encodedQuery, "Country-wise Count-DistDownload");
 
     // packages - pull count
     encodedQuery = check url:encode(queryPackages, "UTF-8");
 
-    _ = check writeDataToSheet(encodedQuery, "Packages - on Pull packages count");
+    _ = check writeDataToSheet(encodedQuery, "Packages Count - Pull");
 
 }
 
