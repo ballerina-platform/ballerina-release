@@ -75,7 +75,7 @@ configurable string SPREADSHEET_REFRESH_TOKEN = os:getEnv("SPREADSHEET_REFRESH_T
 configurable string SPREADSHEET_ID = os:getEnv("SPREADSHEET_ID");
 configurable string applicationID = os:getEnv("APPLICATION_ID");
 configurable string apiKey = os:getEnv("API_KEY");
-
+const string x_api_key = "x-api-key";
 public type HttpResponse record {
     Tables[] tables;
 };
@@ -109,7 +109,7 @@ public function main() returns error? {
     // pull count - ballerina/ballerinax
     string encodedQuery = check url:encode(queryPullCountOfBallerinaBallerinax, "UTF-8");
     HttpResponse response = check http->/query.get({
-            "x-api-key": apiKey
+            x_api_key: apiKey
         },
         query = encodedQuery
     );
@@ -118,7 +118,7 @@ public function main() returns error? {
     // pull count - country-wise
     encodedQuery = check url:encode(queryPullCountByCountry, "UTF-8");
     response = check http->/query.get({
-            "x-api-key": apiKey
+            x_api_key: apiKey
         },
         query = encodedQuery
     );
@@ -127,7 +127,7 @@ public function main() returns error? {
     // push count
     encodedQuery = check url:encode(queryPushCount, "UTF-8");
     response = check http->/query.get({
-            "x-api-key": apiKey
+            x_api_key: apiKey
         },
         query = encodedQuery
     );
@@ -136,7 +136,7 @@ public function main() returns error? {
     // distribution download count
     encodedQuery = check url:encode(queryDistDownloadCount, "UTF-8");
     response = check http->/query.get({
-            "x-api-key": apiKey
+            x_api_key: apiKey
         },
         query = encodedQuery
     );
@@ -145,7 +145,7 @@ public function main() returns error? {
     // packages - pull count
     encodedQuery = check url:encode(queryPackages, "UTF-8");
     response = check http->/query.get({
-            "x-api-key": apiKey
+            x_api_key: apiKey
         },
         query = encodedQuery
     );
