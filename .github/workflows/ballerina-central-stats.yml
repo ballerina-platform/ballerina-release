@@ -1,5 +1,5 @@
 name: Dashboard Extractor
-run-name: Testing out GitHub Actions
+run-name: Daily write - Central Stats to excel sheet 
 on:
   workflow_dispatch:
   schedule:
