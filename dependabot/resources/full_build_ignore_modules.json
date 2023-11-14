@@ -62,7 +62,9 @@
       "openapi-tools": "1.4.x",
       "graphql-tools": "2201.4.x"
     },
-    "additional-arguments": {}
+    "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
+    }
   },
   "2201.3.x": {
     "test-ignore-modules": [],
