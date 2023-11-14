@@ -2,6 +2,7 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_1 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
+		"googleapis.gmail"
 		io
 		"jballerina.java.arrays"
 		"math.vector"
