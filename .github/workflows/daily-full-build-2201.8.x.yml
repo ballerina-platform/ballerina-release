@@ -1,4 +1,4 @@
-name: Daily Full Build Pipeline (2201.6.x)
+name: Daily Full Build Pipeline (2201.8.x)
 
 on:
   workflow_dispatch:
