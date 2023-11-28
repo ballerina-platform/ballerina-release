@@ -92,6 +92,11 @@
             "push_to_central": false
         },
         {
+            "name": "module-ballerinax-java.jms",
+            "version_key": "stdlibJmsVersion",
+            "push_to_central": false
+        },
+        {
             "name": "module-ballerina-jballerina.java.arrays",
             "version_key": "stdlibJavaArraysVersion"
         },
@@ -111,6 +116,14 @@
         },
         {
             "name": "module-ballerina-mime"
+        },
+        {
+            "name": "module-ballerina-mqtt",
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mqtt-ballerina",
+            "version_key": "stdlibMqttVersion",
+            "push_to_central": true,
+            "is_extended_library_module": false
         },
         {
             "name": "module-ballerinax-mssql",
@@ -172,7 +185,12 @@
             "name": "module-ballerina-random"
         },
         {
-            "name": "module-ballerina-regex"
+            "name": "module-ballerina-soap",
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "soap-ballerina",
+            "version_key": "stdlibSoapVersion",
+            "push_to_central": true,
+            "is_extended_library_module": false
         },
         {
             "name": "module-ballerina-sql"

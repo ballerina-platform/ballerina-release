@@ -11,8 +11,6 @@ from pathlib import Path
 from configobj import ConfigObj
 
 # Resources
-MODULE_LIST_JSON = "https://raw.githubusercontent.com/ballerina-platform/" + \
-                   "ballerina-release/master/dependabot/resources/extensions.json"
 TEST_IGNORE_MODULES_JSON = "https://raw.githubusercontent.com/ballerina-platform/" + \
                            "ballerina-release/master/dependabot/resources/full_build_ignore_modules.json"
 
@@ -78,16 +76,20 @@ released_stdlib_versions = dict()
 test_ignore_modules = []
 build_ignore_modules = []
 downstream_repo_branches = dict()
+additional_arguments = dict()
 released_version_data_file_url = None
 distribution_level = None
+module_list_json = "https://raw.githubusercontent.com/ballerina-platform/" + \
+                   "ballerina-release/master/dependabot/resources/extensions.json"
 
 
 def main():
-    global MODULE_LIST_JSON
+    global module_list_json
     global stdlib_modules_by_level
     global test_ignore_modules
     global build_ignore_modules
     global downstream_repo_branches
+    global additional_arguments
     global github_user
     global stdlib_versions
     global released_stdlib_versions
@@ -193,6 +195,8 @@ def main():
     if args.patch_level:
         print_info(f"Using patch level: {args.patch_level}")
         patch_level = args.patch_level
+        module_list_json = "https://raw.githubusercontent.com/ballerina-platform/ballerina-release/" + \
+                           args.patch_level + "/dependabot/resources/extensions.json"
 
     if args.downstream_branch:
         print_info(f"Using downstream branch: {args.downstream_branch}")
@@ -292,13 +296,14 @@ def main():
                                update_stdlib_dependencies, keep_local_changes, downstream_branch)
 
                 if start_build:
+                    build_commands = commands.copy()
                     if not skip_tests and test_module and test_module != module_name:
-                        build_commands = commands.copy()
                         build_commands.append("-x")
                         build_commands.append("test")
-                        return_code = build_module(module_name, build_commands)
-                    else:
-                        return_code = build_module(module_name, commands)
+                    if module_name in additional_arguments:
+                        build_commands += additional_arguments[module_name]
+
+                    return_code = build_module(module_name, build_commands)
 
                     if return_code != 0:
                         exit_code = return_code
@@ -371,11 +376,15 @@ def process_module(module_name, module_version_key, lang_version, patch_level, u
         if module_name in downstream_repo_branches:
             module_branch = downstream_repo_branches[module_name]
             print_info(f"Using defined branch {module_branch} in {TEST_IGNORE_MODULES_JSON}")
+            checkout_branch(module_branch, keep_local_changes, module_version_key, False)
+        else:
+            checkout_branch(module_branch, keep_local_changes, module_version_key, use_released_versions)
     elif patch_level:
         module_branch = patch_level
         print_info(f"Using patch branch {module_branch} for {BALLERINA_DIST_REPO_NAME}")
-
-    checkout_branch(module_branch, keep_local_changes, module_version_key, use_released_versions)
+        checkout_branch(module_branch, keep_local_changes, module_version_key, False)
+    else:
+        checkout_branch(module_branch, keep_local_changes, module_version_key, use_released_versions)
 
     module_version = get_version()
     print_info(f"Module {module_name} version: {module_version}")
@@ -529,7 +538,7 @@ def read_stdlib_data(test_module):
     global stdlib_modules_by_level
 
     try:
-        response = requests.get(MODULE_LIST_JSON)
+        response = requests.get(module_list_json)
         if response.status_code == 200:
             stdlib_modules_data = json.loads(response.text)
             if test_module:
@@ -537,7 +546,7 @@ def read_stdlib_data(test_module):
             else:
                 read_data_for_fbp(stdlib_modules_data)
         else:
-            print_error(f"Failed to access standard library dependency data from {MODULE_LIST_JSON}")
+            print_error(f"Failed to access standard library dependency data from {module_list_json}")
             exit(1)
     except json.decoder.JSONDecodeError:
         print_error("Failed to load standard library dependency data")
@@ -572,7 +581,7 @@ def read_data_for_module_testing(stdlib_modules_data, test_module_name):
             module_dependencies[dependent] = module_dependencies.get(dependent, []) + [module_name]
 
     if test_module_name not in standard_library_data.keys():
-        print_error(f"Desired module {test_module_name} for testing was not found in {MODULE_LIST_JSON}")
+        print_error(f"Desired module {test_module_name} for testing was not found in {module_list_json}")
         exit(1)
 
     module_list = {test_module_name}
@@ -610,6 +619,7 @@ def read_ignore_modules(patch_level):
     global test_ignore_modules
     global build_ignore_modules
     global downstream_repo_branches
+    global additional_arguments
 
     try:
         response = requests.get(TEST_IGNORE_MODULES_JSON)
@@ -619,10 +629,12 @@ def read_ignore_modules(patch_level):
                 test_ignore_modules = data[patch_level]['test-ignore-modules']
                 build_ignore_modules = data[patch_level]['build-ignore-modules']
                 downstream_repo_branches = data[patch_level]['downstream-repo-branches']
+                additional_arguments = data[patch_level]['additional-arguments']
             else:
                 test_ignore_modules = data['master']['test-ignore-modules']
                 build_ignore_modules = data['master']['build-ignore-modules']
                 downstream_repo_branches = data['master']['downstream-repo-branches']
+                additional_arguments = data['master']['additional-arguments']
         else:
             print_error(f"Failed to load test ignore modules from {TEST_IGNORE_MODULES_JSON}")
             exit(1)
