@@ -2,7 +2,6 @@ digraph "Stdlib Dependency Graph" {
 	subgraph cluster_1 {
 		node [color=white style=filled]
 		color=lightgrey style=filled
-		"googleapis.gmail"
 		io
 		"jballerina.java.arrays"
 		"math.vector"
@@ -32,8 +31,6 @@ digraph "Stdlib Dependency Graph" {
 		file
 		ftp
 		mime
-		nats
-		"persist.inmemory"
 		tcp
 		udp
 		uuid
@@ -44,7 +41,6 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		auth
 		email
-		"java.jms"
 		jwt
 		mqtt
 		oauth2
@@ -72,28 +68,9 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		graphql
-		kafka
-		"persist.googlesheets"
-		rabbitmq
 		soap
 		sql
 		label="level 7"
-	}
-	subgraph cluster_8 {
-		node [color=white style=filled]
-		color=lightgrey style=filled
-		"java.jdbc"
-		mssql
-		mysql
-		oracledb
-		postgresql
-		label="level 8"
-	}
-	subgraph cluster_9 {
-		node [color=white style=filled]
-		color=lightgrey style=filled
-		"persist.sql"
-		label="level 9"
 	}
 	io -> log
 	io -> os
@@ -107,33 +84,24 @@ digraph "Stdlib Dependency Graph" {
 	time -> task
 	url -> oauth2
 	constraint -> cache
-	constraint -> nats
 	crypto -> auth
 	crypto -> jwt
-	crypto -> nats
 	crypto -> oauth2
 	crypto -> tcp
 	crypto -> uuid
 	log -> auth
 	log -> file
 	log -> ftp
-	log -> "java.jms"
 	log -> jwt
 	log -> mime
 	log -> mqtt
-	log -> nats
 	log -> oauth2
 	log -> tcp
 	log -> udp
 	os -> file
-	persist -> "persist.googlesheets"
-	persist -> "persist.inmemory"
-	persist -> "persist.sql"
 	protobuf -> grpc
 	random -> grpc
-	random -> kafka
 	random -> mqtt
-	random -> rabbitmq
 	random -> soap
 	random -> websub
 	random -> websubhub
@@ -150,7 +118,6 @@ digraph "Stdlib Dependency Graph" {
 	mime -> email
 	mime -> http
 	uuid -> grpc
-	uuid -> "java.jms"
 	uuid -> mqtt
 	uuid -> transaction
 	uuid -> websocket
@@ -164,17 +131,7 @@ digraph "Stdlib Dependency Graph" {
 	http -> websocket
 	http -> websub
 	http -> websubhub
-	transaction -> kafka
-	transaction -> "persist.googlesheets"
-	transaction -> rabbitmq
 	transaction -> soap
 	transaction -> sql
 	websocket -> graphql
-	sql -> "java.jdbc"
-	sql -> mssql
-	sql -> mysql
-	sql -> oracledb
-	sql -> postgresql
-	mssql -> "persist.sql"
-	mysql -> "persist.sql"
 }
