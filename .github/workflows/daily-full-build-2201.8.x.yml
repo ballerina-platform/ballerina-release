@@ -1,4 +1,4 @@
-name: Daily Full Build Pipeline (2201.4.x)
+name: Daily Full Build Pipeline (2201.8.x)
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     - cron: '30 18 * * *'   # 00:00 in LK time (GMT+5:30)
 
 env:
-  PATCH_LEVEL: 2201.4.x
-  DISTRIBUTION_BUILD_LEVEL: 11
+  PATCH_LEVEL: 2201.8.x
+  DISTRIBUTION_BUILD_LEVEL: 12
 
 jobs:
   build-lang:
@@ -30,11 +30,11 @@ jobs:
           pip install requests
           pip install PyGithub
           pip install cryptography
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17.0.7'
       - name: Build ballerina-lang
         run: python -u dependabot/full_build_pipeline.py ./ --lang-branch $PATCH_LEVEL --build-level 0
         env:
@@ -49,7 +49,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-          python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -93,11 +93,11 @@ jobs:
           pip install requests
           pip install PyGithub
           pip install cryptography
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17.0.7'
       - name: Setup NodeJs
         uses: actions/setup-node@v3
         with:
@@ -115,6 +115,9 @@ jobs:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
           devCentralToken: ${{ secrets.BALLERINA_DEV_CENTRAL_ACCESS_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
           TEST_MODE_ACTIVE: true
       - name: Notify Build Failure
         if: ${{ failure() }}
@@ -123,7 +126,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-          python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -153,11 +156,11 @@ jobs:
           pip install requests
           pip install PyGithub
           pip install cryptography
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17.0.7'
       - name: Download Ballerina Lang Artifacts
         uses: actions/download-artifact@v2
         with:
@@ -196,6 +199,11 @@ jobs:
         with:
           name: MacOS Installer ZIP
           path: ballerina-distribution/ballerina/build/distributions/ballerina-*-macos.zip
+      - name: Archive MacOS-ARM Installer ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS-ARM Installer ZIP
+          path: ballerina-distribution/ballerina/build/distributions/ballerina-*-macos-arm.zip
       - name: Archive Windows Installer ZIP
         uses: actions/upload-artifact@v2
         with:
@@ -241,7 +249,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-          python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -262,11 +270,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          distribution: 'temurin'
+          java-version: '17.0.7'
       - name: Setup Files
         run: |
           cd /etc/yum.repos.d/
@@ -308,11 +316,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17.0.7'
       - name: Download Ballerina Distribution
         run: |
           git clone https://github.com/ballerina-platform/ballerina-distribution.git
@@ -347,6 +355,37 @@ jobs:
         env:
           TEST_MODE_ACTIVE: true
 
+  macos-arm-installer-build:
+    needs: [build-lang, build-distribution]
+    name: Build MacOS ARM Installer
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17.0.7'
+      - name: Download Ballerina Distribution
+        run: |
+          git clone https://github.com/ballerina-platform/ballerina-distribution.git
+          cd ballerina-distribution
+          git checkout $PATCH_LEVEL
+      - name: Download MacOS-ARM Intaller Zip
+        uses: actions/download-artifact@v2
+        with:
+          name: MacOS-ARM Installer ZIP
+      - name: Create macos-pkg
+        id: run_installers_pkg
+        working-directory: ballerina-distribution/installers/mac
+        run: ./build-ballerina-macos-x64.sh -v ${{ needs.build-distribution.outputs.project-version }} -p ./../../../ -a arm
+      - name: Archive MacOS pkg
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS Installer pkg
+          path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-arm-x64.pkg
+
   windows-installer-build:
     needs: [build-lang, build-distribution]
     name: Build Windows Installer
@@ -354,11 +393,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17.0.7'
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '2.1.x'
@@ -414,11 +453,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          distribution: 'temurin'
+          java-version: '17.0.7'
       - name: Install Python Packages
         run: |
           pip install requests
@@ -428,9 +467,6 @@ jobs:
           pip install httplib2
       - name: Clone nBallerina repository
         run: git clone https://github.com/ballerina-platform/nballerina.git
-      - name: Switch to last working nBallerina commit
-        run: git checkout jballerina-2201.4
-        working-directory: nballerina
       - name: Download Linux Deb Installer
         uses: actions/download-artifact@v2
         with:

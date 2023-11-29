@@ -16,6 +16,9 @@ on:
         required: true
         options:
           - 'master'
+          - '2201.8.x'
+          - '2201.7.x'
+          - '2201.6.x'
           - '2201.5.x'
           - '2201.4.x'
           - '2201.3.x'
@@ -40,7 +43,7 @@ on:
         required: true
 
 env:
-  DISTRIBUTION_BUILD_LEVEL: 10
+  DISTRIBUTION_BUILD_LEVEL: 11
 
 jobs:
   build-lang:
@@ -63,7 +66,28 @@ jobs:
           pip install requests
           pip install PyGithub
           pip install cryptography
+      - name: Get Java Verison
+        id: java-version
+        run: |
+          JAVA_VERSION=""
+          patch_level=${{ github.event.inputs.patch_level }}
+          if [[ "$patch_level" == "master" ]]; then
+            JAVA_VERSION="17";
+          else
+            update_version="$(cut -d'.' -f2 <<<"$patch_level")" &&
+            update_version=$((update_version)) &&
+            if [[ $update_version -ge 8 ]]; then JAVA_VERSION="17"; else JAVA_VERSION="11"; fi;
+          fi;
+
+          echo "::set-output name=version::$JAVA_VERSION"
+      - name: Set up JDK 17.0.7
+        if: ${{ steps.java-version.outputs.version == '17' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17.0.7'
       - name: Set up JDK 11
+        if: ${{ steps.java-version.outputs.version == '11' }}
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
@@ -116,6 +140,7 @@ jobs:
     outputs:
       lang-version: ${{ steps.lang-version.outputs.version }}
       spec-version: ${{ steps.lang-version.outputs.specVersion }}
+      java-version: ${{ steps.java-version.outputs.version }}
 
   build-stdlibs:
     name: Build Standard Libraries & Tools
@@ -137,7 +162,14 @@ jobs:
           pip install requests
           pip install PyGithub
           pip install cryptography
+      - name: Set up JDK 17.0.7
+        if: ${{ needs.build-lang.outputs.java-version == '17' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17.0.7'
       - name: Set up JDK 11
+        if: ${{ needs.build-lang.outputs.java-version == '11' }}
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
@@ -225,7 +257,14 @@ jobs:
           pip install requests
           pip install PyGithub
           pip install cryptography
+      - name: Set up JDK 17.0.7
+        if: ${{ needs.build-lang.outputs.java-version == '17' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17.0.7'
       - name: Set up JDK 11
+        if: ${{ needs.build-lang.outputs.java-version == '11' }}
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
@@ -358,10 +397,17 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Set up JDK 11
+      - name: Set up JDK 17.0.7
+        if: ${{ needs.build-lang.outputs.java-version == '17' }}
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
+          distribution: 'temurin'
+          java-version: '17.0.7'
+      - name: Set up JDK 11
+        if: ${{ needs.build-lang.outputs.java-version == '11' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
           java-version: '11'
       - name: Setup Files
         run: |
@@ -404,7 +450,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: Set up JDK 17.0.7
+        if: ${{ needs.build-lang.outputs.java-version == '17' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17.0.7'
       - name: Set up JDK 11
+        if: ${{ needs.build-lang.outputs.java-version == '11' }}
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
@@ -450,7 +503,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: Set up JDK 17.0.7
+        if: ${{ needs.build-lang.outputs.java-version == '17' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17.0.7'
       - name: Set up JDK 11
+        if: ${{ needs.build-lang.outputs.java-version == '11' }}
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
@@ -503,17 +563,24 @@ jobs:
           TEST_MODE_ACTIVE: true
 
   nballerina-build:
-    needs: build-distribution
+    needs: [build-lang, build-distribution]
     name: Build nBallerina
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Set up JDK 11
+      - name: Set up JDK 17.0.7
+        if: ${{ needs.build-lang.outputs.java-version == '17' }}
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
+          distribution: 'temurin'
+          java-version: '17.0.7'
+      - name: Set up JDK 11
+        if: ${{ needs.build-lang.outputs.java-version == '11' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
           java-version: '11'
       - name: Install Python Packages
         run: |
