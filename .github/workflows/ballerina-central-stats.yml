@@ -20,10 +20,10 @@ jobs:
       - name: Run Script
         working-directory: ./central_stats/
         env:
-          SPREADSHEET_CLIENT_ID: ${{secrets.SPREADSHEET_CLIENT_ID}}
-          SPREADSHEET_CLIENT_SECRET: ${{secrets.SPREADSHEET_CLIENT_SECRET}}
-          SPREADSHEET_REFRESH_TOKEN: ${{secrets.SPREADSHEET_REFRESH_TOKEN}}
-          SPREADSHEET_ID: ${{secrets.SPREADSHEET_ID}}
-          APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
-          API_KEY: ${{secrets.API_KEY}}
+          BCENTRAL_SPREADSHEET_CLIENT_ID: ${{secrets.BCENTRAL_SPREADSHEET_CLIENT_ID}}
+          BCENTRAL_SPREADSHEET_CLIENT_SECRET: ${{secrets.BCENTRAL_SPREADSHEET_CLIENT_SECRET}}
+          BCENTRAL_SPREADSHEET_REFRESH_TOKEN: ${{secrets.BCENTRAL_SPREADSHEET_REFRESH_TOKEN}}
+          BCENTRAL_SPREADSHEET_ID: ${{secrets.BCENTRAL_SPREADSHEET_ID}}
+          AZURE_BCENTRAL_APP_ID: ${{ secrets.AZURE_BCENTRAL_APP_ID }}
+          AZURE_BCENTRAL_API_KEY: ${{secrets.AZURE_BCENTRAL_API_KEY}}
         run: bal run 

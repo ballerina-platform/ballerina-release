@@ -21,12 +21,12 @@ import ballerina/time;
 import ballerinax/googleapis.sheets as sheets;
 
 configurable string timeDuration = "24h";
-configurable string SPREADSHEET_CLIENT_ID = os:getEnv("SPREADSHEET_CLIENT_ID");
-configurable string SPREADSHEET_CLIENT_SECRET = os:getEnv("SPREADSHEET_CLIENT_SECRET");
-configurable string SPREADSHEET_REFRESH_TOKEN = os:getEnv("SPREADSHEET_REFRESH_TOKEN");
-configurable string SPREADSHEET_ID = os:getEnv("SPREADSHEET_ID");
-configurable string applicationID = os:getEnv("APPLICATION_ID");
-configurable string apiKey = os:getEnv("API_KEY");
+configurable string BCENTRAL_SPREADSHEET_CLIENT_ID = os:getEnv("BCENTRAL_SPREADSHEET_CLIENT_ID");
+configurable string BCENTRAL_SPREADSHEET_CLIENT_SECRET = os:getEnv("BCENTRAL_SPREADSHEET_CLIENT_SECRET");
+configurable string BCENTRAL_SPREADSHEET_REFRESH_TOKEN = os:getEnv("BCENTRAL_SPREADSHEET_REFRESH_TOKEN");
+configurable string BCENTRAL_SPREADSHEET_ID = os:getEnv("BCENTRAL_SPREADSHEET_ID");
+configurable string AZURE_BCENTRAL_APP_ID = os:getEnv("AZURE_BCENTRAL_APP_ID");
+configurable string AZURE_BCENTRAL_API_KEY = os:getEnv("AZURE_BCENTRAL_API_KEY");
 const string x_api_key = "x-api-key";
 
 time:Utc utc = time:utcNow();
@@ -79,16 +79,16 @@ x ;`;
 
 sheets:ConnectionConfig spreadsheetConfig = {
     auth: {
-        clientId: SPREADSHEET_CLIENT_ID,
-        clientSecret: SPREADSHEET_CLIENT_SECRET,
+        clientId: BCENTRAL_SPREADSHEET_CLIENT_ID,
+        clientSecret: BCENTRAL_SPREADSHEET_CLIENT_SECRET,
         refreshUrl: sheets:REFRESH_URL,
-        refreshToken: SPREADSHEET_REFRESH_TOKEN
+        refreshToken: BCENTRAL_SPREADSHEET_REFRESH_TOKEN
     }
 };
 
 sheets:Client spreadsheetClient = check new (spreadsheetConfig);
 
-http:Client http = check new http:Client(string `https://api.applicationinsights.io/v1/apps/${applicationID}`);
+http:Client http = check new http:Client(string `https://api.applicationinsights.io/v1/apps/${AZURE_BCENTRAL_APP_ID}`);
 
 public type HttpResponse record {
     Tables[] tables;
@@ -143,7 +143,7 @@ public function main() returns error? {
 public function writeDataToSheet(string encodedQuery, string sheetName) returns error? {
 
     HttpResponse response = check http->/query.get({
-            [x_api_key] : apiKey
+            [x_api_key] : AZURE_BCENTRAL_API_KEY
         },
         query = encodedQuery
     );
@@ -154,7 +154,7 @@ public function writeDataToSheet(string encodedQuery, string sheetName) returns 
 
     foreach string[] row in response.tables[0].rows {
         row.push(dateOfQuery);
-        _ = check spreadsheetClient->appendValue(SPREADSHEET_ID, row, a1Range);
+        _ = check spreadsheetClient->appendValue(BCENTRAL_SPREADSHEET_ID, row, a1Range);
     }
 
 }
