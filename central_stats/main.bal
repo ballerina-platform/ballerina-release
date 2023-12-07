@@ -13,12 +13,12 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
-
 import ballerina/http;
-import ballerina/url;
+import ballerina/lang.runtime;
+import ballerina/log;
 import ballerina/os;
 import ballerina/time;
-import ballerina/lang.runtime;
+import ballerina/url;
 import ballerinax/googleapis.sheets as sheets;
 
 configurable string timeDuration = "24h";
@@ -33,6 +33,8 @@ const string x_api_key = "x-api-key";
 time:Utc utc = time:utcNow();
 time:Civil civil = time:utcToCivil(utc);
 string dateOfQuery = civil.day.toString() + "/" + civil.month.toString() + "/" + civil.year.toString();
+int rowCountWrote = 0;
+time:Utc currentTimeBefore = time:utcNow(1);
 
 string queryPullCountOfBallerinaBallerinax = string `let mainTable_ballerina = customEvents
 | where timestamp > ago(${timeDuration})
@@ -155,8 +157,20 @@ public function writeDataToSheet(string encodedQuery, string sheetName) returns 
 
     foreach string[] row in response.tables[0].rows {
         row.push(dateOfQuery);
+        rowCountWrote += 1;
+        if rowCountWrote == 1 {
+            currentTimeBefore = time:utcNow(1);
+        }
+        if rowCountWrote % 60 == 0 {
+            time:Utc currentTimeAfter = time:utcNow(1);
+            time:Seconds utcDiffSeconds = time:utcDiffSeconds(currentTimeAfter, currentTimeBefore);
+            log:printInfo(string `Write requests per minute per user has reached the maximum allowed limit. Sleeping for ${60 - <int>utcDiffSeconds} seconds ...`);
+            runtime:sleep(60 - utcDiffSeconds + 5);
+            currentTimeBefore = time:utcNow(1);
+
+        }
         _ = check spreadsheetClient->appendValue(BCENTRAL_SPREADSHEET_ID, row, a1Range);
-        runtime:sleep(5);
+
     }
 
 }
