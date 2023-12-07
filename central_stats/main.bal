@@ -18,6 +18,7 @@ import ballerina/http;
 import ballerina/url;
 import ballerina/os;
 import ballerina/time;
+import ballerina/lang.runtime;
 import ballerinax/googleapis.sheets as sheets;
 
 configurable string timeDuration = "24h";
@@ -155,6 +156,7 @@ public function writeDataToSheet(string encodedQuery, string sheetName) returns 
     foreach string[] row in response.tables[0].rows {
         row.push(dateOfQuery);
         _ = check spreadsheetClient->appendValue(BCENTRAL_SPREADSHEET_ID, row, a1Range);
+        runtime:sleep(5);
     }
 
 }
