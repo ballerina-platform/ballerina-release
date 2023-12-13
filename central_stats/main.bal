@@ -13,11 +13,10 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
-
 import ballerina/http;
-import ballerina/url;
 import ballerina/os;
 import ballerina/time;
+import ballerina/url;
 import ballerinax/googleapis.sheets as sheets;
 
 configurable string timeDuration = "24h";
@@ -154,7 +153,8 @@ public function writeDataToSheet(string encodedQuery, string sheetName) returns 
 
     foreach string[] row in response.tables[0].rows {
         row.push(dateOfQuery);
-        _ = check spreadsheetClient->appendValue(BCENTRAL_SPREADSHEET_ID, row, a1Range);
+
     }
+    _ = check spreadsheetClient->appendValues(BCENTRAL_SPREADSHEET_ID, response.tables[0].rows, a1Range);
 
 }
