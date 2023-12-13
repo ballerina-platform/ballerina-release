@@ -15,7 +15,7 @@ jobs:
       - uses: ballerina-platform/setup-ballerina@v1
         name: Install Ballerina
         with:
-          version: 2201.7.4
+          version: 2201.8.4
       - run: bal version
       - name: Run Script
         working-directory: ./central_stats/
