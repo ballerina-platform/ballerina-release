@@ -11,7 +11,8 @@
             "artifact_id": "awslambda-extension-bala",
             "version_key": "awslambdaVersion",
             "build_action_file": "build-master",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerinax-azure.functions",
@@ -19,7 +20,8 @@
             "artifact_id": "azurefunctions-extension",
             "version_key": "azFunctionsVersion",
             "build_action_file": "build-master",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-c2c",
@@ -37,7 +39,8 @@
             "version_key": "observeExtChoreoVersion",
             "auto_merge": false,
             "build_action_file": "build-main",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-crypto"
@@ -48,7 +51,8 @@
             "artifact_id": "datamapper-extension",
             "version_key": "dataMapperVersion",
             "build_action_file": "build-master",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-docker",
@@ -84,17 +88,20 @@
             "artifact_id": "jaeger-extension-ballerina",
             "version_key": "observeExtJaegerVersion",
             "build_action_file": "build-main",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerinax-java.jdbc",
             "version_key": "stdlibJdbcVersion",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerinax-java.jms",
             "version_key": "stdlibJmsVersion",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-jballerina.java.arrays",
@@ -105,7 +112,8 @@
         },
         {
             "name": "module-ballerinax-kafka",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-log"
@@ -127,15 +135,18 @@
         },
         {
             "name": "module-ballerinax-mssql",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerinax-mysql",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerinax-nats",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-oauth2",
@@ -154,7 +165,8 @@
         },
         {
             "name": "module-ballerinax-oracledb",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-os"
@@ -164,7 +176,8 @@
         },
         {
             "name": "module-ballerinax-postgresql",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerinax-prometheus",
@@ -172,14 +185,16 @@
             "artifact_id": "prometheus-extension-ballerina",
             "version_key": "observeExtPrometheusVersion",
             "build_action_file": "build-main",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-protobuf"
         },
         {
             "name": "module-ballerinax-rabbitmq",
-            "push_to_central": false
+            "push_to_central": false,
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerina-random"
@@ -289,11 +304,13 @@
         },
         {
             "name": "module-ballerinax-persist.inmemory",
-            "version_key": "stdlibPersistInmemoryVersion"
+            "version_key": "stdlibPersistInmemoryVersion",
+            "is_extended_library_module": true
         },
         {
             "name": "module-ballerinax-persist.sql",
-            "version_key": "stdlibPersistSqlVersion"
+            "version_key": "stdlibPersistSqlVersion",
+            "is_extended_library_module": true
         }
     ]
 }
