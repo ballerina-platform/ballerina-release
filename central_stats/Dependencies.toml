@@ -310,7 +310,7 @@ dependencies = [
 [[package]]
 org = "ballerinax"
 name = "googleapis.sheets"
-version = "3.4.0"
+version = "3.5.0"
 dependencies = [
 	{org = "ballerina", name = "http"},
 	{org = "ballerina", name = "jballerina.java"},
