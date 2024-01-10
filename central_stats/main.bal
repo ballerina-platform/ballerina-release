@@ -30,7 +30,7 @@ const string x_api_key = "x-api-key";
 
 time:Utc utc = time:utcNow();
 time:Civil civil = time:utcToCivil(utc);
-string dateOfQuery = civil.day.toString() + "/" + civil.month.toString() + "/" + civil.year.toString();
+string dateOfQuery = civil.month.toString() + "/" + civil.day.toString() + "/" + civil.year.toString();
 
 string queryPullCountOfBallerinaBallerinax = string `let mainTable_ballerina = customEvents
 | where timestamp > ago(${timeDuration})
