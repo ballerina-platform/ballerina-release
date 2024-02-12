@@ -14,7 +14,6 @@
 // specific language governing permissions and limitations
 // under the License.
 import ballerina/http;
-import ballerina/io;
 import ballerina/os;
 import ballerina/time;
 import ballerina/url;
@@ -141,7 +140,6 @@ public function main() returns error? {
 # + return - Rows to be inserted to the excel sheet
 #
 public function writeDataToSheet(string encodedQuery, string sheetName) returns error? {
-    io:println("---------------------- Sheet Name: " + sheetName);
     HttpResponse response = check http->/query.get({
             [x_api_key] : AZURE_BCENTRAL_API_KEY
         },
@@ -156,8 +154,5 @@ public function writeDataToSheet(string encodedQuery, string sheetName) returns 
         row.push(dateOfQuery);
     }
 
-    io:println("Rows: ", response.tables[0].rows);
-
-    _ = check spreadsheetClient->appendValues(BCENTRAL_SPREADSHEET_ID, response.tables[0].rows, a1Range);
-    io:println("---------------------- End of Sheet " + sheetName);
+    _ = check spreadsheetClient->appendValues(BCENTRAL_SPREADSHEET_ID, response.tables[0].rows, a1Range, "USER_ENTERED");
 }
