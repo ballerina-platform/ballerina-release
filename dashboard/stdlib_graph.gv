@@ -15,6 +15,8 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		constraint
 		crypto
+		"data.jsondata"
+		"data.xmldata"
 		log
 		os
 		persist
@@ -72,6 +74,8 @@ digraph "Stdlib Dependency Graph" {
 		sql
 		label="level 7"
 	}
+	io -> "data.jsondata"
+	io -> "data.xmldata"
 	io -> log
 	io -> os
 	io -> xslt
