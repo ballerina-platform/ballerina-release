@@ -55,6 +55,14 @@
             "is_extended_library_module": true
         },
         {
+            "name": "module-ballerina-data.jsondata",
+            "version_key": "stdlibDataJsondataVersion"
+        },
+        {
+            "name": "module-ballerina-data.xmldata",
+            "version_key": "stdlibDataXmldataVersion"
+        },
+        {
             "name": "module-ballerina-docker",
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
