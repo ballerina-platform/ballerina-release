@@ -230,6 +230,7 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
           TEST_MODE_ACTIVE: true
+          CENTRAL_VERBOSE_ENABLED: true
       - name: Archive Standard Library Artifacts
         uses: actions/upload-artifact@v2
         with:
