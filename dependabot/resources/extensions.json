@@ -165,6 +165,20 @@
             ]
         },
         {
+            "name": "module-ballerina-data.xmldata",
+            "level": 2,
+            "group_id": "io.ballerina.lib",
+            "artifact_id": "data.xmldata-ballerina",
+            "version_key": "stdlibDataXmldataVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
             "name": "module-ballerinai-observe",
             "level": 2,
             "group_id": "io.ballerina",
@@ -405,6 +419,20 @@
             "dependents": [
                 "module-ballerina-http"
             ]
+        },
+        {
+            "name": "module-ballerina-data.jsondata",
+            "level": 4,
+            "group_id": "io.ballerina.lib",
+            "artifact_id": "data.jsondata-ballerina",
+            "version_key": "stdlibDataJsondataVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
         },
         {
             "name": "module-ballerina-file",
@@ -985,34 +1013,6 @@
             "push_to_central": false,
             "is_extended_library_module": true,
             "build_action_file": "build-main",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerina-data.jsondata",
-            "level": 13,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "data.jsondata-ballerina",
-            "version_key": "stdlibDataJsondataVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "module-ballerina-data.xmldata",
-            "level": 13,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "data.xmldata-ballerina",
-            "version_key": "stdlibDataXmldataVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": []
         },
