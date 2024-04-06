@@ -15,7 +15,6 @@ digraph "Stdlib Dependency Graph" {
 		color=lightgrey style=filled
 		constraint
 		crypto
-		"data.jsondata"
 		"data.xmldata"
 		log
 		os
@@ -42,6 +41,7 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		auth
+		"data.jsondata"
 		email
 		jwt
 		mqtt
@@ -74,7 +74,6 @@ digraph "Stdlib Dependency Graph" {
 		sql
 		label="level 7"
 	}
-	io -> "data.jsondata"
 	io -> "data.xmldata"
 	io -> log
 	io -> os
@@ -115,6 +114,7 @@ digraph "Stdlib Dependency Graph" {
 	cache -> auth
 	cache -> jwt
 	cache -> oauth2
+	file -> "data.jsondata"
 	file -> email
 	file -> http
 	file -> toml
