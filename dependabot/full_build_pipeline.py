@@ -58,6 +58,8 @@ parser.add_argument('--up-to-module', help="Build up to the specified module")
 parser.add_argument('--from-module', help="Build from the specified module")
 parser.add_argument('--test-module', help="Test the specified module (Only the dependency modules and dependent " +
                                           "modules will be built)")
+parser.add_argument('--only-build-distribution', action="store_true",
+                    help="If only the distribution should be built")
 parser.add_argument('--skip-build-distribution', action="store_true",
                     help="If the distribution build should be skipped")
 parser.add_argument('--additional-commands',
@@ -115,6 +117,7 @@ def main():
     test_module = None
     build_level = None
     build_distribution = True
+    only_build_distribution = False
 
     continue_on_error = False
     remove_after_build = False
@@ -211,6 +214,9 @@ def main():
         print_info("Skipping ballerina-distribution build")
         build_distribution = False
 
+    if args.only_build_distribution:
+        only_build_distribution = True
+
     if args.publish_to_local_central:
         print_info("Pushing all the modules to local ballerina central repository")
         commands.append("-PpublishToLocalCentral=true")
@@ -266,6 +272,9 @@ def main():
 
     start_build = False if from_module else True
     exit_code = 0
+    if only_build_distribution:
+        start_build = False
+
     module_levels = list(stdlib_modules_by_level.keys())
     module_levels.sort()
     for level in module_levels:
@@ -324,6 +333,7 @@ def main():
             write_failed_modules(failed_modules)
             exit(exit_code)
 
+    start_build = True
     if build_level:
         if int(build_level) == distribution_level:
             start_build = True
@@ -340,10 +350,13 @@ def main():
         process_module(BALLERINA_DIST_REPO_NAME, None, lang_version, patch_level, build_released_versions,
                        update_stdlib_dependencies, keep_local_changes, downstream_branch)
         dist_build_commands = commands.copy()
+
+        # Temporary
         dist_build_commands.append("-x")
         dist_build_commands.append(":project-api-tests:test")
         dist_build_commands.append("-x")
         dist_build_commands.append(":ballerina:testExamples")
+
         if not skip_tests and test_module and test_module != BALLERINA_DIST_REPO_NAME:
             dist_build_commands.append("-x")
             dist_build_commands.append("test")

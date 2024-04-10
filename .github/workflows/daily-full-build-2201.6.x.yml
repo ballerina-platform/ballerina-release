@@ -7,7 +7,6 @@ on:
 
 env:
   PATCH_LEVEL: 2201.6.x
-  DISTRIBUTION_BUILD_LEVEL: 10
 
 jobs:
   build-lang:
@@ -169,7 +168,7 @@ jobs:
       - name: Build ballerina-distribution
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --patch-level $PATCH_LEVEL --build-level $DISTRIBUTION_BUILD_LEVEL --continue-on-error
+          --patch-level $PATCH_LEVEL --only-build-distribution --continue-on-error
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
