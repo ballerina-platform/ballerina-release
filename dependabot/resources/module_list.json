@@ -6,6 +6,9 @@
             "name": "module-ballerina-auth"
         },
         {
+            "name": "module-ballerina-avro"
+        },
+        {
             "name": "module-ballerinax-aws.lambda",
             "group_id": "org.ballerinax.awslambda",
             "artifact_id": "awslambda-extension-bala",
