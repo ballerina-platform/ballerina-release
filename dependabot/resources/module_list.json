@@ -6,8 +6,7 @@
             "name": "module-ballerina-auth"
         },
         {
-            "name": "module-ballerina-avro",
-            "version_key": "stdlibAvroVersion"
+            "name": "module-ballerina-avro"
         },
         {
             "name": "module-ballerinax-aws.lambda",
