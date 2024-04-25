@@ -292,7 +292,6 @@ def check_pending_pr_checks(index: int):
     sha = pull_request.head.sha
     for pr_check in repo.get_commit(sha=sha).get_check_runs():
         count += 1
-        print(pr_check.name)
         # Ignore codecov checks temporarily due to bug
         if not pr_check.name.startswith('codecov') and not pr_check.name.startswith('SonarCloud') and 'graalvm' not in pr_check.name:
             if pr_check.status != 'completed':
