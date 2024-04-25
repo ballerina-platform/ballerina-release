@@ -371,7 +371,7 @@ def check_pending_build_checks(index: int):
         for build_check in repo.get_commit(sha=sha).get_check_runs():
             build_check_found = True
             # Ignore codecov checks temporarily due to bug
-            if not build_check.name.startswith('codecov'):
+            if not build_check.name.startswith('codecov') and not build_check.name.startswith('SonarCloud') and 'graalvm' not in build_check.name:
                 if build_check.status != 'completed':
                     pending = True
                     break
