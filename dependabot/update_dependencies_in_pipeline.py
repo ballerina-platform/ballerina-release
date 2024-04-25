@@ -288,6 +288,7 @@ def check_pending_pr_checks(index: int):
                                   + "'. PR: " + pull_request.html_url
         print(log_message)
         current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
+        return
 
     sha = pull_request.head.sha
     for pr_check in repo.get_commit(sha=sha).get_check_runs():
