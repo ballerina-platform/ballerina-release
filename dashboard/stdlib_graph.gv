@@ -33,6 +33,7 @@ digraph "Stdlib Dependency Graph" {
 		file
 		ftp
 		mime
+		"persist.inmemory"
 		tcp
 		udp
 		uuid
@@ -62,6 +63,7 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		grpc
+		"persist.redis"
 		soap
 		transaction
 		websocket
@@ -73,8 +75,15 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		graphql
+		"persist.googlesheets"
 		sql
 		label="level 7"
+	}
+	subgraph cluster_8 {
+		node [color=white style=filled]
+		color=lightgrey style=filled
+		"persist.sql"
+		label="level 8"
 	}
 	io -> avro
 	io -> "data.xmldata"
@@ -105,6 +114,10 @@ digraph "Stdlib Dependency Graph" {
 	log -> tcp
 	log -> udp
 	os -> file
+	persist -> "persist.googlesheets"
+	persist -> "persist.inmemory"
+	persist -> "persist.redis"
+	persist -> "persist.sql"
 	protobuf -> grpc
 	random -> grpc
 	random -> mqtt
@@ -127,6 +140,7 @@ digraph "Stdlib Dependency Graph" {
 	mime -> http
 	uuid -> grpc
 	uuid -> mqtt
+	uuid -> "persist.redis"
 	uuid -> soap
 	uuid -> transaction
 	uuid -> websocket
@@ -136,11 +150,14 @@ digraph "Stdlib Dependency Graph" {
 	jwt -> http
 	oauth2 -> http
 	http -> grpc
+	http -> "persist.redis"
 	http -> soap
 	http -> transaction
 	http -> websocket
 	http -> websub
 	http -> websubhub
+	transaction -> "persist.googlesheets"
 	transaction -> sql
 	websocket -> graphql
+	sql -> "persist.sql"
 }
