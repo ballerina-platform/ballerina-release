@@ -281,11 +281,20 @@ def check_pending_pr_checks(index: int):
 
     failed_pr_checks = []
     pull_request = repo.get_pull(module[MODULE_CREATED_PR].number)
+
+    # Check if the PR is merged
+    if pull_request.merged:
+        log_message = "[Info] Automated version update PR merged for module '" + module['name'] \
+                                  + "'. PR: " + pull_request.html_url
+        print(log_message)
+        current_level_modules[index][MODULE_CONCLUSION] = MODULE_CONCLUSION_BUILD_PENDING
+        return
+
     sha = pull_request.head.sha
     for pr_check in repo.get_commit(sha=sha).get_check_runs():
         count += 1
         # Ignore codecov checks temporarily due to bug
-        if not pr_check.name.startswith('codecov'):
+        if not pr_check.name.startswith('codecov') and not pr_check.name.startswith('SonarCloud') and 'graalvm' not in pr_check.name:
             if pr_check.status != 'completed':
                 pending = True
                 break
@@ -362,7 +371,7 @@ def check_pending_build_checks(index: int):
         for build_check in repo.get_commit(sha=sha).get_check_runs():
             build_check_found = True
             # Ignore codecov checks temporarily due to bug
-            if not build_check.name.startswith('codecov'):
+            if not build_check.name.startswith('codecov') and not build_check.name.startswith('SonarCloud') and 'graalvm' not in build_check.name:
                 if build_check.status != 'completed':
                     pending = True
                     break
