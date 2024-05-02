@@ -40,6 +40,22 @@
             ]
         },
         {
+            "name": "module-ballerina-data.xmldata",
+            "level": 2,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "data.xmldata-ballerina",
+            "version_key": "stdlibDataXmldataVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
             "name": "module-ballerina-persist",
             "level": 2,
             "group_id": "io.ballerina.stdlib",
