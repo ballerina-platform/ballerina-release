@@ -33,7 +33,6 @@ digraph "Stdlib Dependency Graph" {
 		file
 		ftp
 		mime
-		"persist.inmemory"
 		tcp
 		udp
 		uuid
@@ -63,7 +62,6 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		grpc
-		"persist.redis"
 		soap
 		transaction
 		websocket
@@ -75,15 +73,8 @@ digraph "Stdlib Dependency Graph" {
 		node [color=white style=filled]
 		color=lightgrey style=filled
 		graphql
-		"persist.googlesheets"
 		sql
 		label="level 7"
-	}
-	subgraph cluster_8 {
-		node [color=white style=filled]
-		color=lightgrey style=filled
-		"persist.sql"
-		label="level 8"
 	}
 	io -> avro
 	io -> "data.xmldata"
@@ -98,6 +89,8 @@ digraph "Stdlib Dependency Graph" {
 	time -> random
 	time -> task
 	url -> oauth2
+	xmldata -> "asyncapi-tools"
+	xmldata -> "openapi-tools"
 	constraint -> cache
 	crypto -> auth
 	crypto -> jwt
@@ -136,28 +129,36 @@ digraph "Stdlib Dependency Graph" {
 	file -> http
 	file -> toml
 	file -> yaml
+	file -> "edi-tools"
 	mime -> email
 	mime -> http
 	uuid -> grpc
 	uuid -> mqtt
-	uuid -> "persist.redis"
 	uuid -> soap
 	uuid -> transaction
 	uuid -> websocket
 	uuid -> websub
 	uuid -> websubhub
+	uuid -> "persist.redis"
+	uuid -> "asyncapi-tools"
 	auth -> http
 	jwt -> http
 	oauth2 -> http
 	http -> grpc
-	http -> "persist.redis"
 	http -> soap
 	http -> transaction
 	http -> websocket
 	http -> websub
 	http -> websubhub
-	transaction -> "persist.googlesheets"
+	http -> "persist.redis"
+	http -> "asyncapi-tools"
+	grpc -> "openapi-tools"
+	grpc -> "protoc-tools"
 	transaction -> sql
+	transaction -> "persist.googlesheets"
 	websocket -> graphql
+	websub -> "openapi-tools"
+	graphql -> "graphql-tools"
+	graphql -> "openapi-tools"
 	sql -> "persist.sql"
 }
