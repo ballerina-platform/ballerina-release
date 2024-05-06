@@ -123,7 +123,8 @@
             "send_notification": true,
             "dependents": [
                 "openapi-tools",
-                "asyncapi-tools"
+                "asyncapi-tools",
+                "ballerina-distribution"
             ]
         },
         {
@@ -338,22 +339,6 @@
             ]
         },
         {
-            "name": "module-ballerinax-datamapper",
-            "level": 3,
-            "group_id": "org.ballerinax.datamapper",
-            "artifact_id": "datamapper-extension",
-            "version_key": "dataMapperVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": false,
-            "build_action_file": "build-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
             "name": "module-ballerina-log",
             "level": 3,
             "group_id": "io.ballerina.stdlib",
@@ -411,7 +396,6 @@
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
                 "module-ballerina-grpc",
-                "module-ballerinax-jaeger",
                 "module-ballerinax-java.jms",
                 "module-ballerina-mqtt",
                 "module-ballerinax-prometheus",
@@ -637,7 +621,6 @@
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
                 "module-ballerina-grpc",
-                "module-ballerinax-jaeger",
                 "module-ballerinax-prometheus",
                 "module-ballerina-soap",
                 "asyncapi-tools",
@@ -707,22 +690,6 @@
             "default_branch": "master",
             "auto_merge": true,
             "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "asyncapi-tools",
-            "level": 6,
-            "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-asyncapi",
-            "version_key": "asyncapiVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -901,38 +868,6 @@
             ]
         },
         {
-            "name": "graphql-tools",
-            "level": 8,
-            "group_id": "io.ballerina",
-            "artifact_id": "graphql-tools",
-            "version_key": "graphqlVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "openapi-tools",
-            "level": 8,
-            "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-openapi",
-            "version_key": "openapiVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
             "name": "module-ballerinax-persist.sql",
             "level": 9,
             "group_id": "io.ballerina.stdlib",
@@ -1035,6 +970,20 @@
             "push_to_central": false,
             "is_extended_library_module": true,
             "build_action_file": "build-main",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "module-ballerinax-datamapper",
+            "level": 13,
+            "group_id": "org.ballerinax.datamapper",
+            "artifact_id": "datamapper-extension",
+            "version_key": "dataMapperVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-master",
             "send_notification": true,
             "dependents": []
         },
@@ -1159,6 +1108,48 @@
             "default_branch": "master",
             "auto_merge": true,
             "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "asyncapi-tools",
+            "level": 13,
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-asyncapi",
+            "version_key": "asyncapiVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "graphql-tools",
+            "level": 13,
+            "group_id": "io.ballerina",
+            "artifact_id": "graphql-tools",
+            "version_key": "graphqlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
+            "name": "openapi-tools",
+            "level": 13,
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-openapi",
+            "version_key": "openapiVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
             "is_extended_library_module": true,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
