@@ -35,7 +35,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17.0.7'
       - name: Build ballerina-lang
-        run: python -u dependabot/full_build_pipeline.py ./ --lang-branch 2201.9.0-stage --build-level 0
+        run: python -u dependabot/full_build_pipeline.py ./ --lang-branch $PATCH_LEVEL --build-level 0
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
