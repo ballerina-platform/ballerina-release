@@ -333,6 +333,8 @@ def main():
             write_failed_modules(failed_modules)
             exit(exit_code)
 
+        clean_docker_container()
+
     start_build = True
     if build_level:
         if int(build_level) == distribution_level:
@@ -655,6 +657,14 @@ def read_ignore_modules(patch_level):
         print_error(f"Failed to load test ignore modules from {TEST_IGNORE_MODULES_JSON}")
         exit(1)
 
+
+def clean_docker_container():
+    print_block()
+    print_info(f"Cleaning used docker containers")
+    commands = ["docker", "system", "prune", "-af"]
+    process = subprocess.run(commands)
+
+    return process.returncode
 
 def write_failed_modules(failed_module_names):
     with open(FAILED_MODULES_TEXT_FILE, "w") as file:
