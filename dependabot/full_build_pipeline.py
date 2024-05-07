@@ -321,8 +321,6 @@ def main():
                             write_failed_modules(failed_modules)
                             exit(exit_code)
 
-                    clean_docker_container()
-
                 os.chdir("..")
 
                 if remove_after_build:
@@ -334,6 +332,8 @@ def main():
         if exit_code != 0:
             write_failed_modules(failed_modules)
             exit(exit_code)
+
+        clean_docker_container()
 
     start_build = True
     if build_level:
@@ -660,7 +660,7 @@ def read_ignore_modules(patch_level):
 
 def clean_docker_container():
     print_block()
-    print_info(f"Cleaning docker container")
+    print_info(f"Cleaning used docker containers")
     commands = ["docker", "system", "prune", "-af"]
     process = subprocess.run(commands)
 
