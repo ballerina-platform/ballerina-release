@@ -17,6 +17,7 @@ TEST_IGNORE_MODULES_JSON = "https://raw.githubusercontent.com/ballerina-platform
 # Repository names
 BALLERINA_LANG_REPO_NAME = "ballerina-lang"
 BALLERINA_DIST_REPO_NAME = "ballerina-distribution"
+BALLERINAX = "ballerinax"
 
 # File names
 GRADLE_PROPERTIES = "gradle.properties"
@@ -576,7 +577,7 @@ def read_data_for_fbp(stdlib_modules_data):
         name = module['name']
         level = module['level']
         version_key = module['version_key']
-        if name != BALLERINA_DIST_REPO_NAME:
+        if name != BALLERINA_DIST_REPO_NAME and BALLERINAX not in name:
             stdlib_modules_by_level[level] = stdlib_modules_by_level.get(level, []) + \
                                              [{"name": name, "version_key": version_key}]
         else:
