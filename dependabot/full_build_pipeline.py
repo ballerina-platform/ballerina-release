@@ -661,7 +661,7 @@ def read_ignore_modules(patch_level):
 def clean_docker_container():
     print_block()
     print_info(f"Cleaning docker container")
-    commands = ["docker", "system", "prune", "-a"]
+    commands = ["docker", "system", "prune", "-af"]
     process = subprocess.run(commands)
 
     return process.returncode
