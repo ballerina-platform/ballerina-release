@@ -43,9 +43,6 @@ on:
         deprecationMessage: 'true or false'
         required: true
 
-env:
-  DISTRIBUTION_BUILD_LEVEL: 11
-
 jobs:
   build-lang:
     name: Build ballerina-lang
@@ -319,7 +316,7 @@ jobs:
       - name: Build ballerina-distribution
         run: |
           python -u dependabot/full_build_pipeline.py ${{ steps.set-command.outputs.command }} \
-          --lang-version ${{ needs.build-lang.outputs.lang-version }} --build-level $DISTRIBUTION_BUILD_LEVEL
+          --lang-version ${{ needs.build-lang.outputs.lang-version }} --only-build-distribution
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
