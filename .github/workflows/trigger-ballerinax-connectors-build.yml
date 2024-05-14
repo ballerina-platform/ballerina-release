@@ -6,40 +6,6 @@ on:
     - cron: '30 19 * * *'   # 01:00AM IST (GMT+5:30) 
 
 jobs:
-  get_connector_list:
-    name: Get connector repository names
-    if: github.repository_owner == 'ballerina-platform'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get extended library names
-        id: set-matrix
-        run: |
-            curl https://raw.githubusercontent.com/ballerina-platform/ballerina-release/master/dependabot/resources/ballerina_connector_list.json | jq '.ballerinax_connectors | .[] | {name}' > modules.txt
-            cat modules.txt | jq -s '.' | sed "s: ::g" | tr -d '\n' > processed.txt
-            echo "::set-output name=matrix::{\"include\":$(cat processed.txt)}"
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
-  trigger_repository_disptach_in_connectors:
-    name: Trigger repository dispatch in ballerinax connector repos
-    if: github.repository_owner == 'ballerina-platform'
-    needs: get_connector_list
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix: ${{fromJSON(needs.get_connector_list.outputs.matrix)}}
-    steps:
-      - name: Trigger repository dispatch
-        run: |
-          curl --request \
-          POST 'https://api.github.com/repos/ballerina-platform/${{matrix.name}}/dispatches' \
-          --header 'Accept: application/vnd.github.v3+json' \
-          --header 'Content-Type: application/json' \
-          --header 'Authorization: token ${{secrets.BALLERINA_BOT_TOKEN}}' \
-          --data-raw '{
-              "event_type":"check_connector_for_breaking_changes"
-          }'
-
   get_extended_library_list:
     name: Get extended library repository names
     if: github.repository_owner == 'ballerina-platform'
