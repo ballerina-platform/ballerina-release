@@ -140,6 +140,7 @@ digraph "Stdlib Dependency Graph" {
 	uuid -> websub
 	uuid -> websubhub
 	uuid -> "persist.redis"
+	uuid -> "wso2.controlplane"
 	uuid -> "asyncapi-tools"
 	auth -> http
 	jwt -> http
@@ -151,6 +152,7 @@ digraph "Stdlib Dependency Graph" {
 	http -> websub
 	http -> websubhub
 	http -> "persist.redis"
+	http -> "wso2.controlplane"
 	http -> "asyncapi-tools"
 	grpc -> "openapi-tools"
 	grpc -> "protoc-tools"
