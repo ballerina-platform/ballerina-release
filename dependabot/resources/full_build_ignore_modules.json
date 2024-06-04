@@ -9,7 +9,8 @@
   },
   "2201.8.x": {
     "test-ignore-modules": [
-      "module-ballerina-websub"
+      "module-ballerina-websub",
+      "module-ballerina-oauth2"
     ],
     "build-ignore-modules": [],
     "downstream-repo-branches": {},
