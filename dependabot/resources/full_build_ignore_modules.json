@@ -16,6 +16,7 @@
     "downstream-repo-branches": {},
     "additional-arguments": {
       "module-ballerina-websub": ["-x", "test"],
+      "module-ballerina-oauth2" : ["-x", "test"],
       "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
     }
   },
