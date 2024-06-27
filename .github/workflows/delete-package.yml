@@ -13,8 +13,8 @@ on:
           description: 'Repository'     
           required: true
           default: 'ballerina-lang'
-        package:
-          description: 'Specific package(groupId.artifactId)'
+        packages:
+          description: 'Comma separated list of packages (groupId.artifactId)'
           required: true
         version:
           description: 'Package version'
@@ -30,15 +30,17 @@ jobs:
       - name: Set authorized username
         id: setUname
         run: printf "::set-output name=foundUname::%s" $(cat /tmp/auth-user.json)
-      - name: Get package version ids
+      - name: Read and delete packages
         if: steps.setUname.outputs.foundUname != ''
         run: |
-          curl -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ github.event.inputs.owner }}/packages/maven/${{ github.event.inputs.package }}/versions -o /tmp/version-ids.json
-      - name: Filter packages and set version ID
-        id: setid
-        if: steps.setUname.outputs.foundUname != ''
-        run: printf "::set-output name=versionId::%s" $(cat /tmp/version-ids.json | jq -r '.[] | select(.name=="${{ github.event.inputs.version }}")|.id')
-      - name: Delete selected package
-        if: steps.setUname.outputs.foundUname != '' && steps.setid.outputs.versionId != ''
-        run: |
-          curl -X DELETE -H "Authorization: bearer ${{ secrets.DELETE_PACKAGE_PAT }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ github.event.inputs.owner }}/packages/maven/${{ github.event.inputs.package }}/versions/${{ steps.setid.outputs.versionId }}
+          IFS=',' read -r -a package_array <<< "${{ github.event.inputs.packages }}"
+          for package in "${package_array[@]}"; do
+            package=$(echo $package | xargs)
+            echo "Fetching versions of package: $package"
+            version_ids=$(curl -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ github.event.inputs.owner }}/packages/maven/$package/versions)
+            version_id=$(echo $version_ids | jq -r '.[] | select(.name=="${{ github.event.inputs.version }}")|.id')
+            if [[ -n $version_id ]]; then
+              curl -X DELETE -H "Authorization: bearer ${{ secrets.DELETE_PACKAGE_PAT }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/${{ github.event.inputs.owner }}/packages/maven/$package/versions/$version_id
+              echo "Deleted package version: $version_id"
+            fi
+          done
