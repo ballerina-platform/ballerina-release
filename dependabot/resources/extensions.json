@@ -158,6 +158,7 @@
             "dependents": [
                 "module-ballerina-cache",
                 "module-ballerina-data.jsondata",
+                "module-ballerina-data.xmldata",
                 "module-ballerinax-nats"
             ]
         },
@@ -180,22 +181,6 @@
                 "module-ballerina-oauth2",
                 "module-ballerina-tcp",
                 "module-ballerina-uuid"
-            ]
-        },
-        {
-            "name": "module-ballerina-data.xmldata",
-            "level": 2,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "data.xmldata-ballerina",
-            "version_key": "stdlibDataXmldataVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
             ]
         },
         {
@@ -337,6 +322,22 @@
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
                 "module-ballerina-oauth2"
+            ]
+        },
+        {
+            "name": "module-ballerina-data.xmldata",
+            "level": 3,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "data.xmldata-ballerina",
+            "version_key": "stdlibDataXmldataVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
             ]
         },
         {
