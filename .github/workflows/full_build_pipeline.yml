@@ -90,6 +90,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '17.0.7'
+          distribution: 'graalvm'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          set-java-home: 'false'
       - name: Set command
         id: set-command
         shell: bash
