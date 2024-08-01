@@ -160,6 +160,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '11'
+          distribution: 'graalvm'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          set-java-home: 'false'
       - name: Download Ballerina Lang Artifacts
         uses: actions/download-artifact@v2
         with:
