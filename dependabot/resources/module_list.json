@@ -68,6 +68,10 @@
             "version_key": "stdlibDataXmldataVersion"
         },
         {
+            "name": "module-ballerina-data.csv",
+            "version_key": "stdlibDataCsvVersion"
+        },
+        {
             "name": "module-ballerina-docker",
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
