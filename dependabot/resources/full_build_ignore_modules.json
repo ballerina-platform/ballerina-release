@@ -13,7 +13,9 @@
       "module-ballerina-oauth2"
     ],
     "build-ignore-modules": [],
-    "downstream-repo-branches": {},
+    "downstream-repo-branches": {
+      "module-ballerina-auth": "2201.8.x"
+    },
     "additional-arguments": {
       "module-ballerina-websub": ["-x", "test"],
       "module-ballerina-oauth2" : ["-x", "test"],
@@ -24,6 +26,7 @@
     "test-ignore-modules": [],
     "build-ignore-modules": [],
     "downstream-repo-branches": {
+      "module-ballerina-auth": "2201.7.x",
       "ballerina-dev-tools": "1.2.x",
       "openapi-tools": "1.7.x",
       "graphql-tools": "2201.7.x"
