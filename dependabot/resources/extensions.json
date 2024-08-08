@@ -1081,6 +1081,20 @@
             "dependents": []
         },
         {
+            "name": "module-ballerina-ldap",
+            "level": 13,
+            "group_id": "io.ballerina.lib",
+            "artifact_id": "ldap-ballerina",
+            "version_key": "stdlibLdapVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": true,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
+        },
+        {
             "name": "module-ballerinax-nats",
             "level": 13,
             "group_id": "io.ballerina.stdlib",
