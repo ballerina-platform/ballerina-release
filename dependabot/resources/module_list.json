@@ -133,7 +133,8 @@
             "is_extended_library_module": true
         },
         {
-            "name": "module-ballerina-ldap"
+            "name": "module-ballerina-ldap",
+            "group_id": "io.ballerina.lib"
         },
         {
             "name": "module-ballerina-log"
