@@ -133,6 +133,9 @@
             "is_extended_library_module": true
         },
         {
+            "name": "module-ballerina-ldap"
+        },
+        {
             "name": "module-ballerina-log"
         },        
         {
