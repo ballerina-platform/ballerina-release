@@ -126,7 +126,7 @@
         },
         {
             "name": "module-ballerina-ldap",
-            "version_key": "stdlibLdapVersion"
+            "group_id": "io.ballerina.lib"
         },
         {
             "name": "module-ballerina-jwt"
