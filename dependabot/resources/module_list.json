@@ -134,7 +134,8 @@
         },
         {
             "name": "module-ballerina-ldap",
-            "group_id": "io.ballerina.lib"
+            "group_id": "io.ballerina.lib",
+            "version_key": "stdlibLdapVersion"
         },
         {
             "name": "module-ballerina-log"
