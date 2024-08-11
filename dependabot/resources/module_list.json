@@ -125,6 +125,10 @@
             "version_key": "stdlibJavaArraysVersion"
         },
         {
+            "name": "module-ballerina-ldap",
+            "version_key": "stdlibLdapVersion"
+        },
+        {
             "name": "module-ballerina-jwt"
         },
         {
