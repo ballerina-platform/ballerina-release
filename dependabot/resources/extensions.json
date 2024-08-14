@@ -49,10 +49,12 @@
             "default_branch": "master",
             "auto_merge": true,
             "push_to_central": true,
-            "is_extended_library_module": true,
+            "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-math.vector",
