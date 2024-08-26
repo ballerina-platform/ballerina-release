@@ -18,7 +18,9 @@
   "2201.9.x": {
     "test-ignore-modules": [],
     "build-ignore-modules": [],
-    "downstream-repo-branches": {},
+    "downstream-repo-branches": {
+      "module-ballerina-http": "2201.9.x"
+    },
     "additional-arguments": {
       "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
     }
@@ -31,7 +33,8 @@
     "build-ignore-modules": [],
     "downstream-repo-branches": {
       "module-ballerina-auth": "2201.8.x",
-      "module-ballerina-mqtt": "2201.8.x"
+      "module-ballerina-mqtt": "2201.8.x",
+      "module-ballerina-http": "2201.8.x"
     },
     "additional-arguments": {
       "module-ballerina-websub": ["-x", "test"],
