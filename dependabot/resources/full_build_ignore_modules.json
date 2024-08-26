@@ -30,7 +30,8 @@
     ],
     "build-ignore-modules": [],
     "downstream-repo-branches": {
-      "module-ballerina-auth": "2201.8.x"
+      "module-ballerina-auth": "2201.8.x",
+      "module-ballerina-mqtt": "2201.8.x"
     },
     "additional-arguments": {
       "module-ballerina-websub": ["-x", "test"],
