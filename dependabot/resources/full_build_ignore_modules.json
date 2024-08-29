@@ -19,6 +19,7 @@
     "test-ignore-modules": [],
     "build-ignore-modules": [],
     "downstream-repo-branches": {
+      "module-ballerina-mqtt": "2201.9.x",
       "module-ballerina-http": "2201.9.x",
       "module-ballerina-grpc": "2201.9.x"
     },
