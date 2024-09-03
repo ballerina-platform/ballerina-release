@@ -186,7 +186,7 @@ jobs:
         with:
           node-version: 10.22.1
       - name: Download Ballerina Lang Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: Ballerina Lang Artifacts
           path: ~/.m2/
@@ -278,12 +278,12 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
       - name: Download Ballerina Lang Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: Ballerina Lang Artifacts
           path: ~/.m2/
       - name: Download Standard Library Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: Standard Library Artifacts
           path: ~/.m2/
@@ -432,7 +432,7 @@ jobs:
           cd ballerina-distribution
           git checkout $PATCH_LEVEL
       - name: Download Ballerina rpm Installer
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: Linux Installer rpm
       - name: Install Ballerina RPM
@@ -476,7 +476,7 @@ jobs:
           cd ballerina-distribution
           git checkout $PATCH_LEVEL
       - name: Download MacOS Intaller Zip
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: MacOS Installer ZIP
       - name: Create macos-pkg
@@ -534,7 +534,7 @@ jobs:
           cd ballerina-distribution
           git checkout $PATCH_LEVEL
       - name: Download Windows Intaller Zip
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: Windows Installer ZIP
       - name: Create windows-msi
@@ -600,7 +600,7 @@ jobs:
       - name: Clone nBallerina repository
         run: git clone https://github.com/ballerina-platform/nballerina.git
       - name: Download Linux Deb Installer
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: Linux Installer deb
       - name: Install Ballerina DEB
