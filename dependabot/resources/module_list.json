@@ -68,6 +68,10 @@
             "version_key": "stdlibDataXmldataVersion"
         },
         {
+            "name": "module-ballerina-data.yaml",
+            "version_key": "stdlibDataYamlVersion"
+        },
+        {
             "name": "module-ballerina-docker",
             "group_id": "org.ballerinax.docker",
             "artifact_id": "docker-generator",
@@ -127,6 +131,10 @@
             "name": "module-ballerinax-kafka",
             "push_to_central": false,
             "is_extended_library_module": true
+        },
+        {
+            "name": "module-ballerina-ldap",
+            "group_id": "io.ballerina.lib"
         },
         {
             "name": "module-ballerina-log"
@@ -304,7 +312,6 @@
         },
         {
             "name": "module-ballerina-edi",
-            "group_id": "io.ballerina.stdlib",
             "artifact_id": "edi-ballerina",
             "version_key": "stdlibEdiVersion",
             "auto_merge": true,

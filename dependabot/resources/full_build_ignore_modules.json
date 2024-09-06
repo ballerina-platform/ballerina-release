@@ -7,14 +7,42 @@
       "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
     }
   },
-  "2201.8.x": {
-    "test-ignore-modules": [
-      "module-ballerina-websub"
-    ],
+  "2201.10.x": {
+    "test-ignore-modules": [],
     "build-ignore-modules": [],
     "downstream-repo-branches": {},
     "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
+    }
+  },
+  "2201.9.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {
+      "module-ballerina-mqtt": "2201.9.x",
+      "module-ballerina-http": "2201.9.x",
+      "module-ballerina-grpc": "2201.9.x",
+      "persist-tools": "2201.9.x"
+    },
+    "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
+    }
+  },
+  "2201.8.x": {
+    "test-ignore-modules": [
+      "module-ballerina-websub",
+      "module-ballerina-oauth2"
+    ],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {
+      "module-ballerina-auth": "2201.8.x",
+      "module-ballerina-mqtt": "2201.8.x",
+      "module-ballerina-http": "2201.8.x",
+      "module-ballerina-grpc": "2201.8.x"
+    },
+    "additional-arguments": {
       "module-ballerina-websub": ["-x", "test"],
+      "module-ballerina-oauth2" : ["-x", "test"],
       "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
     }
   },
@@ -22,6 +50,7 @@
     "test-ignore-modules": [],
     "build-ignore-modules": [],
     "downstream-repo-branches": {
+      "module-ballerina-auth": "2201.7.x",
       "ballerina-dev-tools": "1.2.x",
       "openapi-tools": "1.7.x",
       "graphql-tools": "2201.7.x"
