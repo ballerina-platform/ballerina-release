@@ -56,7 +56,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-          python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -117,7 +117,7 @@ jobs:
       - name: Build Standard Libraries & Tools
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --update-stdlib-dependencies --skip-build-distribution --continue-on-error --remove-after-build
+          --build-released-versions --patch-level $PATCH_LEVEL --skip-build-distribution --continue-on-error --remove-after-build
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -126,11 +126,6 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
           TEST_MODE_ACTIVE: true
-      - name: Archive Standard Library Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: Standard Library Artifacts
-          path: ~/.m2/
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash
@@ -138,7 +133,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-          python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
@@ -149,7 +144,7 @@ jobs:
 
   build-distribution:
     name: Build ballerina-distribution
-    needs: [build-lang, build-stdlibs]
+    needs: build-lang
     runs-on: ubuntu-latest
     timeout-minutes: 150
     steps:
@@ -178,15 +173,10 @@ jobs:
         with:
           name: Ballerina Lang Artifacts
           path: ~/.m2/
-      - name: Download Standard Library Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: Standard Library Artifacts
-          path: ~/.m2/
       - name: Build ballerina-distribution
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --update-stdlib-dependencies --only-build-distribution --continue-on-error
+          --patch-level $PATCH_LEVEL --only-build-distribution --continue-on-error
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -266,7 +256,7 @@ jobs:
           FILE="failed_modules.txt"
 
           while read module; do
-          python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
+            python3 dependabot/notify_full_build_failure.py $module $PATCH_LEVEL;
           done < ${FILE}
         env:
           CHAT_ID: ${{ secrets.NOTIFICATIONS_CHAT_ID }}
