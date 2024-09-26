@@ -132,7 +132,7 @@ jobs:
       - name: Download Ballerina Distribution
         run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
       - name: Download MacOS Intaller Zip
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: MacOS Installer ZIP
       - name: Create macos-pkg
@@ -161,7 +161,7 @@ jobs:
       - name: Download Ballerina Distribution
         run: git clone https://github.com/ballerina-platform/ballerina-distribution.git
       - name: Download Windows Intaller Zip
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: Windows Installer ZIP
       - name: Create windows-msi
