@@ -41,22 +41,6 @@
             ]
         },
         {
-            "name": "module-ballerina-ldap",
-            "level": 1,
-            "group_id": "io.ballerina.lib",
-            "artifact_id": "ldap-ballerina",
-            "version_key": "stdlibLdapVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
             "name": "module-ballerina-math.vector",
             "level": 1,
             "group_id": "io.ballerina.stdlib",
@@ -195,6 +179,7 @@
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-jwt",
+                "module-ballerina-ldap",
                 "module-ballerinax-nats",
                 "module-ballerina-oauth2",
                 "module-ballerina-tcp",
@@ -365,6 +350,22 @@
             "artifact_id": "data.yaml-ballerina",
             "version_key": "stdlibDataYamlVersion",
             "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "module-ballerina-ldap",
+            "level": 3,
+            "group_id": "io.ballerina.lib",
+            "artifact_id": "ldap-ballerina",
+            "version_key": "stdlibLdapVersion",
+            "default_branch": "master",
             "auto_merge": true,
             "push_to_central": true,
             "is_extended_library_module": false,
