@@ -16,6 +16,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerina-avro",
+                "module-ballerina-crypto",
                 "module-ballerina-data.xmldata",
                 "module-ballerina-data.yaml",
                 "module-ballerinax-datamapper",
