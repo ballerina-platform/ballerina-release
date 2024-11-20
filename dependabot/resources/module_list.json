@@ -60,16 +60,16 @@
             "is_extended_library_module": true
         },
         {
+            "name": "module-ballerina-data.csv",
+            "version_key": "stdlibDataCsvVersion"
+        },
+        {
             "name": "module-ballerina-data.jsondata",
             "version_key": "stdlibDataJsondataVersion"
         },
         {
             "name": "module-ballerina-data.xmldata",
             "version_key": "stdlibDataXmldataVersion"
-        },
-        {
-            "name": "module-ballerina-data.csv",
-            "version_key": "stdlibDataCsvVersion"
         },
         {
             "name": "module-ballerina-data.yaml",
