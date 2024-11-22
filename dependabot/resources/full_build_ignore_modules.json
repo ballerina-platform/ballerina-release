@@ -7,6 +7,14 @@
       "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
     }
   },
+  "2201.11.x": {
+    "test-ignore-modules": [],
+    "build-ignore-modules": [],
+    "downstream-repo-branches": {},
+    "additional-arguments": {
+      "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
+    }
+  },
   "2201.10.x": {
     "test-ignore-modules": [],
     "build-ignore-modules": [],
