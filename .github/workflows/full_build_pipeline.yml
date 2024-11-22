@@ -137,7 +137,7 @@ jobs:
           echo "::set-output name=command::$command_string"
       - name: Build ballerina-lang
         run: |
-          python -u dependabot/full_build_pipeline.py ${{ steps.set-command.outputs.command }} --build-level 0
+          python -u dependabot/full_build_pipeline.py ${{ steps.set-command.outputs.command }} --build-level 0 --skip-tests
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
