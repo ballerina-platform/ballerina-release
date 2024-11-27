@@ -1,4 +1,4 @@
-name: Daily Full Build Pipeline (master)
+name: Daily Full Build Pipeline (2201.11.x)
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: '30 18 * * *'   # 00:00 in LK time (GMT+5:30)
 
 env:
-  PATCH_LEVEL: master
+  PATCH_LEVEL: 2201.11.x
 
 jobs:
   build-lang:
