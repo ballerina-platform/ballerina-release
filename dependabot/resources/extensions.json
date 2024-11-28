@@ -124,7 +124,6 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "asyncapi-tools",
                 "ballerina-distribution"
             ]
         },
@@ -342,6 +341,7 @@
             "send_notification": true,
             "dependents": [
                 "openapi-tools",
+                "asyncapi-tools",
                 "ballerina-distribution"
             ]
         },
