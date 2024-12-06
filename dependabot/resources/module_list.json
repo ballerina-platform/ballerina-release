@@ -251,7 +251,7 @@
             "name": "graphql-tools",
             "group_id": "io.ballerina",
             "artifact_id": "graphql-tools",
-            "version_key": "graphqlVersion",
+            "version_key": "graphqlToolVersion",
             "push_to_central": false
         },
         {
@@ -266,7 +266,7 @@
             "name": "openapi-tools",
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-openapi",
-            "version_key": "openapiVersion"
+            "version_key": "openapiToolVersion"
         },
         {
             "name": "ballerina-dev-tools",
@@ -279,7 +279,7 @@
             "name": "asyncapi-tools",
             "group_id": "io.ballerina",
             "artifact_id": "module-ballerina-asyncapi",
-            "version_key": "asyncapiVersion",
+            "version_key": "asyncapiToolVersion",
             "push_to_central": false
         },
         {
