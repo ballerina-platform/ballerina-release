@@ -341,8 +341,7 @@
             "send_notification": true,
             "dependents": [
                 "openapi-tools",
-                "asyncapi-tools",
-                "ballerina-distribution"
+                "asyncapi-tools"
             ]
         },
         {
@@ -957,6 +956,54 @@
             ]
         },
         {
+            "name": "graphql-tools",
+            "level": 8,
+            "group_id": "io.ballerina",
+            "artifact_id": "graphql-tools",
+            "version_key": "graphqlToolVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "openapi-tools",
+            "level": 8,
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-openapi",
+            "version_key": "openapiToolVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "asyncapi-tools",
+            "level": 8,
+            "group_id": "io.ballerina",
+            "artifact_id": "module-ballerina-asyncapi",
+            "version_key": "asyncapiToolVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
             "name": "module-ballerinax-persist.sql",
             "level": 9,
             "group_id": "io.ballerina.stdlib",
@@ -1003,48 +1050,6 @@
             "dependents": [
                 "ballerina-distribution"
             ]
-        },
-        {
-            "name": "graphql-tools",
-            "level": 11,
-            "group_id": "io.ballerina",
-            "artifact_id": "graphql-tools",
-            "version_key": "graphqlVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "openapi-tools",
-            "level": 11,
-            "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-openapi",
-            "version_key": "openapiVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
-        },
-        {
-            "name": "asyncapi-tools",
-            "level": 11,
-            "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-asyncapi",
-            "version_key": "asyncapiVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": false,
-            "is_extended_library_module": true,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": []
         },
         {
             "name": "ballerina-distribution",
