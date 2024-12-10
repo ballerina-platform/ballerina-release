@@ -330,7 +330,7 @@
         {
             "name": "module-ballerina-data.xmldata",
             "level": 3,
-            "group_id": "io.ballerina.stdlib",
+            "group_id": "io.ballerina.lib",
             "artifact_id": "data.xmldata-ballerina",
             "version_key": "stdlibDataXmldataVersion",
             "default_branch": "main",
@@ -347,7 +347,7 @@
         {
             "name": "module-ballerina-data.yaml",
             "level": 3,
-            "group_id": "io.ballerina.stdlib",
+            "group_id": "io.ballerina.lib",
             "artifact_id": "data.yaml-ballerina",
             "version_key": "stdlibDataYamlVersion",
             "default_branch": "main",
@@ -597,7 +597,7 @@
         {
             "name": "module-ballerina-data.csv",
             "level": 5,
-            "group_id": "io.ballerina.stdlib",
+            "group_id": "io.ballerina.lib",
             "artifact_id": "data.csv-ballerina",
             "version_key": "stdlibDataCsvVersion",
             "default_branch": "main",
@@ -613,7 +613,7 @@
         {
             "name": "module-ballerina-data.jsondata",
             "level": 5,
-            "group_id": "io.ballerina.stdlib",
+            "group_id": "io.ballerina.lib",
             "artifact_id": "data.jsondata-ballerina",
             "version_key": "stdlibDataJsondataVersion",
             "default_branch": "main",
