@@ -61,19 +61,23 @@
         },
         {
             "name": "module-ballerina-data.csv",
-            "version_key": "stdlibDataCsvVersion"
+            "version_key": "stdlibDataCsvVersion",
+            "group_id": "io.ballerina.lib"
         },
         {
             "name": "module-ballerina-data.jsondata",
-            "version_key": "stdlibDataJsondataVersion"
+            "version_key": "stdlibDataJsondataVersion",
+            "group_id": "io.ballerina.lib"
         },
         {
             "name": "module-ballerina-data.xmldata",
-            "version_key": "stdlibDataXmldataVersion"
+            "version_key": "stdlibDataXmldataVersion",
+            "group_id": "io.ballerina.lib"
         },
         {
             "name": "module-ballerina-data.yaml",
-            "version_key": "stdlibDataYamlVersion"
+            "version_key": "stdlibDataYamlVersion",
+            "group_id": "io.ballerina.lib"
         },
         {
             "name": "module-ballerina-docker",
@@ -142,7 +146,7 @@
         },
         {
             "name": "module-ballerina-log"
-        },        
+        },
         {
             "name": "module-ballerina-math.vector",
             "version_key": "stdlibMathVectorVersion"
