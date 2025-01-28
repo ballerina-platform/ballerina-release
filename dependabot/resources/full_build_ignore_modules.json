@@ -2,7 +2,10 @@
   "master": {
     "test-ignore-modules": [],
     "build-ignore-modules": [],
-    "downstream-repo-branches": {},
+    "downstream-repo-branches": {
+      "module-ballerina-observe": "metrics-logs",
+      "module-ballerinai-observe": "metrics-logs"
+    },
     "additional-arguments": {
       "ballerina-dev-tools": ["-x", ":docerina-ui:npmTestDocerinaUI"]
     }
