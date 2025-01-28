@@ -66,7 +66,7 @@
         },
         {
             "name": "module-ballerina-data.jsondata",
-            "version_key": "stdlibDataJsondataVersion",
+            "version_key": "stdlibDataJsonDataVersion",
             "group_id": "io.ballerina.lib"
         },
         {
