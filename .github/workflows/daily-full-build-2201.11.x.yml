@@ -118,7 +118,7 @@ jobs:
       - name: Build Standard Libraries & Tools
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --update-stdlib-dependencies --skip-build-distribution --continue-on-error --remove-after-build
+          --patch-level $PATCH_LEVEL --update-stdlib-dependencies --skip-build-distribution --continue-on-error --remove-after-build
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -188,7 +188,7 @@ jobs:
       - name: Build ballerina-distribution
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --update-stdlib-dependencies --only-build-distribution --continue-on-error
+          --patch-level $PATCH_LEVEL --update-stdlib-dependencies --only-build-distribution --continue-on-error
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
