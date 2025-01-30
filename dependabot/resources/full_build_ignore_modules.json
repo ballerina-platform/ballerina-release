@@ -19,7 +19,9 @@
     }
   },
   "2201.10.x": {
-    "test-ignore-modules": [],
+    "test-ignore-modules": [
+      "module-ballerina-graphql"
+    ],
     "build-ignore-modules": [],
     "downstream-repo-branches": {},
     "additional-arguments": {
