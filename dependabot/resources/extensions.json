@@ -431,7 +431,6 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerinax-azure.functions",
                 "module-ballerina-grpc",
                 "module-ballerinax-java.jms",
                 "module-ballerina-mqtt",
@@ -702,7 +701,6 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerinax-azure.functions",
                 "module-ballerina-grpc",
                 "module-ballerinax-prometheus",
                 "module-ballerina-soap",
@@ -726,6 +724,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
                 "module-ballerinax-choreo",
                 "openapi-tools",
@@ -797,6 +796,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
                 "openapi-tools"
             ]
@@ -815,6 +815,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
                 "module-ballerina-c2c"
             ]
         },
@@ -832,6 +833,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerinax-aws.lambda",
+                "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
                 "graphql-tools",
                 "openapi-tools",
