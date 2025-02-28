@@ -573,7 +573,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "ballerina-distribution"
+                "ballerina-dev-tools"
             ]
         },
         {
