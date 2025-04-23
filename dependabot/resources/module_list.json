@@ -178,6 +178,10 @@
             "is_extended_library_module": true
         },
         {
+            "name": "module-ballerina-np",
+            "group_id": "io.ballerina.lib"
+        },
+        {
             "name": "module-ballerina-oauth2",
             "version_key": "stdlibOAuth2Version"
         },
