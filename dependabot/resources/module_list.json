@@ -179,7 +179,8 @@
         },
         {
             "name": "module-ballerina-np",
-            "group_id": "io.ballerina.lib"
+            "group_id": "io.ballerina.lib",
+            "is_extended_library_module": false
         },
         {
             "name": "module-ballerina-oauth2",
