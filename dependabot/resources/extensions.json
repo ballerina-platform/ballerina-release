@@ -842,7 +842,7 @@
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
-                "graphql-tools",
+                "graphql-tool",
                 "openapi-tools",
                 "ballerina-dev-tools"
             ]
@@ -964,14 +964,14 @@
             ]
         },
         {
-            "name": "graphql-tools",
+            "name": "graphql-tool",
             "level": 10,
             "group_id": "io.ballerina",
-            "artifact_id": "graphql-tools",
+            "artifact_id": "graphql-tool",
             "version_key": "graphqlToolVersion",
             "default_branch": "main",
             "auto_merge": true,
-            "push_to_central": false,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
