@@ -265,6 +265,7 @@
                 "module-ballerina-grpc",
                 "module-ballerinax-kafka",
                 "module-ballerina-mqtt",
+                "module-ballerinax-mysql",
                 "module-ballerinax-rabbitmq",
                 "module-ballerina-soap",
                 "module-ballerina-websub",
