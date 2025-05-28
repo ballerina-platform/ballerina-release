@@ -998,6 +998,22 @@
             ]
         },
         {
+            "name": "protoc-tool",
+            "level": 10,
+            "group_id": "io.ballerina",
+            "artifact_id": "protoc-tool",
+            "version_key": "protocToolVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
             "name": "openapi-tools",
             "level": 10,
             "group_id": "io.ballerina",
