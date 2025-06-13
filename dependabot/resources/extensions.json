@@ -123,6 +123,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
+                "module-ballerina-ai",
                 "ballerina-distribution"
             ]
         },
@@ -628,6 +629,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
+                "module-ballerina-ai",
                 "ballerina-distribution"
             ]
         },
@@ -692,6 +694,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
+                "module-ballerina-ai",
                 "module-ballerina-grpc",
                 "module-ballerina-np",
                 "module-ballerinax-prometheus",
@@ -701,6 +704,20 @@
                 "module-ballerina-websub",
                 "module-ballerina-websubhub"
             ]
+        },
+        {
+            "name": "module-ballerina-ai",
+            "level": 8,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "ai-ballerina",
+            "version_key": "stdlibAiVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": []
         },
         {
             "name": "module-ballerina-grpc",
