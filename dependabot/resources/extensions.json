@@ -998,7 +998,7 @@
             ]
         },
         {
-            "name": "protoc-tool",
+            "name": "protoc-tools",
             "level": 10,
             "group_id": "io.ballerina",
             "artifact_id": "protoc-tool",
