@@ -860,7 +860,7 @@
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
-                "graphql-tool",
+                "graphql-tools",
                 "openapi-tools",
                 "ballerina-dev-tools"
             ]
@@ -982,7 +982,7 @@
             ]
         },
         {
-            "name": "graphql-tool",
+            "name": "graphql-tools",
             "level": 10,
             "group_id": "io.ballerina",
             "artifact_id": "graphql-tool",
