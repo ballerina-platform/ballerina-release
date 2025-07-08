@@ -887,7 +887,7 @@
             "group_id": "io.ballerina.stdlib",
             "artifact_id": "sql-ballerina",
             "version_key": "stdlibSqlVersion",
-            "default_branch": "master",
+            "default_branch": "2201.12.x",
             "auto_merge": true,
             "push_to_central": true,
             "is_extended_library_module": false,
