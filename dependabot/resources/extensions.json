@@ -54,6 +54,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
+                "module-ballerina-ai",
                 "ballerina-distribution"
             ]
         },
@@ -123,7 +124,6 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-ai",
                 "ballerina-distribution"
             ]
         },
@@ -285,6 +285,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
+                "module-ballerina-ai",
                 "openapi-tools",
                 "asyncapi-tools"
             ]
@@ -985,27 +986,11 @@
             "name": "graphql-tools",
             "level": 10,
             "group_id": "io.ballerina",
-            "artifact_id": "graphql-tool",
+            "artifact_id": "graphql-tools",
             "version_key": "graphqlToolVersion",
             "default_branch": "main",
             "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "protoc-tools",
-            "level": 10,
-            "group_id": "io.ballerina",
-            "artifact_id": "protoc-tool",
-            "version_key": "protocToolVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
+            "push_to_central": false,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
