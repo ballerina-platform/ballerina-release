@@ -54,8 +54,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-ai",
-                "ballerina-distribution"
+                "module-ballerina-ai"
             ]
         },
         {
@@ -630,8 +629,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-ai",
-                "ballerina-distribution"
+                "module-ballerina-ai"
             ]
         },
         {
@@ -697,7 +695,6 @@
             "dependents": [
                 "module-ballerina-ai",
                 "module-ballerina-grpc",
-                "module-ballerina-np",
                 "module-ballerinax-prometheus",
                 "module-ballerina-soap",
                 "module-ballerinai-transaction",
@@ -718,7 +715,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
-            "dependents": []
+            "dependents": [
+                "module-ballerina-np"
+            ]
         },
         {
             "name": "module-ballerina-grpc",
@@ -739,22 +738,6 @@
                 "module-ballerinax-choreo",
                 "openapi-tools",
                 "ballerina-dev-tools"
-            ]
-        },
-        {
-            "name": "module-ballerina-np",
-            "level": 8,
-            "group_id": "io.ballerina.lib",
-            "artifact_id": "np-ballerina",
-            "version_key": "stdlibNpVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
             ]
         },
         {
@@ -880,6 +863,22 @@
             "send_notification": true,
             "dependents": [
                 "asyncapi-tools"
+            ]
+        },
+        {
+            "name": "module-ballerina-np",
+            "level": 9,
+            "group_id": "io.ballerina.lib",
+            "artifact_id": "np-ballerina",
+            "version_key": "stdlibNpVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
             ]
         },
         {
