@@ -835,7 +835,7 @@
             "level": 9,
             "group_id": "io.ballerina.lib",
             "artifact_id": "ai.np-ballerina",
-            "version_key": "stdlibAi.npVersion",
+            "version_key": "stdlibAiNpVersion",
             "default_branch": "main",
             "auto_merge": true,
             "push_to_central": true,
