@@ -180,6 +180,7 @@
         {
             "name": "module-ballerina-ai.np",
             "group_id": "io.ballerina.lib",
+            "version_key": "stdlibAiNpVersion",
             "is_extended_library_module": false
         },
         {
