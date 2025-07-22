@@ -13,7 +13,7 @@
   "2201.12.x": {
     "test-ignore-modules": [],
     "build-ignore-modules": [
-      "module-ballerina-np"
+      "module-ballerina-ai.np"
     ],
     "downstream-repo-branches": {},
     "additional-arguments": {
