@@ -178,7 +178,7 @@
             "is_extended_library_module": true
         },
         {
-            "name": "module-ballerina-np",
+            "name": "module-ballerina-ai.np",
             "group_id": "io.ballerina.lib",
             "is_extended_library_module": false
         },
