@@ -151,7 +151,7 @@ jobs:
 
   build-distribution:
     name: Build ballerina-distribution
-    needs: [build-lang, build-stdlibs]
+    needs: build-lang
     runs-on: ubuntu-latest
     timeout-minutes: 150
     steps:
