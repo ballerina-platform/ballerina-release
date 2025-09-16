@@ -1014,10 +1014,10 @@
             ]
         },
         {
-            "name": "openapi-tools",
+            "name": "openapi-tool",
             "level": 10,
             "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-openapi",
+            "artifact_id": "openapi-tool",
             "version_key": "openapiToolVersion",
             "default_branch": "master",
             "auto_merge": true,
