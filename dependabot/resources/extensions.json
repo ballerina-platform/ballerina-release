@@ -736,7 +736,7 @@
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
                 "module-ballerinax-choreo",
-                "openapi-tools",
+                "openapi-tool",
                 "ballerina-dev-tools"
             ]
         },
@@ -807,7 +807,7 @@
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
-                "openapi-tools"
+                "openapi-tool"
             ]
         },
         {
@@ -861,7 +861,7 @@
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
                 "graphql-tool",
-                "openapi-tools",
+                "openapi-tool",
                 "ballerina-dev-tools"
             ]
         },
