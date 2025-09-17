@@ -286,7 +286,7 @@
             "dependents": [
                 "module-ballerina-ai",
                 "openapi-tools",
-                "asyncapi-tools"
+                "asyncapi-tool"
             ]
         },
         {
@@ -788,7 +788,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerina-graphql",
-                "asyncapi-tools"
+                "asyncapi-tool"
             ]
         },
         {
@@ -878,7 +878,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "asyncapi-tools"
+                "asyncapi-tool"
             ]
         },
         {
@@ -1030,10 +1030,10 @@
             ]
         },
         {
-            "name": "asyncapi-tools",
+            "name": "asyncapi-tool",
             "level": 10,
             "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-asyncapi",
+            "artifact_id": "asyncapi-tool",
             "version_key": "asyncapiToolVersion",
             "default_branch": "main",
             "auto_merge": true,
