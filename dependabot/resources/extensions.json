@@ -449,7 +449,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "persist-tools"
+                "persist-tool"
             ]
         },
         {
@@ -1058,14 +1058,14 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "persist-tools"
+                "persist-tool"
             ]
         },
         {
-            "name": "persist-tools",
+            "name": "persist-tool",
             "level": 12,
             "group_id": "io.ballerina",
-            "artifact_id": "persist-tools",
+            "artifact_id": "persist-tool",
             "version_key": "persistToolVersion",
             "default_branch": "main",
             "auto_merge": true,
