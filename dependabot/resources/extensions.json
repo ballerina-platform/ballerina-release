@@ -3,27 +3,6 @@
     "lang_version_substring": "2201.0.2",
     "standard_library": [
         {
-            "name": "module-ballerina-time",
-            "level": 1,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "time-ballerina",
-            "version_key": "stdlibTimeVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerina-constraint",
-                "module-ballerina-crypto",
-                "module-ballerina-file",
-                "module-ballerinax-persist.inmemory",
-                "module-ballerina-protobuf",
-                "module-ballerina-random"
-            ]
-        },
-        {
             "name": "module-ballerina-oauth2",
             "level": 6,
             "group_id": "io.ballerina.stdlib",
