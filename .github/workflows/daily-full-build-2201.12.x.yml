@@ -118,7 +118,7 @@ jobs:
       - name: Build Standard Libraries & Tools
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --patch-level $PATCH_LEVEL --update-stdlib-dependencies --skip-build-distribution --continue-on-error --remove-after-build
+          --build-released-versions --patch-level $PATCH_LEVEL --skip-build-distribution --continue-on-error --remove-after-build
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -127,12 +127,6 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
           TEST_MODE_ACTIVE: true
-      - name: Archive Standard Library Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: Standard Library Artifacts
-          path: ~/.m2/
-          include-hidden-files: true
       - name: Notify Build Failure
         if: ${{ failure() }}
         shell: bash
@@ -180,15 +174,10 @@ jobs:
         with:
           name: Ballerina Lang Artifacts
           path: ~/.m2/
-      - name: Download Standard Library Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: Standard Library Artifacts
-          path: ~/.m2/
       - name: Build ballerina-distribution
         run: |
           python -u dependabot/full_build_pipeline.py ./ --lang-version ${{ needs.build-lang.outputs.lang-version }} \
-          --patch-level $PATCH_LEVEL --update-stdlib-dependencies --only-build-distribution --continue-on-error
+          --patch-level $PATCH_LEVEL --only-build-distribution --continue-on-error
         env:
           packageUser: ${{ secrets.BALLERINA_BOT_USERNAME }}
           packagePAT: ${{ secrets.BALLERINA_BOT_TOKEN }}
@@ -354,7 +343,7 @@ jobs:
         working-directory: ballerina-distribution/installers/mac
         run: ./build-ballerina-macos-x64.sh -v ${{ needs.build-distribution.outputs.project-version }} -p ./../../../
       - name: Archive MacOS pkg
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
           name: MacOS Installer pkg
           path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-x64.pkg
