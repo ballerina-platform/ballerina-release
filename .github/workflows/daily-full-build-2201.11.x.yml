@@ -343,7 +343,7 @@ jobs:
         working-directory: ballerina-distribution/installers/mac
         run: ./build-ballerina-macos-x64.sh -v ${{ needs.build-distribution.outputs.project-version }} -p ./../../../
       - name: Archive MacOS pkg
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: MacOS Installer pkg
           path: ballerina-distribution/installers/mac/target/pkg/ballerina-*-macos-x64.pkg
