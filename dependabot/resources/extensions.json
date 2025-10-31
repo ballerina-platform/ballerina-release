@@ -286,7 +286,7 @@
             "dependents": [
                 "module-ballerina-ai",
                 "openapi-tools",
-                "asyncapi-tool"
+                "asyncapi-tools"
             ]
         },
         {
@@ -336,7 +336,6 @@
             "dependents": [
                 "module-ballerina-auth",
                 "module-ballerina-file",
-                "module-ballerina-ftp",
                 "module-ballerinax-java.jms",
                 "module-ballerina-jwt",
                 "module-ballerina-mime",
@@ -449,7 +448,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "persist-tool"
+                "persist-tools"
             ]
         },
         {
@@ -533,7 +532,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "ballerina-distribution"
+                "module-ballerina-ftp"
             ]
         },
         {
@@ -549,6 +548,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
+                "module-ballerina-ftp",
                 "module-ballerina-http"
             ]
         },
@@ -574,22 +574,6 @@
             "group_id": "io.ballerina.stdlib",
             "artifact_id": "email-ballerina",
             "version_key": "stdlibEmailVersion",
-            "default_branch": "master",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "module-ballerina-ftp",
-            "level": 5,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "ftp-ballerina",
-            "version_key": "stdlibFtpVersion",
             "default_branch": "master",
             "auto_merge": true,
             "push_to_central": true,
@@ -646,6 +630,22 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerina-http"
+            ]
+        },
+        {
+            "name": "module-ballerina-ftp",
+            "level": 6,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "ftp-ballerina",
+            "version_key": "stdlibFtpVersion",
+            "default_branch": "master",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
             ]
         },
         {
@@ -736,7 +736,7 @@
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
                 "module-ballerinax-choreo",
-                "openapi-tool",
+                "openapi-tools",
                 "ballerina-dev-tools"
             ]
         },
@@ -788,7 +788,7 @@
             "send_notification": true,
             "dependents": [
                 "module-ballerina-graphql",
-                "asyncapi-tool"
+                "asyncapi-tools"
             ]
         },
         {
@@ -807,7 +807,7 @@
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
-                "openapi-tool"
+                "openapi-tools"
             ]
         },
         {
@@ -860,8 +860,8 @@
                 "module-ballerinax-aws.lambda",
                 "module-ballerinax-azure.functions",
                 "module-ballerina-c2c",
-                "graphql-tool",
-                "openapi-tool",
+                "graphql-tools",
+                "openapi-tools",
                 "ballerina-dev-tools"
             ]
         },
@@ -878,7 +878,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "asyncapi-tool"
+                "asyncapi-tools"
             ]
         },
         {
@@ -982,14 +982,14 @@
             ]
         },
         {
-            "name": "graphql-tool",
+            "name": "graphql-tools",
             "level": 10,
             "group_id": "io.ballerina",
-            "artifact_id": "graphql-tool",
+            "artifact_id": "graphql-tools",
             "version_key": "graphqlToolVersion",
             "default_branch": "main",
             "auto_merge": true,
-            "push_to_central": true,
+            "push_to_central": false,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
@@ -998,26 +998,10 @@
             ]
         },
         {
-            "name": "protoc-tool",
+            "name": "openapi-tools",
             "level": 10,
             "group_id": "io.ballerina",
-            "artifact_id": "protoc-tool",
-            "version_key": "protocToolVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "openapi-tool",
-            "level": 10,
-            "group_id": "io.ballerina",
-            "artifact_id": "openapi-tool",
+            "artifact_id": "module-ballerina-openapi",
             "version_key": "openapiToolVersion",
             "default_branch": "master",
             "auto_merge": true,
@@ -1030,10 +1014,10 @@
             ]
         },
         {
-            "name": "asyncapi-tool",
+            "name": "asyncapi-tools",
             "level": 10,
             "group_id": "io.ballerina",
-            "artifact_id": "asyncapi-tool",
+            "artifact_id": "module-ballerina-asyncapi",
             "version_key": "asyncapiToolVersion",
             "default_branch": "main",
             "auto_merge": true,
@@ -1058,14 +1042,14 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "persist-tool"
+                "persist-tools"
             ]
         },
         {
-            "name": "persist-tool",
+            "name": "persist-tools",
             "level": 12,
             "group_id": "io.ballerina",
-            "artifact_id": "persist-tool",
+            "artifact_id": "persist-tools",
             "version_key": "persistToolVersion",
             "default_branch": "main",
             "auto_merge": true,
