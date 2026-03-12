@@ -105,6 +105,9 @@
             "name": "module-ballerina-http"
         },
         {
+            "name": "module-ballerina-messaging"
+        },
+        {
             "name": "module-ballerina-io"
         },
         {
