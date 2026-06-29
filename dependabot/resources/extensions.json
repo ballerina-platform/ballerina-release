@@ -673,7 +673,7 @@
             "group_id": "io.ballerina.stdlib",
             "artifact_id": "oauth2-ballerina",
             "version_key": "stdlibOAuth2Version",
-            "default_branch": "master",
+            "default_branch": "",
             "auto_merge": true,
             "push_to_central": true,
             "is_extended_library_module": false,
