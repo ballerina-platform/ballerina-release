@@ -122,7 +122,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "ballerina-distribution"
+                "module-ballerina-mcp"
             ]
         },
         {
@@ -616,7 +616,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-ai"
+                "module-ballerina-mcp"
             ]
         },
         {
@@ -713,30 +713,14 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-ai",
                 "module-ballerina-grpc",
+                "module-ballerina-mcp",
                 "module-ballerinax-prometheus",
                 "module-ballerina-soap",
                 "module-ballerinai-transaction",
                 "module-ballerina-websocket",
                 "module-ballerina-websub",
                 "module-ballerina-websubhub"
-            ]
-        },
-        {
-            "name": "module-ballerina-ai",
-            "level": 8,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "ai-ballerina",
-            "version_key": "stdlibAiVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerina-ai.np"
             ]
         },
         {
@@ -758,6 +742,22 @@
                 "module-ballerinax-choreo",
                 "openapi-tools",
                 "ballerina-dev-tools"
+            ]
+        },
+        {
+            "name": "module-ballerina-mcp",
+            "level": 8,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "mcp-ballerina",
+            "version_key": "stdlibMcpVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-ai"
             ]
         },
         {
@@ -849,11 +849,11 @@
             ]
         },
         {
-            "name": "module-ballerina-ai.np",
+            "name": "module-ballerina-ai",
             "level": 9,
-            "group_id": "io.ballerina.lib",
-            "artifact_id": "ai.np-ballerina",
-            "version_key": "stdlibAiNpVersion",
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "ai-ballerina",
+            "version_key": "stdlibAiVersion",
             "default_branch": "main",
             "auto_merge": true,
             "push_to_central": true,
@@ -861,7 +861,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "ballerina-distribution"
+                "module-ballerina-ai.np"
             ]
         },
         {
@@ -920,6 +920,22 @@
                 "module-ballerinax-mysql",
                 "module-ballerinax-oracledb",
                 "module-ballerinax-postgresql"
+            ]
+        },
+        {
+            "name": "module-ballerina-ai.np",
+            "level": 10,
+            "group_id": "io.ballerina.lib",
+            "artifact_id": "ai.np-ballerina",
+            "version_key": "stdlibAiNpVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
             ]
         },
         {
