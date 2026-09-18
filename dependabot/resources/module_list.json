@@ -108,6 +108,9 @@
             "name": "module-ballerina-messaging"
         },
         {
+            "name": "module-ballerina-workflow"
+        },
+        {
             "name": "module-ballerina-io"
         },
         {
