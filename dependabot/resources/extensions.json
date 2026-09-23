@@ -700,8 +700,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-workflow",
-                "ballerina-distribution"
+                "module-ballerina-workflow"
             ]
         },
         {
@@ -778,8 +777,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-workflow",
-                "ballerina-distribution"
+                "module-ballerina-workflow"
             ]
         },
         {
@@ -940,7 +938,9 @@
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
-            "dependents": []
+            "dependents": [
+                "ballerina-distribution"
+            ]
         },
         {
             "name": "module-ballerina-ai.np",
