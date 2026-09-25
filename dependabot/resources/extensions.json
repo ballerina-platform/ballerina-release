@@ -198,7 +198,8 @@
                 "module-ballerinax-datamapper",
                 "module-ballerinax-jaeger",
                 "module-ballerina-log",
-                "module-ballerina-persist"
+                "module-ballerina-persist",
+                "module-ballerinax-prometheus"
             ]
         },
         {
@@ -718,7 +719,6 @@
             "dependents": [
                 "module-ballerina-grpc",
                 "module-ballerina-mcp",
-                "module-ballerinax-prometheus",
                 "module-ballerina-soap",
                 "module-ballerinai-transaction",
                 "module-ballerina-websocket",
