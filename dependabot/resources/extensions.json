@@ -385,8 +385,7 @@
                 "module-ballerina-data.xmldata",
                 "module-ballerina-edi",
                 "module-ballerina-email",
-                "module-ballerina-toml",
-                "module-ballerina-yaml"
+                "module-ballerina-toml"
             ]
         },
         {
@@ -605,22 +604,6 @@
             "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
-            ]
-        },
-        {
-            "name": "module-ballerina-yaml",
-            "level": 5,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "yaml-ballerina",
-            "version_key": "stdlibYamlVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "module-ballerina-mcp"
             ]
         },
         {
