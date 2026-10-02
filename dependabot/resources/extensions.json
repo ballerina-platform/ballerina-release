@@ -53,8 +53,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-ai",
-                "module-ballerina-workflow"
+                "module-ballerina-ai"
             ]
         },
         {
@@ -287,7 +286,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "ballerina-distribution"
+                "module-ballerina-ai"
             ]
         },
         {
@@ -385,7 +384,8 @@
                 "module-ballerina-data.xmldata",
                 "module-ballerina-edi",
                 "module-ballerina-email",
-                "module-ballerina-toml"
+                "module-ballerina-toml",
+                "module-ballerina-yaml"
             ]
         },
         {
@@ -553,8 +553,7 @@
             "dependents": [
                 "module-ballerina-ai",
                 "openapi-tools",
-                "asyncapi-tools",
-                "module-ballerina-workflow"
+                "asyncapi-tools"
             ]
         },
         {
@@ -604,6 +603,22 @@
             "send_notification": true,
             "dependents": [
                 "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "module-ballerina-yaml",
+            "level": 5,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "yaml-ballerina",
+            "version_key": "stdlibYamlVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "module-ballerina-mcp"
             ]
         },
         {
@@ -743,8 +758,7 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-ai",
-                "module-ballerina-workflow"
+                "module-ballerina-ai"
             ]
         },
         {
@@ -848,7 +862,8 @@
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
             "dependents": [
-                "module-ballerina-ai.np"
+                "module-ballerina-ai.np",
+                "module-ballerina-workflow"
             ]
         },
         {
@@ -907,22 +922,6 @@
                 "module-ballerinax-mysql",
                 "module-ballerinax-oracledb",
                 "module-ballerinax-postgresql"
-            ]
-        },
-        {
-            "name": "module-ballerina-workflow",
-            "level": 9,
-            "group_id": "io.ballerina.stdlib",
-            "artifact_id": "workflow-ballerina",
-            "version_key": "stdlibWorkflowVersion",
-            "default_branch": "main",
-            "auto_merge": true,
-            "push_to_central": true,
-            "is_extended_library_module": false,
-            "build_action_file": "build-timestamped-master",
-            "send_notification": true,
-            "dependents": [
-                "ballerina-distribution"
             ]
         },
         {
@@ -1062,6 +1061,22 @@
             "default_branch": "main",
             "auto_merge": true,
             "push_to_central": false,
+            "is_extended_library_module": false,
+            "build_action_file": "build-timestamped-master",
+            "send_notification": true,
+            "dependents": [
+                "ballerina-distribution"
+            ]
+        },
+        {
+            "name": "module-ballerina-workflow",
+            "level": 10,
+            "group_id": "io.ballerina.stdlib",
+            "artifact_id": "workflow-ballerina",
+            "version_key": "stdlibWorkflowVersion",
+            "default_branch": "main",
+            "auto_merge": true,
+            "push_to_central": true,
             "is_extended_library_module": false,
             "build_action_file": "build-timestamped-master",
             "send_notification": true,
