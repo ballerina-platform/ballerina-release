@@ -275,22 +275,29 @@
         {
             "name": "graphql-tools",
             "group_id": "io.ballerina",
-            "artifact_id": "graphql-tools",
+            "artifact_id": "graphql-tool",
             "version_key": "graphqlToolVersion",
             "push_to_central": false
         },
         {
             "name": "persist-tools",
             "group_id": "io.ballerina",
-            "artifact_id": "persist-tools",
+            "artifact_id": "persist-tool",
             "version_key": "persistToolVersion",
             "push_to_central": false,
             "is_extended_library_module": false
         },
         {
+            "name": "protoc-tools",
+            "group_id": "io.ballerina",
+            "artifact_id": "protoc-tool",
+            "version_key": "protocToolVersion",
+            "push_to_central": false
+        },
+        {
             "name": "openapi-tools",
             "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-openapi",
+            "artifact_id": "openapi-tool",
             "version_key": "openapiToolVersion"
         },
         {
@@ -303,7 +310,7 @@
         {
             "name": "asyncapi-tools",
             "group_id": "io.ballerina",
-            "artifact_id": "module-ballerina-asyncapi",
+            "artifact_id": "asyncapi-tool",
             "version_key": "asyncapiToolVersion",
             "push_to_central": false
         },
